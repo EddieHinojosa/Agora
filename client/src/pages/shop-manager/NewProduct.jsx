@@ -94,12 +94,13 @@ const NewProduct = () => {
                         </ol>
                     </p>
                 </div>
-                <div className="w-3/4 grid grid-cols-5 gap-6">
+                <div className="w-3/4 grid grid-cols-6">
                     <div className="border bg-gray-200 rounded-md flex h-32 w-32">
                         <button className="py-2 px-4 rounded-md hover:underline">
                             Upload Image <MdUpload className="mx-auto mt-2" />
                         </button>
                     </div>
+                    <div className="border border-gray-300 rounded-md h-32 w-32"></div>
                     <div className="border border-gray-300 rounded-md h-32 w-32"></div>
                     <div className="border border-gray-300 rounded-md h-32 w-32"></div>
                     <div className="border border-gray-300 rounded-md h-32 w-32"></div>
