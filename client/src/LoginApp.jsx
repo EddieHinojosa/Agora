@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import LoginNavbar from "./components/login/LoginNav";
+import ShopNavbar from "./components/ShopNavbar";
 import Footer from "./components/Footer";
 
 function LoginApp() {
   return (
     <>
-      <LoginNavbar />
+      <ShopNavbar />
       <main>
         <Outlet />
       </main>
