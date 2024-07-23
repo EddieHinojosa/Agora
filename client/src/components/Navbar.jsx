@@ -25,13 +25,13 @@ const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center space-x-4">
-        <Link to="/shopsignup" className="text-sm">
+        <Link to="/login/shopsignup" className="text-sm">
           Sell
         </Link>
         <Link to="/login" className="text-sm">
           Login
         </Link>
-        <Link to="/usersignup" className="text-sm">
+        <Link to="/login/usersignup" className="text-sm">
           Sign Up
         </Link>
 

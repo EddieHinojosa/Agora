@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 const Login = () => {
     return (
         <div>
-            <Link to='/usersignup'>User Signup</Link>
-            <Link to='/shopsignup'>Shop Signup</Link>
+            <div><Link to='/login/usersignup' className='hover:underline'>User Signup</Link></div>
+            <div><Link to='/login/shopsignup' className='hover:underline'>Shop Signup</Link></div>
         </div>
     )
 }
