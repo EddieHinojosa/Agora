@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import ShopNavbar from './components/ShopNavbar'
-import ShopSidebar from './components/ShopSidebar'
-import Footer from './components/Footer'
+import ShopNavbar from './components/ShopNavbar';
+import ShopSidebar from './components/ShopSidebar';
+import Footer from './components/Footer';
 
 function ShopApp() {
     return (
@@ -15,7 +15,7 @@ function ShopApp() {
             </div>
             <Footer />
         </div>
-    )
+    );
 }
 
-export default ShopApp
+export default ShopApp;
