@@ -484,6 +484,9 @@ const NewProduct = () => {
             ))}
           </tbody>
         </table>
+        
+        
+        {/* Shipping Section here - Zip code, item size when boxed, etc. */}
       </div>
     </div>
   );
