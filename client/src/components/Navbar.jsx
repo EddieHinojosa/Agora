@@ -41,6 +41,8 @@ const Navbar = () => {
 
         {/* If SHOP OWNER is logged in, navbar changes:*/}
         {/* <Link to="/shopmanager"><CiShop /></Link> */}
+        {/* <Link to="/user"><CiUser /></Link> */}
+        {/* <Link to="/cart"><MdOutlineShoppingBag /></Link> */}
         
       </div>
     </nav>
