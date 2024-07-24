@@ -376,7 +376,7 @@ const NewProduct = () => {
                               <span>{value}</span>
                               <button
                                 onClick={() => deleteOptionValue(index, valueIndex)}
-                                className="text-red-500 hover:text-red-700"
+                                className="text-black"
                               >
                                 &times;
                               </button>
@@ -388,7 +388,7 @@ const NewProduct = () => {
                     <td className="px-6 py-4 align-top">
                       <button
                         onClick={() => deleteOptionRow(index)}
-                        className="px-4 py-2 rounded hover:bg-gray-300"
+                        className="px-4 py-2 mt-1 rounded hover:bg-gray-300"
                       >
                         <MdDelete />
                       </button>
