@@ -13,6 +13,8 @@
   &nbsp;&nbsp;
   <a href="https://github.com/EddieHinojosa/Agora/issues/new?labels=bug&template=bug-report---.md">![Static Badge](https://img.shields.io/badge/Report_Bug-red)
   </a>
+  &nbsp;&nbsp;
+  <a>[![Netlify Status](https://api.netlify.com/api/v1/badges/65e9486a-2d24-4361-86d6-17565afe97e2/deploy-status)](https://app.netlify.com/sites/agoracrafts/deploys) </a>
 </div>
 
 <br>
