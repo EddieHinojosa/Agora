@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js --ignore client",
+    "start": "node server/index.js --ignore client",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "@netlify/functions": "^2.8.1",
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "mongodb": "^6.8.0"
   }
 }
