@@ -3,7 +3,11 @@ import { MdUpload, MdDelete } from "react-icons/md";
 import { IoIosAdd } from "react-icons/io";
 import { GrHide } from "react-icons/gr";
 
+
+
 const NewProduct = () => {
+
+  // This code will probably have to change to sync up to DB - just wrote for table test
   const [rows, setRows] = useState([
     {
       photo: "",
@@ -19,7 +23,9 @@ const NewProduct = () => {
     },
   ]);
 
+  // Modal Code
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [optionRows, setOptionRows] = useState([{ option: "", values: [], newValue: "" }]);
 
   const addRow = () => {
     setRows([
@@ -57,9 +63,12 @@ const NewProduct = () => {
   };
 
   const handleCardClick = (index) => {
+    // Input Photo code in here for possible change to specific uploaded photo?
     console.log("Card clicked", index);
   };
+  //   End table test code
 
+  // Modal Code
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
@@ -67,6 +76,43 @@ const NewProduct = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+
+  const handleOptionChange = (index, event) => {
+    const updatedOptionRows = [...optionRows];
+    updatedOptionRows[index][event.target.name] = event.target.value;
+    setOptionRows(updatedOptionRows);
+  };
+
+  const handleNewValueChange = (index, event) => {
+    const updatedOptionRows = [...optionRows];
+    updatedOptionRows[index].newValue = event.target.value;
+    setOptionRows(updatedOptionRows);
+  };
+
+  const addOptionValue = (index) => {
+    const updatedOptionRows = [...optionRows];
+    if (updatedOptionRows[index].newValue.trim() !== "") {
+      updatedOptionRows[index].values.push(updatedOptionRows[index].newValue);
+      updatedOptionRows[index].newValue = "";
+      setOptionRows(updatedOptionRows);
+    }
+  };
+
+  const deleteOptionValue = (optionIndex, valueIndex) => {
+    const updatedOptionRows = [...optionRows];
+    updatedOptionRows[optionIndex].values.splice(valueIndex, 1);
+    setOptionRows(updatedOptionRows);
+  };
+
+  const addOptionRow = () => {
+    setOptionRows([...optionRows, { option: "", values: [], newValue: "" }]);
+  };
+
+  const deleteOptionRow = (index) => {
+    const updatedOptionRows = optionRows.filter((_, i) => i !== index);
+    setOptionRows(updatedOptionRows);
+  };
+  // End Modal Code
 
   return (
     <div className="flex flex-col">
@@ -172,23 +218,6 @@ const NewProduct = () => {
               placeholder="Enter item tags"
             />
           </div>
-
-          {/* Materials */}
-          <div>
-            <label
-              htmlFor="materials"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Materials
-            </label>
-            <input
-              type="text"
-              id="material"
-              name="materials"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              placeholder="Materials, Ingredients, etc."
-            />
-          </div>
         </div>
       </div>
 
@@ -271,9 +300,9 @@ const NewProduct = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-md p-6 w-96">
+          <div className="bg-white rounded-md p-6 w-full max-w-2xl">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Options</h2>
+              <h2 className="text-xl font-semibold">Product Options</h2>
               <button
                 onClick={handleModalClose}
                 className="text-gray-500 hover:text-gray-700"
@@ -281,24 +310,112 @@ const NewProduct = () => {
                 &times;
               </button>
             </div>
-            <div>
-
-              {/* Modal Content */}
-              <p>blah blah blah</p>
-            </div>
-            <div className="mt-4 flex justify-end">
+            <table className="min-w-full divide-y divide-gray-200 mb-4">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Option
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Option Values
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200 text-sm">
+                {optionRows.map((row, index) => (
+                  <tr key={index}>
+                    <td className="px-6 py-4 align-top">
+                      <select
+                        name="option"
+                        value={row.option}
+                        onChange={(e) => handleOptionChange(index, e)}
+                        className="w-full p-2 rounded bg-white border"
+                      >
+                        <option value="">Select Option</option>
+                        <option value="Size">Size</option>
+                        <option value="Color">Color</option>
+                        <option value="Material">Material</option>
+                        <option value="Scent">Scent</option>
+                      </select>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div>
+                        <div className="flex">
+                          <input
+                            type="text"
+                            name="value"
+                            value={row.newValue}
+                            onChange={(e) => handleNewValueChange(index, e)}
+                            className="w-full p-2 rounded border"
+                          />
+                          <button
+                            onClick={() => addOptionValue(index)}
+                            className="ml-2 py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
+                          >
+                            Add
+                          </button>
+                        </div>
+                        <div className="flex flex-wrap items-center space-x-2 mt-2">
+                          {row.values.map((value, valueIndex) => (
+                            <div
+                              key={valueIndex}
+                              className="flex items-center px-2 py-1 bg-gray-200 rounded-md space-x-2"
+                            >
+                              <span>{value}</span>
+                              <button
+                                onClick={() => deleteOptionValue(index, valueIndex)}
+                                className="text-red-500 hover:text-red-700"
+                              >
+                                &times;
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 align-top">
+                      <button
+                        onClick={() => deleteOptionRow(index)}
+                        className="px-4 py-2 rounded hover:bg-gray-300"
+                      >
+                        <MdDelete />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="mt-4 flex justify-between">
+              <button
+                onClick={addOptionRow}
+                className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
+              >
+                <IoIosAdd />
+              </button>
               <button
                 onClick={handleModalClose}
-                className="py-2 px-4 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+                className="py-2 px-4 bg-black text-white text-sm rounded-md hover:bg-gray-300"
               >
-                Close
+                Save
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Trying this with button instead, will revert back to this if button doesn't work -Clarissa */}
+      {/* If time-going to work on incorporating this with modal to input into table below from modal answers -Clarissa */}
       {/* Multiple Options  */}
       {/* <div className="mt-20">
         <span className="block text-sm font-medium text-gray-700">
@@ -416,6 +533,9 @@ const NewProduct = () => {
             {rows.map((row, index) => (
               <tr key={index} className={row.hidden ? "hidden" : ""}>
                 <td className="px-6 py-4">
+
+                  {/* Devon, feel free to change photo code tp fit however you've done it!*/}
+                  {/* Photo Row - has click in case you want to incorporate*/}
                   <div
                     className="w-full p-4 bg-gray-100 shadow rounded cursor-pointer"
                     onClick={() => handleCardClick(index)}
@@ -428,6 +548,7 @@ const NewProduct = () => {
                   </div>
                 </td>
 
+                {/* Status Row Option */}
                 <td className="py-4">
                   <select
                     name="status"
@@ -441,6 +562,8 @@ const NewProduct = () => {
                   </select>
                 </td>
 
+
+                {/* Inputed information to go in here - currently hard coded*/}
                 <td className="px-6 py-4">{row.size}</td>
                 <td className="px-6 py-4">{row.color}</td>
                 <td className="px-6 py-4">{row.cost}</td>
@@ -450,6 +573,7 @@ const NewProduct = () => {
                 <td className="px-6 py-4">{row.width}</td>
                 <td className="px-6 py-4">{row.height}</td>
 
+                {/* Sticky Action Buttons */}
                 <td className="px-6 py-4 sticky right-0 bg-gray-100">
                   <div className="flex">
                     <button
