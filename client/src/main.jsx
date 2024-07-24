@@ -28,6 +28,7 @@ import Products from './pages/shop-manager/Products.jsx';
 import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
+import Finances from './pages/shop-manager/Finances.jsx'
 
 const router = createBrowserRouter([
   // Home-Main Pages
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
       {
         path: 'newproduct',
         element: <NewProduct />
+      },
+      {
+        path: 'finances',
+        element: <Finances />
       },
       {
         path: 'calendar',
