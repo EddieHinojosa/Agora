@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 // import { CiUser } from 'react-icons/ci'
-// import { MdOutlineShoppingBag } from "react-icons/md";
+import { MdOutlineShoppingBag } from "react-icons/md";
 // import { CiShop } from "react-icons/ci";
 
 const Navbar = () => {
@@ -34,10 +34,10 @@ const Navbar = () => {
         <Link to="/login/usersignup" className="text-sm">
           Sign Up
         </Link>
+        <Link to="/cart"><MdOutlineShoppingBag /></Link>
 
         {/* If USER is logged in, navbar changes: */}
         {/* <Link to="/user"><CiUser /></Link> */}
-        {/* <Link to="/cart"><MdOutlineShoppingBag /></Link> */}
 
         {/* If SHOP OWNER is logged in, navbar changes:*/}
         {/* <Link to="/shopmanager"><CiShop /></Link> */}
