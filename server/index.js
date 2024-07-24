@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Update this to match your frontend URL
+    origin: '*', // Update this to match your frontend URL
     credentials: true
 }));
 
