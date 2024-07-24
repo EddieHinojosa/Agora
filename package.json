@@ -21,6 +21,7 @@
   "dependencies": {
     "@netlify/functions": "^2.8.1",
     "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5",
     "mongodb": "^6.8.0"
   }
 }
