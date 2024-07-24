@@ -3,21 +3,20 @@ import { MdUpload, MdDelete } from "react-icons/md";
 import { IoIosAdd } from "react-icons/io";
 import { GrHide } from "react-icons/gr";
 
-
 // This code will probably have to change to sync up to DB - just wrote for table test
 const NewProduct = () => {
   const [rows, setRows] = useState([
     {
       photo: "",
       status: "",
-      size: "",
-      color: "",
-      cost: "",
-      quantity: "",
-      weight: "",
-      length: "",
-      width: "",
-      height: "",
+      size: "S",
+      color: "Pink",
+      cost: "20",
+      quantity: "100",
+      weight: "5",
+      length: "10",
+      width: "15",
+      height: "20",
     },
   ]);
 
@@ -27,14 +26,14 @@ const NewProduct = () => {
       {
         photo: "",
         status: "",
-        size: "",
-        color: "",
-        cost: "",
-        quantity: "",
-        weight: "",
-        length: "",
-        width: "",
-        height: "",
+        size: "S",
+        color: "Green",
+        cost: "20",
+        quantity: "100",
+        weight: "5",
+        length: "10",
+        width: "15",
+        height: "20",
       },
     ]);
   };
@@ -57,25 +56,23 @@ const NewProduct = () => {
   };
 
   const handleCardClick = (index) => {
-    // Input Photo code in here?
+    // Input Photo code in here for possible change to specific uploaded photo?
     console.log("Card clicked", index);
   };
 
-//   End table test code
+  //   End table test code
 
   return (
     <div className="flex flex-col">
       <div className="text-xl font-bold">New Product</div>
       <div className="mt-4 flex space-x-4 w-full">
         <div className="w-1/2 flex flex-col space-y-4">
-       
-         {/* Product Name Area */}
+          {/* Product Name Area */}
           <div>
             <label
               htmlFor="productName"
               className="block text-sm font-medium text-gray-700"
             >
-
               Product Name
             </label>
             <input
@@ -86,14 +83,13 @@ const NewProduct = () => {
               placeholder="Enter product name"
             />
           </div>
-        
-            {/* Product Detail Area */}
+
+          {/* Product Detail Area */}
           <div>
             <label
               htmlFor="productDetails"
               className="block text-sm font-medium text-gray-700"
             >
-
               Product Details
             </label>
             <textarea
@@ -104,15 +100,13 @@ const NewProduct = () => {
             />
           </div>
         </div>
-
-        {/* Product Type Area */}
         <div className="w-1/2 flex flex-col space-y-4">
+          {/* Product Type Area */}
           <div>
             <label
               htmlFor="productType"
               className="block text-sm font-medium text-gray-700"
             >
-
               Product Type
             </label>
             <input
@@ -123,6 +117,8 @@ const NewProduct = () => {
               placeholder="Enter product type"
             />
           </div>
+
+          {/* Physical or Digital */}
           <div className="flex space-x-4">
             <div className="flex mt-5">
               <input
@@ -131,8 +127,6 @@ const NewProduct = () => {
                 name="physicalItem"
                 className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
               />
-
-                {/* Physical or Digital */}
               <label
                 htmlFor="physicalItem"
                 className="ml-2 block text-sm text-gray-700"
@@ -155,8 +149,8 @@ const NewProduct = () => {
               </label>
             </div>
           </div>
-              
-        {/* Item Tags */}
+
+          {/* Item Tags */}
           <div>
             <label
               htmlFor="itemTags"
@@ -172,6 +166,8 @@ const NewProduct = () => {
               placeholder="Enter item tags"
             />
           </div>
+
+          {/* Materials */}
           <div>
             <label
               htmlFor="materials"
@@ -190,7 +186,7 @@ const NewProduct = () => {
         </div>
       </div>
 
-      {/* Image Area */}
+      {/* Devon, Image Area! */}
       <div className="mt-6 text-2xl font-bold">Images</div>
       <div className="mt-4 w-full flex space-x-4">
         <div className="w-1/4">
@@ -217,11 +213,10 @@ const NewProduct = () => {
           <div className="border border-gray-300 rounded-md h-32 w-32"></div>
         </div>
       </div>
-        {/* End Image Area */}
+      {/* End Image Area */}
 
-
-        {/* If time-going to work on incorporating this with modal to input into table below from modal answers -Clarissa */}
-        {/* Multiple Options 
+      {/* If time-going to work on incorporating this with modal to input into table below from modal answers -Clarissa */}
+      {/* Multiple Options 
       <div className="mt-20">
         <span className="block text-sm font-medium text-gray-700">
           Does this come in multiple options?
@@ -258,13 +253,11 @@ const NewProduct = () => {
         </div>
       </div> */}
 
-
-
-      {/* Table Area */}
+        {/* Table Area */}
       <div className="mt-20 overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
 
-            {/* Table Header */}
+          {/* Table Header */}
           <thead className="bg-gray-100">
             <tr className="border">
               <th
@@ -342,9 +335,8 @@ const NewProduct = () => {
               <tr key={index} className={row.hidden ? "hidden" : ""}>
                 <td className="px-6 py-4">
 
-
-                  {/* Devon, feel free to change photo code to fit however you've done it! */}
-                  {/* Photo Row */}
+                  {/* Devon, feel free to change photo code tp fit however you've done it!*/}
+                  {/* Photo Row - has click in case you want to incorporate*/}
                   <div
                     className="w-full p-4 bg-gray-100 shadow rounded cursor-pointer"
                     onClick={() => handleCardClick(index)}
@@ -357,7 +349,7 @@ const NewProduct = () => {
                   </div>
                 </td>
 
-                {/* Status Row Option*/}
+                {/* Status Row Option */}
                 <td className="py-4">
                   <select
                     name="status"
@@ -371,93 +363,17 @@ const NewProduct = () => {
                   </select>
                 </td>
 
-                {/* Size */}
-                <td className="px-6 py-4">
-                  <input
-                    type="text"
-                    name="size"
-                    value={row.size}
-                    onChange={(e) => handleChange(index, e)}
-                    className="w-full"
-                  />
-                </td>
+                {/* Inputed information to go in here - currently hard coded*/}
+                <td className="px-6 py-4">{row.size}</td>
+                <td className="px-6 py-4">{row.color}</td>
+                <td className="px-6 py-4">{row.cost}</td>
+                <td className="px-6 py-4">{row.quantity}</td>
+                <td className="px-6 py-4">{row.weight}</td>
+                <td className="px-6 py-4">{row.length}</td>
+                <td className="px-6 py-4">{row.width}</td>
+                <td className="px-6 py-4">{row.height}</td>
 
-                {/* Color */}
-                <td className="px-6 py-4">
-                  <input
-                    type="text"
-                    name="color"
-                    value={row.color}
-                    onChange={(e) => handleChange(index, e)}
-                    className="w-full"
-                  />
-                </td>
-
-                {/* Cost */}
-                <td className="px-6 py-4">
-                  <input
-                    type="text"
-                    name="cost"
-                    value={row.cost}
-                    onChange={(e) => handleChange(index, e)}
-                    className="w-full"
-                  />
-                </td>
-
-                {/* Quantity */}
-                <td className="px-6 py-4">
-                  <input
-                    type="text"
-                    name="quantity"
-                    value={row.quantity}
-                    onChange={(e) => handleChange(index, e)}
-                    className="w-full"
-                  />
-                </td>
-
-                {/* Weight */}
-                <td className="px-6 py-4">
-                  <input
-                    type="text"
-                    name="weight"
-                    value={row.weight}
-                    onChange={(e) => handleChange(index, e)}
-                    className="w-full"
-                  />
-                </td>
-
-                {/* length */}
-                <td className="px-6 py-4">
-                  <input
-                    type="text"
-                    name="length"
-                    value={row.length}
-                    onChange={(e) => handleChange(index, e)}
-                    className="w-full"
-                  />
-                </td>
-                <td className="px-6 py-4">
-                  <input
-                    type="text"
-                    name="width"
-                    value={row.width}
-                    onChange={(e) => handleChange(index, e)}
-                    className="w-full"
-                  />
-                </td>
-
-                {/* height */}
-                <td className="px-6 py-4">
-                  <input
-                    type="text"
-                    name="height"
-                    value={row.height}
-                    onChange={(e) => handleChange(index, e)}
-                    className="w-full"
-                  />
-                </td>
-
-                {/* Actions */}
+                {/* Sticky Action Buttons */}
                 <td className="px-6 py-4 sticky right-0 bg-gray-100">
                   <div className="flex">
                     <button
@@ -484,9 +400,6 @@ const NewProduct = () => {
             ))}
           </tbody>
         </table>
-        
-        
-        {/* Shipping Section here - Zip code, item size when boxed, etc. */}
       </div>
     </div>
   );
