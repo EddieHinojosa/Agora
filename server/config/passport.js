@@ -7,23 +7,23 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const opts = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET,
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET,
 };
 
 export default (passport) => {
-    passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
-        try {
-            const user = await User.findById(jwt_payload.sub);
-            if (user) {
-                return done(null, user);
-            } else {
-                return done(null, false);
-            }
-        } catch (error) {
-            return done(error, false);
-        }
-    }));
+  passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
+      try {
+          const user = await User.findById(jwt_payload.sub);
+          if (user) {
+              return done(null, user);
+          } else {
+              return done(null, false);
+          }
+      } catch (error) {
+          return done(error, false);
+      }
+  }));
 
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,

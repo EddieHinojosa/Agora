@@ -14,8 +14,10 @@ export const AuthProvider = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             }).then(response => {
+                console.log("Profile response:", response);
                 setUser(response.data.user);
-            }).catch(() => {
+            }).catch(error => {
+                console.error("Error fetching profile:", error);
                 setUser(null);
             });
         }
@@ -31,9 +33,11 @@ export const AuthProvider = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             }).then(response => {
+                console.log("Profile response with token:", response);
                 setUser(response.data.user);
                 window.history.replaceState(null, '', '/'); // Remove the token from the URL
-            }).catch(() => {
+            }).catch(error => {
+                console.error("Error fetching profile with token:", error);
                 setUser(null);
             });
         }
@@ -57,6 +61,8 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
+
+
 
 
 
