@@ -8,10 +8,7 @@ export default defineConfig({
     port: 3001,
     open: true,
   },
-  resolve: {
-    alias: {
-      '@': '/src',
-    },
+  build: {
+    outDir: 'dist',
   },
 });
-
