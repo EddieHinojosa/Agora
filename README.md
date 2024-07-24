@@ -76,7 +76,7 @@
 <div align="center">
 
 <!-- add project logo -->
-<img width="922" alt="Agora Logo goes here..." src=" insert logo source " style="width:300px; height:auto;">
+<img width="922" alt="Agora Logo goes here..." src=" insert logo source... " style="width:300px; height:auto;">
 </div>
 
 
