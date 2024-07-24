@@ -4,22 +4,27 @@ const AddressSchema = new mongoose.Schema({
     street: {
         type: String,
         required: true,
+        default: ''  // Default value for street
     },
     city: {
         type: String,
         required: true,
+        default: ''  // Default value for city
     },
     state: {
         type: String,
         required: true,
+        default: ''  // Default value for state
     },
     zip: {
         type: String,
         required: true,
+        default: ''  // Default value for zip
     },
     country: {
         type: String,
         required: true,
+        default: ''  // Default value for country
     },
 });
 

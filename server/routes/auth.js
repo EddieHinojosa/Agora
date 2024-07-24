@@ -1,8 +1,8 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import User from '../models/User.js';
-import jwt from 'jsonwebtoken';
 import passport from 'passport';
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
 const router = express.Router();
 
@@ -61,40 +61,76 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-      if (err) return next(err);
-      if (!user) return res.status(400).json({ message: info.message });
 
-      req.login(user, { session: false }, (err) => {
-          if (err) return next(err);
-          const token = generateToken(user);
-          res.json({ message: 'Login successful', token, user });
-      });
-  })(req, res, next);
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) return next(err);
+        if (!user) return res.status(400).json({ message: info.message });
+
+        req.login(user, { session: false }, (err) => {
+            if (err) return next(err);
+            const token = generateToken(user);
+            res.json({ message: 'Login successful', token, user });
+        });
+    })(req, res, next);
 });
 
 router.get('/profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  try {
-      const user = await User.findById(req.user.id).select('-password');
-      if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-      }
-      res.json({ user });
-  } catch (error) {
-      res.status(500).json({ message: error.message });
-  }
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 // Google OAuth Routes
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  const token = generateToken(req.user);
-  res.redirect(`http://localhost:3001?token=${token}`);
+    const token = generateToken(req.user);
+    res.redirect(`http://localhost:3001/complete-profile?token=${token}`);
+});
+
+router.post('/update-profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const { billingStreetAddress, billingZipcode, billingCity, billingState, billingCountry, mailingStreetAddress, mailingZipcode, mailingCity, mailingState, mailingCountry } = req.body;
+
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.billingAddress = {
+            street: billingStreetAddress,
+            city: billingCity,
+            state: billingState,
+            zip: billingZipcode,
+            country: billingCountry,
+        };
+
+        user.mailingAddress = {
+            street: mailingStreetAddress,
+            city: mailingCity,
+            state: mailingState,
+            zip: mailingZipcode,
+            country: mailingCountry,
+        };
+
+        await user.save();
+        res.json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 export default router;
+
+
+
 
 
 
