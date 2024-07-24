@@ -3,7 +3,6 @@ import { MdUpload, MdDelete } from "react-icons/md";
 import { IoIosAdd } from "react-icons/io";
 import { GrHide } from "react-icons/gr";
 
-// This code will probably have to change to sync up to DB - just wrote for table test
 const NewProduct = () => {
   const [rows, setRows] = useState([
     {
@@ -19,6 +18,8 @@ const NewProduct = () => {
       height: "20",
     },
   ]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const addRow = () => {
     setRows([
@@ -56,11 +57,16 @@ const NewProduct = () => {
   };
 
   const handleCardClick = (index) => {
-    // Input Photo code in here for possible change to specific uploaded photo?
     console.log("Card clicked", index);
   };
 
-  //   End table test code
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="flex flex-col">
@@ -215,9 +221,86 @@ const NewProduct = () => {
       </div>
       {/* End Image Area */}
 
-      {/* If time-going to work on incorporating this with modal to input into table below from modal answers -Clarissa */}
-      {/* Multiple Options 
-      <div className="mt-20">
+      <div>
+        <label
+          htmlFor="price"
+          className="mt-14 block text-sm font-medium text-gray-700"
+        >
+          Price
+        </label>
+        <div className="relative mt-1">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <span className="text-gray-500 sm:text-sm">$</span>
+          </div>
+          <input
+            type="text"
+            id="price"
+            name="Price"
+            className="p-2 block w-1/4 pl-7 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="0.00"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label
+          htmlFor="quantity"
+          className="mt-6 block text-sm font-medium text-gray-700"
+        >
+          Quantity
+        </label>
+        <input
+          type="text"
+          id="quantity"
+          name="quantity"
+          className="mt-1 p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder=""
+        />
+      </div>
+
+      {/* Options Button */}
+      <div className="mt-6">
+        <button
+          onClick={handleModalOpen}
+          className="py-2 px-4 w-1/4 bg-black text-white rounded-md hover:bg-gray-300"
+        >
+          Options
+        </button>
+      </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-md p-6 w-96">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">Options</h2>
+              <button
+                onClick={handleModalClose}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                &times;
+              </button>
+            </div>
+            <div>
+
+              {/* Modal Content */}
+              <p>blah blah blah</p>
+            </div>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={handleModalClose}
+                className="py-2 px-4 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Trying this with button instead, will revert back to this if button doesn't work -Clarissa */}
+      {/* Multiple Options  */}
+      {/* <div className="mt-20">
         <span className="block text-sm font-medium text-gray-700">
           Does this come in multiple options?
         </span>
@@ -253,10 +336,9 @@ const NewProduct = () => {
         </div>
       </div> */}
 
-        {/* Table Area */}
+      {/* Table Area */}
       <div className="mt-20 overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-
           {/* Table Header */}
           <thead className="bg-gray-100">
             <tr className="border">
@@ -334,9 +416,6 @@ const NewProduct = () => {
             {rows.map((row, index) => (
               <tr key={index} className={row.hidden ? "hidden" : ""}>
                 <td className="px-6 py-4">
-
-                  {/* Devon, feel free to change photo code tp fit however you've done it!*/}
-                  {/* Photo Row - has click in case you want to incorporate*/}
                   <div
                     className="w-full p-4 bg-gray-100 shadow rounded cursor-pointer"
                     onClick={() => handleCardClick(index)}
@@ -349,7 +428,6 @@ const NewProduct = () => {
                   </div>
                 </td>
 
-                {/* Status Row Option */}
                 <td className="py-4">
                   <select
                     name="status"
@@ -363,7 +441,6 @@ const NewProduct = () => {
                   </select>
                 </td>
 
-                {/* Inputed information to go in here - currently hard coded*/}
                 <td className="px-6 py-4">{row.size}</td>
                 <td className="px-6 py-4">{row.color}</td>
                 <td className="px-6 py-4">{row.cost}</td>
@@ -373,7 +450,6 @@ const NewProduct = () => {
                 <td className="px-6 py-4">{row.width}</td>
                 <td className="px-6 py-4">{row.height}</td>
 
-                {/* Sticky Action Buttons */}
                 <td className="px-6 py-4 sticky right-0 bg-gray-100">
                   <div className="flex">
                     <button
@@ -406,3 +482,4 @@ const NewProduct = () => {
 };
 
 export default NewProduct;
+
