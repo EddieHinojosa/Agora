@@ -12,13 +12,14 @@
   },
   "keywords": [],
   "author": [
-    "Eddie Hinojosa", 
+    "Eddie Hinojosa",
     "Alex Happel",
     "Devon Ross",
     "Clarissa Mobley"
   ],
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5"
   }
 }
