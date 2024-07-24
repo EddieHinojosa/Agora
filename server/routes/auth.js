@@ -15,22 +15,58 @@ const generateToken = (user) => {
 };
 
 router.post('/register', async (req, res) => {
-    const { firstName, lastName, email, billingAddress, mailingAddress, username, password, shopName } = req.body;
-    
+    const {
+        firstName,
+        lastName,
+        email,
+        billingStreetAddress,
+        billingZipcode,
+        billingCity,
+        billingState,
+        billingCountry,
+        mailingStreetAddress,
+        mailingZipcode,
+        mailingCity,
+        mailingState,
+        mailingCountry,
+        username,
+        password,
+        confirmPassword,
+        shopName
+    } = req.body;
+
     try {
         let user = await User.findOne({ username });
         if (user) {
             return res.status(400).json({ message: 'Username already exists' });
         }
 
+        if (password !== confirmPassword) {
+            return res.status(400).json({ message: 'Passwords do not match' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         user = new User({
             firstName,
             lastName,
             email,
-            billingAddress,
-            mailingAddress,
+            billingAddress: {
+                streetAddress: billingStreetAddress,
+                zipcode: billingZipcode,
+                city: billingCity,
+                state: billingState,
+                country: billingCountry
+            },
+            mailingAddress: {
+                streetAddress: mailingStreetAddress,
+                zipcode: mailingZipcode,
+                city: mailingCity,
+                state: mailingState,
+                country: mailingCountry
+            },
             username,
-            password: password ? await bcrypt.hash(password, 10) : undefined,
+            password: hashedPassword, // Store hashed password
             shopName,
         });
 
@@ -72,3 +108,6 @@ router.get('/protected', passport.authenticate('jwt', { session: false }), (req,
 });
 
 export default router;
+
+
+
