@@ -22,6 +22,10 @@ const schema = yup.object().shape({
     mailingState: yup.string().required('Mailing State is required'),
     mailingCountry: yup.string().required('Mailing Country is required'),
     username: yup.string().required('Username is required'),
+    password: yup.string().required('Password is required'),
+    confirmPassword: yup.string()
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm Password is required'), // Confirm password field added
     shopName: yup.string(),
 });
 
@@ -35,11 +39,15 @@ const UserSignup = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post('/api/register', data);
+            const response = await axios.post('http://localhost:5000/api/register', data); // Ensure the URL is correct
             localStorage.setItem('token', response.data.token);
             alert('Registration successful');
         } catch (error) {
-            alert('Registration failed: ' + error.response.data.message);
+            if (error.response) {
+                alert('Registration failed: ' + error.response.data.message);
+            } else {
+                alert('Registration failed: ' + error.message);
+            }
         }
     };
 
@@ -77,6 +85,8 @@ const UserSignup = () => {
                 <SelectField label="Mailing Country" name="mailingCountry" register={register} errors={errors} options={countries} />
                 
                 <FormField label="Username" name="username" register={register} errors={errors} />
+                <FormField label="Password" name="password" type="password" register={register} errors={errors} /> {/* Password field added */}
+                <FormField label="Confirm Password" name="confirmPassword" type="password" register={register} errors={errors} /> {/* Confirm password field added */}
                 <FormField label="Shop Name (Optional)" name="shopName" register={register} errors={errors} />
                 
                 <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Register</button>
@@ -87,3 +97,5 @@ const UserSignup = () => {
 };
 
 export default UserSignup;
+
+

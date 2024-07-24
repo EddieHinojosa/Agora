@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const schema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -14,19 +14,25 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post('/api/login', data);
+            const response = await axios.post('http://localhost:5000/api/login', data);
             localStorage.setItem('token', response.data.token);
             alert('Login successful');
+            navigate('/'); // Redirect to home page upon successful login
         } catch (error) {
-            alert('Login failed: ' + error.response.data.message);
+            if (error.response) {
+                alert('Login failed: ' + error.response.data.message);
+            } else {
+                alert('Login failed: ' + error.message);
+            }
         }
     };
 
     const handleGoogleLogin = () => {
-        window.location.href = '/api/auth/google';
+        window.location.href = 'http://localhost:5000/api/auth/google';
     };
 
     return (
