@@ -12,13 +12,14 @@
   },
   "keywords": [],
   "contributors": [
-    "Eddie Hinojosa", 
+    "Eddie Hinojosa",
     "Alex Happel",
     "Devon Ross",
     "Clarissa Mobley"
   ],
   "license": "ISC",
   "dependencies": {
+    "@netlify/functions": "^2.8.1",
     "concurrently": "^8.2.2"
   }
 }
