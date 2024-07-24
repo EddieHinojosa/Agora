@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "@netlify/functions": "^2.8.1",
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "mongodb": "^6.8.0"
   }
 }
