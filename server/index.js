@@ -16,8 +16,8 @@ const PORT = process.env.PORT || 5000;
 
 // Enable CORS
 app.use(cors({
-  origin: 'http://localhost:3001',
-  credentials: true,
+    origin: '*', // Update this to match your frontend URL
+    credentials: true
 }));
 
 // Parse JSON

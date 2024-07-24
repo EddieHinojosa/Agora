@@ -8,6 +8,7 @@ const ShopSidebar = () => {
                 <Link to='/shopmanager/orders' className='hover:underline'>Orders</Link>
                 <Link to='/shopmanager/messages' className='hover:underline'>Messages</Link>
                 <Link to='/shopmanager/products' className='hover:underline'>Products</Link>
+                <Link to='/shopmanager/finances' className='hover:underline'>Finances</Link>
                 <Link to='/shopmanager/calendar' className='hover:underline'>Calendar</Link>
                 <Link to='/shopmanager/settings' className='hover:underline'>Settings</Link>
             </div>
