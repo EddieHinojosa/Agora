@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import passport from 'passport';
 import session from 'express-session';
-import './config/passport.js'; // Importing passport configuration
+import './config/passport.js';
 
 dotenv.config();
 
@@ -13,7 +13,11 @@ const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://agora-7wwm.onrender.com', //'http://localhost:3001', // Update this to match your frontend URL
+    credentials: true
+}));
+
 app.use(express.json());
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 
@@ -24,3 +28,4 @@ import authRoutes from './routes/auth.js';
 app.use('/api', authRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
