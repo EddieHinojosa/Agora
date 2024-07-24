@@ -1,31 +1,69 @@
-import express from 'express';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import cors from 'cors';
-import passport from 'passport';
-import session from 'express-session';
-import './config/passport.js';
-
 dotenv.config();
+
+import express from 'express';
+import passport from 'passport';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import session from 'express-session';
+import helmet from 'helmet';
+import passportConfig from './config/passport.js';
+import authRoutes from './routes/auth.js';
+import shopRoutes from './routes/shop.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
+// Enable CORS
 app.use(cors({
-    origin: 'http://localhost:3001', // Update this to match your frontend URL
-    credentials: true
+  origin: 'http://localhost:3001',
+  credentials: true,
 }));
 
+// Parse JSON
 app.use(express.json());
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 
+// Content Security Policy
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://apis.google.com"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https://*.google.com"],
+      connectSrc: ["'self'", "https://accounts.google.com"],
+      frameSrc: ["'self'", "https://accounts.google.com"],
+    },
+  })
+);
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error(err));
+
+// Session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+  }
+}));
+
+// Initialize Passport and session
+passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-import authRoutes from './routes/auth.js';
+// Routes
 app.use('/api', authRoutes);
+app.use('/api/shop', shopRoutes);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 

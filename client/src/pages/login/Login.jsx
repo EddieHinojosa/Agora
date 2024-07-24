@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 
 const schema = yup.object().shape({
     email: yup.string().email('Invalid email').required('Email is required'),
@@ -14,14 +15,17 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
             const response = await axios.post('http://localhost:5000/api/login', data);
-            localStorage.setItem('token', response.data.token);
+            const userData = response.data.user;
+            const token = response.data.token;
+            login({ ...userData, token });
             alert('Login successful');
-            navigate('/'); // Redirect to home page upon successful login
+            navigate('/');
         } catch (error) {
             if (error.response) {
                 alert('Login failed: ' + error.response.data.message);
@@ -58,3 +62,6 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
