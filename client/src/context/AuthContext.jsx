@@ -7,39 +7,32 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            axios.get('http://localhost:5000/api/profile', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(response => {
-                console.log("Profile response:", response);
+        const fetchProfile = async (token) => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/profile', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 setUser(response.data.user);
-            }).catch(error => {
+                console.log('Profile response:', response);
+            } catch (error) {
                 console.error("Error fetching profile:", error);
                 setUser(null);
-            });
-        }
-    }, []);
+            }
+        };
 
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
+        const token = localStorage.getItem('token');
         if (token) {
-            localStorage.setItem('token', token);
-            axios.get('http://localhost:5000/api/profile', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(response => {
-                console.log("Profile response with token:", response);
-                setUser(response.data.user);
-                window.history.replaceState(null, '', '/'); // Remove the token from the URL
-            }).catch(error => {
-                console.error("Error fetching profile with token:", error);
-                setUser(null);
-            });
+            fetchProfile(token);
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenFromUrl = urlParams.get('token');
+        if (tokenFromUrl) {
+            localStorage.setItem('token', tokenFromUrl);
+            fetchProfile(tokenFromUrl);
+            window.history.replaceState(null, '', '/'); // Remove the token from the URL
         }
     }, []);
 
@@ -53,14 +46,20 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
     };
 
+    const updateProfile = (updatedUserData) => {
+        setUser(updatedUserData);
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout, updateProfile }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
 export default AuthContext;
+
+
 
 
 

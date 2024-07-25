@@ -15,6 +15,7 @@ import Home from './pages/Home.jsx';
 import User from './pages/User.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx'
+import UpdateProfile from './pages/UpdateProfile.jsx';
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
@@ -23,7 +24,6 @@ import UserSignup from './pages/login/UserSignup.jsx';
 
 // Shop Manager Pages
 import ShopManager from './pages/shop-manager/ShopManager.jsx';
-import ShopHome from './pages/shop-manager/ShopHome.jsx';
 import Orders from './pages/shop-manager/Orders.jsx';
 import Messages from './pages/shop-manager/Messages.jsx';
 import Products from './pages/shop-manager/Products.jsx';
@@ -59,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: 'checkout',
         element: <Checkout />
+      },
+      {
+        path: 'update-profile',
+        element: <UpdateProfile />
       }
     ]
   },
@@ -93,10 +97,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <ShopManager />
-      },
-      {
-        path: 'shophome',
-        element: <ShopHome />
       },
       {
         path: 'orders',
