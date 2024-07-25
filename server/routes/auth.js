@@ -15,65 +15,49 @@ const generateToken = (user) => {
 };
 
 router.post('/register', async (req, res) => {
-    const {
-        firstName,
-        lastName,
-        email,
-        billingStreetAddress,
-        billingZipcode,
-        billingCity,
-        billingState,
-        billingCountry,
-        mailingStreetAddress,
-        mailingZipcode,
-        mailingCity,
-        mailingState,
-        mailingCountry,
-        username,
-        password,
-        confirmPassword,
-        shopName
-    } = req.body;
+    const { firstName, lastName, email, username, password, billingStreetAddress, billingZipcode, billingCity, billingState, billingCountry, mailingStreetAddress, mailingZipcode, mailingCity, mailingState, mailingCountry, shopName } = req.body;
 
     try {
-        let user = await User.findOne({ username });
-        if (user) {
-            return res.status(400).json({ message: 'Username already exists' });
-        }
+        let user = await User.findOne({ email });
+        if (user) return res.status(400).json({ message: 'Email already exists' });
 
-        if (password !== confirmPassword) {
-            return res.status(400).json({ message: 'Passwords do not match' });
-        }
+        user = await User.findOne({ username });
+        if (user) return res.status(400).json({ message: 'Username already exists' });
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const isGmail = email.endsWith('@gmail.com');
 
         user = new User({
             firstName,
             lastName,
             email,
+            username,
+            password: hashedPassword,
             billingAddress: {
-                streetAddress: billingStreetAddress,
-                zipcode: billingZipcode,
+                street: billingStreetAddress,
                 city: billingCity,
                 state: billingState,
-                country: billingCountry
+                zip: billingZipcode,
+                country: billingCountry,
             },
             mailingAddress: {
-                streetAddress: mailingStreetAddress,
-                zipcode: mailingZipcode,
+                street: mailingStreetAddress,
                 city: mailingCity,
                 state: mailingState,
-                country: mailingCountry
+                zip: mailingZipcode,
+                country: mailingCountry,
             },
-            username,
-            password: hashedPassword, // Store hashed password
             shopName,
+            isGmail
         });
 
         await user.save();
         const token = generateToken(user);
-        res.status(201).json({ message: 'User registered successfully', token });
+        res.json({ message: 'Registration successful', token });
     } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'Duplicate field value entered' });
+        }
         res.status(500).json({ message: error.message });
     }
 });
@@ -86,28 +70,79 @@ router.post('/login', (req, res, next) => {
         req.login(user, { session: false }, (err) => {
             if (err) return next(err);
             const token = generateToken(user);
-            res.json({ message: 'Login successful', token });
+            res.json({ message: 'Login successful', token, user });
         });
     })(req, res, next);
 });
 
-router.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-
-router.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/' }),
-    (req, res) => {
-        const token = generateToken(req.user);
-        res.redirect(`/?token=${token}`);
+router.get('/profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-);
+});
 
-router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.json({ message: 'This is a protected route', user: req.user });
+// Google OAuth Routes
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+    const token = generateToken(req.user);
+    res.redirect(`http://localhost:3001/complete-profile?token=${token}`);
+});
+
+router.post('/update-profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const { billingStreetAddress, billingZipcode, billingCity, billingState, billingCountry, mailingStreetAddress, mailingZipcode, mailingCity, mailingState, mailingCountry } = req.body;
+
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.billingAddress = {
+            street: billingStreetAddress,
+            city: billingCity,
+            state: billingState,
+            zip: billingZipcode,
+            country: billingCountry,
+        };
+
+        user.mailingAddress = {
+            street: mailingStreetAddress,
+            city: mailingCity,
+            state: mailingState,
+            zip: mailingZipcode,
+            country: mailingCountry,
+        };
+
+        await user.save();
+        res.json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 export default router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

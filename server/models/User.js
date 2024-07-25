@@ -1,26 +1,86 @@
 import mongoose from 'mongoose';
 
-const addressSchema = new mongoose.Schema({
-    streetAddress: { type: String, required: true },
-    zipcode: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    country: { type: String, required: true },
+const AddressSchema = new mongoose.Schema({
+    street: {
+        type: String,
+        required: true,
+        default: ''  // Default value for street
+    },
+    city: {
+        type: String,
+        required: true,
+        default: ''  // Default value for city
+    },
+    state: {
+        type: String,
+        required: true,
+        default: ''  // Default value for state
+    },
+    zip: {
+        type: String,
+        required: true,
+        default: ''  // Default value for zip
+    },
+    country: {
+        type: String,
+        required: true,
+        default: ''  // Default value for country
+    },
 });
 
-const userSchema = new mongoose.Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    billingAddress: { type: addressSchema, required: true },
-    mailingAddress: { type: addressSchema, required: true },
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, // Password field added
-    googleId: { type: String },
-    shopName: { type: String },
+const UserSchema = new mongoose.Schema({
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    username: {
+        type: String,
+        required: function() { return !this.googleId; },
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: function() { return !this.googleId; },
+    },
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true,
+    },
+    billingAddress: {
+        type: AddressSchema,
+        required: true,
+    },
+    mailingAddress: {
+        type: AddressSchema,
+        required: true,
+    },
+    shopName: {
+        type: String,
+    },
+    isGmail: {
+        type: Boolean,
+        default: false,
+    }
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', UserSchema);
 
 export default User;
+
+
+
+
+
+
+
 

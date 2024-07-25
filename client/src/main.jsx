@@ -5,6 +5,7 @@ import App from './App.jsx';
 import LoginApp from './LoginApp.jsx';
 import ShopApp from './ShopApp.jsx';
 import './index.css';
+import { AuthProvider } from './context/AuthContext.jsx';
 
 // Error page
 import Error from './pages/Error.jsx';
@@ -131,8 +132,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
-
 
