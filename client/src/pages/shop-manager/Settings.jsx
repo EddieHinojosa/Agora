@@ -38,7 +38,7 @@ const Settings = () => {
                     file:rounded-full file:border-0
                     file:text-sm file:font-semibold
                     file:bg-gray-300 file:text-black
-                    hover:file:bg-blue-100"
+                    hover:file:bg-gray-300"
                 />
                 {shopPhoto && <img src={shopPhoto} alt="Shop" className="mt-4 w-32 h-32 object-cover rounded" />}
             </div>
@@ -56,7 +56,7 @@ const Settings = () => {
                     file:rounded-full file:border-0
                     file:text-sm file:font-semibold
                     file:bg-gray-300 file:text-black
-                    hover:file:bg-blue-100"
+                    hover:file:bg-gray-300"
                 />
                 {bannerPhoto && <img src={bannerPhoto} alt="Banner" className="mt-4 w-full h-32 object-cover rounded" />}
             </div>
