@@ -5,7 +5,7 @@ import Footer from './components/Footer';
 
 function ShopApp() {
     return (
-        <div className='flex flex-col h-screen'>
+        <div className='flex flex-col min-h-screen'>
             <ShopNavbar />
             <div className='flex flex-1'>
                 <ShopSidebar />
