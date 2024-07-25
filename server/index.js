@@ -9,8 +9,8 @@ import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 
-const {google} = require('googleapis');
-const oauth2Client = new google.auth.OAuth2(process.env.CLIENT_ID, process.env.SECRET)
+// const {google} = require('googleapis');
+// const oauth2Client = new google.auth.OAuth2(process.env.CLIENT_ID, process.env.SECRET)
 
 dotenv.config();
 
@@ -42,7 +42,13 @@ app.use(
 );
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
+const mongoUri = process.env.MONGO_URI;
+if (!mongoUri) {
+    console.error('MONGO_URI is not defined in the environment variables');
+    process.exit(1);
+}
+
+mongoose.connect(mongoUri)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error(err));
 
