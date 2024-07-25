@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MdUpload, MdDelete } from "react-icons/md";
+import { MdUpload, MdDelete, MdEdit, MdSave } from "react-icons/md";
 import { IoIosAdd } from "react-icons/io";
 // import { GrHide } from "react-icons/gr";
 import { Link } from 'react-router-dom'
@@ -47,7 +47,11 @@ const NewProduct = () => {
 
   const handleChange = (index, event) => {
     const updatedRows = [...rows];
-    updatedRows[index][event.target.name] = event.target.value;
+    const { name, value } = event.target;
+    updatedRows[index] = {
+      ...updatedRows[index],
+      [name]: value
+    };
     setRows(updatedRows);
   };
 
@@ -65,6 +69,16 @@ const NewProduct = () => {
   const handleCardClick = (index) => {
     // Devon, Input Photo code in here for possible change to specific uploaded photo?
     console.log("Card clicked", index);
+  };
+
+  const toggleEdit = (index) => {
+    const updatedRows = [...rows];
+    updatedRows[index].isEditing = !updatedRows[index].isEditing;
+    setRows(updatedRows);
+  };
+
+  const saveChanges = (index) => {
+    toggleEdit(index);
   };
 
   //   End table test code
@@ -728,15 +742,15 @@ const NewProduct = () => {
                   <option value="sold out">Sold Out</option>
                 </select>
               </td>
-              <td className="px-6 py-4">{row.size}</td>
-              <td className="px-6 py-4">{row.color}</td>
-              <td className="px-6 py-4">{row.cost}</td>
-              <td className="px-6 py-4">{row.quantity}</td>
-              <td className="px-6 py-4">{row.material}</td>
-              <td className="px-6 py-4">{row.weight}</td>
-              <td className="px-6 py-4">{row.length}</td>
-              <td className="px-6 py-4">{row.width}</td>
-              <td className="px-6 py-4">{row.height}</td>
+              <td className="px-6 py-4">{row.isEditing ? <input name="size" className='border border-gray-300 p-1' value={row.size} onChange={(e) => handleChange(index, e)} /> : row.size}</td>
+              <td className="px-6 py-4">{row.isEditing ? <input name="color" className='border border-gray-300 p-1' value={row.color} onChange={(e) => handleChange(index, e)} /> : row.color}</td>
+              <td className="px-6 py-4">{row.isEditing ? <input name="cost" className='border border-gray-300 p-1'value={row.cost} onChange={(e) => handleChange(index, e)} /> : row.cost}</td>
+              <td className="px-6 py-4">{row.isEditing ? <input name="quantity" className='border border-gray-300 p-1' value={row.quantity} onChange={(e) => handleChange(index, e)} /> : row.quantity}</td>
+              <td className="px-6 py-4">{row.isEditing ? <input name="material" className='border border-gray-300 p-1' value={row.material} onChange={(e) => handleChange(index, e)} /> : row.material}</td>
+              <td className="px-6 py-4">{row.isEditing ? <input name="weight" className='border border-gray-300 p-1' value={row.weight} onChange={(e) => handleChange(index, e)} /> : row.weight}</td>
+              <td className="px-6 py-4">{row.isEditing ? <input name="length" className='border border-gray-300 p-1' value={row.length} onChange={(e) => handleChange(index, e)} /> : row.length}</td>
+              <td className="px-6 py-4">{row.isEditing ? <input name="width" className='border border-gray-300 p-1' value={row.width} onChange={(e) => handleChange(index, e)} /> : row.width}</td>
+              <td className="px-6 py-4">{row.isEditing ? <input name="height" className='border border-gray-300 p-1' value={row.height} onChange={(e) => handleChange(index, e)} /> : row.height}</td>
               <td className="px-6 py-4 sticky right-0 bg-gray-100">
                 <div className="flex">
                   {/* <button
@@ -745,6 +759,17 @@ const NewProduct = () => {
                   >
                     <GrHide />
                   </button> */}
+
+                  {/* Incorporating  edit/save function*/}
+                  {row.isEditing ? (
+                    <button onClick={() => saveChanges(index)} className="px-4 py-2 rounded hover:bg-gray-300">
+                      <MdSave />
+                    </button>
+                  ) : (
+                    <button onClick={() => toggleEdit(index)} className="px-4 py-2 rounded hover:bg-gray-300">
+                      <MdEdit />
+                    </button>
+                  )}
                   <button
                     onClick={() => handleDelete(index)}
                     className="px-4 py-2 rounded hover:bg-gray-300"
@@ -781,13 +806,13 @@ const NewProduct = () => {
   );
 
   const steps = [
-    <ProductInfo />,
-    <ProductType />,
-    <ProductImages />,
-    <ProductPricing />,
-    <ProductOptions />,
-    <ProductDimensions />,
-    <ProductTable />
+    <ProductInfo key="productInfo" />,
+    <ProductType key="productType" />,
+    <ProductImages key="productImages" />,
+    <ProductPricing key="productPricing" />,
+    <ProductOptions key="productOptions" />,
+    <ProductDimensions key="productDimensions" />,
+    <ProductTable key="productTable" />
   ];
 
   return (
