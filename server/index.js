@@ -9,8 +9,8 @@ import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 
-const {google} = require('googleapis');
-const oauth2Client = new google.auth.OAuth2(process.env.CLIENT_ID, process.env.SECRET)
+// const {google} = require('googleapis');
+// const oauth2Client = new google.auth.OAuth2(process.env.CLIENT_ID, process.env.SECRET)
 
 dotenv.config();
 
