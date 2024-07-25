@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,12 +18,30 @@ const Login = () => {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        if (token) {
+            localStorage.setItem('token', token);
+            axios.get('http://localhost:5000/api/profile', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(response => {
+                login(response.data.user);
+                navigate('/');
+            }).catch(error => {
+                console.error("Error fetching profile:", error);
+            });
+        }
+    }, [login, navigate]);
+
     const onSubmit = async (data) => {
         try {
             const response = await axios.post('http://localhost:5000/api/login', data);
-            const userData = response.data.user;
-            const token = response.data.token;
-            login({ ...userData, token });
+            const { token, user } = response.data;
+            localStorage.setItem('token', token);
+            login(user);
             alert('Login successful');
             navigate('/');
         } catch (error) {

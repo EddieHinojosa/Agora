@@ -42,7 +42,13 @@ app.use(
 );
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
+const mongoUri = process.env.MONGO_URI;
+if (!mongoUri) {
+    console.error('MONGO_URI is not defined in the environment variables');
+    process.exit(1);
+}
+
+mongoose.connect(mongoUri)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error(err));
 

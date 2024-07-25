@@ -15,6 +15,7 @@ import Home from './pages/Home.jsx';
 import User from './pages/User.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx'
+import UpdateProfile from './pages/UpdateProfile.jsx';
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: 'checkout',
         element: <Checkout />
+      },
+      {
+        path: 'update-profile',
+        element: <UpdateProfile />
       }
     ]
   },

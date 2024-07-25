@@ -92,42 +92,45 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
     const token = generateToken(req.user);
-    res.redirect(`http://localhost:3001/complete-profile?token=${token}`);
+    res.redirect(`http://localhost:3001?token=${token}`);
 });
 
 router.post('/update-profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const { billingStreetAddress, billingZipcode, billingCity, billingState, billingCountry, mailingStreetAddress, mailingZipcode, mailingCity, mailingState, mailingCountry } = req.body;
-
     try {
         const user = await User.findById(req.user.id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        // Update user fields
+        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        user.email = req.body.email;
         user.billingAddress = {
-            street: billingStreetAddress,
-            city: billingCity,
-            state: billingState,
-            zip: billingZipcode,
-            country: billingCountry,
+            street: req.body.billingStreetAddress,
+            city: req.body.billingCity,
+            state: req.body.billingState,
+            zip: req.body.billingZipcode,
+            country: req.body.billingCountry,
         };
-
         user.mailingAddress = {
-            street: mailingStreetAddress,
-            city: mailingCity,
-            state: mailingState,
-            zip: mailingZipcode,
-            country: mailingCountry,
+            street: req.body.mailingStreetAddress,
+            city: req.body.mailingCity,
+            state: req.body.mailingState,
+            zip: req.body.mailingZipcode,
+            country: req.body.mailingCountry,
         };
+        user.shopName = req.body.shopName;
 
         await user.save();
-        res.json({ message: 'Profile updated successfully' });
+        res.json({ message: 'Profile updated successfully', user });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
 export default router;
+
 
 
 
