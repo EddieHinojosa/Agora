@@ -13,6 +13,7 @@ import Error from './pages/Error.jsx';
 import Home from './pages/Home.jsx';
 import User from './pages/User.jsx';
 import Cart from './pages/Cart.jsx';
+import Checkout from './pages/Checkout.jsx'
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
@@ -29,6 +30,7 @@ import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx'
+
 
 const router = createBrowserRouter([
   // Home-Main Pages
@@ -52,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: 'cart',
         element: <Cart />
+      },
+      {
+        path: 'checkout',
+        element: <Checkout />
       }
     ]
   },
