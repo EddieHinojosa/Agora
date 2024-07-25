@@ -24,7 +24,6 @@ import UserSignup from './pages/login/UserSignup.jsx';
 
 // Shop Manager Pages
 import ShopManager from './pages/shop-manager/ShopManager.jsx';
-import ShopHome from './pages/shop-manager/ShopHome.jsx';
 import Orders from './pages/shop-manager/Orders.jsx';
 import Messages from './pages/shop-manager/Messages.jsx';
 import Products from './pages/shop-manager/Products.jsx';
@@ -98,10 +97,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <ShopManager />
-      },
-      {
-        path: 'shophome',
-        element: <ShopHome />
       },
       {
         path: 'orders',

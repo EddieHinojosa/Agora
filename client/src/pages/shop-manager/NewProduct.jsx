@@ -648,7 +648,7 @@ const NewProduct = () => {
     const [state, setState] = useState('');
     const [zip, setZip] = useState('');
     const [addresses, setAddresses] = useState([
-      
+
       // Hard Coded for now.
       '123 Main, Atlanta, GA 12345',
       '456 Marty St, Atlanta, GA, 12345',
@@ -806,14 +806,14 @@ const NewProduct = () => {
         </div>
   
         <div>
-          <label htmlFor="packedHeight" className="mt-4 block text-sm font-medium text-gray-700">
+          <label htmlFor="processingTime" className="mt-4 block text-sm font-medium text-gray-700">
             Packed Height
           </label>
           <div className="flex items-center mt-1">
             <input
               type="text"
-              id="packedHeight"
-              name="packedHeight"
+              id="processingTime"
+              name="processingTime"
               className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder=""
             />
@@ -823,6 +823,21 @@ const NewProduct = () => {
               <option value="mm">mm</option>
               <option value="ft">ft</option>
             </select>
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="packedHeight" className="mt-4 block text-sm font-medium text-gray-700">
+            Processing Time
+          </label>
+          <div className="flex items-center mt-1">
+            <input
+              type="text"
+              id="processingTime"
+              name="processingTime"
+              className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder=""
+            />
           </div>
         </div>
   

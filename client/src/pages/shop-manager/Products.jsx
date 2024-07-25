@@ -22,9 +22,9 @@ const Products = () => {
                 <div className="w-full flex p-1 space-x-4 items-center">
                     <button className="p-2 hover:underline border border-gray-300 rounded-md">Sort A-Z</button>
                     <div className="relative flex-grow">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                            <IoMdSearch className="text-gray-500" />
-                        </span>
+                        <button className="absolute inset-y-0 left-0 flex items-center pl-2">
+                            <IoMdSearch className="text-gray-500 hover:text-black" />
+                        </button>
                         <input
                             type="text"
                             className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
