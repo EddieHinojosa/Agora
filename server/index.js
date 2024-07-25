@@ -67,10 +67,6 @@ app.use('/api/shop', shopRoutes);
 
 
 
-
-
-
-
 //-----------------eddie calendar stuff in process-----------------
 // // Import the googleapis library
 // import { google } from 'googleapis';
