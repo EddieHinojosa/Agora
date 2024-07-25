@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 // Enable CORS
 app.use(cors({
-    origin: '*', // Replace with your frontend URL
+    origin: 'http://localhost:3001', // Replace with your frontend URL
     credentials: true
 }));
 
@@ -133,6 +133,7 @@ app.use('/api/shop', shopRoutes);
 // });
 
 // // --------------------need to fix the routing (Eddie)-----------------------
+
 
 
 
