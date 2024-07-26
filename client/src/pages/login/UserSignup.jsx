@@ -64,7 +64,7 @@ const UserSignup = () => {
             }
         }
     };
-
+    
     const handleAddressCheck = () => {
         setValue('mailingStreetAddress', watch('billingStreetAddress'));
         setValue('mailingZipcode', watch('billingZipcode'));
