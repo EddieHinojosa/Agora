@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "watch": "nodemon index.js"
+    "watch": "nodemon index.js",
+    "render-build":"npm install && npm run build"
   },
   "keywords": [],
   "author": "",
