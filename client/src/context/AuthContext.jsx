@@ -5,14 +5,15 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const apiUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://agora-crafts.onrender.com/api'
-        : 'http://localhost:5000/api';
 
     useEffect(() => {
         const fetchProfile = async (token) => {
             try {
-                const response = await axios.get(`${apiUrl}/profile`, {
+                const apiUrl = process.env.NODE_ENV === 'production'
+                    ? 'https://agora-crafts.onrender.com/api/profile'
+                    : 'http://localhost:5000/api/profile';
+
+                const response = await axios.get(apiUrl, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
             fetchProfile(tokenFromUrl);
             window.history.replaceState(null, '', '/'); // Remove the token from the URL
         }
-    }, [apiUrl]);
+    }, []);
 
     const login = (userData) => {
         setUser(userData);

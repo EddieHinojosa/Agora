@@ -17,16 +17,17 @@ const Login = () => {
     });
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
-    const apiUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://agora-crafts.onrender.com/api'
-        : 'http://localhost:5000/api';
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
         if (token) {
             localStorage.setItem('token', token);
-            axios.get(`${apiUrl}/profile`, {
+            const apiUrl = process.env.NODE_ENV === 'production'
+                ? 'https://agora-crafts.onrender.com/api/profile'
+                : 'http://localhost:5000/api/profile';
+
+            axios.get(apiUrl, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -37,18 +38,23 @@ const Login = () => {
                 console.error("Error fetching profile:", error);
             });
         }
-    }, [login, navigate, apiUrl]);
+    }, [login, navigate]);
+
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post(`${apiUrl}/login`, data);
+            const apiUrl = process.env.NODE_ENV === 'production'
+                ? 'https://agora-crafts.onrender.com/api/login'
+                : 'http://localhost:5000/api/login';
+
+            const response = await axios.post(apiUrl, data);
             const { token, user } = response.data;
             localStorage.setItem('token', token);
             login(user);
             alert('Login successful');
             navigate('/');
         } catch (error) {
-            if (error.response) {
+            if (error.response && error.response.data.message) {
                 alert('Login failed: ' + error.response.data.message);
             } else {
                 alert('Login failed: ' + error.message);
@@ -57,7 +63,10 @@ const Login = () => {
     };
 
     const handleGoogleLogin = () => {
-        window.location.href = `${apiUrl}/auth/google`;
+        const googleAuthUrl = process.env.NODE_ENV === 'production'
+            ? 'https://agora-crafts.onrender.com/api/auth/google'
+            : 'http://localhost:5000/api/auth/google';
+        window.location.href = googleAuthUrl;
     };
 
     return (

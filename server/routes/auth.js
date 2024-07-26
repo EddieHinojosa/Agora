@@ -92,8 +92,8 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
     const token = generateToken(req.user);
-    const redirectUrl = process.env.NODE_ENV === 'production' 
-        ? `https://agora-crafts.onrender.com?token=${token}` 
+    const redirectUrl = process.env.NODE_ENV === 'production'
+        ? `https://agora-crafts.onrender.com?token=${token}`
         : `http://localhost:3001?token=${token}`;
     res.redirect(302, redirectUrl);
 });
