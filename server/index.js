@@ -48,7 +48,7 @@ if (!mongoUri) {
     process.exit(1);
 }
 
-mongoose.connect(mongoUri)
+mongoose.connect(mongoUri, {ssl: true})
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error(err));
 
