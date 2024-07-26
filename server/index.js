@@ -9,18 +9,14 @@ import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 
-// const {google} = require('googleapis');
-// const oauth2Client = new google.auth.OAuth2(process.env.CLIENT_ID, process.env.SECRET)
-
 dotenv.config();
-
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Enable CORS
 app.use(cors({
-    origin: 'http://localhost:3001', // Replace with your frontend URL
+    origin: ['http://localhost:3001', 'https://agora-crafts.onrender.com'],
     credentials: true
 }));
 
@@ -76,6 +72,7 @@ app.use('/api/shop', shopRoutes);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
 
 
 

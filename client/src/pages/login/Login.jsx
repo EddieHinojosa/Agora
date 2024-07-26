@@ -17,13 +17,16 @@ const Login = () => {
     });
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
+    const apiUrl = process.env.NODE_ENV === 'production' 
+        ? 'https://agora-crafts.onrender.com/api'
+        : 'http://localhost:5000/api';
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
         if (token) {
             localStorage.setItem('token', token);
-            axios.get('http://localhost:5000/api/profile', {
+            axios.get(`${apiUrl}/profile`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -34,11 +37,11 @@ const Login = () => {
                 console.error("Error fetching profile:", error);
             });
         }
-    }, [login, navigate]);
+    }, [login, navigate, apiUrl]);
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post('http://localhost:5000/api/login', data);
+            const response = await axios.post(`${apiUrl}/login`, data);
             const { token, user } = response.data;
             localStorage.setItem('token', token);
             login(user);
@@ -54,7 +57,7 @@ const Login = () => {
     };
 
     const handleGoogleLogin = () => {
-        window.location.href = 'http://localhost:5000/api/auth/google';
+        window.location.href = `${apiUrl}/auth/google`;
     };
 
     return (
@@ -80,3 +83,4 @@ const Login = () => {
 };
 
 export default Login;
+
