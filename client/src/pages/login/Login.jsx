@@ -24,8 +24,8 @@ const Login = () => {
         if (token) {
             localStorage.setItem('token', token);
             const apiUrl = process.env.NODE_ENV === 'production'
-                ? 'https://agora-crafts.onrender.com/api/profile'
-                : 'http://localhost:5000/api/profile';
+            ? process.env.REACT_APP_PROD_API_URL
+            : process.env.REACT_APP_DEV_API_URL
 
             axios.get(apiUrl, {
                 headers: {

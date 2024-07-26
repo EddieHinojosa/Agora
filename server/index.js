@@ -3,6 +3,7 @@ import passport from 'passport';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import passportConfig from './config/passport.js';
@@ -53,9 +54,10 @@ mongoose.connect(mongoUri)
 
 // Session middleware
 app.use(session({
-    secret: process.env.REACT_APP_SESSION_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: mongoUri }),
     cookie: {
         sameSite: 'lax',
         secure: process.env.NODE_ENV === 'production',

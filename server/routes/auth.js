@@ -9,7 +9,7 @@ const router = express.Router();
 const generateToken = (user) => {
     return jwt.sign(
         { sub: user.id, email: user.email },
-        process.env.JWT_SECRET,
+        process.env.REACT_APP_JWT_SECRET,
         { expiresIn: '7d' }
     );
 };
@@ -93,8 +93,8 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
     const token = generateToken(req.user);
     const redirectUrl = process.env.NODE_ENV === 'production'
-        ? `${process.env.API_URL_PROD}?token=${token}`
-        : `${process.env.API_URL_LOCAL}?token=${token}`;
+        ? `${process.env.REACT_APP_API_URL_PROD}?token=${token}`
+        : `${process.env.REACT_APP_API_URL_LOCAL}?token=${token}`;
     res.redirect(302, redirectUrl);
 });
 

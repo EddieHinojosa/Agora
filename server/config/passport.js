@@ -8,7 +8,7 @@ dotenv.config();
 
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET,
+    secretOrKey: process.env.REACT_APP_JWT_SECRET,
 };
 
 export default (passport) => {
@@ -30,8 +30,8 @@ export default (passport) => {
         clientID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
         clientSecret: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.NODE_ENV === 'production'
-            ? 'https://agora-crafts.onrender.com/api/auth/google/callback'
-            : 'http://localhost:5000/api/auth/google/callback'
+        ? process.env.REACT_APP_PROD_API_URL + '/auth/google/callback'
+        : process.env.REACT_APP_DEV_API_URL + '/auth/google/callback'
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             let user = await User.findOne({ googleId: profile.id });
