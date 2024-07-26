@@ -1,24 +1,20 @@
 import express from 'express';
 import passport from 'passport';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
-import connectDB from './config/db.js';
 
-dotenv.config();
+
+dotenv.config()
+
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Get the directory name
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const PORT = process.env.PORT || 5000;
 
 // Enable CORS
 app.use(cors({
@@ -44,7 +40,15 @@ app.use(
 );
 
 // Connect to MongoDB
-connectDB();
+const mongoUri = process.env.MONGO_URI;
+if (!mongoUri) {
+    console.error('MONGO_URI is not defined in the environment variables');
+    process.exit(1);
+}
+
+mongoose.connect(mongoUri)
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error(err));
 
 // Session middleware
 app.use(session({
@@ -57,26 +61,17 @@ app.use(session({
     }
 }));
 
+
 // Initialize Passport and session
 passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// API Routes
-app.use('/api', authRoutes);
+// Routes
+app.use('/api', authRoutes); // Ensure this line is present and correct
 app.use('/api/shop', shopRoutes);
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/dist')));
 
-// For any other routes, send back the index.html file from React
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
-});
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
 
 
 //-----------------eddie calendar stuff in process-----------------
@@ -144,4 +139,9 @@ app.listen(PORT, () => {
 
 
 
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}...poop poop`);
+});
 

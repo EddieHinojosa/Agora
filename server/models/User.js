@@ -1,34 +1,38 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const AddressSchema = new mongoose.Schema({
   street: {
     type: String,
     required: true,
-    default: "",
+    default: "", // Default value for street
   },
   city: {
     type: String,
     required: true,
-    default: "",
+    default: "", // Default value for city
   },
   state: {
     type: String,
     required: true,
-    default: "",
+    default: "", // Default value for state
   },
   zip: {
     type: String,
     required: true,
-    default: "",
+    default: "", // Default value for zip
   },
   country: {
     type: String,
     required: true,
-    default: "",
+    default: "", // Default value for country
   },
 });
 
 const UserSchema = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: mongoose.Types.ObjectId,
+  },
   firstName: {
     type: String,
     required: true,
