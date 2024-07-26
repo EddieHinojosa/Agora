@@ -124,6 +124,3 @@ const UserSignup = () => {
 };
 
 export default UserSignup;
-
-
-

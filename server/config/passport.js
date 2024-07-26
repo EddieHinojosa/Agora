@@ -21,6 +21,7 @@ export default (passport) => {
                 return done(null, false);
             }
         } catch (error) {
+            console.error('JWT Strategy Error:', error);
             return done(error, false);
         }
     }));
@@ -40,13 +41,11 @@ export default (passport) => {
 
             user = await User.findOne({ email: profile.emails[0].value });
             if (user) {
-                // Link Google account
                 user.googleId = profile.id;
                 await user.save();
                 return done(null, user);
             }
 
-            // Create new user with Google profile information
             user = new User({
                 googleId: profile.id,
                 email: profile.emails[0].value,
@@ -58,6 +57,7 @@ export default (passport) => {
             await user.save();
             done(null, user);
         } catch (error) {
+            console.error('Google Strategy Error:', error);
             done(error, false);
         }
     }));
@@ -78,6 +78,7 @@ export default (passport) => {
 
             return done(null, user);
         } catch (error) {
+            console.error('Local Strategy Error:', error);
             return done(error, false);
         }
     }));
@@ -91,6 +92,7 @@ export default (passport) => {
             const user = await User.findById(id);
             done(null, user);
         } catch (error) {
+            console.error('Deserialize User Error:', error);
             done(error, null);
         }
     });
