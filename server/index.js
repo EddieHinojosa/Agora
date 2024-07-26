@@ -18,7 +18,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Enable CORS
-const allowedOrigins = [process.env.REACT_APP_API_URL, process.env.REACT_APP_PROD_API_URL];
+const allowedOrigins = [process.env.REACT_APP_DEV_API_URL, process.env.REACT_APP_PROD_API_URL];
 app.use(cors({
     origin: allowedOrigins,
     credentials: true
@@ -48,9 +48,14 @@ if (!mongoUri) {
     process.exit(1);
 }
 
-mongoose.connect(mongoUri, {ssl: true})
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error(err));
+mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    ssl: true
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error(err));
+
 
 // Session middleware
 app.use(session({
