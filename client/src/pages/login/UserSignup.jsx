@@ -37,7 +37,7 @@ const UserSignup = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post('http://localhost:5000/api/register', data);
+            const response = await axios.post('http://localhost:5000/api/register', 'https://agora-crafts.onrender.com/api/register', data);
             localStorage.setItem('token', response.data.token);
             alert('Registration successful');
         } catch (error) {

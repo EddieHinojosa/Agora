@@ -52,7 +52,7 @@ const ShopSignup = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post('http://localhost:5000/api/shop/signup', data);
+            const response = await axios.post('http://localhost:5000/api/shop/signup', 'https://agora-crafts.onrender.com/api/shop/signup', data);
             alert('Shop signup successful');
             navigate('/');
         } catch (error) {
