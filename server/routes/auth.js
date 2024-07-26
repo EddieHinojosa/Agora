@@ -92,7 +92,7 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
     const token = generateToken(req.user);
-    res.redirect(`http://localhost:3001?token=${token}`);
+    res.redirect(`http://localhost:3001?token=${token}`, `https://agora-crafts.onrender.com?token=${token}`);
 });
 
 router.post('/update-profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
