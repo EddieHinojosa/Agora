@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000;
 
 // Enable CORS
 app.use(cors({
-    origin: 'http://localhost:3001', // Replace with your frontend URL
+    origin: ['http://localhost:3001', 'https://agora-crafts.onrender.com'],
     credentials: true
 }));
 
