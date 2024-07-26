@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "render-build":"npm install && npm run build"
+    "seed": "node seeds/seeds.js"
   },
   "keywords": [],
   "author": "",

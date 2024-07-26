@@ -51,7 +51,7 @@ const UserSignup = () => {
             }
             const apiUrl = process.env.NODE_ENV === 'production'
                 ? 'https://agora-crafts.onrender.com/api/register'
-                : 'http://localhost:5000/api/register';
+                : 'http://localhost:5000/api/auth/register';
             
             const response = await axios.post(apiUrl, data);
             localStorage.setItem('token', response.data.token);
