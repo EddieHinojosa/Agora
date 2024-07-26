@@ -49,9 +49,7 @@ if (!mongoUri) {
 }
 
 mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    ssl: true
+        ssl: true
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error(err));
@@ -78,6 +76,7 @@ app.use(passport.session());
 // Routes
 app.use('/api', authRoutes); // Ensure this line is present and correct
 app.use('/api/shop', shopRoutes);
+app.use('/api/profile', profileRoutes);
 
 
 
