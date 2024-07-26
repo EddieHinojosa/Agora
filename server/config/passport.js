@@ -26,8 +26,8 @@ export default (passport) => {
     }));
 
     passport.use(new GoogleStrategy({
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        clientID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        clientSecret: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.NODE_ENV === 'production'
             ? 'https://agora-crafts.onrender.com/api/auth/google/callback'
             : 'http://localhost:5000/api/auth/google/callback'

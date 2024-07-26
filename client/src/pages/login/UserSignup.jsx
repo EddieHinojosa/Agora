@@ -42,7 +42,7 @@ const UserSignup = () => {
     });
 
     // For seller shop
-    const [isSeller, setIsSeller] = useState(false)
+    const [isSeller, setIsSeller] = useState(false);
 
     const onSubmit = async (data) => {
         try {
@@ -50,10 +50,10 @@ const UserSignup = () => {
                 delete data.shopName;
             }
             const apiUrl = process.env.NODE_ENV === 'production'
-                ? 'https://agora-crafts.onrender.com/api/register'
-                : 'http://localhost:5000/api/register';
+                ? process.env.REACT_APP_PROD_API_URL
+                : process.env.REACT_APP_API_URL;
             
-            const response = await axios.post(apiUrl, data);
+            const response = await axios.post(`${apiUrl}/api/register`, data);
             localStorage.setItem('token', response.data.token);
             alert('Registration successful');
         } catch (error) {

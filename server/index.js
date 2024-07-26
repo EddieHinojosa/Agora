@@ -17,8 +17,9 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Enable CORS
+const allowedOrigins = [process.env.REACT_APP_API_URL, process.env.REACT_APP_PROD_API_URL];
 app.use(cors({
-    origin: ['http://localhost:3001', 'https://agora-crafts.onrender.com'],
+    origin: allowedOrigins,
     credentials: true
 }));
 
@@ -40,7 +41,7 @@ app.use(
 );
 
 // Connect to MongoDB
-const mongoUri = process.env.MONGO_URI;
+const mongoUri = process.env.REACT_APP_MONGO_URI;
 if (!mongoUri) {
     console.error('MONGO_URI is not defined in the environment variables');
     process.exit(1);
@@ -52,7 +53,7 @@ mongoose.connect(mongoUri)
 
 // Session middleware
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.REACT_APP_SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {

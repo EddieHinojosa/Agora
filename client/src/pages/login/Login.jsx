@@ -40,34 +40,30 @@ const Login = () => {
         }
     }, [login, navigate]);
 
+    const apiUrl = process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_PROD_API_URL
+    : process.env.REACT_APP_API_URL;
 
-    const onSubmit = async (data) => {
-        try {
-            const apiUrl = process.env.NODE_ENV === 'production'
-                ? 'https://agora-crafts.onrender.com/api/login'
-                : 'http://localhost:5000/api/login';
-
-            const response = await axios.post(apiUrl, data);
-            const { token, user } = response.data;
-            localStorage.setItem('token', token);
-            login(user);
-            alert('Login successful');
-            navigate('/');
-        } catch (error) {
-            if (error.response && error.response.data.message) {
-                alert('Login failed: ' + error.response.data.message);
-            } else {
-                alert('Login failed: ' + error.message);
-            }
+const onSubmit = async (data) => {
+    try {
+        const response = await axios.post(`${apiUrl}/api/login`, data);
+        const { token, user } = response.data;
+        localStorage.setItem('token', token);
+        login(user);
+        alert('Login successful');
+        navigate('/');
+    } catch (error) {
+        if (error.response) {
+            alert('Login failed: ' + error.response.data.message);
+        } else {
+            alert('Login failed: ' + error.message);
         }
-    };
+    }
+};
 
-    const handleGoogleLogin = () => {
-        const googleAuthUrl = process.env.NODE_ENV === 'production'
-            ? 'https://agora-crafts.onrender.com/api/auth/google'
-            : 'http://localhost:5000/api/auth/google';
-        window.location.href = googleAuthUrl;
-    };
+const handleGoogleLogin = () => {
+    window.location.href = `${apiUrl}/api/auth/google`;
+};
 
     return (
         <div className="max-w-md mx-auto bg-white p-8 mt-10 shadow-md rounded">
