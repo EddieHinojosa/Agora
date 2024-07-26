@@ -54,7 +54,7 @@ mongoose.connect(mongoUri)
 
 // Session middleware
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.REACT_APP_SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: mongoUri }),
