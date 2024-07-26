@@ -79,7 +79,7 @@ app.use('/api/shop', shopRoutes);
 // import { google } from 'googleapis';
 // const oauth2Client = new google.auth.OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, process.env.REDIRECT);
 
-// // Google OAuth2 callback------need to fix the routing (Eddie)--------------
+// // Google OAuth2 callback------need to fix the routing (Eddie)---------------
 // app.get('/', (req, res) => {
 //     const url = oauth2Client.generateAuthUrl({
 //         access_type: 'offline',
