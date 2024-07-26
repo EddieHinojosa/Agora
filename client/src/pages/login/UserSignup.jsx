@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -27,7 +27,13 @@ const schema = yup.object().shape({
     shopName: yup.string(),
 });
 
-const states = ["California", "New York", "Texas", "Florida", "Illinois"]; // Example states
+const states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+    "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
+    "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
+    "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
+    "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
+    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]; // Example states
 const countries = ["United States", "Canada", "Mexico"]; // Example countries
 
 const UserSignup = () => {
@@ -35,8 +41,14 @@ const UserSignup = () => {
         resolver: yupResolver(schema),
     });
 
+    // For seller shop
+    const [isSeller, setIsSeller] = useState(false)
+
     const onSubmit = async (data) => {
         try {
+            if (!isSeller) {
+                delete data.shopName;
+            }
             const apiUrl = process.env.NODE_ENV === 'production'
                 ? 'https://agora-crafts.onrender.com/api/register'
                 : 'http://localhost:5000/api/register';
@@ -89,7 +101,20 @@ const UserSignup = () => {
                 <FormField label="Username" name="username" register={register} errors={errors} />
                 <FormField label="Password" name="password" type="password" register={register} errors={errors} />
                 <FormField label="Confirm Password" name="confirmPassword" type="password" register={register} errors={errors} />
-                <FormField label="Shop Name (Optional)" name="shopName" register={register} errors={errors} />
+                
+                {/* Checkbox for Seller Store */}
+                <div className="flex items-center">
+                    <input 
+                        type="checkbox" 
+                        className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" 
+                        onChange={(e) => setIsSeller(e.target.checked)}
+                    />
+                    <label className="ml-2 block text-sm text-gray-900">Are you a seller?</label>
+                </div>
+                
+                {isSeller && (
+                    <FormField label="Shop Name" name="shopName" register={register} errors={errors} />
+                )}
                 
                 <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Register</button>
                 <p className="text-center text-sm text-gray-600 mt-4">Already have an account? <Link to="/login" className="text-indigo-600 hover:underline">Login</Link></p>
