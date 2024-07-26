@@ -142,7 +142,7 @@ app.use('/api/shop', shopRoutes);
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}...poop`);
+    console.log(`Server running on port ${PORT}...poop poop`);
 });
 
 
