@@ -15,50 +15,73 @@ const seedData = async () => {
 
         const users = [
             {
-                firstName: 'Alice',
-                lastName: 'Johnson',
-                email: 'alice.johnson@example.com',
-                username: 'alicej',
-                password: await bcrypt.hash('securePass123', 12),
+                firstName: 'Emily',
+                lastName: 'Clark',
+                email: 'emily.clark@example.com',
+                username: 'emilyc',
+                password: await bcrypt.hash('mypassword123', 12),
                 billingAddress: {
-                    street: '789 Oak St',
-                    city: 'Springfield',
-                    state: 'IL',
-                    zip: '62704',
+                    street: '321 Elm St',
+                    city: 'Lakeview',
+                    state: 'CA',
+                    zip: '90210',
                     country: 'USA'
                 },
                 mailingAddress: {
-                    street: '789 Oak St',
-                    city: 'Springfield',
-                    state: 'IL',
-                    zip: '62704',
+                    street: '321 Elm St',
+                    city: 'Lakeview',
+                    state: 'CA',
+                    zip: '90210',
                     country: 'USA'
                 },
-                shopName: 'Alice\'s Art',
+                shopName: 'Emily\'s Emporium',
+                isGmail: false
+            },
+            {
+                firstName: 'Michael',
+                lastName: 'Brown',
+                email: 'michael.brown@example.com',
+                username: 'michaelb',
+                password: await bcrypt.hash('securePassword456', 12),
+                billingAddress: {
+                    street: '987 Maple Ave',
+                    city: 'Hometown',
+                    state: 'NY',
+                    zip: '10001',
+                    country: 'USA'
+                },
+                mailingAddress: {
+                    street: '987 Maple Ave',
+                    city: 'Hometown',
+                    state: 'NY',
+                    zip: '10001',
+                    country: 'USA'
+                },
+                shopName: 'Michael\'s Market',
                 isGmail: true
             },
             {
-                firstName: 'Bob',
-                lastName: 'Williams',
-                email: 'bob.williams@example.com',
-                username: 'bobbyw',
-                password: await bcrypt.hash('password321', 12),
+                firstName: 'Sophia',
+                lastName: 'Davis',
+                email: 'sophia.davis@example.com',
+                username: 'sophiad',
+                password: await bcrypt.hash('password789!', 12),
                 billingAddress: {
-                    street: '654 Pine St',
-                    city: 'Metropolis',
-                    state: 'TX',
-                    zip: '75001',
+                    street: '456 Birch Rd',
+                    city: 'Greenville',
+                    state: 'WA',
+                    zip: '98101',
                     country: 'USA'
                 },
                 mailingAddress: {
-                    street: '654 Pine St',
-                    city: 'Metropolis',
-                    state: 'TX',
-                    zip: '75001',
+                    street: '456 Birch Rd',
+                    city: 'Greenville',
+                    state: 'WA',
+                    zip: '98101',
                     country: 'USA'
                 },
-                shopName: 'Bob\'s Books',
-                isGmail: false
+                shopName: 'Sophia\'s Crafts',
+                isGmail: true
             }
         ];
 
