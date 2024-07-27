@@ -116,7 +116,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
             picture: profile.photos[0].value
         };
         const encodedProfile = encodeURIComponent(JSON.stringify(profileData));
-        res.redirect(`${process.env.VITE_PROD_APP_URL}/complete-profile?profile=${encodedProfile}`);
+        res.redirect(`${process.env.VITE_PROD_URL}/complete-profile?profile=${encodedProfile}`);
     }
 });
 
