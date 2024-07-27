@@ -37,6 +37,7 @@ const UserSignup = () => {
             setValue('firstName', parsedProfile.firstName);
             setValue('lastName', parsedProfile.lastName);
             setValue('email', parsedProfile.email);
+            setValue('username', parsedProfile.email.split('@')[0]); // Autogenerate username from email
         }
     }, [setValue]);
 
@@ -76,21 +77,21 @@ const UserSignup = () => {
                 <FormField label="Billing City" name="billingCity" register={register} errors={errors} />
                 <SelectField label="Billing State" name="billingState" register={register} errors={errors} options={states} />
                 <SelectField label="Billing Country" name="billingCountry" register={register} errors={errors} options={countries} />
-                
+
                 <div className="flex items-center">
                     <input type="checkbox" className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" onClick={handleAddressCheck} />
                     <label className="ml-2 block text-sm text-gray-900">Mailing address same as billing</label>
                 </div>
-                
+
                 <FormField label="Mailing Street Address" name="mailingStreetAddress" register={register} errors={errors} />
                 <FormField label="Mailing Zipcode" name="mailingZipcode" register={register} errors={errors} />
                 <FormField label="Mailing City" name="mailingCity" register={register} errors={errors} />
                 <SelectField label="Mailing State" name="mailingState" register={register} errors={errors} options={states} />
                 <SelectField label="Mailing Country" name="mailingCountry" register={register} errors={errors} options={countries} />
-                
+
                 <FormField label="Username" name="username" register={register} errors={errors} />
                 <FormField label="Shop Name" name="shopName" register={register} errors={errors} />
-                
+
                 <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Register</button>
             </form>
         </div>
@@ -98,5 +99,6 @@ const UserSignup = () => {
 };
 
 export default UserSignup;
+
 
 

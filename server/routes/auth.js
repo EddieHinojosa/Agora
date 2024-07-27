@@ -21,10 +21,6 @@ const generateToken = (user) => {
 };
 
 router.post('/register', async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-
     const { firstName, lastName, email, username, password, billingStreetAddress, billingZipcode, billingCity, billingState, billingCountry, mailingStreetAddress, mailingZipcode, mailingCity, mailingState, mailingCountry, shopName } = req.body;
 
     try {
@@ -35,7 +31,7 @@ router.post('/register', async (req, res) => {
         if (user) return res.status(400).json({ message: 'Username already exists' });
 
         const hashedPassword = await bcrypt.hash(password, 12);
-        const isGmail = email.endsWith('@gmail.com');
+        const isGmail = email.endsWith('@gmail.com') || email.endsWith('@googlemail.com');
 
         user = new User({
             firstName,
@@ -107,7 +103,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
         res.redirect(`${process.env.VITE_PROD_URL}?token=${token}`);
     } else if (req.authInfo && req.authInfo.profileData) {
         // New user, redirect to registration with pre-filled data
-        res.redirect(`${process.env.VITE_PROD_URL}/register?profile=${req.authInfo.profileData}`);
+        res.redirect(`${process.env.VITE_PROD_URL}/login/usersignup?profile=${req.authInfo.profileData}`);
     }
 });
 
@@ -146,6 +142,7 @@ router.post('/update-profile', passport.authenticate('jwt', { session: false }),
 });
 
 export default router;
+
 
 
 
