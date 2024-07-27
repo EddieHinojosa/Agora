@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-    
+
     const { firstName, lastName, email, username, password, billingStreetAddress, billingZipcode, billingCity, billingState, billingCountry, mailingStreetAddress, mailingZipcode, mailingCity, mailingState, mailingCountry, shopName } = req.body;
 
     try {
@@ -101,12 +101,24 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), async (
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-    const token = generateToken(req.user);
-    const redirectUrl = process.env.NODE_ENV === 'production'
-        ? `${process.env.VITE_PROD_URL}?token=${token}`
-        : `${process.env.VITE_DEV_API_URL}?token=${token}`;
-    res.redirect(302, redirectUrl);
-    });
+    if (req.user) {
+        // Existing user
+        const token = generateToken(req.user);
+        res.redirect(`${process.env.VITE_PROD_APP_URL}?token=${token}`);
+    } else if (req.authInfo && req.authInfo.profile) {
+        // New user, redirect to profile completion
+        const profile = req.authInfo.profile;
+        const profileData = {
+            googleId: profile.id,
+            email: profile.emails[0].value,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
+            picture: profile.photos[0].value
+        };
+        const encodedProfile = encodeURIComponent(JSON.stringify(profileData));
+        res.redirect(`${process.env.VITE_PROD_APP_URL}/complete-profile?profile=${encodedProfile}`);
+    }
+});
 
 router.post('/update-profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {

@@ -16,6 +16,7 @@ import User from './pages/User.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx'
 import UpdateProfile from './pages/UpdateProfile.jsx';
+import CompleteProfile from './pages/CompleteProfile.jsx';
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: 'update-profile',
         element: <UpdateProfile />
+      },
+      {
+        path: 'complete-profile', 
+        element: <CompleteProfile />
       }
     ]
   },
