@@ -43,12 +43,12 @@ app.use(express.json());
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'", process.env.VITE_PROD_API_URL],
-      scriptSrc: ["'self'", "https://apis.google.com", process.env.VITE_PROD_API_URL],
+      defaultSrc: ["'self'", process.env.VITE_PROD_URL],
+      scriptSrc: ["'self'", "https://apis.google.com", process.env.VITE_PROD_URL],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:", "https://*.google.com", process.env.VITE_PROD_API_URL],
-      connectSrc: ["'self'", "https://accounts.google.com", process.env.VITE_DEV_API_URL, process.env.VITE_PROD_API_URL],
-      frameSrc: ["'self'", "https://accounts.google.com", process.env.VITE_PROD_API_URL],
+      imgSrc: ["'self'", "data:", "https://*.google.com", process.env.VITE_PROD_URL],
+      connectSrc: ["'self'", "https://accounts.google.com", process.env.VITE_DEV_API_URL, process.env.VITE_PROD_URL],
+      frameSrc: ["'self'", "https://accounts.google.com", process.env.VITE_PROD_URL],
     },
   })
 );
