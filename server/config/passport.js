@@ -6,7 +6,6 @@ import User from '../models/User.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.VITE_JWT_SECRET,
@@ -77,8 +76,9 @@ export default (passport) => {
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
                 username: uniqueUsername,
-                billingAddress: {},
-                mailingAddress: {}
+                isGmail: profile.emails[0].value.endsWith('@gmail.com') || profile.emails[0].value.endsWith('@googlemail.com'),
+                billingAddress: { street: '', city: '', state: '', zip: '', country: '' },
+                mailingAddress: { street: '', city: '', state: '', zip: '', country: '' }
             });
             await user.save();
             done(null, user);
@@ -123,3 +123,4 @@ export default (passport) => {
         }
     });
 };
+
