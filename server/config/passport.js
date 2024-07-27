@@ -57,7 +57,13 @@ export default (passport) => {
 
             user = await User.findOne({ email: profile.emails[0].value });
             if (user) {
+                // Handle the case where a different Google account has the same email
+                if (user.googleId && user.googleId !== profile.id) {
+                    return done(null, false, { message: 'This email is already associated with another Google account.' });
+                }
+    
                 user.googleId = profile.id;
+                user.isGmail = profile.emails[0].value.endsWith('@gmail.com') || profile.emails[0].value.endsWith('@googlemail.com');
                 await user.save();
                 return done(null, user);
             }
