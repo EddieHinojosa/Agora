@@ -8,15 +8,21 @@ import passport from 'passport';
 import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
+import userRoutes from './routes/user.js';
+import setupSocket from './sockets/socket.js';
+import http from 'http';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000; 
+const server = http.createServer(app);
+const PORT = process.env.PORT || 3000;
 
-// Enable CORS
+// Enable CORS with specific origins and headers
 app.use(cors({
-  origin: ['http://localhost:3001', 'https://agora-crafts.onrender.com'],
+  origin: ['http://localhost:3001', 'http://localhost:5173', 'https://agora-crafts.onrender.com'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 
@@ -64,10 +70,13 @@ passportConfig(passport); // Initialize passport strategies
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Setup Socket.IO
+setupSocket(server);
+
 // Routes
 app.use('/api', authRoutes);
 app.use('/api', shopRoutes);
-
+app.use('/api', userRoutes); // User routes
 
 
 //-----------------eddie calendar stuff in process-----------------
@@ -140,4 +149,3 @@ app.use('/api', shopRoutes);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}...poop poop`);
 });
-
