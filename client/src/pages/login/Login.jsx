@@ -58,7 +58,7 @@ const onSubmit = async (data) => {
         } else {
             alert('Login failed: ' + error.message);
         }
-    }
+    };
 
 
 
@@ -86,7 +86,7 @@ const handleGoogleLogin = () => {
             </form>
         </div>
     );
-};
+}};
 
 export default Login;
 
