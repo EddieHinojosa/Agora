@@ -7,7 +7,7 @@ import fetchUser from '../../utils/fetchUser';
 
 // Parenthesis need to stay empty or console loop with appear
 // Establish connection to socket
-const socket = io();
+const socket = io(import.meta.env.VITE_SOCKET_URL);
 
 const Messages = () => {
   const [showModal, setShowModal] = useState(false);
