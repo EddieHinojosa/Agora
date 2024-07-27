@@ -12,6 +12,10 @@ import userRoutes from './routes/user.js';
 import setupSocket from './sockets/socket.js';
 import http from 'http';
 
+import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+
 dotenv.config();
 
 const app = express();
@@ -142,7 +146,31 @@ app.use('/api', userRoutes); // User routes
 
 // // --------------------need to fix the routing (Eddie)-----------------------
 
-
+// Stripe Checkout Session route
+app.post('/api/create-checkout-session', async (req, res) => {
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: req.body.items.map(item => ({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: item.name,
+            },
+            unit_amount: item.amount,
+          },
+          quantity: item.quantity,
+        })),
+        mode: 'payment',
+        success_url: `${process.env.CLIENT_URL}/checkout-success`, //need success page
+        cancel_url: `${process.env.CLIENT_URL}/cart`, //may redirect back
+      });
+  
+      res.json({ url: session.url });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  });
 
 
 // Start server
