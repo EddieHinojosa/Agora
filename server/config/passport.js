@@ -58,8 +58,8 @@ export default (passport) => {
                 email: profile.emails[0].value,
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
-                billingAddress: { street: '', city: '', state: '', zip: '', country: '' },
-                mailingAddress: { street: '', city: '', state: '', zip: '', country: '' }
+                billingAddress: { },
+                mailingAddress: { }
             });
             await user.save();
             done(null, user);

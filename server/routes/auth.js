@@ -9,6 +9,10 @@ dotenv.config();
 const router = express.Router();
 
 const generateToken = (user) => {
+    if (!process.env.VITE_JWT_SECRET) {
+        console.error('JWT secret is not defined');
+        throw new Error('JWT secret is not defined');
+    }
     return jwt.sign(
         { sub: user.id, email: user.email },
         process.env.VITE_REACT_APP_JWT_SECRET,
