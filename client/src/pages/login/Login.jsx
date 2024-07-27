@@ -23,9 +23,9 @@ const Login = () => {
         const token = urlParams.get('token');
         if (token) {
             localStorage.setItem('token', token);
-            const apiUrl = process.env.NODE_ENV === 'production'
-                ? 'https://agora-crafts.onrender.com/api/profile'
-                : 'http://localhost:5000/api/profile';
+            const apiUrl = import.meta.env.MODE === 'production'
+                ? import.meta.env.VITE_API_URL + '/api/profile'
+                : import.meta.env.VITE_API_URL + '/api/profile';
 
             axios.get(apiUrl, {
                 headers: {
@@ -40,12 +40,11 @@ const Login = () => {
         }
     }, [login, navigate]);
 
-
     const onSubmit = async (data) => {
         try {
-            const apiUrl = process.env.NODE_ENV === 'production'
-                ? 'https://agora-crafts.onrender.com/api/login'
-                : 'http://localhost:5000/api/login';
+            const apiUrl = import.meta.env.MODE === 'production'
+                ? import.meta.env.VITE_API_URL + '/api/login'
+                : import.meta.env.VITE_API_URL + '/api/login';
 
             const response = await axios.post(apiUrl, data);
             const { token, user } = response.data;
@@ -63,9 +62,9 @@ const Login = () => {
     };
 
     const handleGoogleLogin = () => {
-        const googleAuthUrl = process.env.NODE_ENV === 'production'
-            ? 'https://agora-crafts.onrender.com/api/auth/google'
-            : 'http://localhost:5000/api/auth/google';
+        const googleAuthUrl = import.meta.env.MODE === 'production'
+            ? import.meta.env.VITE_API_URL + '/api/auth/google'
+            : import.meta.env.VITE_API_URL + '/api/auth/google';
         window.location.href = googleAuthUrl;
     };
 
