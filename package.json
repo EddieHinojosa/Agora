@@ -29,5 +29,8 @@
     "googleapis": "^140.0.1",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.1"
+  },
+  "devDependencies": {
+    "vite-plugin-socket-io": "^1.0.2"
   }
 }
