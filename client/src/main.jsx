@@ -68,7 +68,7 @@ const router = createBrowserRouter([
         element: <UpdateProfile />
       },
       {
-        path: 'complete-profile', 
+        path: 'complete-profile', // Add this route
         element: <CompleteProfile />
       }
     ]
