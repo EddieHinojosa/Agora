@@ -29,7 +29,7 @@ const app = express();
 const PORT = process.env.PORT || 5000; 
 
 // Enable CORS
-const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_PROD_API_URL, process.env.PROD_URL];
+const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_PROD_API_URL, process.env.VITE_PROD_URL];
 app.use(cors({
     origin: allowedOrigins,
     credentials: true,
