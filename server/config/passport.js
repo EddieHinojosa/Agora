@@ -6,12 +6,6 @@ import User from '../models/User.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
-console.log('Passport environment variables:', {
-    VITE_GOOGLE_CLIENT_ID: process.env.VITE_GOOGLE_CLIENT_ID,
-    VITE_GOOGLE_CLIENT_SECRET: process.env.VITE_GOOGLE_CLIENT_SECRET,
-    VITE_JWT_SECRET: process.env.VITE_JWT_SECRET,
-  });
-
 
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -32,6 +26,20 @@ export default (passport) => {
             return done(error, false);
         }
     }));
+
+    const generateUniqueUsername = async (base) => {
+        let username = base;
+        let userExists = await User.findOne({ username });
+    
+        let counter = 1;
+        while (userExists) {
+            username = `${base}${counter}`;
+            userExists = await User.findOne({ username });
+            counter++;
+        }
+    
+        return username;
+    };
 
     passport.use(new GoogleStrategy({
         clientID: process.env.VITE_GOOGLE_CLIENT_ID,
@@ -54,11 +62,15 @@ export default (passport) => {
                 return done(null, user);
             }
 
+            const baseUsername = profile.emails[0].value.split('@')[0];
+            const uniqueUsername = await generateUniqueUsername(baseUsername);
+
             user = new User({
                 googleId: profile.id,
                 email: profile.emails[0].value,
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
+                username: uniqueUsername,
                 billingAddress: {},
                 mailingAddress: {}
             });
