@@ -1,11 +1,11 @@
 import express from 'express';
-import passport from 'passport';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
+import passport from 'passport';
 import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
@@ -26,7 +26,7 @@ console.log('Server environment variables:', {
   });
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000; 
 
 // Enable CORS
 const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_PROD_API_URL];
@@ -40,23 +40,23 @@ app.use(express.json());
 
 // Content Security Policy
 app.use(
-    helmet.contentSecurityPolicy({
-        directives: {
-            defaultSrc: ["'self'"],
-            scriptSrc: ["'self'", "https://apis.google.com"],
-            styleSrc: ["'self'", "'unsafe-inline'"],
-            imgSrc: ["'self'", "data:", "https://*.google.com"],
-            connectSrc: ["'self'", "https://accounts.google.com"],
-            frameSrc: ["'self'", "https://accounts.google.com"],
-        },
-    })
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://apis.google.com"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https://*.google.com"],
+      connectSrc: ["'self'", "https://accounts.google.com"],
+      frameSrc: ["'self'", "https://accounts.google.com"],
+    },
+  })
 );
 
 // Connect to MongoDB
 const mongoUri = process.env.VITE_MONGO_URI;
 if (!mongoUri) {
-    console.error('MONGO_URI is not defined in the environment variables');
-    process.exit(1);
+  console.error('MONGO_URI is not defined in the environment variables');
+  process.exit(1);
 }
 
 mongoose.connect(mongoUri, {
@@ -78,16 +78,14 @@ app.use(session({
     }
 }));
 
-
 // Initialize Passport and session
-passportConfig(passport);
+passportConfig(passport); // Initialize passport strategies
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/api', authRoutes); // Ensure this line is present and correct
-app.use('/api/shop', shopRoutes);
-
+app.use('/api', authRoutes);
+app.use('/api', shopRoutes);
 
 
 
