@@ -6,9 +6,16 @@ import User from '../models/User.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
+console.log('Passport environment variables:', {
+    VITE_GOOGLE_CLIENT_ID: process.env.VITE_GOOGLE_CLIENT_ID,
+    VITE_GOOGLE_CLIENT_SECRET: process.env.VITE_GOOGLE_CLIENT_SECRET,
+    VITE_JWT_SECRET: process.env.VITE_JWT_SECRET,
+  });
+
+
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.REACT_APP_JWT_SECRET,
+    secretOrKey: process.env.VITE_JWT_SECRET,
 };
 
 export default (passport) => {
@@ -27,11 +34,11 @@ export default (passport) => {
     }));
 
     passport.use(new GoogleStrategy({
-        clientID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-        clientSecret: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
+        clientID: process.env.VITE_GOOGLE_CLIENT_ID,
+        clientSecret: process.env.VITE_GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.NODE_ENV === 'production'
-        ? process.env.REACT_APP_PROD_API_URL + '/auth/google/callback'
-        : process.env.REACT_APP_DEV_API_URL + '/auth/google/callback'
+            ? `${process.env.VITE_PROD_API_URL}/api/auth/google/callback`
+            : `${process.env.VITE_DEV_API_URL}/api/auth/google/callback`
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             let user = await User.findOne({ googleId: profile.id });

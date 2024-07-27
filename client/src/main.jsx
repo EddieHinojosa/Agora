@@ -7,6 +7,19 @@ import ShopApp from './ShopApp.jsx';
 import './index.css';
 import { AuthProvider } from './context/AuthContext.jsx';
 
+console.log(import.meta.env);
+
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log('API URL:', apiUrl);
+
+console.log('Client environment variables:', {
+  VITE_DEV_API_URL: import.meta.env.VITE_DEV_API_URL,
+  VITE_PROD_API_URL: import.meta.env.VITE_PROD_API_URL,
+  VITE_GOOGLE_CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+  VITE_GOOGLE_CLIENT_SECRET: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
+  VITE_JWT_SECRET: import.meta.env.VITE_JWT_SECRET,
+});
+
 // Error page
 import Error from './pages/Error.jsx';
 

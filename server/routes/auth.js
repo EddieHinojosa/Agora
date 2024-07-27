@@ -3,13 +3,15 @@ import bcrypt from 'bcryptjs';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const router = express.Router();
 
 const generateToken = (user) => {
     return jwt.sign(
         { sub: user.id, email: user.email },
-        process.env.REACT_APP_JWT_SECRET,
+        process.env.VITE_JWT_SECRET,
         { expiresIn: '7d' }
     );
 };
@@ -93,8 +95,8 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
     const token = generateToken(req.user);
     const redirectUrl = process.env.NODE_ENV === 'production'
-        ? `${process.env.REACT_APP_PROD_API_URL}?token=${token}`
-        : `${process.env.REACT_APP_DEV_API_URL}?token=${token}`;
+        ? `${process.env.VITE_REACT_APP_PROD_API_URL}?token=${token}`
+        : `${process.env.VITE_REACT_APP_DEV_API_URL}?token=${token}`;
     res.redirect(302, redirectUrl);
 });
 

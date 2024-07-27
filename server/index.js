@@ -13,12 +13,23 @@ import shopRoutes from './routes/shop.js';
 
 dotenv.config()
 
+console.log('Server environment variables:', {
+    VITE_MONGO_URI: process.env.VITE_MONGO_URI,
+    VITE_GOOGLE_CLIENT_ID: process.env.VITE_GOOGLE_CLIENT_ID,
+    VITE_GOOGLE_CLIENT_SECRET: process.env.VITE_GOOGLE_CLIENT_SECRET,
+    VITE_SESSION_SECRET: process.env.VITE_SESSION_SECRET,
+    VITE_JWT_SECRET: process.env.VITE_JWT_SECRET,
+    NODE_ENV: process.env.NODE_ENV,
+    VITE_DEV_URL: process.env.VITE_DEV_URL,
+    VITE_DEV_API_URL: process.env.VITE_DEV_API_URL,
+    VITE_PROD_API_URL: process.env.VITE_PROD_API_URL,
+  });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Enable CORS
-const allowedOrigins = [process.env.REACT_APP_DEV_API_URL, process.env.REACT_APP_PROD_API_URL];
+const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_PROD_API_URL];
 app.use(cors({
     origin: allowedOrigins,
     credentials: true
@@ -42,7 +53,7 @@ app.use(
 );
 
 // Connect to MongoDB
-const mongoUri = process.env.REACT_APP_MONGO_URI;
+const mongoUri = process.env.VITE_MONGO_URI;
 if (!mongoUri) {
     console.error('MONGO_URI is not defined in the environment variables');
     process.exit(1);
@@ -57,7 +68,7 @@ mongoose.connect(mongoUri, {
 
 // Session middleware
 app.use(session({
-    secret: process.env.REACT_APP_SESSION_SECRET,
+    secret: process.env.VITE_SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: mongoUri }),
@@ -76,7 +87,7 @@ app.use(passport.session());
 // Routes
 app.use('/api', authRoutes); // Ensure this line is present and correct
 app.use('/api/shop', shopRoutes);
-app.use('/api/profile', profileRoutes);
+
 
 
 

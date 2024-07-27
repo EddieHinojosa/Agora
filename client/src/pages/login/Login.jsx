@@ -23,9 +23,9 @@ const Login = () => {
         const token = urlParams.get('token');
         if (token) {
             localStorage.setItem('token', token);
-            const apiUrl = process.env.NODE_ENV === 'production'
-            ? process.env.REACT_APP_PROD_API_URL
-            : process.env.REACT_APP_DEV_API_URL
+            const apiUrl = import.meta.env.MODE === 'production'
+                ? import.meta.env.VITE_PROD_API_URL
+                : import.meta.env.VITE_DEV_API_URL;
 
             axios.get(apiUrl, {
                 headers: {
@@ -40,9 +40,9 @@ const Login = () => {
         }
     }, [login, navigate]);
 
-    const apiUrl = process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_PROD_API_URL
-    : process.env.REACT_APP_API_URL;
+    const apiUrl = import.meta.env.MODE === 'production'
+        ? import.meta.env.VITE_PROD_API_URL
+        : import.meta.env.VITE_DEV_API_URL;
 
 const onSubmit = async (data) => {
     try {

@@ -49,9 +49,9 @@ const UserSignup = () => {
             if (!isSeller) {
                 delete data.shopName;
             }
-            const apiUrl = process.env.NODE_ENV === 'production'
-                ? process.env.REACT_APP_PROD_API_URL
-                : process.env.REACT_APP_API_URL;
+            const apiUrl = import.meta.env.MODE === 'production'
+        ? import.meta.env.VITE_PROD_API_URL
+        : import.meta.env.VITE_DEV_API_URL;
             
             const response = await axios.post(`${apiUrl}/api/register`, data);
             localStorage.setItem('token', response.data.token);
