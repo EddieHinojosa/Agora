@@ -3,27 +3,22 @@ import mongoose from "mongoose";
 const AddressSchema = new mongoose.Schema({
   street: {
     type: String,
-    required: true,
     default: "", // Default value for street
   },
   city: {
     type: String,
-    required: true,
     default: "", // Default value for city
   },
   state: {
     type: String,
-    required: true,
     default: "", // Default value for state
   },
   zip: {
-    type: String,
-    required: true,
+    type: String,    
     default: "", // Default value for zip
   },
   country: {
     type: String,
-    required: true,
     default: "", // Default value for country
   },
 });
@@ -66,11 +61,9 @@ const UserSchema = new mongoose.Schema({
   },
   billingAddress: {
     type: AddressSchema,
-    required: true,
   },
   mailingAddress: {
     type: AddressSchema,
-    required: true,
   },
   shopId: {
     type: mongoose.Schema.Types.ObjectId,

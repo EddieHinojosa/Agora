@@ -41,8 +41,8 @@ const Login = () => {
     }, [login, navigate]);
 
     const apiUrl = import.meta.env.MODE === 'production'
-        ? import.meta.env.VITE_PROD_API_URL
-        : import.meta.env.VITE_DEV_API_URL;
+    ? import.meta.env.VITE_PROD_API_URL
+    : import.meta.env.VITE_DEV_API_URL; 
 
 const onSubmit = async (data) => {
     try {
@@ -60,6 +60,7 @@ const onSubmit = async (data) => {
         }
     }
 };
+
 
 const handleGoogleLogin = () => {
     window.location.href = `${apiUrl}/api/auth/google`;
