@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
 
@@ -16,76 +16,37 @@ const schema = yup.object().shape({
     billingCity: yup.string().required('Billing City is required'),
     billingState: yup.string().required('Billing State is required'),
     billingCountry: yup.string().required('Billing Country is required'),
-    mailingStreetAddress: yup.string().required('Mailing Street Address is required'),
-    mailingZipcode: yup.string().required('Mailing Zipcode is required'),
-    mailingCity: yup.string().required('Mailing City is required'),
-    mailingState: yup.string().required('Mailing State is required'),
-    mailingCountry: yup.string().required('Mailing Country is required'),
     username: yup.string().required('Username is required'),
-    password: yup.string().required('Password is required'),
-    confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
-    shopName: yup.string(),
+    shopName: yup.string().required('Shop Name is required'),
 });
 
-const states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
-    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
-    "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
-    "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
-    "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
-    "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
-    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]; // Example states
+const states = ["California", "New York", "Texas", "Florida", "Illinois"]; // Example states
 const countries = ["United States", "Canada", "Mexico"]; // Example countries
 
 const UserSignup = () => {
-    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
+    const navigate = useNavigate();
 
-    // For seller shop
-    const [isSeller, setIsSeller] = useState(false);;
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const profileData = params.get('profile');
+        if (profileData) {
+            const parsedProfile = JSON.parse(decodeURIComponent(profileData));
+            setValue('firstName', parsedProfile.firstName);
+            setValue('lastName', parsedProfile.lastName);
+            setValue('email', parsedProfile.email);
+        }
+    }, [setValue]);
 
     const onSubmit = async (data) => {
         try {
-            if (!isSeller) {
-                delete data.shopName;
-            }
-            const apiUrl = import.meta.env.MODE === 'production'
-                ? import.meta.env.VITE_PROD_API_URL + '/api/register'
-                : import.meta.env.VITE_DEV_API_URL + '/api/register'
-
-                const requestData = {
-                    ...data,
-                    billingAddress: {
-                        street: data.billingStreetAddress,
-                        city: data.billingCity,
-                        state: data.billingState,
-                        zip: data.billingZipcode,
-                        country: data.billingCountry,
-                    },
-                    mailingAddress: {
-                        street: data.mailingStreetAddress,
-                        city: data.mailingCity,
-                        state: data.mailingState,
-                        zip: data.mailingZipcode,
-                        country: data.mailingCountry,
-                    },
-                };
-    
-    
-                delete requestData.billingStreetAddress;
-                delete requestData.billingCity;
-                delete requestData.billingState;
-                delete requestData.billingZipcode;
-                delete requestData.billingCountry;
-                delete requestData.mailingStreetAddress;
-                delete requestData.mailingCity;
-                delete requestData.mailingState;
-                delete requestData.mailingZipcode;
-                delete requestData.mailingCountry;
-            
-            const response = await axios.post(apiUrl, data);
-            localStorage.setItem('token', response.data.token);
+            const response = await axios.post(`${import.meta.env.VITE_PROD_API_URL}/api/register`, data);
+            const { token } = response.data;
+            localStorage.setItem('token', token);
             alert('Registration successful');
+            navigate('/');
         } catch (error) {
             if (error.response) {
                 alert('Registration failed: ' + error.response.data.message);
@@ -110,48 +71,32 @@ const UserSignup = () => {
                 <FormField label="First Name" name="firstName" register={register} errors={errors} />
                 <FormField label="Last Name" name="lastName" register={register} errors={errors} />
                 <FormField label="Email" name="email" register={register} errors={errors} />
-
                 <FormField label="Billing Street Address" name="billingStreetAddress" register={register} errors={errors} />
                 <FormField label="Billing Zipcode" name="billingZipcode" register={register} errors={errors} />
                 <FormField label="Billing City" name="billingCity" register={register} errors={errors} />
                 <SelectField label="Billing State" name="billingState" register={register} errors={errors} options={states} />
                 <SelectField label="Billing Country" name="billingCountry" register={register} errors={errors} options={countries} />
-
+                
                 <div className="flex items-center">
                     <input type="checkbox" className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" onClick={handleAddressCheck} />
                     <label className="ml-2 block text-sm text-gray-900">Mailing address same as billing</label>
                 </div>
-
+                
                 <FormField label="Mailing Street Address" name="mailingStreetAddress" register={register} errors={errors} />
                 <FormField label="Mailing Zipcode" name="mailingZipcode" register={register} errors={errors} />
                 <FormField label="Mailing City" name="mailingCity" register={register} errors={errors} />
                 <SelectField label="Mailing State" name="mailingState" register={register} errors={errors} options={states} />
                 <SelectField label="Mailing Country" name="mailingCountry" register={register} errors={errors} options={countries} />
-
+                
                 <FormField label="Username" name="username" register={register} errors={errors} />
-                <FormField label="Password" name="password" type="password" register={register} errors={errors} />
-                <FormField label="Confirm Password" name="confirmPassword" type="password" register={register} errors={errors} />
-
-                {/* Checkbox for Seller Store */}
-                <div className="flex items-center">
-                    <input
-                        type="checkbox"
-                        className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                        onChange={(e) => setIsSeller(e.target.checked)}
-                    />
-                    <label className="ml-2 block text-sm text-gray-900">Are you a seller?</label>
-                </div>
-
-                {isSeller && (
-                    <FormField label="Shop Name" name="shopName" register={register} errors={errors} />
-                )}
-
+                <FormField label="Shop Name" name="shopName" register={register} errors={errors} />
+                
                 <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Register</button>
-                <p className="text-center text-sm text-gray-600 mt-4">Already have an account? <Link to="/login" className="text-indigo-600 hover:underline">Login</Link></p>
             </form>
         </div>
     );
 };
 
 export default UserSignup;
+
 

@@ -105,18 +105,9 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
         // Existing user
         const token = generateToken(req.user);
         res.redirect(`${process.env.VITE_PROD_URL}?token=${token}`);
-    } else if (req.authInfo && req.authInfo.profile) {
-        // New user, redirect to profile completion
-        const profile = req.authInfo.profile;
-        const profileData = {
-            googleId: profile.id,
-            email: profile.emails[0].value,
-            firstName: profile.name.givenName,
-            lastName: profile.name.familyName,
-            picture: profile.photos[0].value
-        };
-        const encodedProfile = encodeURIComponent(JSON.stringify(profileData));
-        res.redirect(`${process.env.VITE_PROD_URL}/complete-profile?profile=${encodedProfile}`);
+    } else if (req.authInfo && req.authInfo.profileData) {
+        // New user, redirect to registration with pre-filled data
+        res.redirect(`${process.env.VITE_PROD_URL}/register?profile=${req.authInfo.profileData}`);
     }
 });
 

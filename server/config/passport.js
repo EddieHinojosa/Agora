@@ -66,27 +66,20 @@ export default (passport) => {
                 await user.save();
                 return done(null, user);
             }
-            const baseUsername = profile.emails[0].value.split('@')[0];
-            const uniqueUsername = await generateUniqueUsername(baseUsername);
 
-            user = new User({
+            // Store profile in session and redirect to registration page
+            const profileData = {
                 googleId: profile.id,
                 email: profile.emails[0].value,
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
-                username: uniqueUsername,
-                isGmail: profile.emails[0].value.endsWith('@gmail.com') || profile.emails[0].value.endsWith('@googlemail.com'),
-                billingAddress: { street: '', city: '', state: '', zip: '', country: '' },
-                mailingAddress: { street: '', city: '', state: '', zip: '', country: '' }
-            });
-            await user.save();
-            done(null, user);
-            
-            // Store profile in session and redirect to profile completion page
-            done(null, false, { profile });
+                picture: profile.photos[0].value
+            };
+            const encodedProfile = encodeURIComponent(JSON.stringify(profileData));
+            return done(null, false, { profileData: encodedProfile });
         } catch (error) {
             console.error('Google Strategy Error:', error);
-            done(error, false);
+            return done(error, false);
         }
     }));
 
@@ -125,5 +118,7 @@ export default (passport) => {
         }
     });
 };
+
+
 
 

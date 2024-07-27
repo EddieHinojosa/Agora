@@ -16,7 +16,7 @@ import User from './pages/User.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx'
 import UpdateProfile from './pages/UpdateProfile.jsx';
-import CompleteProfile from './pages/CompleteProfile.jsx';
+
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
@@ -33,7 +33,7 @@ import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx';
 
-console.log('Client environment variables:', import.meta.env);
+
 
 
 const router = createBrowserRouter([
@@ -66,10 +66,6 @@ const router = createBrowserRouter([
       {
         path: 'update-profile',
         element: <UpdateProfile />
-      },
-      {
-        path: 'complete-profile', // Add this route
-        element: <CompleteProfile />
       }
     ]
   },
