@@ -8,11 +8,14 @@ import passport from 'passport';
 import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
+import setupSocket from './sockets/socket.js';
+import http from 'http'
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 3000;
+const server = http.createServer(app);
 
 // Enable CORS
 app.use(cors({
@@ -63,6 +66,9 @@ app.use(session({
 passportConfig(passport); // Initialize passport strategies
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Setup Socket
+setupSocket(server)
 
 // Routes
 app.use('/api', authRoutes);
