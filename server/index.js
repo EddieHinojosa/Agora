@@ -47,7 +47,7 @@ app.use(
       scriptSrc: ["'self'", "https://apis.google.com"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:", "https://*.google.com"],
-      connectSrc: ["'self'", "https://accounts.google.com"],
+      connectSrc: ["'self'", "https://accounts.google.com", process.env.VITE_DEV_API_URL, process.env.VITE_PROD_API_URL],
       frameSrc: ["'self'", "https://accounts.google.com"],
     },
   })
