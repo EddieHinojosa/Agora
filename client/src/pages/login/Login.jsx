@@ -21,6 +21,8 @@ const Login = () => {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
+        const profileData = urlParams.get('profile');
+
         if (token) {
             localStorage.setItem('token', token);
             const apiUrl = import.meta.env.MODE === 'production'
@@ -38,32 +40,37 @@ const Login = () => {
                 console.error("Error fetching profile:", error);
             });
         }
+
+        if (profileData) {
+            const decodedProfile = JSON.parse(decodeURIComponent(profileData));
+            navigate('/login/usersignup', { state: { profile: decodedProfile } });
+        }
     }, [login, navigate]);
 
     const apiUrl = import.meta.env.MODE === 'production'
-    ? import.meta.env.VITE_PROD_API_URL
-    : import.meta.env.VITE_DEV_API_URL; 
+        ? import.meta.env.VITE_PROD_API_URL
+        : import.meta.env.VITE_DEV_API_URL; 
 
-const onSubmit = async (data) => {
-    try {
-        const response = await axios.post(`${apiUrl}/api/login`, data);
-        const { token, user } = response.data;
-        localStorage.setItem('token', token);
-        login(user);
-        alert('Login successful');
-        navigate('/');
-    } catch (error) {
-        if (error.response) {
-            alert('Login failed: ' + error.response.data.message);
-        } else {
-            alert('Login failed: ' + error.message);
+    const onSubmit = async (data) => {
+        try {
+            const response = await axios.post(`${apiUrl}/api/login`, data);
+            const { token, user } = response.data;
+            localStorage.setItem('token', token);
+            login(user);
+            alert('Login successful');
+            navigate('/');
+        } catch (error) {
+            if (error.response) {
+                alert('Login failed: ' + error.response.data.message);
+            } else {
+                alert('Login failed: ' + error.message);
+            }
         }
     };
-};
 
-const handleGoogleLogin = () => {
-    window.location.href = `${apiUrl}/api/auth/google`;
-};
+    const handleGoogleLogin = () => {
+        window.location.href = `${apiUrl}/api/auth/google`;
+    };
 
     return (
         <div className="max-w-md mx-auto bg-white p-8 mt-10 shadow-md rounded">
@@ -88,4 +95,5 @@ const handleGoogleLogin = () => {
 };
 
 export default Login;
+
 
