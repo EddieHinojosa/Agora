@@ -32,9 +32,10 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_PROD_API_URL];
 app.use(cors({
     origin: allowedOrigins,
-    credentials: true
-}));
-
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
 // Parse JSON
 app.use(express.json());
 

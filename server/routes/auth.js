@@ -102,7 +102,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
         ? `${process.env.VITE_PROD_URL}?token=${token}`
         : `${process.env.VITE_DEV_API_URL}?token=${token}`;
     res.redirect(302, redirectUrl);
-});
+    });
 
 router.post('/update-profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {

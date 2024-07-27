@@ -40,6 +40,7 @@ export default (passport) => {
             ? process.env.VITE_PROD_API_URL + '/api/auth/google/callback'
             : process.env.VITE_DEV_API_URL + '/api/auth/google/callback'
     }, async (accessToken, refreshToken, profile, done) => {
+        console.log('Google profile:', profile);
         try {
             let user = await User.findOne({ googleId: profile.id });
             if (user) {
@@ -58,8 +59,8 @@ export default (passport) => {
                 email: profile.emails[0].value,
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
-                billingAddress: { },
-                mailingAddress: { }
+                billingAddress: {},
+                mailingAddress: {}
             });
             await user.save();
             done(null, user);
