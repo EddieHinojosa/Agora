@@ -10,6 +10,8 @@ export const AuthProvider = ({ children }) => {
         ? import.meta.env.VITE_APP_PROD_API_URL
         : import.meta.env.VITE_APP_DEV_API_URL;
 
+        console.log('API URL:', apiUrl); // Log to verify
+
     useEffect(() => {
         const fetchProfile = async (token) => {
             try {
