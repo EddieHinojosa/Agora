@@ -1,4 +1,9 @@
 import { Link } from 'react-router-dom';
+import Checkout from './Checkout';
+import React from 'react';
+
+
+
 
 const Cart = () => {
     return (
@@ -29,6 +34,8 @@ const Cart = () => {
 
                                 </div>
                             </div>
+                        
+
                         </div>
                     </div>
                     <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -38,6 +45,9 @@ const Cart = () => {
                         >
                             Close
                         </Link>
+                        <div className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-500 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                                <Checkout />
+                            </div>
                     </div>
                 </div>
             </div>
