@@ -31,7 +31,7 @@ const AddressSchema = new mongoose.Schema({
 const UserSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
-    default: mongoose.Types.ObjectId,
+    default: () => new mongoose.Types.ObjectId(),
   },
   firstName: {
     type: String,

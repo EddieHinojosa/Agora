@@ -1,95 +1,139 @@
-import React, { useContext, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../../context/AuthContext';
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import passport from 'passport';
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
-const schema = yup.object().shape({
-    email: yup.string().email('Invalid email').required('Email is required'),
-    password: yup.string().required('Password is required'),
-});
+const router = express.Router();
 
-const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema),
-    });
-    const { login } = useContext(AuthContext);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        if (token) {
-            localStorage.setItem('token', token);
-            const apiUrl = process.env.NODE_ENV === 'production'
-                ? 'https://agora-crafts.onrender.com/api/profile'
-                : 'http://localhost:5000/api/profile';
-
-            axios.get(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(response => {
-                login(response.data.user);
-                navigate('/');
-            }).catch(error => {
-                console.error("Error fetching profile:", error);
-            });
-        }
-    }, [login, navigate]);
-
-
-    const onSubmit = async (data) => {
-        try {
-            const apiUrl = process.env.NODE_ENV === 'production'
-                ? 'https://agora-crafts.onrender.com/api/login'
-                : 'http://localhost:5000/api/login';
-
-            const response = await axios.post(apiUrl, data);
-            const { token, user } = response.data;
-            localStorage.setItem('token', token);
-            login(user);
-            alert('Login successful');
-            navigate('/');
-        } catch (error) {
-            if (error.response && error.response.data.message) {
-                alert('Login failed: ' + error.response.data.message);
-            } else {
-                alert('Login failed: ' + error.message);
-            }
-        }
-    };
-
-    const handleGoogleLogin = () => {
-        const googleAuthUrl = process.env.NODE_ENV === 'production'
-            ? 'https://agora-crafts.onrender.com/api/auth/google'
-            : 'http://localhost:5000/api/auth/google';
-        window.location.href = googleAuthUrl;
-    };
-
-    return (
-        <div className="max-w-md mx-auto bg-white p-8 mt-10 shadow-md rounded">
-            <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
-                    <input {...register('email')} className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                    <p className="text-red-600 text-sm">{errors.email?.message}</p>
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" {...register('password')} className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                    <p className="text-red-600 text-sm">{errors.password?.message}</p>
-                </div>
-                <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Login</button>
-                <button type="button" onClick={handleGoogleLogin} className="w-full bg-red-600 text-white p-2 rounded-md hover:bg-red-700 mt-2">Login with Google</button>
-                <p className="text-center text-sm text-gray-600 mt-4">Don't have an account? <Link to="/login/usersignup" className="text-indigo-600 hover:underline">User Signup</Link> or <Link to="/login/shopsignup" className="text-indigo-600 hover:underline">Shop Signup</Link></p>
-            </form>
-        </div>
+const generateToken = (user) => {
+    return jwt.sign(
+        { sub: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '7d' }
     );
 };
 
-export default Login;
+router.post('/register', async (req, res) => {
+    const { firstName, lastName, email, username, password, billingStreetAddress, billingZipcode, billingCity, billingState, billingCountry, mailingStreetAddress, mailingZipcode, mailingCity, mailingState, mailingCountry, shopName } = req.body;
 
+    try {
+        let user = await User.findOne({ email });
+        if (user) return res.status(400).json({ message: 'Email already exists' });
+
+        user = await User.findOne({ username });
+        if (user) return res.status(400).json({ message: 'Username already exists' });
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const isGmail = email.endsWith('@gmail.com');
+
+        user = new User({
+            firstName,
+            lastName,
+            email,
+            username,
+            password: hashedPassword,
+            billingAddress: {
+                street: billingStreetAddress,
+                city: billingCity,
+                state: billingState,
+                zip: billingZipcode,
+                country: billingCountry,
+            },
+            mailingAddress: {
+                street: mailingStreetAddress,
+                city: mailingCity,
+                state: mailingState,
+                zip: mailingZipcode,
+                country: mailingCountry,
+            },
+            shopName,
+            isGmail
+        });
+
+        await user.save();
+        const token = generateToken(user);
+        res.json({ message: 'Registration successful', token });
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'Duplicate field value entered' });
+        }
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) return res.status(400).json({ message: 'Invalid email or password' });
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
+
+        const token = generateToken(user);
+        res.json({ message: 'Login successful', token, user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.get('/profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Google OAuth Routes
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+    const token = generateToken(req.user);
+    const redirectUrl = process.env.NODE_ENV === 'production'
+        ? `https://agora-crafts.onrender.com?token=${token}`
+        : `http://localhost:3001?token=${token}`;
+    res.redirect(302, redirectUrl);
+});
+
+router.post('/update-profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Update user fields
+        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        user.email = req.body.email;
+        user.billingAddress = {
+            street: req.body.billingStreetAddress,
+            city: req.body.billingCity,
+            state: req.body.billingState,
+            zip: req.body.billingZipcode,
+            country: req.body.billingCountry,
+        };
+        user.mailingAddress = {
+            street: req.body.mailingStreetAddress,
+            city: req.body.mailingCity,
+            state: req.body.mailingState,
+            zip: req.body.mailingZipcode,
+            country: req.body.mailingCountry,
+        };
+        user.shopName = req.body.shopName;
+
+        await user.save();
+        res.json({ message: 'Profile updated successfully', user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+export default router;
