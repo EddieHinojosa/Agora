@@ -11,20 +11,16 @@ const schema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),
     lastName: yup.string().required('Last Name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
-    billingAddress: yup.object().shape({
-        street: yup.string().required('Billing Street Address is required'),
-        city: yup.string().required('Billing City is required'),
-        state: yup.string().required('Billing State is required'),
-        zip: yup.string().required('Billing Zipcode is required'),
-        country: yup.string().required('Billing Country is required'),
-    }),
-    mailingAddress: yup.object().shape({
-        street: yup.string().required('Mailing Street Address is required'),
-        city: yup.string().required('Mailing City is required'),
-        state: yup.string().required('Mailing State is required'),
-        zip: yup.string().required('Mailing Zipcode is required'),
-        country: yup.string().required('Mailing Country is required'),
-    }),
+    billingStreetAddress: yup.string().required('Billing Street Address is required'),
+    billingZipcode: yup.string().required('Billing Zipcode is required'),
+    billingCity: yup.string().required('Billing City is required'),
+    billingState: yup.string().required('Billing State is required'),
+    billingCountry: yup.string().required('Billing Country is required'),
+    mailingStreetAddress: yup.string().required('Mailing Street Address is required'),
+    mailingZipcode: yup.string().required('Mailing Zipcode is required'),
+    mailingCity: yup.string().required('Mailing City is required'),
+    mailingState: yup.string().required('Mailing State is required'),
+    mailingCountry: yup.string().required('Mailing Country is required'),
     username: yup.string().required('Username is required'),
     password: yup.string().required('Password is required'),
     confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
@@ -54,27 +50,8 @@ const UserSignup = () => {
                 delete data.shopName;
             }
             const apiUrl = `${import.meta.env.VITE_API_URL}/api/register`;
-
-            // Nest the address fields into their respective objects
-            const requestData = {
-                ...data,
-                billingAddress: {
-                    street: data.billingStreetAddress,
-                    city: data.billingCity,
-                    state: data.billingState,
-                    zip: data.billingZipcode,
-                    country: data.billingCountry,
-                },
-                mailingAddress: {
-                    street: data.mailingStreetAddress,
-                    city: data.mailingCity,
-                    state: data.mailingState,
-                    zip: data.mailingZipcode,
-                    country: data.mailingCountry,
-                },
-            };
             
-            const response = await axios.post(apiUrl, requestData);
+            const response = await axios.post(apiUrl, data);
             localStorage.setItem('token', response.data.token);
             alert('Registration successful');
         } catch (error) {
@@ -145,5 +122,4 @@ const UserSignup = () => {
 };
 
 export default UserSignup;
-
 
