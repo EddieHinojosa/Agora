@@ -59,7 +59,7 @@ const onSubmit = async (data) => {
             alert('Login failed: ' + error.message);
         }
     }
-};
+
 
 
 const handleGoogleLogin = () => {
