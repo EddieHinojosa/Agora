@@ -13,7 +13,7 @@ import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 import favicon from 'serve-favicon';
 import rateLimit from 'express-rate-limit';
-import morgan from 'morgan';
+
 
 dotenv.config();
 
@@ -68,9 +68,6 @@ const limiter = rateLimit({
     max: 100 // Limit each IP to 100 requests per windowMs
 });
 app.use(limiter);
-
-// Logging
-app.use(morgan('combined'));
 
 // Connect to MongoDB
 const mongoUri = process.env.VITE_MONGO_URI;
