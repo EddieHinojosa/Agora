@@ -37,8 +37,8 @@ export default (passport) => {
         clientID: process.env.VITE_GOOGLE_CLIENT_ID,
         clientSecret: process.env.VITE_GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.NODE_ENV === 'production'
-            ? `${process.env.VITE_PROD_API_URL}/api/auth/google/callback`
-            : `${process.env.VITE_DEV_API_URL}/api/auth/google/callback`
+            ? process.env.VITE_PROD_API_URL + /api/auth/google/callback
+            : process.env.VITE_DEV_API_URL + /api/auth/google/callback
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             let user = await User.findOne({ googleId: profile.id });
