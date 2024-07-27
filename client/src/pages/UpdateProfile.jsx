@@ -36,6 +36,11 @@ const UpdateProfile = () => {
     const { user, login, updateProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    // Determine the correct API URL based on the environment
+    const apiUrl = import.meta.env.MODE === 'production'
+        ? import.meta.env.VITE_PROD_API_URL
+        : import.meta.env.VITE_DEV_API_URL;
+
     useEffect(() => {
         if (user) {
             setValue('firstName', user.firstName);
@@ -59,7 +64,7 @@ const UpdateProfile = () => {
     const onSubmit = async (data) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post('http://localhost:5000/api/update-profile', data, {
+            const response = await axios.post(`${apiUrl}/api/update-profile`, data, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

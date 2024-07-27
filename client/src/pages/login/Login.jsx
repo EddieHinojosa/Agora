@@ -61,7 +61,6 @@ const onSubmit = async (data) => {
     };
 };
 
-
 const handleGoogleLogin = () => {
     window.location.href = `${apiUrl}/api/auth/google`;
 };

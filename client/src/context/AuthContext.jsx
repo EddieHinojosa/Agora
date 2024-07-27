@@ -10,8 +10,7 @@ export const AuthProvider = ({ children }) => {
         ? import.meta.env.VITE_PROD_API_URL
         : import.meta.env.VITE_DEV_API_URL;
 
-        console.log('API URL:', apiUrl); // Log to verify
-
+        
     useEffect(() => {
         const fetchProfile = async (token) => {
             try {
@@ -21,7 +20,7 @@ export const AuthProvider = ({ children }) => {
                     }
                 });
                 setUser(response.data.user);
-                console.log('Profile response:', response);
+                
             } catch (error) {
                 console.error("Error fetching profile:", error);
                 setUser(null);
