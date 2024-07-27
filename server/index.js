@@ -6,13 +6,17 @@ import MongoStore from 'connect-mongo';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import passport from 'passport';
-import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 
 
 dotenv.config()
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 console.log('Server environment variables:', {
     VITE_MONGO_URI: process.env.VITE_MONGO_URI,
