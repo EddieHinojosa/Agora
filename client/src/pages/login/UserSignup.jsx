@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
 
@@ -28,18 +28,17 @@ const UserSignup = () => {
         resolver: yupResolver(schema),
     });
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const profileData = params.get('profile');
-        if (profileData) {
-            const parsedProfile = JSON.parse(decodeURIComponent(profileData));
-            setValue('firstName', parsedProfile.firstName);
-            setValue('lastName', parsedProfile.lastName);
-            setValue('email', parsedProfile.email);
-            setValue('username', parsedProfile.email.split('@')[0]); // Autogenerate username from email
+        if (location.state && location.state.profile) {
+            const { firstName, lastName, email, username } = location.state.profile;
+            setValue('firstName', firstName);
+            setValue('lastName', lastName);
+            setValue('email', email);
+            setValue('username', username);
         }
-    }, [setValue]);
+    }, [location.state, setValue]);
 
     const onSubmit = async (data) => {
         try {
@@ -99,6 +98,7 @@ const UserSignup = () => {
 };
 
 export default UserSignup;
+
 
 
 

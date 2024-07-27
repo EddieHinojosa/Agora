@@ -56,7 +56,6 @@ export default (passport) => {
 
             user = await User.findOne({ email: profile.emails[0].value });
             if (user) {
-                // Handle the case where a different Google account has the same email
                 if (user.googleId && user.googleId !== profile.id) {
                     return done(null, false, { message: 'This email is already associated with another Google account.' });
                 }
@@ -67,14 +66,17 @@ export default (passport) => {
                 return done(null, user);
             }
 
-            // Store profile in session and redirect to registration page
+            const baseUsername = profile.emails[0].value.split('@')[0];
+            const uniqueUsername = await generateUniqueUsername(baseUsername);
+
             const profileData = {
                 googleId: profile.id,
                 email: profile.emails[0].value,
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
-                picture: profile.photos[0].value
+                username: uniqueUsername,
             };
+
             const encodedProfile = encodeURIComponent(JSON.stringify(profileData));
             return done(null, false, { profileData: encodedProfile });
         } catch (error) {
@@ -118,6 +120,7 @@ export default (passport) => {
         }
     });
 };
+
 
 
 
