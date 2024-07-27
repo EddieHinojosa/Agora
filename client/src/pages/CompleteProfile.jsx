@@ -39,7 +39,7 @@ const CompleteProfile = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_PROD_API_URL}/api/register`, { ...data, googleId: profile.googleId });
+            const response = await axios.post(`${import.meta.env.VITE_PROD_URL}/api/register`, { ...data, googleId: profile.googleId });
             const { token } = response.data;
             localStorage.setItem('token', token);
             alert('Profile completed successfully');
