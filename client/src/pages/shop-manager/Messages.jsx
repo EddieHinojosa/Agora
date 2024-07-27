@@ -1,13 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { IoMdSearch } from "react-icons/io";
 import { Link } from "react-router-dom";
+import io from 'socket.io-client';
+import AuthContext from '../../context/AuthContext';
+
+const socket = io(import.meta.env.VITE_API_URL);
 
 const Messages = () => {
-
-    // Modal New Message Code
+  // Modal New Message Code
   const [showModal, setShowModal] = useState(false);
-  const [username, setUsername] = useState("");
+  const [recipientId, setRecipientId] = useState("");
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    socket.on('receiveMessage', (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+  }, []);
 
   const handleNewMessageClick = () => {
     setShowModal(true);
@@ -18,13 +29,23 @@ const Messages = () => {
   };
 
   const handleSendMessage = () => {
-    // code to send message goes here and closes modal after sending
+    if (!recipientId || !message) {
+      alert('Recipient ID and message text are required.');
+      return;
+    }
+
+    const newMessage = {
+      senderId: user._id,
+      recipientId,
+      text: message,
+    };
+    socket.emit('sendMessage', newMessage);
     setShowModal(false);
+    setMessage("");
   };
 
   return (
-    // Main Content
-      <div className="flex h-screen">
+    <div className="flex h-screen">
       <div className="flex-1 p-4">
         <div className="flex flex-col mb-4">
           <h1 className="text-2xl font-bold mb-2">Messages</h1>
@@ -49,8 +70,6 @@ const Messages = () => {
               + New Message
             </button>
             <ul>
-
-                {/* Eventually need proper inbox/sent links */}
               <li className="mb-2">
                 <Link to="#" className="text-gray-700 font-bold hover:underline">
                   Inbox
@@ -64,52 +83,36 @@ const Messages = () => {
             </ul>
           </div>
 
-          {/* Incoming Messages */}
-          {/* Goes to Error Page when clicked - needs backend code to work */}
-          {/* Img Icons of users there if we can make that happen */}
+          {/* Messages */}
           <div className="flex-1 p-4 space-y-4">
-            <Link
-              to="/message/1"
-              className="flex justify-between items-center border p-4 rounded-lg hover:bg-gray-50 cursor-pointer"
-            >
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 mr-4">
-                  <img src="" alt="" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <h2 className="font-bold">User 1</h2>
-                  <p className="text-gray-600">Message goes here...</p>
-                </div>
-              </div>
-            </Link>
-            <Link
-              to="/message/2"
-              className="flex justify-between items-center border p-4 rounded-lg hover:bg-gray-50 cursor-pointer"
-            >
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 mr-4">
-                  <img src="" alt="" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <h2 className="font-bold">User 2</h2>
-                  <p className="text-gray-600">Message goes here...</p>
+            {messages.map((msg, index) => (
+              <div key={index} className="flex justify-between items-center border p-4 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <div className="flex items-center">
+                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300 mr-4">
+                    <img src="" alt="" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h2 className="font-bold">{msg.sender}</h2>
+                    <p className="text-gray-600">{msg.text}</p>
+                  </div>
                 </div>
               </div>
-            </Link>
+            ))}
           </div>
         </div>
       </div>
 
-    {/* Modal Code */}
+
+      {/* Message Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white rounded-lg p-8 w-full max-w-md">
             <h2 className="text-2xl mb-4">New Message</h2>
             <input
               type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Recipient User ID"
+              value={recipientId}
+              onChange={(e) => setRecipientId(e.target.value)}
               className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
             />
             <textarea
@@ -128,7 +131,7 @@ const Messages = () => {
               </button>
               <button
                 onClick={handleSendMessage}
-                className="bg-black hover text-white px-4 py-2 rounded-md"
+                className="bg-black text-white px-4 py-2 rounded-md"
               >
                 Send
               </button>
@@ -141,4 +144,3 @@ const Messages = () => {
 };
 
 export default Messages;
-

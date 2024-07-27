@@ -15,7 +15,7 @@ const MessageSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  Timestamp: {
+  timestamp: {
     type: Date,
     default: Date.now,
   },
@@ -23,3 +23,4 @@ const MessageSchema = new mongoose.Schema({
 
 const Message = mongoose.model("Message", MessageSchema);
 export default Message;
+

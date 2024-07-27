@@ -14,7 +14,7 @@ const setupSocket = (server) => {
                 sender: senderId,
                 recipient: recipientId,
                 text,
-                Timestamp: new Date(),
+                timestamp: new Date(),
             });
             await message.save()
 
@@ -29,4 +29,4 @@ const setupSocket = (server) => {
     return io;
 }
 
-export default setupSocket
+export default setupSocket;
