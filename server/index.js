@@ -12,7 +12,7 @@ import shopRoutes from './routes/shop.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001; // Ensure the port is set correctly
+const PORT = process.env.PORT || 5000; 
 
 // Enable CORS
 app.use(cors({
