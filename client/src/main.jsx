@@ -9,8 +9,7 @@ import { AuthProvider } from './context/AuthContext.jsx';
 
 console.log(import.meta.env);
 
-const apiUrl = import.meta.env.VITE_API_URL;
-console.log('API URL:', apiUrl);
+
 
 console.log('Client environment variables:', {
   VITE_DEV_API_URL: import.meta.env.VITE_DEV_API_URL,
