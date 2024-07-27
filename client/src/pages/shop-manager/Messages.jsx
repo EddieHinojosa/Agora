@@ -5,6 +5,7 @@ import { io } from 'socket.io-client';
 import AuthContext from '../../context/AuthContext';
 import fetchUser from '../../utils/fetchUser';
 
+// Parenthesis need to stay empty or console loop with appear
 // Establish connection to socket
 const socket = io();
 
@@ -96,7 +97,7 @@ const Messages = () => {
               + New Message
             </button>
 
-            {/* Inbox and Sent links */}
+            {/* Inbox and Sent links - needs code*/}
             <ul>
               <li className="mb-2">
                 <Link to="#" className="text-gray-700 font-bold hover:underline">
