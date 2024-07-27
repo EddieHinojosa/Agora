@@ -107,7 +107,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
         res.redirect(`${process.env.VITE_PROD_URL}?token=${token}`);
     } else if (req.authInfo && req.authInfo.profileData) {
         // New user, redirect to registration with pre-filled data
-        res.redirect(`${process.env.VITE_PROD_URL}/login/usersignup?profile=${req.authInfo.profileData}`);
+        res.redirect(`${process.env.VITE_PROD_URL}/register?profile=${req.authInfo.profileData}`);
     }
 });
 
@@ -146,6 +146,7 @@ router.post('/update-profile', passport.authenticate('jwt', { session: false }),
 });
 
 export default router;
+
 
 
 

@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -6,15 +8,16 @@ import MongoStore from 'connect-mongo';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import passport from 'passport';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
 import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
+import favicon from 'serve-favicon';
+import rateLimit from 'express-rate-limit';
+import morgan from 'morgan';
 
+dotenv.config();
 
-dotenv.config()
-
+// Define __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -28,10 +31,10 @@ console.log('Server environment variables:', {
     VITE_DEV_URL: process.env.VITE_DEV_URL,
     VITE_DEV_API_URL: process.env.VITE_DEV_API_URL,
     VITE_PROD_API_URL: process.env.VITE_PROD_API_URL,
-  });
+});
 
 const app = express();
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 5000;
 
 // Enable CORS
 const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_PROD_API_URL, process.env.VITE_PROD_URL];
@@ -40,26 +43,34 @@ app.use(cors({
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
-  }));
+}));
+
 // Parse JSON
 app.use(express.json());
 
+// Serve the favicon
+app.use(favicon(join(__dirname, 'public', 'favicon.ico')));
 
-// Content Security Policy
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'", process.env.VITE_PROD_URL],
-      scriptSrc: ["'self'", "https://apis.google.com", process.env.VITE_PROD_URL],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:", "https://*.google.com", process.env.VITE_PROD_URL, `${process.env.VITE_PROD_API_URL}/favicon.ico`],
-      connectSrc: ["'self'", "https://accounts.google.com", process.env.VITE_DEV_API_URL, process.env.VITE_PROD_URL],
-      frameSrc: ["'self'", "https://accounts.google.com", process.env.VITE_PROD_URL],
-    },
-  })
-);
+// Helmet for security headers
+app.use(helmet({
+    contentSecurityPolicy: false, // Disable CSP only
+    frameguard: { action: 'deny' },
+    hidePoweredBy: true,
+    hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
+    ieNoOpen: true,
+    noSniff: true,
+    xssFilter: true,
+}));
 
-app.use('/favicon.ico', express.static(join(__dirname, 'public', 'favicon.ico')));
+// Rate limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // Limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
+
+// Logging
+app.use(morgan('combined'));
 
 // Connect to MongoDB
 const mongoUri = process.env.VITE_MONGO_URI;
@@ -74,7 +85,6 @@ mongoose.connect(mongoUri, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error(err));
 
-
 // Session middleware
 app.use(session({
     secret: process.env.VITE_SESSION_SECRET,
@@ -82,8 +92,9 @@ app.use(session({
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: process.env.VITE_MONGO_URI }),
     cookie: {
-        sameSite: 'strict',
+        httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
     }
 }));
 
@@ -96,6 +107,10 @@ app.use(passport.session());
 app.use('/api', authRoutes);
 app.use('/api', shopRoutes);
 
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}...poop poop`);
+});
 
 
 
@@ -161,12 +176,3 @@ app.use('/api', shopRoutes);
 // });
 
 // // --------------------need to fix the routing (Eddie)-----------------------
-
-
-
-
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}...poop poop`);
-});
-
