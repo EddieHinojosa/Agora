@@ -39,6 +39,8 @@ app.use(cors({
 // Parse JSON
 app.use(express.json());
 
+app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'favicon.ico')));
+
 // Content Security Policy
 app.use(
   helmet.contentSecurityPolicy({
