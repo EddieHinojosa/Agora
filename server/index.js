@@ -44,7 +44,6 @@ app.use(cors({
 // Parse JSON
 app.use(express.json());
 
-app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Content Security Policy
 app.use(
@@ -59,6 +58,8 @@ app.use(
     },
   })
 );
+
+app.use('/favicon.ico', express.static(join(__dirname, 'public', 'favicon.ico')));
 
 // Connect to MongoDB
 const mongoUri = process.env.VITE_MONGO_URI;
