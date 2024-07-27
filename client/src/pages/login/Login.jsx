@@ -24,8 +24,8 @@ const Login = () => {
         if (token) {
             localStorage.setItem('token', token);
             const apiUrl = import.meta.env.MODE === 'production'
-                ? import.meta.env.VITE_API_URL + '/profile'
-                : 'http://localhost:5000/api/profile';
+                ? import.meta.env.VITE_API_URL + '/api/profile'
+                : import.meta.env.VITE_API_URL + '/api/profile';
 
             axios.get(apiUrl, {
                 headers: {
@@ -43,8 +43,8 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             const apiUrl = import.meta.env.MODE === 'production'
-                ? import.meta.env.VITE_API_URL + '/login'
-                : 'http://localhost:5000/api/login';
+                ? import.meta.env.VITE_API_URL + '/api/login'
+                : import.meta.env.VITE_API_URL + '/api/login';
 
             const response = await axios.post(apiUrl, data);
             const { token, user } = response.data;
@@ -63,8 +63,8 @@ const Login = () => {
 
     const handleGoogleLogin = () => {
         const googleAuthUrl = import.meta.env.MODE === 'production'
-            ? import.meta.env.VITE_API_URL + '/auth/google'
-            : 'http://localhost:5000/api/auth/google';
+            ? import.meta.env.VITE_API_URL + '/api/auth/google'
+            : import.meta.env.VITE_API_URL + '/api/auth/google';
         window.location.href = googleAuthUrl;
     };
 
@@ -91,3 +91,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -49,7 +49,7 @@ const UserSignup = () => {
             if (!isSeller) {
                 delete data.shopName;
             }
-            const apiUrl = import.meta.env.VITE_API_URL + '/api/register';
+            const apiUrl = `${import.meta.env.VITE_API_URL}/api/register`;
             
             const response = await axios.post(apiUrl, data);
             localStorage.setItem('token', response.data.token);
@@ -122,3 +122,4 @@ const UserSignup = () => {
 };
 
 export default UserSignup;
+
