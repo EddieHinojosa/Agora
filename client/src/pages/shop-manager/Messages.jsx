@@ -5,8 +5,7 @@ import { io } from 'socket.io-client';
 import AuthContext from '../../context/AuthContext';
 import fetchUser from '../../utils/fetchUser';
 
-// Parenthesis need to stay empty or console loop message appears
-// establish connection to socket
+// Establish connection to socket
 const socket = io();
 
 const Messages = () => {
@@ -16,7 +15,7 @@ const Messages = () => {
   const [messages, setMessages] = useState([]);
   const { user } = useContext(AuthContext);
 
-  // listens for incoming messages
+  // Listens for incoming messages
   useEffect(() => {
     if (!user || !user._id) {
       console.error("User is not authenticated or user ID is missing");
@@ -47,20 +46,20 @@ const Messages = () => {
       return;
     }
 
-    // checks if user is authenticated ---- having issues with this
+    // Checks if user is authenticated
     if (!user || !user._id) {
       alert('User is not authenticated or user ID is missing.');
       return;
     }
 
-    // fetches user
+    // Fetches user
     const recipientId = await fetchUser(recipientUsername);
     if (!recipientId) {
       alert('Recipient not found');
       return;
     }
 
-    // if user is found, sends message
+    // If user is found, sends message
     const newMessage = {
       senderId: user._id,
       recipientId,
@@ -68,6 +67,7 @@ const Messages = () => {
     };
     socket.emit('sendMessage', newMessage);
     setShowModal(false);
+    setRecipientUsername("");
     setMessage("");
   };
 
@@ -96,8 +96,7 @@ const Messages = () => {
               + New Message
             </button>
 
-
-            {/* Code needs to be put in to get inbox and sent */}
+            {/* Inbox and Sent links */}
             <ul>
               <li className="mb-2">
                 <Link to="#" className="text-gray-700 font-bold hover:underline">
@@ -121,7 +120,7 @@ const Messages = () => {
                     <img src="" alt="" className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h2 className="font-bold">{msg.sender.firstName} {msg.sender.lastName}</h2>
+                    <h2 className="font-bold">{msg.sender?.firstName} {msg.sender?.lastName}</h2>
                     <p className="text-gray-600">{msg.text}</p>
                   </div>
                 </div>
@@ -172,6 +171,7 @@ const Messages = () => {
 };
 
 export default Messages;
+
 
 
 
