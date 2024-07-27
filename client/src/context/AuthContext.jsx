@@ -7,8 +7,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const apiUrl = import.meta.env.MODE === 'production'
-        ? import.meta.env.VITE_APP_PROD_API_URL
-        : import.meta.env.VITE_APP_DEV_API_URL;
+        ? import.meta.env.VITE_PROD_API_URL
+        : import.meta.env.VITE_DEV_API_URL;
 
         console.log('API URL:', apiUrl); // Log to verify
 
