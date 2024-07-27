@@ -104,7 +104,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
     if (req.user) {
         // Existing user
         const token = generateToken(req.user);
-        res.redirect(`${process.env.VITE_PROD_APP_URL}?token=${token}`);
+        res.redirect(`${process.env.VITE_PROD_URL}?token=${token}`);
     } else if (req.authInfo && req.authInfo.profile) {
         // New user, redirect to profile completion
         const profile = req.authInfo.profile;
