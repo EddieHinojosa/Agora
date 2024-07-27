@@ -24,8 +24,8 @@ const Login = () => {
         if (token) {
             localStorage.setItem('token', token);
             const apiUrl = import.meta.env.MODE === 'production'
-                ? import.meta.env.VITE_PROD_API_URL
-                : import.meta.env.VITE_DEV_API_URL;
+                ? import.meta.env.VITE_PROD_API_URL + '/api/profile'
+                : import.meta.env.VITE_DEV_API_URL + '/api/profile';
 
             axios.get(apiUrl, {
                 headers: {

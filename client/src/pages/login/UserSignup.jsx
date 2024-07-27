@@ -49,9 +49,39 @@ const UserSignup = () => {
             if (!isSeller) {
                 delete data.shopName;
             }
-            const apiUrl = process.env.NODE_ENV === 'production'
-                ? 'https://agora-crafts.onrender.com/api/register'
-                : 'http://localhost:5000/api/register';
+            const apiUrl = import.meta.env.MODE === 'production'
+                ? import.meta.env.VITE_PROD_API_URL + '/api/register'
+                : import.meta.env.VITE_DEV_API_URL + '/api/register'
+
+                const requestData = {
+                    ...data,
+                    billingAddress: {
+                        street: data.billingStreetAddress,
+                        city: data.billingCity,
+                        state: data.billingState,
+                        zip: data.billingZipcode,
+                        country: data.billingCountry,
+                    },
+                    mailingAddress: {
+                        street: data.mailingStreetAddress,
+                        city: data.mailingCity,
+                        state: data.mailingState,
+                        zip: data.mailingZipcode,
+                        country: data.mailingCountry,
+                    },
+                };
+    
+    
+                delete requestData.billingStreetAddress;
+                delete requestData.billingCity;
+                delete requestData.billingState;
+                delete requestData.billingZipcode;
+                delete requestData.billingCountry;
+                delete requestData.mailingStreetAddress;
+                delete requestData.mailingCity;
+                delete requestData.mailingState;
+                delete requestData.mailingZipcode;
+                delete requestData.mailingCountry;
             
             const response = await axios.post(apiUrl, data);
             localStorage.setItem('token', response.data.token);
