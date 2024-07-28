@@ -26,7 +26,7 @@ import UserSignup from './pages/login/UserSignup.jsx';
 // Shop Manager Pages
 import ShopManager from './pages/shop-manager/ShopManager.jsx';
 import Orders from './pages/shop-manager/Orders.jsx';
-// import Messages from './pages/shop-manager/Messages.jsx';
+import Messages from './pages/shop-manager/Messages.jsx';
 import Products from './pages/shop-manager/Products.jsx';
 import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';

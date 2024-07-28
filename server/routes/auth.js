@@ -14,19 +14,28 @@ const generateToken = (user) => {
 
 router.post('/firebase-login', async (req, res) => {
     const { token } = req.body;
+    console.log("Received token:", token); // Log received token
     try {
         const decodedToken = await admin.auth().verifyIdToken(token);
-        const uid = decodedToken.uid;
+        console.log("Decoded token:", decodedToken); // Log decoded token
+        const { uid, email, name } = decodedToken;
+        const [firstName, lastName] = name ? name.split(' ') : [null, null];
 
         let user = await User.findOne({ uid });
         if (!user) {
-            user = new User({ uid, email: decodedToken.email });
+            user = new User({
+                uid,
+                email,
+                firstName,
+                lastName
+            });
             await user.save();
         }
 
         const jwtToken = generateToken(user);
         res.json({ user, token: jwtToken });
     } catch (error) {
+        console.error("Error during firebase-login:", error); // Log the error details
         res.status(500).json({ message: error.message });
     }
 });
@@ -49,6 +58,7 @@ router.post('/register', async (req, res) => {
 });
 
 export default router;
+
 
 
 

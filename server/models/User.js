@@ -30,11 +30,11 @@ const UserSchema = new mongoose.Schema({
   },
   firstName: {
     type: String,
-    required: true,
+    required: false, // Change to false
   },
   lastName: {
     type: String,
-    required: true,
+    required: false, // Change to false
   },
   email: {
     type: String,
@@ -44,17 +44,22 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: function () {
-      return !this.googleId;
+      return !this.googleId && !this.uid;
     },
     unique: true,
   },
   password: {
     type: String,
     required: function () {
-      return !this.googleId;
+      return !this.googleId && !this.uid;
     },
   },
   googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
+  uid: {
     type: String,
     unique: true,
     sparse: true,
