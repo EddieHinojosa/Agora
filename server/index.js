@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 3000;
 
 // Enable CORS with specific origins and headers
 app.use(cors({
-  origin: ['http://localhost:3001', 'http://localhost:5173', 'https://agora-crafts.onrender.com'],
+  origin: ['http://localhost:3001', 'http://localhost:5173', 'https://agora-crafts.onrender.com', 'https://agora-6bm6.onrender.com'], //agora-6bm6 is for multi transaction testing on eddie branch, will remove once done
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
