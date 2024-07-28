@@ -9,12 +9,12 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/user.js';
-import setupSocket from './sockets/socket.js';
 import favicon from 'serve-favicon';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import admin from 'firebase-admin';
 import MongoStore from 'connect-mongo';
+import http from 'http';
 
 dotenv.config();
 
@@ -53,7 +53,7 @@ app.use(cors({
 app.use(express.json());
 
 // Serve the favicon
-app.use(favicon(join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(join(__dirname, 'public', 'favicon.ico')));
 
 // Helmet for security headers
 app.use(helmet({
@@ -98,9 +98,6 @@ app.use(session({
         sameSite: 'strict',
     }
 }));
-
-// Setup Socket.IO
-setupSocket(server);
 
 // Routes
 app.use('/api', authRoutes);
