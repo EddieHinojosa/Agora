@@ -1,6 +1,8 @@
-import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
 
+import React, { createContext, useState, useEffect } from 'react';
+import { auth } from '../firebaseConfig';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -10,59 +12,50 @@ export const AuthProvider = ({ children }) => {
         ? import.meta.env.VITE_PROD_API_URL
         : import.meta.env.VITE_DEV_API_URL;
 
-        
     useEffect(() => {
-        const fetchProfile = async (token) => {
-            try {
-                const response = await axios.get(`${apiUrl}/api/profile`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                setUser(response.data.user);
-                
-            } catch (error) {
-                console.error("Error fetching profile:", error);
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            if (firebaseUser) {
+                try {
+                    const token = await firebaseUser.getIdToken();
+                    const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
+                    setUser(response.data.user);
+                    localStorage.setItem('token', response.data.jwt);
+                } catch (error) {
+                    console.error("Error fetching user profile:", error);
+                    setUser(null);
+                }
+            } else {
                 setUser(null);
             }
-        };
-
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetchProfile(token);
-        }
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const tokenFromUrl = urlParams.get('token');
-        if (tokenFromUrl) {
-            localStorage.setItem('token', tokenFromUrl);
-            fetchProfile(tokenFromUrl);
-            window.history.replaceState(null, '', '/'); // Remove the token from the URL
-        }
+        });
+        return () => unsubscribe();
     }, [apiUrl]);
 
-    const login = (userData) => {
-        setUser(userData);
-        localStorage.setItem('token', userData.token);
+    const login = async (email, password) => {
+        await signInWithEmailAndPassword(auth, email, password);
     };
 
-    const logout = () => {
-        setUser(null);
+    const googleLogin = async () => {
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(auth, provider);
+    };
+
+    const logout = async () => {
+        await signOut(auth);
         localStorage.removeItem('token');
-    };
-
-    const updateProfile = (updatedUserData) => {
-        setUser(updatedUserData);
+        setUser(null);
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, updateProfile }}>
+        <AuthContext.Provider value={{ user, login, googleLogin, logout }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
 export default AuthContext;
+
+
 
 
 

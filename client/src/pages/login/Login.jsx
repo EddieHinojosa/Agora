@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+// src/pages/login/Login.jsx
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
@@ -15,61 +15,26 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
-    const { login } = useContext(AuthContext);
+    const { login, googleLogin } = useContext(AuthContext);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        const profileData = urlParams.get('profile');
-
-        if (token) {
-            localStorage.setItem('token', token);
-            const apiUrl = import.meta.env.MODE === 'production'
-                ? import.meta.env.VITE_PROD_API_URL + '/api/profile'
-                : import.meta.env.VITE_DEV_API_URL + '/api/profile';
-
-            axios.get(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(response => {
-                login(response.data.user);
-                navigate('/');
-            }).catch(error => {
-                console.error("Error fetching profile:", error);
-            });
-        }
-
-        if (profileData) {
-            const decodedProfile = JSON.parse(decodeURIComponent(profileData));
-            navigate('/login/usersignup', { state: { profile: decodedProfile } });
-        }
-    }, [login, navigate]);
-
-    const apiUrl = import.meta.env.MODE === 'production'
-        ? import.meta.env.VITE_PROD_API_URL
-        : import.meta.env.VITE_DEV_API_URL; 
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post(`${apiUrl}/api/login`, data);
-            const { token, user } = response.data;
-            localStorage.setItem('token', token);
-            login(user);
+            await login(data.email, data.password);
             alert('Login successful');
             navigate('/');
         } catch (error) {
-            if (error.response) {
-                alert('Login failed: ' + error.response.data.message);
-            } else {
-                alert('Login failed: ' + error.message);
-            }
+            alert('Login failed: ' + error.message);
         }
     };
 
-    const handleGoogleLogin = () => {
-        window.location.href = `${apiUrl}/api/auth/google`;
+    const handleGoogleLogin = async () => {
+        try {
+            await googleLogin();
+            navigate('/');
+        } catch (error) {
+            alert('Google login failed: ' + error.message);
+        }
     };
 
     return (
@@ -95,6 +60,7 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
 

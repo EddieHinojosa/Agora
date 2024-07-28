@@ -1,16 +1,20 @@
-import React, { useEffect } from 'react';
+// src/pages/login/UserSignup.jsx
+// src/pages/login/UserSignup.jsx
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
+import { auth } from '../../firebaseConfig';
 
 const schema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),
     lastName: yup.string().required('Last Name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
+    password: yup.string().required('Password is required'),
     billingStreetAddress: yup.string().required('Billing Street Address is required'),
     billingZipcode: yup.string().required('Billing Zipcode is required'),
     billingCity: yup.string().required('Billing City is required'),
@@ -28,31 +32,40 @@ const UserSignup = () => {
         resolver: yupResolver(schema),
     });
     const navigate = useNavigate();
-    const location = useLocation();
-
-    useEffect(() => {
-        if (location.state && location.state.profile) {
-            const { firstName, lastName, email, username } = location.state.profile;
-            setValue('firstName', firstName);
-            setValue('lastName', lastName);
-            setValue('email', email);
-            setValue('username', username);
-        }
-    }, [location.state, setValue]);
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_PROD_API_URL}/api/register`, data);
-            const { token } = response.data;
-            localStorage.setItem('token', token);
+            const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+            const user = userCredential.user;
+
+            // Save additional user data in MongoDB through the server
+            await axios.post(`${apiUrl}/api/auth/register`, {
+                uid: user.uid,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                billingAddress: {
+                    street: data.billingStreetAddress,
+                    city: data.billingCity,
+                    state: data.billingState,
+                    zip: data.billingZipcode,
+                    country: data.billingCountry,
+                },
+                mailingAddress: {
+                    street: data.mailingStreetAddress,
+                    city: data.mailingCity,
+                    state: data.mailingState,
+                    zip: data.mailingZipcode,
+                    country: data.mailingCountry,
+                },
+                username: data.username,
+                shopName: data.shopName,
+            });
+
             alert('Registration successful');
             navigate('/');
         } catch (error) {
-            if (error.response) {
-                alert('Registration failed: ' + error.response.data.message);
-            } else {
-                alert('Registration failed: ' + error.message);
-            }
+            alert('Registration failed: ' + error.message);
         }
     };
 
@@ -71,6 +84,7 @@ const UserSignup = () => {
                 <FormField label="First Name" name="firstName" register={register} errors={errors} />
                 <FormField label="Last Name" name="lastName" register={register} errors={errors} />
                 <FormField label="Email" name="email" register={register} errors={errors} />
+                <FormField label="Password" name="password" register={register} errors={errors} />
                 <FormField label="Billing Street Address" name="billingStreetAddress" register={register} errors={errors} />
                 <FormField label="Billing Zipcode" name="billingZipcode" register={register} errors={errors} />
                 <FormField label="Billing City" name="billingCity" register={register} errors={errors} />
@@ -98,6 +112,8 @@ const UserSignup = () => {
 };
 
 export default UserSignup;
+
+
 
 
 

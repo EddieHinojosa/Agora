@@ -7,8 +7,6 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import passport from 'passport';
-import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/user.js';
@@ -16,12 +14,11 @@ import setupSocket from './sockets/socket.js';
 import http from 'http';
 import favicon from 'serve-favicon';
 import rateLimit from 'express-rate-limit';
-
-
 import Stripe from 'stripe';
+import admin from 'firebase-admin';
+import serviceAccount from './path/to/serviceAccountKey.json'; // Make sure to update this path
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
-
 dotenv.config();
 
 // Define __dirname
@@ -38,6 +35,11 @@ console.log('Server environment variables:', {
     VITE_DEV_URL: process.env.VITE_DEV_URL,
     VITE_DEV_API_URL: process.env.VITE_DEV_API_URL,
     VITE_PROD_API_URL: process.env.VITE_PROD_API_URL,
+});
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://your-project-id.firebaseio.com',
 });
 
 const app = express();
@@ -102,11 +104,6 @@ app.use(session({
     }
 }));
 
-// Initialize Passport and session
-passportConfig(passport); // Initialize passport strategies
-app.use(passport.initialize());
-app.use(passport.session());
-
 // Setup Socket.IO
 setupSocket(server);
 
@@ -114,9 +111,6 @@ setupSocket(server);
 app.use('/api', authRoutes);
 app.use('/api', shopRoutes);
 app.use('/api', userRoutes); // User routes
-
-
-
 
 //-----------------eddie calendar stuff in process-----------------
 // // Import the googleapis library
