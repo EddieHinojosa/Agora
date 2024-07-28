@@ -11,9 +11,6 @@ export const AuthProvider = ({ children }) => {
         ? import.meta.env.VITE_PROD_API_URL
         : import.meta.env.VITE_DEV_API_URL;
 
-    // Debugging line to ensure apiUrl is being set correctly
-    console.log("API URL:", apiUrl);
-
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             if (firebaseUser) {
@@ -56,6 +53,8 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
+
+
 
 
 
