@@ -4,7 +4,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
-import MongoStore from 'connect-mongo';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
@@ -15,10 +14,11 @@ import favicon from 'serve-favicon';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import admin from 'firebase-admin';
-import serviceAccount from './path/to/serviceAccountKey.json'; // Make sure to update this path
+
+// Load environment variables from .env file
+dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-dotenv.config();
 
 // Define __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -37,8 +37,11 @@ console.log('Server environment variables:', {
 });
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://your-project-id.firebaseio.com',
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+  })
 });
 
 const app = express();
@@ -85,7 +88,7 @@ if (!mongoUri) {
 }
 
 mongoose.connect(mongoUri, {
-        ssl: true
+    ssl: true
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error(err));
@@ -109,7 +112,7 @@ setupSocket(server);
 // Routes
 app.use('/api', authRoutes);
 app.use('/api', shopRoutes);
-app.use('/api', userRoutes);
+app.use('/api', userRoutes); // User routes
 
 //-----------------eddie calendar stuff in process-----------------
 // // Import the googleapis library
