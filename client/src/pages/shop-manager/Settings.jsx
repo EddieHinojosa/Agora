@@ -23,7 +23,7 @@ const Settings = () => {
 
     return (
         <div className="p-6 min-h-screen">
-            <h1 className="text-2xl font-bold mb-6">Shop Settings</h1>
+            <h2 className="text-2xl font-bold mb-6">Shop Settings</h2>
             
             <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -35,7 +35,7 @@ const Settings = () => {
                     onChange={getShopPhoto}
                     className="block w-full text-sm text-gray-500
                     file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
+                    file: file:border-0
                     file:text-sm file:font-semibold
                     file:bg-gray-300 file:text-black
                     hover:file:bg-gray-300"
@@ -53,7 +53,7 @@ const Settings = () => {
                     onChange={getBannerPhoto}
                     className="block w-full text-sm text-gray-500
                     file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
+                    file: file:border-0
                     file:text-sm file:font-semibold
                     file:bg-gray-300 file:text-black
                     hover:file:bg-gray-300"
@@ -85,7 +85,7 @@ const Settings = () => {
             <div className="mb-6">
                 <button
                     onClick={handleSave}
-                    className="px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="px-4 py-2 bg-black text-white text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                     Save
                 </button>
