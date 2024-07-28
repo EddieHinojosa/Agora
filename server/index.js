@@ -103,7 +103,7 @@ mongoose.connect(mongoUri, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error(err));
 
-const MongoStore = connectMongo(session);
+const MongoStore = new connectMongo(session);
 
 // Session middleware
 app.use(session({
