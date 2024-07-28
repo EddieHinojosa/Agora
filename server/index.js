@@ -18,6 +18,10 @@ import favicon from 'serve-favicon';
 import rateLimit from 'express-rate-limit';
 
 
+import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+
 dotenv.config();
 
 // Define __dirname
@@ -110,10 +114,7 @@ setupSocket(server);
 app.use('/api', authRoutes);
 app.use('/api', shopRoutes);
 app.use('/api', userRoutes); // User routes
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}...poop poop`);
-});
+
 
 
 
@@ -179,3 +180,35 @@ app.listen(PORT, () => {
 // });
 
 // // --------------------need to fix the routing (Eddie)-----------------------
+
+// Stripe Checkout Session route
+app.post('/api/create-checkout-session', async (req, res) => {
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: req.body.items.map(item => ({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: item.name,
+            },
+            unit_amount: item.amount,
+          },
+          quantity: item.quantity,
+        })),
+        mode: 'payment',
+        success_url: `${process.env.CLIENT_URL}/checkout-success`, //need success page
+        cancel_url: `${process.env.CLIENT_URL}/cart`, //may redirect back
+      });
+  
+      res.json({ url: session.url });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  });
+
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}...poop poop`);
+});
