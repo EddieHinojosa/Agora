@@ -11,7 +11,6 @@ import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/user.js';
 import setupSocket from './sockets/socket.js';
-import http from 'http';
 import favicon from 'serve-favicon';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
@@ -110,7 +109,7 @@ setupSocket(server);
 // Routes
 app.use('/api', authRoutes);
 app.use('/api', shopRoutes);
-app.use('/api', userRoutes); // User routes
+app.use('/api', userRoutes);
 
 //-----------------eddie calendar stuff in process-----------------
 // // Import the googleapis library

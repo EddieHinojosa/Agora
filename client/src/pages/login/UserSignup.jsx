@@ -1,11 +1,10 @@
-// src/pages/login/UserSignup.jsx
-// src/pages/login/UserSignup.jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
 import { auth } from '../../firebaseConfig';
@@ -39,7 +38,7 @@ const UserSignup = () => {
             const user = userCredential.user;
 
             // Save additional user data in MongoDB through the server
-            await axios.post(`${apiUrl}/api/auth/register`, {
+            await axios.post(`${import.meta.env.VITE_PROD_API_URL}/api/auth/register`, {
                 uid: user.uid,
                 firstName: data.firstName,
                 lastName: data.lastName,

@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
-import LoginApp from './LoginApp.jsx';
-import ShopApp from './ShopApp.jsx';
+import Chat from './components/Chat.jsx';
+import Login from './pages/login/Login.jsx';
+import UserSignup from './pages/login/UserSignup.jsx';
+import AuthProvider from './context/AuthContext.jsx';
 import './index.css';
-import { AuthProvider } from './context/AuthContext.jsx';
 
 // Error page
 import Error from './pages/Error.jsx';
