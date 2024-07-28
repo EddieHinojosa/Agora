@@ -14,6 +14,7 @@ import favicon from 'serve-favicon';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import admin from 'firebase-admin';
+import connectMongo from 'connect-mongo';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -101,6 +102,8 @@ mongoose.connect(mongoUri, {
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error(err));
+
+const MongoStore = connectMongo(session);
 
 // Session middleware
 app.use(session({
