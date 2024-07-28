@@ -14,44 +14,27 @@ import favicon from 'serve-favicon';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import admin from 'firebase-admin';
-import connectMongo from 'connect-mongo';
+import MongoStore from 'connect-mongo';
 
-// Load environment variables from .env file
 dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const serviceAccount = {
-    type: "service_account",
-    project_id: process.env.FIREBASE_PROJECT_ID,
-    private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-    private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    client_email: process.env.FIREBASE_CLIENT_EMAIL,
-    client_id: process.env.FIREBASE_CLIENT_ID,
-    auth_uri: process.env.FIREBASE_AUTH_URI,
-    token_uri: process.env.FIREBASE_TOKEN_URI,
-    auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
-    client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL
+  type: "service_account",
+  project_id: process.env.FIREBASE_PROJECT_ID,
+  private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  client_email: process.env.FIREBASE_CLIENT_EMAIL,
+  client_id: process.env.FIREBASE_CLIENT_ID,
+  auth_uri: process.env.FIREBASE_AUTH_URI,
+  token_uri: process.env.FIREBASE_TOKEN_URI,
+  auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
+  client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL
 };
 
-// Define __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-console.log('Server environment variables:', {
-    VITE_MONGO_URI: process.env.VITE_MONGO_URI,
-    VITE_GOOGLE_CLIENT_ID: process.env.VITE_GOOGLE_CLIENT_ID,
-    VITE_GOOGLE_CLIENT_SECRET: process.env.VITE_GOOGLE_CLIENT_SECRET,
-    VITE_SESSION_SECRET: process.env.VITE_SESSION_SECRET,
-    VITE_JWT_SECRET: process.env.VITE_JWT_SECRET,
-    NODE_ENV: process.env.NODE_ENV,
-    VITE_DEV_URL: process.env.VITE_DEV_URL,
-    VITE_DEV_API_URL: process.env.VITE_DEV_API_URL,
-    VITE_PROD_API_URL: process.env.VITE_PROD_API_URL,
-});
-
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(serviceAccount),
 });
 
 const app = express();
@@ -103,14 +86,12 @@ mongoose.connect(mongoUri, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error(err));
 
-const MongoStore = new connectMongo(session);
-
 // Session middleware
 app.use(session({
     secret: process.env.VITE_SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore.create({ mongoUrl: process.env.VITE_MONGO_URI }),
+    store: MongoStore.create({ mongoUrl: mongoUri }), // Correctly initialize MongoStore
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -125,6 +106,7 @@ setupSocket(server);
 app.use('/api', authRoutes);
 app.use('/api', shopRoutes);
 app.use('/api', userRoutes); // User routes
+
 
 //-----------------eddie calendar stuff in process-----------------
 // // Import the googleapis library
