@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { FaHome } from 'react-icons/fa';
+import { IoHomeOutline } from "react-icons/io5";
 
 const ShopNavbar = () => {
     return (
-        <nav className='bg-gray-100 p-2 flex justify-between items-center w-full'>
-            <div className='text-lg font-bold'>Agora</div>
+        <nav className='p-2 border border-gray-100 flex justify-between items-center w-full'>
+            <h1 className='text-3xl'>agora</h1>
             <div>
-                <Link to='/'><FaHome size={24} /></Link>
+                <Link to='/'><IoHomeOutline size={22} className='text-gray-500 hover:text-black' /></Link>
             </div>
         </nav>
     );
