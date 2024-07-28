@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { IoMdSearch } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import AuthContext from '../../context/AuthContext';
 import fetchUser from '../../utils/fetchUser';
 

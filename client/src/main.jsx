@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
-import Chat from './components/Chat.jsx';
+// import Chat from './components/Chat.jsx';
 import AuthProvider from './context/AuthContext.jsx';
 import './index.css';
 
