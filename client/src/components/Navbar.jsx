@@ -18,10 +18,10 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="flex items-center justify-between p-4 bg-gray-100">
-            <div className="flex items-center">
-                <Link to="/" className="mr-4 text-xl font-bold">
-                    Agora
+        <nav className="flex border border-gray-100 items-center justify-between p-4">
+            <div className="flex items-center brand-font">
+                <Link to="/" className="mr-4 text-3xl font-bold">
+                    agora
                 </Link>
             </div>
             <div className="flex-grow mx-4">
@@ -29,7 +29,7 @@ const Navbar = () => {
                     <input
                         type="text"
                         placeholder=""
-                        className="w-full p-1 pr-12 border-gray-300 rounded-lg"
+                        className="w-full p-1 pr-12 border border-gray-300 rounded-lg"
                     />
                     <button className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
                         <FaSearch />
@@ -42,15 +42,15 @@ const Navbar = () => {
                         <button onClick={handleSellClick} className="text-sm">
                             Sell
                         </button>
-                        <Link to="/user"><CiUser /></Link>
-                        {user.shopName && <Link to="/shopmanager"><CiShop /></Link>}
+                        <Link to="/user"><CiUser size={22} className='text-gray-500 hover:text-black'/></Link>
+                        {user.shopName && <Link to="/shopmanager"><CiShop size={22} className='text-gray-500 hover:text-black'/></Link>}
                         <button onClick={logout} className="text-sm">
                             Logout
                         </button>
                     </>
                 ) : (
                     <>
-                        <Link to="/login/shopsignup" className="text-sm">
+                        <Link to="/login/usersignup" className="text-sm">
                             Sell
                         </Link>
                         <Link to="/login" className="text-sm">
@@ -61,7 +61,7 @@ const Navbar = () => {
                         </Link>
                     </>
                 )}
-                <Link to="/cart"><MdOutlineShoppingBag /></Link>
+                <Link to="/cart"><MdOutlineShoppingBag size={22} className='text-gray-500 hover:text-black'/></Link>
             </div>
         </nav>
     );

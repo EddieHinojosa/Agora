@@ -1,19 +1,34 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { IoMenu, IoClose } from 'react-icons/io5';
 
 const ShopSidebar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
-        <nav className='w-1/6 h-screen bg-gray-100 flex flex-col justify-between'>
-            <div className='flex flex-col h-full p-4 space-y-6'>
-                <Link to='/shopmanager/' className='hover:underline'>Shop Home</Link>
-                <Link to='/shopmanager/orders' className='hover:underline'>Orders</Link>
-                <Link to='/shopmanager/messages' className='hover:underline'>Messages</Link>
-                <Link to='/shopmanager/products' className='hover:underline'>Products</Link>
-                <Link to='/shopmanager/finances' className='hover:underline'>Finances</Link>
-                <Link to='/shopmanager/calendar' className='hover:underline'>Calendar</Link>
-                <Link to='/shopmanager/settings' className='hover:underline'>Settings</Link>
+        <nav className='w-full md:w-1/6 border border-gray-100 flex flex-col md:flex-col'>
+            <div className='flex md:hidden p-4 justify-between items-center'>
+                <button onClick={toggleMenu}>
+                    {isOpen ? <IoClose  size={26} className='text-gray-500'/> : <IoMenu  size={26} className='text-gray-500' />}
+                </button>
+            </div>
+            <div className={`flex-col md:flex md:h-full p-4 space-y-4 ${isOpen ? 'flex items-center justify-start w-full' : 'hidden md:flex md:items-start'}`}>
+                <Link to='/shopmanager/' className='mt-2 hover:underline text-sm text-center md:text-left'>Shop Home</Link>
+                <Link to='/shopmanager/orders' className='hover:underline text-sm text-center md:text-left'>Orders</Link>
+                <Link to='/shopmanager/messages' className='hover:underline text-sm text-center md:text-left'>Messages</Link>
+                <Link to='/shopmanager/products' className='hover:underline text-sm text-center md:text-left'>Products</Link>
+                <Link to='/shopmanager/finances' className='hover:underline text-sm text-center md:text-left'>Finances</Link>
+                <Link to='/shopmanager/calendar' className='hover:underline text-sm text-center md:text-left'>Calendar</Link>
+                <Link to='/shopmanager/settings' className='hover:underline text-sm text-center md:text-left'>Settings</Link>
             </div>
         </nav>
     );
 };
 
 export default ShopSidebar;
+
+
