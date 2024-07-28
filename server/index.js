@@ -11,6 +11,9 @@ import passport from 'passport';
 import passportConfig from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
+import userRoutes from './routes/user.js';
+import setupSocket from './sockets/socket.js';
+import http from 'http';
 import favicon from 'serve-favicon';
 import rateLimit from 'express-rate-limit';
 
@@ -100,10 +103,13 @@ passportConfig(passport); // Initialize passport strategies
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Setup Socket.IO
+setupSocket(server);
+
 // Routes
 app.use('/api', authRoutes);
 app.use('/api', shopRoutes);
-
+app.use('/api', userRoutes); // User routes
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}...poop poop`);
