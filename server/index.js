@@ -110,7 +110,7 @@ app.use(session({
     secret: process.env.VITE_SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: process.env.VITE_MONGO_URI }),
+    store: new MongoStore.create({ mongoUrl: process.env.VITE_MONGO_URI }),
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
