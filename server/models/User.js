@@ -3,27 +3,22 @@ import mongoose from "mongoose";
 const AddressSchema = new mongoose.Schema({
   street: {
     type: String,
-    required: true,
     default: "", // Default value for street
   },
   city: {
     type: String,
-    required: true,
     default: "", // Default value for city
   },
   state: {
     type: String,
-    required: true,
     default: "", // Default value for state
   },
   zip: {
-    type: String,
-    required: true,
+    type: String,    
     default: "", // Default value for zip
   },
   country: {
     type: String,
-    required: true,
     default: "", // Default value for country
   },
 });
@@ -35,11 +30,11 @@ const UserSchema = new mongoose.Schema({
   },
   firstName: {
     type: String,
-    required: true,
+    required: false, // Change to false
   },
   lastName: {
     type: String,
-    required: true,
+    required: false, // Change to false
   },
   email: {
     type: String,
@@ -49,14 +44,14 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: function () {
-      return !this.googleId;
+      return !this.googleId && !this.uid;
     },
     unique: true,
   },
   password: {
     type: String,
     required: function () {
-      return !this.googleId;
+      return !this.googleId && !this.uid;
     },
   },
   googleId: {
@@ -64,13 +59,16 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     sparse: true,
   },
+  uid: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
   billingAddress: {
     type: AddressSchema,
-    required: true,
   },
   mailingAddress: {
     type: AddressSchema,
-    required: true,
   },
   shopId: {
     type: mongoose.Schema.Types.ObjectId,
