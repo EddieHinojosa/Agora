@@ -3,7 +3,7 @@ import ShopNavbar from './components/ShopNavbar';
 import ShopSidebar from './components/ShopSidebar';
 import Footer from './components/Footer';
 
-function ShopApp() {
+const ShopApp = () => {
     return (
         <div className='flex flex-col min-h-screen'>
             <ShopNavbar />

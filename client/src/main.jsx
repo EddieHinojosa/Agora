@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
-import LoginApp from './LoginApp.jsx';  // Ensure this import is correct
+import LoginApp from './LoginApp.jsx';
 import ShopApp from './ShopApp.jsx';
 import './index.css';
 import { AuthProvider } from './context/AuthContext.jsx';
@@ -14,9 +14,8 @@ import Error from './pages/Error.jsx';
 import Home from './pages/Home.jsx';
 import User from './pages/User.jsx';
 import Cart from './pages/Cart.jsx';
-import Checkout from './pages/Checkout.jsx'
+import Checkout from './pages/Checkout.jsx';
 import UpdateProfile from './pages/UpdateProfile.jsx';
-
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
@@ -32,9 +31,7 @@ import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx';
-
-
-
+import MessageList from './components/MessageList.jsx';
 
 const router = createBrowserRouter([
   // Home-Main Pages
@@ -108,7 +105,11 @@ const router = createBrowserRouter([
       {
         path: 'messages',
         element: <Messages />
-      }, 
+      },
+      {
+        path: 'messagelist',
+        element: <MessageList />
+      },
       {
         path: 'products',
         element: <Products />
@@ -140,4 +141,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </AuthProvider>
   </React.StrictMode>
 );
-
