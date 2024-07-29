@@ -33,7 +33,7 @@ const UpdateProfile = () => {
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
-    const { user, login, updateProfile } = useContext(AuthContext);
+    const { user, updateProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
     // Determine the correct API URL based on the environment
@@ -46,16 +46,16 @@ const UpdateProfile = () => {
             setValue('firstName', user.firstName);
             setValue('lastName', user.lastName);
             setValue('email', user.email);
-            setValue('billingStreetAddress', user.billingAddress.street);
-            setValue('billingZipcode', user.billingAddress.zip);
-            setValue('billingCity', user.billingAddress.city);
-            setValue('billingState', user.billingAddress.state);
-            setValue('billingCountry', user.billingAddress.country);
-            setValue('mailingStreetAddress', user.mailingAddress.street);
-            setValue('mailingZipcode', user.mailingAddress.zip);
-            setValue('mailingCity', user.mailingAddress.city);
-            setValue('mailingState', user.mailingAddress.state);
-            setValue('mailingCountry', user.mailingAddress.country);
+            setValue('billingStreetAddress', user.billingAddress?.street || '');
+            setValue('billingZipcode', user.billingAddress?.zip || '');
+            setValue('billingCity', user.billingAddress?.city || '');
+            setValue('billingState', user.billingAddress?.state || '');
+            setValue('billingCountry', user.billingAddress?.country || '');
+            setValue('mailingStreetAddress', user.mailingAddress?.street || '');
+            setValue('mailingZipcode', user.mailingAddress?.zip || '');
+            setValue('mailingCity', user.mailingAddress?.city || '');
+            setValue('mailingState', user.mailingAddress?.state || '');
+            setValue('mailingCountry', user.mailingAddress?.country || '');
             setValue('username', user.username);
             setValue('shopName', user.shopName);
         }
@@ -123,5 +123,9 @@ const UpdateProfile = () => {
 };
 
 export default UpdateProfile;
+
+
+
+
 
 

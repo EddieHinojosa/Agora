@@ -7,6 +7,7 @@ import ShopApp from './ShopApp.jsx';
 import './index.css';
 import { AuthProvider } from './context/AuthContext.jsx';
 
+
 // Error page
 import Error from './pages/Error.jsx';
 

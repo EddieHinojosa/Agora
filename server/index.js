@@ -18,16 +18,6 @@ import admin from 'firebase-admin';
 import MongoStore from 'connect-mongo';
 import http from 'http';
 
-console.log('Environment Variables:', {
-    FIREBASE_PRIVATE_KEY: process.env.FIREBASE_PRIVATE_KEY,
-    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
-    FIREBASE_CLIENT_EMAIL: process.env.FIREBASE_CLIENT_EMAIL,
-    FIREBASE_PRIVATE_KEY_ID: process.env.FIREBASE_PRIVATE_KEY_ID,
-    FIREBASE_AUTH_URI: process.env.FIREBASE_AUTH_URI,
-    FIREBASE_TOKEN_URI: process.env.FIREBASE_TOKEN_URI,
-    FIREBASE_AUTH_PROVIDER_X509_CERT_URL: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
-    FIREBASE_CLIENT_X509_CERT_URL: process.env.FIREBASE_CLIENT_X509_CERT_URL,
-  });
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -42,10 +32,10 @@ const serviceAccount = {
     token_uri: process.env.FIREBASE_TOKEN_URI,
     auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
     client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL
-  };
+};
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(serviceAccount),
 });
 
 
@@ -88,8 +78,8 @@ app.use(limiter);
 // Connect to MongoDB
 const mongoUri = process.env.VITE_MONGO_URI;
 if (!mongoUri) {
-  console.error('MONGO_URI is not defined in the environment variables');
-  process.exit(1);
+    console.error('MONGO_URI is not defined in the environment variables');
+    process.exit(1);
 }
 
 mongoose.connect(mongoUri, {
