@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import sendMessage from '../../sendMessage';
-import MessageList from '../../components/MessageList';
+import sendMessage from '../utils/sendMessage.js';
+import MessageList from '../../components/MessageList.jsx';
 
 const Messages = () => {
   const [recipientId, setRecipientId] = useState('');
@@ -14,26 +14,38 @@ const Messages = () => {
   }
 
   return (
-    <div>
-      <h2>Messages</h2>
-      <MessageList />
-      <input
-        type="text"
-        placeholder="User ID"
-        value={recipientId}
-        onChange={(e) => setRecipientId(e.target.value)}
-      />
-      <textarea
-        placeholder="Message"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <button onClick={handleSend}>Send</button>
+    <div className="max-w-3xl mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">Messages</h2>
+      <div className="bg-white shadow-md rounded-lg p-4">
+        <input
+          type="text"
+          placeholder="User ID"
+          value={recipientId}
+          onChange={(e) => setRecipientId(e.target.value)}
+          className="w-full p-2 mb-4 border border-gray-300 rounded"
+        />
+        <textarea
+          placeholder="Message"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className="w-full p-2 mb-4 border border-gray-300 rounded"
+        />
+        <button
+          onClick={handleSend}
+          className="w-full bg-black text-sm text-white p-2 rounded hover:bg-gray-300"
+        >
+          Send
+        </button>
+      </div>
+      <div className="mt-6 bg-white shadow-md rounded-lg p-4 mb-4">
+        <MessageList />
+      </div>
     </div>
   );
 };
 
 export default Messages;
+
 
 
 
