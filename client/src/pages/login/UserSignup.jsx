@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
-import { auth } from '../utils/firebaseConfig';
+import { auth } from '../../utils/firebaseConfig';
 
 const schema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),

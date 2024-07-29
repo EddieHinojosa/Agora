@@ -6,7 +6,7 @@ const Products = () => {
     return (
         <div className="container mx-auto p-4">
             <div className="flex items-center mb-4">
-                <h2 className="text-2xl font-bold">Products</h2>
+                <h2 className="text-2xl">Products</h2>
                 <Link to='/shopmanager/newproduct' className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2">
                     <IoIosAddCircle className="mr-2 text-xl" /> Add A Product
                 </Link>
