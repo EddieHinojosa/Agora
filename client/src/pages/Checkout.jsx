@@ -2,7 +2,7 @@ import React from 'react';
 
 const Checkout = () => {
     const handleCheckout = () => {
-        fetch(`${import.meta.env.VITE_API_URL}/api/create-checkout-session`, {
+        fetch("http://localhost:3000/api/create-checkout-session", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
