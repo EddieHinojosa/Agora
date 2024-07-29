@@ -14,6 +14,8 @@ const Cart = () => {
                             <h1 className="text-lg font-medium leading-6 text-gray-900">Items</h1>
                             <div className="mt-4 space-y-4">
                                 <div className="flex justify-between items-center p-4 border-b">
+                                    
+                                    {/* contetn harded coded until i can call them fromt he database */}
                                     <div className="text-lg">Clarissa's socks</div>
                                     <div className="text-lg">$10.00</div>
                                 </div>
