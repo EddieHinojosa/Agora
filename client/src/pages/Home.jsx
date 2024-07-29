@@ -12,7 +12,7 @@ const Home = () => {
           <h2 className="text-5xl text-white">unique as</h2>
           <h2 className="text-5xl text-white">you.</h2>
           <Link to="/login/usersignup">
-            <button className="mt-4 px-6 py-2 bg-white text-[#4a000a] font-bold rounded-lg shadow-lg hover:bg-gray-200">
+            <button className="mt-6 px-6 py-2 bg-white text-[#4a000a] font-bold rounded-lg shadow-lg hover:bg-gray-200">
               Sign Up
             </button>
           </Link>
@@ -30,5 +30,6 @@ const Home = () => {
 };
 
 export default Home;
+
 
 
