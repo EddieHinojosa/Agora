@@ -3,6 +3,8 @@ import { MdUpload, MdDelete, MdEdit, MdSave } from "react-icons/md";
 import { IoIosAdd } from "react-icons/io";
 // import { GrHide } from "react-icons/gr";
 import { Link } from "react-router-dom";
+// import { ProductImages } from "../../components/newProductSteps/ProductImages";
+import CloudinaryUploadWidget from "../../components/cloudinaryUploadWidget";
 
 const NewProduct = () => {
   // For Next/Previous Sections
@@ -215,6 +217,15 @@ const NewProduct = () => {
     </div>
   );
 
+
+  function selectImages () {
+    document.querySelector('[name = "img"]').click()
+  }
+   
+  function uploadImages (event) {
+console.log(event.currentTarget, event.currentTarget.files)
+   }
+
   // For Devon!
   // Image Section
   const ProductImages = () => (
@@ -225,18 +236,16 @@ const NewProduct = () => {
           <div className="text-xl font-bold">How to Upload</div>
           <p className="mt-2 text-sm text-gray-700">
             Please follow these steps to upload images:
-            <ol className="list-decimal ml-4 mt-2">
+          </p>
+          <ol className="list-decimal ml-4 mt-2">
               <li>Step 1</li>
               <li>Step 2</li>
               <li>Step 3</li>
             </ol>
-          </p>
         </div>
         <div className="w-3/4 grid grid-cols-6">
           <div className="border bg-gray-200 rounded-md flex h-32 w-32">
-            <button className="py-2 px-4 rounded-md hover:underline">
-              Upload Image <MdUpload className="mx-auto mt-2" />
-            </button>
+            <CloudinaryUploadWidget/>
           </div>
           <div className="border border-gray-300 rounded-md h-32 w-32"></div>
           <div className="border border-gray-300 rounded-md h-32 w-32"></div>
@@ -263,6 +272,7 @@ const NewProduct = () => {
       </div>
     </div>
   );
+
 
   // Product Price and Quantity Section
   const ProductPricing = () => (
