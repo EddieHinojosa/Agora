@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { auth } from '../pages/utils/firebaseConfig';
+import { auth } from '../utils/firebaseConfig';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import axios from 'axios';
 
@@ -53,7 +53,6 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
-
 
 
 
