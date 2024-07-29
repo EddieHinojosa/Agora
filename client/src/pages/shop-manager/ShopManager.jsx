@@ -19,7 +19,7 @@ const ShopManager = () => {
   return (
     <>
       <div className='justify-center text-center'>
-        <h1 className='text-4xl'>Hello (shopname)!</h1>
+        <h2 className='text-4xl'>Hello (shopname)!</h2>
         <Link to="#" className='flex items-center justify-center space-x-2 hover:underline'>
           <FaLink />
           <span>Shop Link</span>

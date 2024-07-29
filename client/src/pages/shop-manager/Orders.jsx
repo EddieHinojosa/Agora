@@ -4,7 +4,7 @@ const Orders = () => {
     return (
         <div><div className="container mx-auto p-4">
         <div className="flex items-center mb-4">
-            <span className="text-2xl font-bold">Orders</span>
+            <h2 className="text-2xl">Orders</h2>
         </div>
         <div className="flex justify-end">
             <div className="w-full bg-gray-100 flex p-1 space-x-4">

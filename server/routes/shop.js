@@ -1,12 +1,30 @@
 import express from 'express';
-import passport from 'passport';
+import admin from 'firebase-admin';
 import User from '../models/User.js';
 
 const router = express.Router();
 
-router.post('/signup', passport.authenticate('jwt', { session: false }), async (req, res) => {
+// Middleware to verify Firebase ID Token
+const authenticate = async (req, res, next) => {
+    const idToken = req.headers.authorization?.split('Bearer ')[1];
+
+    if (!idToken) {
+        return res.status(401).json({ message: 'Unauthorized: No token provided' });
+    }
+
     try {
-        const user = await User.findById(req.user.id);
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        req.user = decodedToken;
+        next();
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        res.status(401).json({ message: 'Unauthorized: Invalid token' });
+    }
+};
+
+router.post('/signup', authenticate, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.uid);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -35,6 +53,7 @@ router.post('/signup', passport.authenticate('jwt', { session: false }), async (
 });
 
 export default router;
+
 
 
 

@@ -7,9 +7,9 @@ function ShopApp() {
     return (
         <div className='flex flex-col min-h-screen'>
             <ShopNavbar />
-            <div className='flex flex-1'>
+            <div className='flex flex-col md:flex-row flex-1'>
                 <ShopSidebar />
-                <main className='w-5/6 p-4'>
+                <main className='w-full md:w-5/6 p-4'>
                     <Outlet />
                 </main>
             </div>

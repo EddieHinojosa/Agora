@@ -1151,7 +1151,7 @@ const NewProduct = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="text-xl font-bold">New Product</div>
+      <h2 className="text-2xl font-bold">New Product</h2>
       <div className="mt-4">{steps[currentStep]}</div>
     </div>
   );

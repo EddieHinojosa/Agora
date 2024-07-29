@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
-import LoginApp from './LoginApp.jsx';
+import LoginApp from './LoginApp.jsx';  // Ensure this import is correct
 import ShopApp from './ShopApp.jsx';
 import './index.css';
 import { AuthProvider } from './context/AuthContext.jsx';
@@ -17,6 +17,7 @@ import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx'
 import UpdateProfile from './pages/UpdateProfile.jsx';
 
+
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
 import ShopSignup from './pages/login/ShopSignup.jsx';
@@ -30,7 +31,9 @@ import Products from './pages/shop-manager/Products.jsx';
 import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
-import Finances from './pages/shop-manager/Finances.jsx'
+import Finances from './pages/shop-manager/Finances.jsx';
+
+
 
 
 const router = createBrowserRouter([

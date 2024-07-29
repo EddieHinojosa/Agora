@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
@@ -15,57 +14,26 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
-    const { login } = useContext(AuthContext);
+    const { login, googleLogin } = useContext(AuthContext);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        if (token) {
-            localStorage.setItem('token', token);
-            const apiUrl = import.meta.env.MODE === 'production'
-                ? import.meta.env.VITE_API_URL + '/api/profile'
-                : import.meta.env.VITE_API_URL + '/api/profile';
-
-            axios.get(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(response => {
-                login(response.data.user);
-                navigate('/');
-            }).catch(error => {
-                console.error("Error fetching profile:", error);
-            });
-        }
-    }, [login, navigate]);
 
     const onSubmit = async (data) => {
         try {
-            const apiUrl = import.meta.env.MODE === 'production'
-                ? import.meta.env.VITE_API_URL + '/api/login'
-                : import.meta.env.VITE_API_URL + '/api/login';
-
-            const response = await axios.post(apiUrl, data);
-            const { token, user } = response.data;
-            localStorage.setItem('token', token);
-            login(user);
+            await login(data.email, data.password);
             alert('Login successful');
             navigate('/');
         } catch (error) {
-            if (error.response && error.response.data.message) {
-                alert('Login failed: ' + error.response.data.message);
-            } else {
-                alert('Login failed: ' + error.message);
-            }
+            alert('Login failed: ' + error.message);
         }
     };
 
-    const handleGoogleLogin = () => {
-        const googleAuthUrl = import.meta.env.MODE === 'production'
-            ? import.meta.env.VITE_API_URL + '/api/auth/google'
-            : import.meta.env.VITE_API_URL + '/api/auth/google';
-        window.location.href = googleAuthUrl;
+    const handleGoogleLogin = async () => {
+        try {
+            await googleLogin();
+            navigate('/');
+        } catch (error) {
+            alert('Google login failed: ' + error.message);
+        }
     };
 
     return (
@@ -91,4 +59,8 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
 
