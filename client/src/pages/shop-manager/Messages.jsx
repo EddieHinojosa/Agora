@@ -3,6 +3,7 @@ import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestor
 import { auth, db } from '../../utils/firebaseConfig';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
+import { IoIosAddCircle } from "react-icons/io";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -58,12 +59,9 @@ const Messages = () => {
             className="w-full border-none focus:ring-0"
           />
         </div>
-        <Link
-          to="/shopmanager/newmessage"
-          className="w-1/4 md:w-1/4 p-2 bg-black text-sm text-white text-center rounded-md hover:bg-gray-300 hover:text-black"
-        >
-          + New Message
-        </Link>
+        <Link to='/shopmanager/message' className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
+                    <IoIosAddCircle className="mr-2 text-xl" /> New Message
+                </Link>
       </div>
 
       {/* Inbox and Sent Links --- currently no code inputed for links to make this happen */}
