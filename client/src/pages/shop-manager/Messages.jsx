@@ -41,7 +41,7 @@ const Messages = () => {
   );
 
   return (
-    <div>
+    <div className='mt-4'>
       <h2 className="text-2xl">Messages</h2>
 
       {/* Search and new message button */}
