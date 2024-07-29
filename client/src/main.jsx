@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
-import LoginApp from './LoginApp.jsx';  // Ensure this import is correct
+import LoginApp from './LoginApp.jsx';
 import ShopApp from './ShopApp.jsx';
 import './index.css';
 import { AuthProvider } from './context/AuthContext.jsx';
-
 
 // Error page
 import Error from './pages/Error.jsx';
@@ -18,11 +17,11 @@ import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx'
 import UpdateProfile from './pages/UpdateProfile.jsx';
 
-
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
 import ShopSignup from './pages/login/ShopSignup.jsx';
 import UserSignup from './pages/login/UserSignup.jsx';
+import CompleteProfile from './pages/login/CompleteProfile.jsx';
 
 // Shop Manager Pages
 import ShopManager from './pages/shop-manager/ShopManager.jsx';
@@ -64,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: 'update-profile',
         element: <UpdateProfile />
+      },
+      {
+        path: 'complete-profile',
+        element: <CompleteProfile />  // Add route for CompleteProfile
       }
     ]
   },
