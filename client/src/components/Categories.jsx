@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { IoMenu, IoClose } from 'react-icons/io5';
 
-const ShopSidebar = () => {
+const Categories = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -12,7 +12,7 @@ const ShopSidebar = () => {
     return (
         <nav className='border-b border-gray-100 pb-4'>
             <div className='flex md:hidden justify-between items-center mb-4'>
-                <button onClick={toggleMenu}>
+                <button onClick={toggleMenu} className='ml-4'>
                     {isOpen ? <IoClose size={26} className='text-gray-500' /> : <IoMenu size={26} className='text-gray-500' />}
                 </button>
             </div>
@@ -29,6 +29,6 @@ const ShopSidebar = () => {
     );
 };
 
-export default ShopSidebar;
+export default Categories;
 
 
