@@ -59,7 +59,7 @@ const Messages = () => {
             className="w-full border-none focus:ring-0"
           />
         </div>
-        <Link to='/shopmanager/message' className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
+        <Link to='/shopmanager/newmessage' className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
                     <IoIosAddCircle className="mr-2 text-xl" /> New Message
                 </Link>
       </div>
