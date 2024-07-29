@@ -3,10 +3,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
-import { auth } from '../../firebaseConfig';
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 
@@ -37,9 +35,8 @@ const UserSignup = () => {
 
     const onSubmit = async (data) => {
         try {
-            await registerUser(data);
+            await registerUser(data, navigate);
             alert('Registration successful');
-            navigate('/');
         } catch (error) {
             alert('Registration failed: ' + error.message);
         }
@@ -89,6 +86,7 @@ const UserSignup = () => {
 };
 
 export default UserSignup;
+
 
 
 

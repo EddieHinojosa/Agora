@@ -17,7 +17,7 @@ const Login = () => {
         resolver: yupResolver(schema),
     });
     const { login, googleLogin, setUsernameAndPassword, user } = useContext(AuthContext);
-    const navigate = useNavigate(); // Ensure navigate is defined here
+    const navigate = useNavigate();
     const [isUsernameAndPassword, setIsUsernameAndPassword] = useState(false);
 
     const onSubmit = async (data) => {
@@ -32,8 +32,8 @@ const Login = () => {
 
     const handleGoogleLogin = async () => {
         try {
-            await googleLogin(navigate); // Pass navigate function
-            if (!user.username) {
+            await googleLogin(navigate);
+            if (user && !user.username) {
                 setIsUsernameAndPassword(true);
             } else {
                 navigate('/');
@@ -92,6 +92,8 @@ const Login = () => {
 };
 
 export default Login;
+
+
 
 
 

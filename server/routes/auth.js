@@ -21,7 +21,15 @@ router.post('/firebase-login', async (req, res) => {
 
         let user = await User.findOne({ uid });
         if (!user) {
-            user = new User({ uid, email: decodedToken.email });
+            user = new User({
+                uid,
+                email: decodedToken.email,
+                username: '',  // Set default or empty username
+                firstName: '',
+                lastName: '',
+                billingAddress: {},
+                mailingAddress: {}
+            });
             await user.save();
         }
 
