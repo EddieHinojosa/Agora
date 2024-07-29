@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
 import helmet from 'helmet';
-
+import cloudinary from './config/cloudinary.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/user.js';
