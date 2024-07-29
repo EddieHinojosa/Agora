@@ -31,7 +31,7 @@ import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx';
-import MessageList from './components/MessageList.jsx';
+import NewMessage  from './pages/shop-manager/NewMessage.jsx';
 
 const router = createBrowserRouter([
   // Home-Main Pages
@@ -107,8 +107,8 @@ const router = createBrowserRouter([
         element: <Messages />
       },
       {
-        path: 'messagelist',
-        element: <MessageList />
+        path: 'newmessage',
+        element: <NewMessage />
       },
       {
         path: 'products',
