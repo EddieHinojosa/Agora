@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
 import LoginApp from './LoginApp.jsx';
-import LoginApp from './LoginApp.jsx';
 import ShopApp from './ShopApp.jsx';
 import './index.css';
 import { AuthProvider } from './context/AuthContext.jsx';
@@ -33,6 +32,7 @@ import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx';
+import MessageList from './components/MessageList.jsx';
 
 
 
