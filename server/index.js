@@ -16,7 +16,6 @@ import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import admin from 'firebase-admin';
 import MongoStore from 'connect-mongo';
-import http from 'http';
 
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
