@@ -16,30 +16,52 @@ const generateToken = (user) => {
 router.post('/firebase-login', async (req, res) => {
     const { token } = req.body;
     try {
-        const decodedToken = await admin.auth().verifyIdToken(token);
-        const uid = decodedToken.uid;
-
-        let user = await User.findOne({ uid });
-        if (!user) {
-            user = new User({
-                uid,
-                email: decodedToken.email,
-                username: '',  // Set default or empty username
-                firstName: '',
-                lastName: '',
-                billingAddress: {},
-                mailingAddress: {}
-            });
-            await user.save();
-        }
-
-        const jwtToken = generateToken(user);
-        res.json({ user, token: jwtToken });
+      console.log('Received token:', token);
+  
+      const decodedToken = await admin.auth().verifyIdToken(token);
+      const uid = decodedToken.uid;
+  
+      console.log('Decoded token UID:', uid);
+  
+      let user = await User.findOne({ uid });
+      if (!user) {
+        console.log('Creating new user');
+        user = new User({
+          uid,
+          email: decodedToken.email,
+          username: decodedToken.email,
+          firstName: decodedToken.name?.split(' ')[0] || '',
+          lastName: decodedToken.name?.split(' ').slice(1).join(' ') || '',
+          isGmail: true,
+          profileCompleted: false
+        });
+  
+        // Save to MongoDB
+        await user.save();
+        console.log('User saved to MongoDB:', user);
+  
+        // Save to Firestore
+        const userDoc = firestore.collection('users').doc(uid);
+        await userDoc.set({
+          email: decodedToken.email,
+          username: decodedToken.email,
+          firstName: decodedToken.name?.split(' ')[0] || '',
+          lastName: decodedToken.name?.split(' ').slice(1).join(' ') || '',
+          isGmail: true,
+          profileCompleted: false
+        });
+        console.log('User saved to Firestore:', uid);
+      } else {
+        console.log('User already exists:', user);
+      }
+  
+      const jwtToken = generateToken(user);
+      res.json({ user, token: jwtToken });
     } catch (error) {
-        console.error('Error during firebase-login:', error);
-        res.status(500).json({ message: error.message });
+      console.error('Error during firebase-login:', error);
+      res.status(500).json({ message: error.message });
     }
-});
+  });
 
 router.post('/set-username-password', async (req, res) => {
     const { username, password } = req.body;

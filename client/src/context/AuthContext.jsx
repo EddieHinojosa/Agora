@@ -39,9 +39,11 @@ export const AuthProvider = ({ children }) => {
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
             const firebaseUser = result.user;
+    
             if (firebaseUser) {
                 const token = await firebaseUser.getIdToken();
                 const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
+    
                 setUser(response.data.user);
                 localStorage.setItem('token', response.data.token);
                 navigate('/');
