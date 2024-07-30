@@ -10,28 +10,53 @@ import ProductTable from '../../components/newProductSteps/ProductTable'
 
 
 const NewProduct = () => {
-    
-const [rows, setRows] = useState([
-  {
-    productName: "",
-    productDetails: "",
-    category: "",
-    tags: [],
-    photo: "",
-    status: "",
-    size: "",
-    color: "",
-    price: "",
-    quantity: "",
-    material: "",
-    weight: "",
-    length: "",
-    width: "",
-    height: "",
-  },
-]);
-
+  // For Next/Previous Sections
   const [currentStep, setCurrentStep] = useState(0);
+
+  // This code will probably have to change to sync up to DB - just wrote for table test
+  const [rows, setRows] = useState([
+    {
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
+      photo: "",
+      status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
+    },
+  ]);
+
+  const addRow = () => {
+    setRows([
+      ...rows,
+      {
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
+      photo: "",
+      status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
+      },
+    ]);
+  };
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
