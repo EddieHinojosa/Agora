@@ -7,7 +7,7 @@ import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
-import { auth } from '../../utils/firebaseConfig';
+
 
 const schema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),

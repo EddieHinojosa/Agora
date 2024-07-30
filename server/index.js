@@ -10,10 +10,12 @@ import rateLimit from 'express-rate-limit';
 
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
-import { admin } from './firebaseAdmin.js';  // Correct import for firebaseAdmin
+import { admin } from './firebaseAdmin.js'; 
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+// Ensure environment variables are being read
+
 
 // Enable CORS
 const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_DEV_URL, process.env.VITE_PROD_API_URL, process.env.VITE_PROD_URL];
@@ -30,8 +32,8 @@ app.use(helmet());
 
 // Rate limiting
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100 // Limit each IP to 100 requests per windowMs
+    windowMs: 15 * 60 * 1000, 
+    max: 100 
 });
 app.use(limiter);
 
@@ -64,7 +66,7 @@ app.use(session({
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', shopRoutes);
+// app.use('/api', shopRoutes);
 app.use('/api', userRoutes); // User routes
 
 
