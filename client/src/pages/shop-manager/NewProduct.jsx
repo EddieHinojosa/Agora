@@ -11,28 +11,53 @@ import CloudinaryUploadWidget from "../../components/cloudinaryUploadWidget";
 
 
 const NewProduct = () => {
-    
-const [rows, setRows] = useState([
-  {
-    productName: "",
-    productDetails: "",
-    category: "",
-    tags: [],
-    photo: "",
-    status: "",
-    size: "",
-    color: "",
-    price: "",
-    quantity: "",
-    material: "",
-    weight: "",
-    length: "",
-    width: "",
-    height: "",
-  },
-]);
-
+  // For Next/Previous Sections
   const [currentStep, setCurrentStep] = useState(0);
+
+  // This code will probably have to change to sync up to DB - just wrote for table test
+  const [rows, setRows] = useState([
+    {
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
+      photo: "",
+      status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
+    },
+  ]);
+
+  const addRow = () => {
+    setRows([
+      ...rows,
+      {
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
+      photo: "",
+      status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
+      },
+    ]);
+  };
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -41,104 +66,30 @@ const [rows, setRows] = useState([
     console.log(name)
     updatedRows[0][name] = value;
     console.log(updatedRows)
+    const updatedRows = [...rows];
+    console.log(updatedRows)
+    console.log(name)
+    updatedRows[0][name] = value;
+    console.log(updatedRows)
     setRows(updatedRows);
   };
 
-  const steps = [
-    <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} />,
-    <ProductType key="productType" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductImages key="productImages" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductPricing key="productPricing" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductOptions key="productOptions" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductDimensions key="productDimensions" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ShippingSection key="shippingSection" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductTable key="productTable" onPrevious={() => setCurrentStep(currentStep - 1)} />,
-  ];
-
-  return (
-    <div className="flex flex-col">
-      <h2 className="text-2xl font-bold">New Product</h2>
-      <div className="mt-4">{steps[currentStep]}</div>
-    </div>
-  )
-
-}
-
-
-export default NewProduct
-
-
-
-
-
-// OLD CODE - HERE JUST IN CASE
-// import CloudinaryUploadWidget from "../../components/cloudinaryUploadWidget";
-
-// const NewProduct = () => {
-//   // For Next/Previous Sections
-//   const [currentStep, setCurrentStep] = useState(0);
-
-//   // This code will probably have to change to sync up to DB - just wrote for table test
-//   // const [rows, setRows] = useState([
-//   //   {
-//   //     photo: "",
-//   //     status: "",
-//   //     size: "S",
-//   //     color: "Pink",
-//   //     cost: "20",
-//   //     quantity: "100",
-//   //     material: "rubber",
-//   //     weight: "5",
-//   //     length: "10",
-//   //     width: "15",
-//   //     height: "20",
-//   //   },
-//   // ]);
-
-//   // const addRow = () => {
-//   //   setRows([
-//   //     ...rows,
-//   //     {
-//   //       photo: "",
-//   //       status: "",
-//   //       size: "S",
-//   //       color: "Green",
-//   //       cost: "20",
-//   //       quantity: "100",
-//   //       material: "plastic",
-//   //       weight: "5",
-//   //       length: "10",
-//   //       width: "15",
-//   //       height: "20",
-//   //     },
-//   //   ]);
-//   // };
-
-//   // const handleChange = (index, event) => {
-//   //   const updatedRows = [...rows];
-//   //   const { name, value } = event.target;
-//   //   updatedRows[index] = {
-//   //     ...updatedRows[index],
-//   //     [name]: value,
-//   //   };
-//   //   setRows(updatedRows);
-//   // };
+  // const handleChange = (index, event) => {
+  //   const updatedRows = [...rows];
+  //   const { name, value } = event.target;
+  //   updatedRows[index] = {
+  //     ...updatedRows[index],
+  //     [name]: value,
+  //   };
+  //   setRows(updatedRows);
+  // };
 
   // const handleHide = (index) => {
   //   const updatedRows = [...rows];
   //   updatedRows[index].hidden = !updatedRows[index].hidden;
   //   setRows(updatedRows);
   // };
-  // const handleHide = (index) => {
-  //   const updatedRows = [...rows];
-  //   updatedRows[index].hidden = !updatedRows[index].hidden;
-  //   setRows(updatedRows);
-  // };
 
-  const handleDelete = (index) => {
-    const updatedRows = rows.filter((_, i) => i !== index);
-    setRows(updatedRows);
-  };
   const handleDelete = (index) => {
     const updatedRows = rows.filter((_, i) => i !== index);
     setRows(updatedRows);
@@ -182,7 +133,44 @@ export default NewProduct
           onChange = {handleChange}
         />
       </div>
+  // Product Info Section
+  const ProductInfo = () => (
+    <div className="w-full flex flex-col space-y-4">
+      {/* Product Name */}
+      <div>
+        <label
+          htmlFor="productName"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Product Name
+        </label>
+        <input
+          type="text"
+          id="productName"
+          name="productName"
+          value={rows[0].productName}
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Enter product name"
+          onChange = {handleChange}
+        />
+      </div>
 
+      {/* Product Details */}
+      <div>
+        <label
+          htmlFor="productDetails"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Product Details
+        </label>
+        <textarea
+          id="productDetails"
+          name="productDetails"
+          className="mt-1 p-2 block w-full h-32 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Enter product details"
+          onChange = {handleChange}
+        />
+      </div>
       {/* Product Details */}
       <div>
         <label
@@ -310,6 +298,34 @@ export default NewProduct
 // //   // Image Section
 // //    const [images, setImages] = useState([]);
 
+  const ProductImages = () => (
+    <div className="mt-6">
+      <div className="mt-6 text-2xl font-bold">Images</div>
+      <div className="mt-4 w-full flex space-x-4">
+        <div className="w-1/4">
+          <div className="text-xl font-bold">How to Upload</div>
+          <p className="mt-2 text-sm text-gray-700">
+            Please follow these steps to upload images:
+          </p>
+          <ol className="list-decimal ml-4 mt-2">
+          <li>Click the "Upload" button to the right, you may need to click twice</li>
+          <br/>
+          <li>Select an image from any location supported by the widget</li>
+          <br/>
+          <li>Crop your image, if you'd like</li>
+            </ol>
+        </div>
+        <div className="w-3/4 grid grid-cols-6">
+          <div className="border bg-gray-200 rounded-md flex h-32 w-32">
+            <CloudinaryUploadWidget setImages={setImages}/>
+          </div>
+          {images.map((image, index) => (
+            <div key={index} className="border border-gray-300 rounded-md h-32 w-32 thumbnails">
+              <img src={image.url} alt={`Uploaded ${index}`} />
+            </div>
+          ))}
+        </div>
+      </div>
   const ProductImages = () => (
     <div className="mt-6">
       <div className="mt-6 text-2xl font-bold">Images</div>
