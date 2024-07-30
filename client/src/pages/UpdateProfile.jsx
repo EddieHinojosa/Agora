@@ -29,8 +29,6 @@ const schema = yup.object().shape({
 const states = ["California", "New York", "Texas", "Florida", "Illinois"]; // Example states
 const countries = ["United States", "Canada", "Mexico"]; // Example countries
 
-
-
 const UpdateProfile = () => {
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -38,13 +36,10 @@ const UpdateProfile = () => {
     const { user, updateProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // Determine the correct API URL based on the environment
     const apiUrl = import.meta.env.MODE === 'production'
         ? import.meta.env.VITE_PROD_API_URL
         : import.meta.env.VITE_DEV_API_URL;
-        useEffect(() => {
-            console.log('API URL:', apiUrl);
-        }, [apiUrl]);
+
     useEffect(() => {
         if (user) {
             setValue('firstName', user.firstName);
@@ -127,6 +122,7 @@ const UpdateProfile = () => {
 };
 
 export default UpdateProfile;
+
 
 
 

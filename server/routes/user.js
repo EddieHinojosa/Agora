@@ -6,46 +6,45 @@ const router = express.Router();
 
 // Middleware to verify Firebase ID Token
 const authenticate = async (req, res, next) => {
-    const idToken = req.headers.authorization?.split('Bearer ')[1];
+  const idToken = req.headers.authorization?.split('Bearer ')[1];
 
-    if (!idToken) {
-        return res.status(401).json({ message: 'Unauthorized: No token provided' });
-    }
+  if (!idToken) {
+      return res.status(401).json({ message: 'Unauthorized: No token provided' });
+  }
 
-    try {
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
-        req.user = decodedToken;
-        next();
-    } catch (error) {
-        console.error('Error verifying token:', error);
-        res.status(401).json({ message: 'Unauthorized: Invalid token' });
-    }
+  try {
+      const decodedToken = await admin.auth().verifyIdToken(idToken);
+      req.user = decodedToken;
+      next();
+  } catch (error) {
+      console.error('Error verifying token:', error);
+      res.status(401).json({ message: 'Unauthorized: Invalid token' });
+  }
 };
+
 
 // Update profile route
 router.post('/update-profile', authenticate, async (req, res) => {
-    try {
-        const { firstName, lastName, email, billingAddress, mailingAddress, username, shopName } = req.body;
+  const { firstName, lastName, billingAddress, mailingAddress, username, shopName } = req.body;
+  try {
+      const user = await User.findOne({ uid: req.user.uid });
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
 
-        const user = await User.findOne({ email: req.user.email }); // Modify this to fit your logic
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.billingAddress = billingAddress;
+      user.mailingAddress = mailingAddress;
+      user.username = username;
+      user.shopName = shopName;
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        user.firstName = firstName || user.firstName;
-        user.lastName = lastName || user.lastName;
-        user.billingAddress = billingAddress || user.billingAddress;
-        user.mailingAddress = mailingAddress || user.mailingAddress;
-        user.shopName = shopName || user.shopName;
-
-        await user.save();
-
-        res.status(200).json({ message: 'Profile updated successfully' });
-    } catch (error) {
-        console.error('Error updating profile:', error);
-        res.status(500).json({ message: 'Profile update failed', error });
-    }
+      await user.save();
+      res.status(200).json({ message: 'Profile updated successfully', user });
+  } catch (error) {
+      console.error('Error updating profile:', error);
+      res.status(500).json({ message: 'Failed to update profile', error });
+  }
 });
 
 export default router;
