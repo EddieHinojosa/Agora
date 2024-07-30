@@ -1,37 +1,63 @@
-import { useState } from 'react'
-import ProductInfo from '../../components/newProductSteps/ProductInfo'
-import ProductType from '../../components/newProductSteps/ProductType'
-import ProductImages from '../../components/newProductSteps/ProductImages'
-import ProductPricing from '../../components/newProductSteps/ProductPricing'
-import ProductOptions from '../../components/newProductSteps/ProductOptions'
-import ProductDimensions from '../../components/newProductSteps/ProductDimensions'
-import ShippingSection from '../../components/newProductSteps/ShippingSection'
-import ProductTable from '../../components/newProductSteps/ProductTable'
+import { useState } from "react";
+import { MdUpload, MdDelete, MdEdit, MdSave } from "react-icons/md";
+import { IoIosAdd } from "react-icons/io";
+// import { GrHide } from "react-icons/gr";
+import { Link } from "react-router-dom";
+// import { ProductImages } from "../../components/newProductSteps/ProductImages";
+import CloudinaryUploadWidget from "../../components/cloudinaryUploadWidget";
+
+
+
 
 
 const NewProduct = () => {
-    
-const [rows, setRows] = useState([
-  {
-    productName: "",
-    productDetails: "",
-    category: "",
-    tags: [],
-    photo: "",
-    status: "",
-    size: "",
-    color: "",
-    price: "",
-    quantity: "",
-    material: "",
-    weight: "",
-    length: "",
-    width: "",
-    height: "",
-  },
-]);
-
+  // For Next/Previous Sections
   const [currentStep, setCurrentStep] = useState(0);
+
+  // This code will probably have to change to sync up to DB - just wrote for table test
+  const [rows, setRows] = useState([
+    {
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
+      photo: "",
+      status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
+    },
+  ]);
+
+  const addRow = () => {
+    setRows([
+      ...rows,
+      {
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
+      photo: "",
+      status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
+      },
+    ]);
+  };
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -121,16 +147,16 @@ export default NewProduct
 //   //   setRows(updatedRows);
 //   // };
 
-//   // // const handleHide = (index) => {
-//   // //   const updatedRows = [...rows];
-//   // //   updatedRows[index].hidden = !updatedRows[index].hidden;
-//   // //   setRows(updatedRows);
-//   // // };
+  // const handleHide = (index) => {
+  //   const updatedRows = [...rows];
+  //   updatedRows[index].hidden = !updatedRows[index].hidden;
+  //   setRows(updatedRows);
+  // };
 
-//   // const handleDelete = (index) => {
-//   //   const updatedRows = rows.filter((_, i) => i !== index);
-//   //   setRows(updatedRows);
-//   // };
+  const handleDelete = (index) => {
+    const updatedRows = rows.filter((_, i) => i !== index);
+    setRows(updatedRows);
+  };
 
 //   // const handleCardClick = (index) => {
 //   //   // Devon, Input Photo code in here for possible change to specific uploaded photo?
@@ -149,41 +175,44 @@ export default NewProduct
 
 //   //   End table test code
 
-//   // // Product Info Section
-//   // const ProductInfo = () => (
-//   //   <div className="w-full flex flex-col space-y-4">
-//   //     {/* Product Name */}
-//   //     <div>
-//   //       <label
-//   //         htmlFor="productName"
-//   //         className="block text-sm font-medium text-gray-700"
-//   //       >
-//   //         Product Name
-//   //       </label>
-//   //       <input
-//   //         type="text"
-//   //         id="productName"
-//   //         name="productName"
-//   //         className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-//   //         placeholder="Enter product name"
-//   //       />
-//   //     </div>
+  // Product Info Section
+  const ProductInfo = () => (
+    <div className="w-full flex flex-col space-y-4">
+      {/* Product Name */}
+      <div>
+        <label
+          htmlFor="productName"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Product Name
+        </label>
+        <input
+          type="text"
+          id="productName"
+          name="productName"
+          value={rows[0].productName}
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Enter product name"
+          onChange = {handleChange}
+        />
+      </div>
 
-//   //     {/* Product Details */}
-//   //     <div>
-//   //       <label
-//   //         htmlFor="productDetails"
-//   //         className="block text-sm font-medium text-gray-700"
-//   //       >
-//   //         Product Details
-//   //       </label>
-//   //       <textarea
-//   //         id="productDetails"
-//   //         name="productDetails"
-//   //         className="mt-1 p-2 block w-full h-32 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-//   //         placeholder="Enter product details"
-//   //       />
-//   //     </div>
+      {/* Product Details */}
+      <div>
+        <label
+          htmlFor="productDetails"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Product Details
+        </label>
+        <textarea
+          id="productDetails"
+          name="productDetails"
+          className="mt-1 p-2 block w-full h-32 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Enter product details"
+          onChange = {handleChange}
+        />
+      </div>
 
 //   //     {/* Next Button */}
 //   //     <button
@@ -295,32 +324,34 @@ export default NewProduct
 // //   // Image Section
 // //    const [images, setImages] = useState([]);
 
-// //   const ProductImages = () => (
-// //     <div className="mt-6">
-// //       <div className="mt-6 text-2xl font-bold">Images</div>
-// //       <div className="mt-4 w-full flex space-x-4">
-// //         <div className="w-1/4">
-// //           <div className="text-xl font-bold">How to Upload</div>
-// //           <p className="mt-2 text-sm text-gray-700">
-// //             Please follow these steps to upload images:
-// //           </p>
-// //           <ol className="list-decimal ml-4 mt-2">
-// //               <li>Step 1</li>
-// //               <li>Step 2</li>
-// //               <li>Step 3</li>
-// //             </ol>
-// //         </div>
-// //         <div className="w-3/4 grid grid-cols-6">
-// //           <div className="border bg-gray-200 rounded-md flex h-32 w-32">
-// //             <CloudinaryUploadWidget setImages={setImages}/>
-// //           </div>
-// //           {images.map((image, index) => (
-// //             <div key={index} className="border border-gray-300 rounded-md h-32 w-32 thumbnails">
-// //               <img src={image.url} alt={`Uploaded ${index}`} />
-// //             </div>
-// //           ))}
-// //         </div>
-// //       </div>
+  const ProductImages = () => (
+    <div className="mt-6">
+      <div className="mt-6 text-2xl font-bold">Images</div>
+      <div className="mt-4 w-full flex space-x-4">
+        <div className="w-1/4">
+          <div className="text-xl font-bold">How to Upload</div>
+          <p className="mt-2 text-sm text-gray-700">
+            Please follow these steps to upload images:
+          </p>
+          <ol className="list-decimal ml-4 mt-2">
+          <li>Click the "Upload" button to the right, you may need to click twice</li>
+          <br/>
+          <li>Select an image from any location supported by the widget</li>
+          <br/>
+          <li>Crop your image, if you'd like</li>
+            </ol>
+        </div>
+        <div className="w-3/4 grid grid-cols-6">
+          <div className="border bg-gray-200 rounded-md flex h-32 w-32">
+            <CloudinaryUploadWidget setImages={setImages}/>
+          </div>
+          {images.map((image, index) => (
+            <div key={index} className="border border-gray-300 rounded-md h-32 w-32 thumbnails">
+              <img src={image.url} alt={`Uploaded ${index}`} />
+            </div>
+          ))}
+        </div>
+      </div>
 
 // //       {/* Next/Previous Button */}
 // //       <div className="flex space-x-4 mt-6">
