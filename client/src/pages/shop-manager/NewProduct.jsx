@@ -40,6 +40,11 @@ const [rows, setRows] = useState([
     console.log(name)
     updatedRows[0][name] = value;
     console.log(updatedRows)
+    const updatedRows = [...rows];
+    console.log(updatedRows)
+    console.log(name)
+    updatedRows[0][name] = value;
+    console.log(updatedRows)
     setRows(updatedRows);
   };
 
