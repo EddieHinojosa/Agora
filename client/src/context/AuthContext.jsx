@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
                     const token = await firebaseUser.getIdToken();
                     const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
                     setUser(response.data.user);
-                    localStorage.setItem('token', response.data.token);
+                    localStorage.setItem('token', token);
                 } catch (error) {
                     console.error("Error fetching user profile:", error);
                     setUser(null);
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
                 const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
 
                 setUser(response.data.user);
-                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('token', token);
 
                 if (!response.data.user.profileCompleted) {
                     navigate('/complete-profile');
@@ -114,7 +114,6 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
-
 
 
 

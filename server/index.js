@@ -5,26 +5,31 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
 import helmet from 'helmet';
-
+import admin from './firebaseAdmin.js';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/user.js';
-
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
-import {admin} from './firebaseAdmin.js';
+
 import MongoStore from 'connect-mongo';
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+      credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
+  });
+}
+
+console.log('FIREBASE_PRIVATE_KEY:', process.env.FIREBASE_PRIVATE_KEY);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-// Ensure environment variables are being read
-
 
 // Enable CORS
 const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_DEV_URL, process.env.VITE_PROD_API_URL, process.env.VITE_PROD_URL];
 app.use(cors({
-    origin: allowedOrigins,
-    credentials: true,
+  origin: allowedOrigins,
+  credentials: true,
 }));
 
 // Parse JSON
@@ -35,42 +40,43 @@ app.use(helmet());
 
 // Rate limiting
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, 
-    max: 100 
+  windowMs: 15 * 60 * 1000, 
+  max: 100 
 });
 app.use(limiter);
 
 // Connect to MongoDB
 const mongoUri = process.env.VITE_MONGO_URI;
 if (!mongoUri) {
-    console.error('MONGO_URI is not defined in the environment variables');
-    process.exit(1);
+  console.error('MONGO_URI is not defined in the environment variables');
+  process.exit(1);
 }
 
 mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error(err));
 
 // Session middleware
 app.use(session({
-    secret: process.env.VITE_SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: mongoUri }),
-    cookie: {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-    }
+  secret: process.env.VITE_SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: mongoUri }),
+  cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+  }
 }));
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', shopRoutes);
 app.use('/api', userRoutes); // User routes
+app.use('/api', shopRoutes);
+
 
 
 //-----------------eddie calendar stuff in process-----------------
