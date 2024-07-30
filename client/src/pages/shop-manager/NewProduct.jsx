@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 // import { ProductImages } from "../../components/newProductSteps/ProductImages";
 import CloudinaryUploadWidget from "../../components/cloudinaryUploadWidget";
 
+
+
+
+
 const NewProduct = () => {
   // For Next/Previous Sections
   const [currentStep, setCurrentStep] = useState(0);
@@ -13,17 +17,21 @@ const NewProduct = () => {
   // This code will probably have to change to sync up to DB - just wrote for table test
   const [rows, setRows] = useState([
     {
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
       photo: "",
       status: "",
-      size: "S",
-      color: "Pink",
-      cost: "20",
-      quantity: "100",
-      material: "rubber",
-      weight: "5",
-      length: "10",
-      width: "15",
-      height: "20",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
     },
   ]);
 
@@ -31,30 +39,45 @@ const NewProduct = () => {
     setRows([
       ...rows,
       {
-        photo: "",
-        status: "",
-        size: "S",
-        color: "Green",
-        cost: "20",
-        quantity: "100",
-        material: "plastic",
-        weight: "5",
-        length: "10",
-        width: "15",
-        height: "20",
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
+      photo: "",
+      status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
       },
     ]);
   };
 
-  const handleChange = (index, event) => {
-    const updatedRows = [...rows];
+
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    updatedRows[index] = {
-      ...updatedRows[index],
-      [name]: value,
-    };
+    const updatedRows = [...rows];
+    console.log(updatedRows)
+    console.log(name)
+    updatedRows[0][name] = value;
+    console.log(updatedRows)
     setRows(updatedRows);
   };
+
+  // const handleChange = (index, event) => {
+  //   const updatedRows = [...rows];
+  //   const { name, value } = event.target;
+  //   updatedRows[index] = {
+  //     ...updatedRows[index],
+  //     [name]: value,
+  //   };
+  //   setRows(updatedRows);
+  // };
 
   // const handleHide = (index) => {
   //   const updatedRows = [...rows];
@@ -99,8 +122,10 @@ const NewProduct = () => {
           type="text"
           id="productName"
           name="productName"
+          value={rows[0].productName}
           className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Enter product name"
+          onChange = {handleChange}
         />
       </div>
 
@@ -117,6 +142,7 @@ const NewProduct = () => {
           name="productDetails"
           className="mt-1 p-2 block w-full h-32 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Enter product details"
+          onChange = {handleChange}
         />
       </div>
 
@@ -240,9 +266,11 @@ console.log(event.currentTarget, event.currentTarget.files)
             Please follow these steps to upload images:
           </p>
           <ol className="list-decimal ml-4 mt-2">
-              <li>Step 1</li>
-              <li>Step 2</li>
-              <li>Step 3</li>
+          <li>Click the "Upload" button to the right, you may need to click twice</li>
+          <br/>
+          <li>Select an image from any location supported by the widget</li>
+          <br/>
+          <li>Crop your image, if you'd like</li>
             </ol>
         </div>
         <div className="w-3/4 grid grid-cols-6">

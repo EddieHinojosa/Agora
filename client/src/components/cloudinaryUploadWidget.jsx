@@ -38,6 +38,7 @@ function CloudinaryUploadWidget({ uwConfig, setImages }) {
         {
         cloudName: cloudName,
         uploadPreset: uploadPreset,
+        clientAllowedFormats: ["png", "jpeg", "jpg", "svg", "gif", "webp", "gifi",],
         cropping: true,
         showSkipCropButton: true,
         gravity: "custom",
