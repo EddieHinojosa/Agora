@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import AuthContext from '../context/AuthContext';
 
 const schema = yup.object().shape({
-    newPassword: yup.string().required('New Password is required'),
+    newPassword: yup.string().required('New Password is required').min(6, 'Password must be at least 6 characters long'),
     confirmNewPassword: yup.string().oneOf([yup.ref('newPassword'), null], 'Passwords must match').required('Confirm New Password is required'),
 });
 

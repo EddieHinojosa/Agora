@@ -22,30 +22,30 @@ const authenticate = async (req, res, next) => {
     }
 };
 
-// Gets user
-router.get('/user', authenticate, async (req, res) => {
-  const { username, email } = req.query;
+// Update profile route
+router.post('/update-profile', authenticate, async (req, res) => {
+    try {
+        const { firstName, lastName, email, billingAddress, mailingAddress, username, shopName } = req.body;
 
-  try {
-    let user;
-    if (username) {
-      user = await User.findOne({ username });
-    } else if (email) {
-      user = await User.findOne({ email });
-    } else if (req.user && req.user.uid) {
-      user = await User.findById(req.user.uid);
-    } else {
-      return res.status(400).send('Username, email, or user ID is required');
+        const user = await User.findOne({ email: req.user.email }); // Modify this to fit your logic
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.firstName = firstName || user.firstName;
+        user.lastName = lastName || user.lastName;
+        user.billingAddress = billingAddress || user.billingAddress;
+        user.mailingAddress = mailingAddress || user.mailingAddress;
+        user.shopName = shopName || user.shopName;
+
+        await user.save();
+
+        res.status(200).json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ message: 'Profile update failed', error });
     }
-
-    if (!user) {
-      return res.status(404).send('User not found');
-    }
-
-    res.json(user);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
 });
 
 export default router;

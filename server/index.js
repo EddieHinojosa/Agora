@@ -4,10 +4,14 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
+<<<<<<< HEAD
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import rateLimit from 'express-rate-limit';
 
+=======
+import cloudinary from './config/cloudinary.js';
+>>>>>>> 359667c7a5b2784c4064f1e6da959671f4eecb1d
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 import { admin } from './firebaseAdmin.js'; 
