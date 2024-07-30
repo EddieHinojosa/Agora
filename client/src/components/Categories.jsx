@@ -24,6 +24,7 @@ const Categories = () => {
                 <Link to='#' className='hover:underline text-sm'>Food & Drink</Link>
                 <Link to='#' className='hover:underline text-sm'>Jewelry</Link>
                 <Link to='#' className='hover:underline text-sm'>Paper & Novelty</Link>
+                <Link to='#' className='hover:underline text-sm'>Pets</Link>
             </div>
         </nav>
     );
