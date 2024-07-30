@@ -1,8 +1,8 @@
   import React from "react";
   
   // Product Info Section
-  const ProductInfo = ({ onNext }) => (
-    <div className="w-full flex flex-col space-y-4">
+  const ProductInfo = ({ onNext, rows, handleChange }) => (
+   <div className="w-full flex flex-col space-y-4">
       {/* Product Name */}
       <div>
         <label
@@ -15,8 +15,11 @@
           type="text"
           id="productName"
           name="productName"
+          value={rows.productName}
           className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Enter product name"
+          onChange = {handleChange}
+          onBlur = {handleChange}
         />
       </div>
 
@@ -33,6 +36,8 @@
           name="productDetails"
           className="mt-1 p-2 block w-full h-32 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Enter product details"
+          onChange = {handleChange}
+          onBlur = {handleChange}
         />
       </div>
 

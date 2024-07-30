@@ -10,10 +10,41 @@ import ProductTable from '../../components/newProductSteps/ProductTable'
 
 
 const NewProduct = () => {
-  const [currentStep, setCurrentStep] = useState(0)
+    
+const [rows, setRows] = useState([
+  {
+    productName: "",
+    productDetails: "",
+    category: "",
+    tags: [],
+    photo: "",
+    status: "",
+    size: "",
+    color: "",
+    price: "",
+    quantity: "",
+    material: "",
+    weight: "",
+    length: "",
+    width: "",
+    height: "",
+  },
+]);
+
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    const updatedRows = [...rows];
+    console.log(updatedRows)
+    console.log(name)
+    updatedRows[0][name] = value;
+    console.log(updatedRows)
+    setRows(updatedRows);
+  };
 
   const steps = [
-    <ProductInfo key="productInfo" onNext={() => setCurrentStep(currentStep + 1)} />,
+    <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} />,
     <ProductType key="productType" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductImages key="productImages" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductPricing key="productPricing" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,

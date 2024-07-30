@@ -11,7 +11,9 @@ const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 
 function CloudinaryUploadWidget({ uwConfig, setImages }) {
-  const [loaded, setLoaded] = useState(false);
+
+    const [uploadImages, setUploadImages] = useState([]);  
+    const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     // Check if the script is already loaded
@@ -50,7 +52,6 @@ function CloudinaryUploadWidget({ uwConfig, setImages }) {
           if (!error && result && result.event === "success") {
             console.log("Done! Here is the image info: ", result.info);
             console.log("And here is the image URL:", result.info.secure_url);
-            console.log("and the cropping coordinates", result.info.coordinates.custom);
 
             setImages((prevImages) => [
                 ...prevImages,
