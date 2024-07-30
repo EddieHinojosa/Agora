@@ -10,8 +10,10 @@ const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 
 
-function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
-  const [loaded, setLoaded] = useState(false);
+function CloudinaryUploadWidget({ uwConfig, setImages }) {
+
+    const [uploadImages, setUploadImages] = useState([]);  
+    const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     // Check if the script is already loaded
@@ -34,14 +36,31 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
 
   const initializeCloudinaryWidget = () => {
     if (loaded)  {
-      var myWidget = window.cloudinary.createUploadWidget({
+      var myWidget = window.cloudinary.createUploadWidget(
+        {
         cloudName: cloudName,
         uploadPreset: uploadPreset,
+        clientAllowedFormats: ["png", "jpeg", "jpg", "svg", "gif", "webp", "gifi",],
         cropping: true,
+        showSkipCropButton: true,
+        gravity: "custom",
+        croppingAspectRatio: 1,
+        croppingCoordinatesMode: 'custom',
+        maxFiles: 10,
+        thumbnails: ".thumbnails",
       },
         (error, result) => {
           if (!error && result && result.event === "success") {
-            console.log("Done! Here is the image url: ", result.info.secure_url);
+            console.log("Done! Here is the image info: ", result.info);
+            console.log("And here is the image URL:", result.info.secure_url);
+
+            setImages((prevImages) => [
+                ...prevImages,
+                {
+                    url: result.info.secure_url,
+                    coordinates: result.info.coordinates.custom
+                },
+            ]);
           }
 
         }
@@ -61,7 +80,7 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
     <CloudinaryScriptContext.Provider value={{ loaded }}>
       <button
         id="upload_widget"
-        className="cloudinary-button"
+        className="border 200 rounded-md flex h-32 w-32 cloudinary-button"
         onClick={initializeCloudinaryWidget}
       >
         Upload <MdUpload className="mx-auto mt-2" />

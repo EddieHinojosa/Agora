@@ -27,7 +27,8 @@ const PORT = process.env.PORT || 5000;
 app.set('trust proxy', 1);
 
 // Enable CORS
-const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_DEV_URL, process.env.VITE_PROD_API_URL, process.env.VITE_PROD_URL];
+//temporarily added local and the link for testing
+const allowedOrigins = [`http://localhost:5173`, 'https://agora-crafts.onrender.com', process.env.VITE_DEV_API_URL, process.env.VITE_DEV_URL, process.env.VITE_PROD_API_URL, process.env.VITE_PROD_URL];
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
@@ -77,6 +78,7 @@ app.use(session({
 app.use('/api/auth', authRoutes);
 app.use('/api', userRoutes); // User routes
 app.use('/api', shopRoutes);
+
 
 
 
@@ -145,29 +147,32 @@ app.use('/api', shopRoutes);
 
 // Stripe Checkout Session route
 app.post('/api/create-checkout-session', async (req, res) => {
-    try {
+  try {
+      // Create a Stripe Checkout session
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: req.body.items.map(item => ({
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: item.name,
-            },
-            unit_amount: item.amount,
-          },
-          quantity: item.quantity,
-        })),
-        mode: 'payment',
-        success_url: `${process.env.CLIENT_URL}/checkout-success`, //need success page
-        cancel_url: `${process.env.CLIENT_URL}/cart`, //may redirect back
+          payment_method_types: ['card'],
+          line_items: req.body.items.map(item => ({
+              price_data: {
+                  currency: 'usd',
+                  product_data: {
+                      name: item.name,
+                  },
+                  unit_amount: item.amount,
+              },
+              quantity: item.quantity,
+          })),
+          mode: 'payment',
+          // Update these URLs to match your deployment
+          success_url: `${process.env.VITE_PROD_API_URL}/checkout-success`,
+          cancel_url: `${process.env.CLIENT_URL}/`,
       });
-  
+
+      // Send the session URL to the client
       res.json({ url: session.url });
-    } catch (e) {
+  } catch (e) {
       res.status(500).json({ error: e.message });
-    }
-  });
+  }
+});
 
 
 // Start server
