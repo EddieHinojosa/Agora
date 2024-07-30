@@ -1,7 +1,7 @@
 // server/firebaseAdmin.js
-
-import admin from 'firebase-admin';
 import dotenv from 'dotenv';
+import admin from 'firebase-admin';
+
 
 dotenv.config();
 
