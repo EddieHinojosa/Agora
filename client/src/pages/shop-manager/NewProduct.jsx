@@ -4,6 +4,12 @@ import { IoIosAdd } from "react-icons/io";
 // import { GrHide } from "react-icons/gr";
 import { Link } from "react-router-dom";
 // import { ProductImages } from "../../components/newProductSteps/ProductImages";
+// import { ProductInfo } from "../../components/newProductSteps/ProductInfo";
+// import { ProductType } from "../../components/newProductSteps/ProductType";
+// import { ProductPricing } from "../../components/newProductSteps/ProductPricing";
+// import { ProductOptions } from "../../components/newProductSteps/ProductOptions";
+// import { ProductDimensions } from "../../components/newProductSteps/ProductDimensions";
+// import { ShippingSection } from "../../components/newProductSteps/ShippingSection";
 import CloudinaryUploadWidget from "../../components/cloudinaryUploadWidget";
 
 
