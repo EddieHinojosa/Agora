@@ -2,7 +2,7 @@ import express from 'express';
 import admin from 'firebase-admin';
 import User from '../models/User.js';
 import dotenv from 'dotenv';
-import bcrypt from 'bcryptjs';
+import { getFirestore } from 'firebase-admin/firestore';
 
 dotenv.config();
 
