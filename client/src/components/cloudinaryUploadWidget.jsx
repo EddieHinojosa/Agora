@@ -34,15 +34,18 @@ function CloudinaryUploadWidget({ uwConfig, setImages }) {
 
   const initializeCloudinaryWidget = () => {
     if (loaded)  {
-      var myWidget = window.cloudinary.createUploadWidget({
+      var myWidget = window.cloudinary.createUploadWidget(
+        {
         cloudName: cloudName,
         uploadPreset: uploadPreset,
         cropping: true,
+        maxFiles: 10,
+        thumbnails: ".thumbnails",
       },
         (error, result) => {
           if (!error && result && result.event === "success") {
             console.log("Done! Here is the image url: ", result.info.secure_url);
-            setImages((images) => [...images, result.info.secure_url]);
+            setImages((prevImages) => [...prevImages,{ url: result.info.secure_url}]);
           }
 
         }
