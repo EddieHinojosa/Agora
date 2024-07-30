@@ -24,8 +24,16 @@ const schema = yup.object().shape({
     shopName: yup.string().required('Shop Name is required'),
 });
 
-const states = ["California", "New York", "Texas", "Florida", "Illinois"]; // Example states
-const countries = ["United States", "Canada", "Mexico"]; // Example countries
+const states = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", 
+    "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", 
+    "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", 
+    "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", 
+    "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", 
+    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+];
+const countries = ["United States", "Canada", "Mexico"];
 
 const UserSignup = () => {
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({

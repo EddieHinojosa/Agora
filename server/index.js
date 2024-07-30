@@ -3,11 +3,17 @@ dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import session from 'express-session';
 import helmet from 'helmet';
-import cloudinary from './config/cloudinary.js';
+
 import authRoutes from './routes/auth.js';
+import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/user.js';
-import { admin } from './firebaseAdmin.js'; 
+
+import rateLimit from 'express-rate-limit';
+import Stripe from 'stripe';
+import {admin} from './firebaseAdmin.js';
+import MongoStore from 'connect-mongo';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -63,7 +69,7 @@ app.use(session({
 
 // Routes
 app.use('/api/auth', authRoutes);
-// app.use('/api', shopRoutes);
+app.use('/api', shopRoutes);
 app.use('/api', userRoutes); // User routes
 
 

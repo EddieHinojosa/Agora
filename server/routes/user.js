@@ -1,6 +1,7 @@
 import express from 'express';
 import admin from 'firebase-admin';
 import User from '../models/User.js';
+import { verifyJwtToken } from './auth.js';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ const authenticate = async (req, res, next) => {
   }
 
   try {
+      console.log('Verifying token:', idToken); // Log the token
       const decodedToken = await admin.auth().verifyIdToken(idToken);
       req.user = decodedToken;
       next();
@@ -22,8 +24,6 @@ const authenticate = async (req, res, next) => {
   }
 };
 
-
-// Update profile route
 router.post('/update-profile', authenticate, async (req, res) => {
   const { firstName, lastName, billingAddress, mailingAddress, username, shopName } = req.body;
   try {
@@ -46,6 +46,7 @@ router.post('/update-profile', authenticate, async (req, res) => {
       res.status(500).json({ message: 'Failed to update profile', error });
   }
 });
+
 
 export default router;
 

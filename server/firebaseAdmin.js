@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const serviceAccount = {
-  type: "service_account",
+  type: process.env.FIREBASE_TYPE,
   project_id: process.env.FIREBASE_PROJECT_ID,
   private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
   private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
@@ -16,9 +16,10 @@ const serviceAccount = {
   client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL
 };
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+})};
 
 const firestore = admin.firestore();
 
