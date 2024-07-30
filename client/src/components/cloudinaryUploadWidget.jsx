@@ -39,13 +39,26 @@ function CloudinaryUploadWidget({ uwConfig, setImages }) {
         cloudName: cloudName,
         uploadPreset: uploadPreset,
         cropping: true,
+        showSkipCropButton: true,
+        gravity: "custom",
+        croppingAspectRatio: 1,
+        croppingCoordinatesMode: 'custom',
         maxFiles: 10,
         thumbnails: ".thumbnails",
       },
         (error, result) => {
           if (!error && result && result.event === "success") {
-            console.log("Done! Here is the image url: ", result.info.secure_url);
-            setImages((prevImages) => [...prevImages,{ url: result.info.secure_url}]);
+            console.log("Done! Here is the image info: ", result.info);
+            console.log("And here is the image URL:", result.info.secure_url);
+            console.log("and the cropping coordinates", result.info.coordinates.custom);
+
+            setImages((prevImages) => [
+                ...prevImages,
+                {
+                    url: result.info.secure_url,
+                    coordinates: result.info.coordinates.custom
+                },
+            ]);
           }
 
         }
