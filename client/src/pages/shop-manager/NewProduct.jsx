@@ -16,6 +16,10 @@ import CloudinaryUploadWidget from "../../components/cloudinaryUploadWidget";
 
 
 
+
+
+
+
 const NewProduct = () => {
   // For Next/Previous Sections
   const [currentStep, setCurrentStep] = useState(0);
@@ -27,8 +31,21 @@ const NewProduct = () => {
       productDetails: "",
       category: "",
       tags: [],
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
       photo: "",
       status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
       size: "",
       color: "",
       price: "",
@@ -60,10 +77,27 @@ const NewProduct = () => {
       length: "",
       width: "",
       height: "",
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
+      photo: "",
+      status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
       },
     ]);
   };
 
+
+  const handleChange = (event) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -71,6 +105,8 @@ const NewProduct = () => {
     console.log(updatedRows)
     console.log(name)
     updatedRows[0][name] = value;
+    console.log(updatedRows)
+    setRows(updatedRows);
   };
 
   const steps = [
@@ -197,8 +233,10 @@ export default NewProduct
           id="productName"
           name="productName"
           value={rows[0].productName}
+          value={rows[0].productName}
           className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Enter product name"
+          onChange = {handleChange}
           onChange = {handleChange}
         />
       </div>
@@ -216,6 +254,7 @@ export default NewProduct
           name="productDetails"
           className="mt-1 p-2 block w-full h-32 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Enter product details"
+          onChange = {handleChange}
           onChange = {handleChange}
         />
       </div>
@@ -340,6 +379,11 @@ export default NewProduct
             Please follow these steps to upload images:
           </p>
           <ol className="list-decimal ml-4 mt-2">
+          <li>Click the "Upload" button to the right, you may need to click twice</li>
+          <br/>
+          <li>Select an image from any location supported by the widget</li>
+          <br/>
+          <li>Crop your image, if you'd like</li>
           <li>Click the "Upload" button to the right, you may need to click twice</li>
           <br/>
           <li>Select an image from any location supported by the widget</li>
