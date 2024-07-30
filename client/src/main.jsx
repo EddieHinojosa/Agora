@@ -21,6 +21,7 @@ import UpdateProfile from './pages/UpdateProfile.jsx';
 import Login from './pages/login/Login.jsx';
 import ShopSignup from './pages/login/ShopSignup.jsx';
 import UserSignup from './pages/login/UserSignup.jsx';
+import CompleteProfile from './pages/login/CompleteProfile.jsx';
 
 // Shop Manager Pages
 import ShopManager from './pages/shop-manager/ShopManager.jsx';
@@ -32,6 +33,9 @@ import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx';
 import NewMessage  from './pages/shop-manager/NewMessage.jsx';
+
+
+
 
 const router = createBrowserRouter([
   // Home-Main Pages
@@ -63,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: 'update-profile',
         element: <UpdateProfile />
+      },
+      {
+        path: 'complete-profile',
+        element: <CompleteProfile />  // Add route for CompleteProfile
       }
     ]
   },

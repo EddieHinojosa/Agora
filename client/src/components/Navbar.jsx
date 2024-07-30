@@ -13,8 +13,12 @@ const Navbar = ({ setModalIsOpen }) => {
         if (user.shopName) {
             navigate('/shopmanager');
         } else {
-          navigate('/update-profile');
+            navigate('/update-profile');
         }
+    };
+
+    const handleLogout = () => {
+        logout(navigate);
     };
 
     return (
@@ -42,9 +46,9 @@ const Navbar = ({ setModalIsOpen }) => {
                         <button onClick={handleSellClick} className="text-sm">
                             Sell
                         </button>
-                        <Link to="/user"><CiUser size={22} className='text-gray-500 hover:text-black'/></Link>
-                        {user.shopName && <Link to="/shopmanager"><CiShop size={22} className='text-gray-500 hover:text-black'/></Link>}
-                        <button onClick={logout} className="text-sm">
+                        <Link to="/user"><CiUser size={22} className='text-gray-500 hover:text-black' /></Link>
+                        {user.shopName && <Link to="/shopmanager"><CiShop size={22} className='text-gray-500 hover:text-black' /></Link>}
+                        <button onClick={handleLogout} className="text-sm">
                             Logout
                         </button>
                     </>
@@ -79,5 +83,3 @@ export default Navbar;
         {/* <Link to="/shopmanager"><CiShop /></Link> */}
         {/* <Link to="/user"><CiUser /></Link> */}
         {/* <Link to="/cart"><MdOutlineShoppingBag /></Link> */}
-        
-

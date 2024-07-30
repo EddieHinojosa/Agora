@@ -43,13 +43,13 @@
 //       {/* Next/Previous Button */}
 //       <div className="flex space-x-4 mt-6">
 //         <button
-//           onClick={() => alert("This button bo longer works, button should be in new product")}
+//           onClick={() => setCurrentStep(currentStep - 1)}
 //           className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
 //         >
 //           Previous
 //         </button>
 //         <button
-//           onClick={() => alert("This button bo longer works, button should be in new product")}
+//           onClick={() => setCurrentStep(currentStep + 1)}
 //           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
 //         >
 //           Next

@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { MdUpload } from "react-icons/md";
+
 // Create a context to manage the script loading state
 const CloudinaryScriptContext = createContext();
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -8,7 +9,8 @@ const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 // console.log(cloudName, uploadPreset);
 
 
-function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
+
+function CloudinaryUploadWidget({ uwConfig, setImages }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -31,16 +33,21 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
   }, [loaded]);
 
   const initializeCloudinaryWidget = () => {
-    if (loaded) {
-      var myWidget = window.cloudinary.createUploadWidget({
+    if (loaded)  {
+      var myWidget = window.cloudinary.createUploadWidget(
+        {
         cloudName: cloudName,
         uploadPreset: uploadPreset,
+        cropping: true,
+        maxFiles: 10,
+        thumbnails: ".thumbnails",
       },
         (error, result) => {
           if (!error && result && result.event === "success") {
-            console.log("Done! Here is the image info: ", result.info);
-            setPublicId(result.info.public_id);
+            console.log("Done! Here is the image url: ", result.info.secure_url);
+            setImages((prevImages) => [...prevImages,{ url: result.info.secure_url}]);
           }
+
         }
       );
 
@@ -58,7 +65,7 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
     <CloudinaryScriptContext.Provider value={{ loaded }}>
       <button
         id="upload_widget"
-        className="cloudinary-button"
+        className="border 200 rounded-md flex h-32 w-32 cloudinary-button"
         onClick={initializeCloudinaryWidget}
       >
         Upload <MdUpload className="mx-auto mt-2" />

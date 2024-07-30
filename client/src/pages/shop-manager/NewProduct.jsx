@@ -228,6 +228,8 @@ console.log(event.currentTarget, event.currentTarget.files)
 
   // For Devon!
   // Image Section
+   const [images, setImages] = useState([]);
+
   const ProductImages = () => (
     <div className="mt-6">
       <div className="mt-6 text-2xl font-bold">Images</div>
@@ -245,13 +247,13 @@ console.log(event.currentTarget, event.currentTarget.files)
         </div>
         <div className="w-3/4 grid grid-cols-6">
           <div className="border bg-gray-200 rounded-md flex h-32 w-32">
-            <CloudinaryUploadWidget/>
+            <CloudinaryUploadWidget setImages={setImages}/>
           </div>
-          <div className="border border-gray-300 rounded-md h-32 w-32"></div>
-          <div className="border border-gray-300 rounded-md h-32 w-32"></div>
-          <div className="border border-gray-300 rounded-md h-32 w-32"></div>
-          <div className="border border-gray-300 rounded-md h-32 w-32"></div>
-          <div className="border border-gray-300 rounded-md h-32 w-32"></div>
+          {images.map((image, index) => (
+            <div key={index} className="border border-gray-300 rounded-md h-32 w-32 thumbnails">
+              <img src={image.url} alt={`Uploaded ${index}`} />
+            </div>
+          ))}
         </div>
       </div>
 
