@@ -10,7 +10,7 @@ const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 
 
-function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
+function CloudinaryUploadWidget({ uwConfig, setImages }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -42,6 +42,7 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
         (error, result) => {
           if (!error && result && result.event === "success") {
             console.log("Done! Here is the image url: ", result.info.secure_url);
+            setImages((images) => [...images, result.info.secure_url]);
           }
 
         }
@@ -61,7 +62,7 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
     <CloudinaryScriptContext.Provider value={{ loaded }}>
       <button
         id="upload_widget"
-        className="cloudinary-button"
+        className="border 200 rounded-md flex h-32 w-32 cloudinary-button"
         onClick={initializeCloudinaryWidget}
       >
         Upload <MdUpload className="mx-auto mt-2" />
