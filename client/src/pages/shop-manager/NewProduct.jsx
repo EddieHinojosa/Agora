@@ -131,7 +131,10 @@ const NewProduct = () => {
   );
 
   // Product Type Section
-  const ProductType = () => (
+  const ProductType = () => {
+    const [selectedCategory, setSelectedCategory] = useState('')
+
+    return (
     <div className="w-full flex flex-col space-y-4">
       {/* Physical or Digital */}
       <div className="flex space-x-4">
@@ -165,24 +168,34 @@ const NewProduct = () => {
         </div>
       </div>
 
-      {/* Product Type */}
+      {/* Category */}
       <div>
         <label
-          htmlFor="productType"
+          htmlFor="category"
           className="block text-sm font-medium text-gray-700"
         >
-          Product Type
+          Category
         </label>
-        <input
-          type="text"
-          id="productType"
-          name="productType"
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          placeholder="Enter product type"
-        />
+        <select
+          id="category"
+          name="category"
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="">Select category</option>
+          <option value="accessories">Accessories</option>
+          <option value="art">Art</option>
+          <option value="clothing">Clothing</option>
+          <option value="homedecor">Collectible</option>
+          <option value="tableware">Tableware</option>
+          <option value="drinkware">Drinkware</option>
+          <option value="jewelry">Jewelry</option>
+          <option value="paper">Paper</option>
+          <option value="novelty">Novelty</option>
+          <option value="pets">Pets</option>
+        </select>
       </div>
-
-      {/* Item Tags */}
       <div>
         <label
           htmlFor="itemTags"
@@ -216,6 +229,7 @@ const NewProduct = () => {
       </div>
     </div>
   );
+  };
 
 
   function selectImages () {

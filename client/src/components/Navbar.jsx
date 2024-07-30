@@ -79,5 +79,3 @@ export default Navbar;
         {/* <Link to="/shopmanager"><CiShop /></Link> */}
         {/* <Link to="/user"><CiUser /></Link> */}
         {/* <Link to="/cart"><MdOutlineShoppingBag /></Link> */}
-        
-
