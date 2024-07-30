@@ -81,7 +81,7 @@ router.post('/firebase-login', async (req, res) => {
   }
 });
 
-router.post('/set-username-password', verifyJwtToken, async (req, res) => {
+router.post('/set-username-password', async (req, res) => {
   const { username, password } = req.body;
 
   try {
