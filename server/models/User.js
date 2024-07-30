@@ -24,6 +24,11 @@ const AddressSchema = new mongoose.Schema({
 });
 
 const UserSchema = new mongoose.Schema({
+  uid: {
+    type: String,
+    unique: true,
+    required: true
+},
   _id: {
     type: mongoose.Schema.Types.ObjectId,
     default: () => new mongoose.Types.ObjectId(),
