@@ -20,8 +20,21 @@ const NewProduct = () => {
       productDetails: "",
       category: "",
       tags: [],
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
       photo: "",
       status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
       size: "",
       color: "",
       price: "",
@@ -53,10 +66,27 @@ const NewProduct = () => {
       length: "",
       width: "",
       height: "",
+      productName: "",
+      productDetails: "",
+      category: "",
+      tags: [],
+      photo: "",
+      status: "",
+      size: "",
+      color: "",
+      price: "",
+      quantity: "",
+      material: "",
+      weight: "",
+      length: "",
+      width: "",
+      height: "",
       },
     ]);
   };
 
+
+  const handleChange = (event) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
