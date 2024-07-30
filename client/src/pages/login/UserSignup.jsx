@@ -2,18 +2,19 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
-import { auth } from '../../utils/firebaseConfig';
+import { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
+
 
 const schema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),
     lastName: yup.string().required('Last Name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
-    password: yup.string().required('Password is required'),
+    password: yup.string().min(8, 'Password must be at least 8 characters').matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,'Password must contain at least one uppercase letter, one number, and one special character').required('Password is required'),
+    confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
     billingStreetAddress: yup.string().required('Billing Street Address is required'),
     billingZipcode: yup.string().required('Billing Zipcode is required'),
     billingCity: yup.string().required('Billing City is required'),
@@ -23,46 +24,28 @@ const schema = yup.object().shape({
     shopName: yup.string().required('Shop Name is required'),
 });
 
-const states = ["California", "New York", "Texas", "Florida", "Illinois"]; // Example states
-const countries = ["United States", "Canada", "Mexico"]; // Example countries
+const states = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", 
+    "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", 
+    "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", 
+    "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", 
+    "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", 
+    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+];
+const countries = ["United States", "Canada", "Mexico"];
 
 const UserSignup = () => {
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
+    const { registerUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
-            const user = userCredential.user;
-
-            // Save additional user data in MongoDB through the server
-            await axios.post(`${import.meta.env.VITE_PROD_API_URL}/api/auth/register`, {
-                uid: user.uid,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                email: data.email,
-                billingAddress: {
-                    street: data.billingStreetAddress,
-                    city: data.billingCity,
-                    state: data.billingState,
-                    zip: data.billingZipcode,
-                    country: data.billingCountry,
-                },
-                mailingAddress: {
-                    street: data.mailingStreetAddress,
-                    city: data.mailingCity,
-                    state: data.mailingState,
-                    zip: data.mailingZipcode,
-                    country: data.mailingCountry,
-                },
-                username: data.username,
-                shopName: data.shopName,
-            });
-
+            await registerUser(data, navigate);
             alert('Registration successful');
-            navigate('/');
         } catch (error) {
             alert('Registration failed: ' + error.message);
         }
@@ -84,6 +67,7 @@ const UserSignup = () => {
                 <FormField label="Last Name" name="lastName" register={register} errors={errors} />
                 <FormField label="Email" name="email" register={register} errors={errors} />
                 <FormField label="Password" name="password" register={register} errors={errors} />
+                <FormField label="Confirm Password" name="confirmPassword" register={register} errors={errors} />
                 <FormField label="Billing Street Address" name="billingStreetAddress" register={register} errors={errors} />
                 <FormField label="Billing Zipcode" name="billingZipcode" register={register} errors={errors} />
                 <FormField label="Billing City" name="billingCity" register={register} errors={errors} />
@@ -111,6 +95,10 @@ const UserSignup = () => {
 };
 
 export default UserSignup;
+
+
+
+
 
 
 
