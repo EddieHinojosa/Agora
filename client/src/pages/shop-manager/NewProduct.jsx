@@ -71,13 +71,6 @@ const NewProduct = () => {
     console.log(updatedRows)
     console.log(name)
     updatedRows[0][name] = value;
-    console.log(updatedRows)
-    const updatedRows = [...rows];
-    console.log(updatedRows)
-    console.log(name)
-    updatedRows[0][name] = value;
-    console.log(updatedRows)
-    setRows(updatedRows);
   };
 
   // const handleChange = (index, event) => {
