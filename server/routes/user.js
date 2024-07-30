@@ -1,7 +1,7 @@
 import express from 'express';
 import admin from 'firebase-admin';
 import User from '../models/User.js';
-import { verifyJwtToken } from './auth.js';
+// import { verifyJwtToken } from './auth.js';
 
 const router = express.Router();
 
