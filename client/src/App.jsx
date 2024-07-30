@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Categories from './components/Categories'
 import Cart from './pages/Cart';
 //imported Modal because the Cart component uses it
 import Modal from 'react-modal'; 
@@ -18,8 +17,7 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <Categories />
+      <Navbar setModalIsOpen={setModalIsOpen} />
       <main>
         <Outlet />
         <Cart isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} />

@@ -18,7 +18,7 @@ const Navbar = ({ setModalIsOpen }) => {
     };
 
     return (
-        <nav className="flex items-center justify-between p-4">
+        <nav className="flex border border-gray-100 items-center justify-between p-4">
             <div className="flex items-center brand-font">
                 <Link to="/" className="mr-4 text-3xl font-bold">
                     agora
@@ -79,5 +79,3 @@ export default Navbar;
         {/* <Link to="/shopmanager"><CiShop /></Link> */}
         {/* <Link to="/user"><CiUser /></Link> */}
         {/* <Link to="/cart"><MdOutlineShoppingBag /></Link> */}
-        
-

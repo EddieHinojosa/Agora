@@ -17,13 +17,13 @@ const Categories = () => {
                 </button>
             </div>
             <div className={`flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-4 ${isOpen ? 'flex' : 'hidden md:flex'}`}>
-                <Link to='/shopmanager/' className='hover:underline text-sm'>Shop Home</Link>
-                <Link to='/shopmanager/orders' className='hover:underline text-sm'>Orders</Link>
-                <Link to='/shopmanager/messages' className='hover:underline text-sm'>Messages</Link>
-                <Link to='/shopmanager/products' className='hover:underline text-sm'>Products</Link>
-                <Link to='/shopmanager/finances' className='hover:underline text-sm'>Finances</Link>
-                <Link to='/shopmanager/calendar' className='hover:underline text-sm'>Calendar</Link>
-                <Link to='/shopmanager/settings' className='hover:underline text-sm'>Settings</Link>
+                <Link to='#' className='hover:underline text-sm'>Accessories</Link>
+                <Link to='#' className='hover:underline text-sm'>Art & Collectibles</Link>
+                <Link to='#' className='hover:underline text-sm'>Clothing</Link>
+                <Link to='#' className='hover:underline text-sm'>Home Decor</Link>
+                <Link to='#' className='hover:underline text-sm'>Food & Drink</Link>
+                <Link to='#' className='hover:underline text-sm'>Jewelry</Link>
+                <Link to='#' className='hover:underline text-sm'>Paper & Novelty</Link>
             </div>
         </nav>
     );
