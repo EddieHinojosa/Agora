@@ -1,7 +1,7 @@
 import React from "react";
 
 // Product Price and Quantity Section
-const ProductPricing = ({ onNext, onPrevious }) => (
+const ProductPricing = ({ onNext, onPrevious, rows, handleChange }) => (
     <div>
       {/* Price */}
       <div>
@@ -19,8 +19,11 @@ const ProductPricing = ({ onNext, onPrevious }) => (
             type="text"
             id="price"
             name="Price"
+            value={rows.price}
             className="p-2 block w-1/4 pl-7 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="0.00"
+            onChange = {handleChange}
+            onBlur = {handleChange}
           />
         </div>
       </div>
@@ -37,8 +40,11 @@ const ProductPricing = ({ onNext, onPrevious }) => (
           type="text"
           id="quantity"
           name="quantity"
+          value={rows.quantity}
           className="mt-1 p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder=""
+          onChange = {handleChange}
+          onBlur = {handleChange}
         />
       </div>
 
