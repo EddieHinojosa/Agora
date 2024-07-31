@@ -23,6 +23,10 @@ if (!admin.apps.length) {
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)  //to initialize stripe...hopefully
+
+
+// Ensure environment variables are being read
 
 app.set('trust proxy', 1);
 
@@ -87,6 +91,7 @@ app.use(session({
 app.use('/api/auth', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api', shopRoutes);
+app.use('/api', userRoutes); // User routes
 
 
 

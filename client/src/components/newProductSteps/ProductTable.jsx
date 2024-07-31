@@ -8,17 +8,24 @@ import { Link } from "react-router-dom";
  const ProductTable = ({ onPrevious }) => {
     const [rows, setRows] = useState([
         {
-          photo: "",
+          category: "",
+          color: "",
+          cost: "",
+          height: "",
+          image_urls: [],
+          material: "",
+          packedLength: "",
+          packedWidth: "",
+          packedHeight: "",
+          productLength: "",
+          productName: "",
+          price: "",
           status: "",
-          size: "S",
-          color: "Pink",
-          cost: "20",
-          quantity: "100",
-          material: "rubber",
-          weight: "5",
-          length: "10",
-          width: "15",
-          height: "20",
+          size: "",
+          tags: [],
+          quantity: "",
+          width: "",
+          weight: ""
         },
       ]);
     
@@ -26,30 +33,47 @@ import { Link } from "react-router-dom";
         setRows([
           ...rows,
           {
-            photo: "",
+            category: "",
+            color: "",
+            cost: "",
+            height: "",
+            image_urls: [],
+            material: "",
+            packedLength: "",
+            packedWidth: "",
+            packedHeight: "",
+            productLength: "",
+            productName: "",
+            price: "",
             status: "",
-            size: "S",
-            color: "Green",
-            cost: "20",
-            quantity: "100",
-            material: "plastic",
-            weight: "5",
-            length: "10",
-            width: "15",
-            height: "20",
+            size: "",
+            tags: [],
+            quantity: "",
+            width: "",
+            weight: ""
           },
         ]);
       };
     
-      const handleChange = (index, event) => {
-        const updatedRows = [...rows];
+      const handleChange = (event) => {
         const { name, value } = event.target;
-        updatedRows[index] = {
-          ...updatedRows[index],
-          [name]: value,
-        };
+        const updatedRows = [...rows];
+        console.log(updatedRows)
+        console.log(name)
+        updatedRows[0][name] = value;
         setRows(updatedRows);
       };
+      
+      // const handleChange = (index, event) => {
+      //   const updatedRows = [...rows];
+      //   const { name, value } = event.target;
+      //   updatedRows[index] = {
+      //     ...updatedRows[index],
+      //     [name]: value,
+      //   };
+      //   setRows(updatedRows);
+      // };
+    
     
       // const handleHide = (index) => {
       //   const updatedRows = [...rows];
