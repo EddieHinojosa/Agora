@@ -32,7 +32,7 @@ const [rows, setRows] = useState([
   },
 ]);
 
-  const [currentStep, setCurrentStep] = useState(0);
+const [currentStep, setCurrentStep] = useState(0);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
