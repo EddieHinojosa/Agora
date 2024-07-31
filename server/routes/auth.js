@@ -100,17 +100,12 @@ router.post('/set-username-password', authenticate, async (req, res) => {
     }
 });
 
-if (!uid || !email || !username || !password || !firstName || !lastName || !billingStreetAddress || !billingCity || !billingState || !billingCountry || !billingZipcode || !shopName) {
-    return res.status(400).json({ message: 'All fields are required' });
+if (!uid || !email || !username || !password || !firstName || !lastName || !billingStreetAddress || !billingCity || !billingState || !billingCountry || !billingZipcode || !shopName) 
+    { return res.status(400).json({ message: 'All fields are required' });
 }
 
     // Log the incoming request body for debugging
     console.log('Incoming registration request:', req.body);
-
-    // Validate incoming request
-    if (!uid || !email || !username || !password) {
-        return res.status(400).json({ message: 'All fields are required' });
-    }
 
     try {
         console.log('Registering user:', { uid, email, username });
@@ -148,8 +143,7 @@ if (!uid || !email || !username || !password || !firstName || !lastName || !bill
     } catch (error) {
         console.error('Error during registration:', error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message });
-    }
-});
+    };
 
 export { authenticate };
 export default router;
