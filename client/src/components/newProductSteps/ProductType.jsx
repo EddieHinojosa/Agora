@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // Product Type Section
-const ProductType = ({ onNext, onPrevious, rows, handleChange }) => {
+const ProductType = ({ onNext, onPrevious, rows, handleChange, setRows }) => {
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
   const [tagLimitReached, setTagLimitReached] = useState(false);
@@ -14,6 +14,18 @@ const ProductType = ({ onNext, onPrevious, rows, handleChange }) => {
       setTags([...tags, newTag.trim()]);
       setNewTag("");
       setTagLimitReached(false);
+
+      // State change logic below
+          // console.log(addTag)
+          // console.log(addTag[index].option)
+          // console.log(addTag[index].values[index])
+          const stateRow = newTag.toLowerCase()
+          const stateRowValue = newTag.values
+          const updatedRows = {...rows}
+          updatedRows[stateRow] = stateRowValue
+          setRows(updatedRows)
+          console.log(updatedRows)
+
     } else if (tags.length >= 10) {
       setTagLimitReached(true);
     }

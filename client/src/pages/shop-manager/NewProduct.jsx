@@ -46,7 +46,7 @@ const [rows, setRows] = useState(
 
   const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} />,
-    <ProductType key="productType" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
+    <ProductType key="productType" rows={rows} handleChange={handleChange} setRows={setRows} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductImages key="productImages" rows={rows} setRows={setRows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductOptions key="productOptions" rows={rows} handleChange={handleChange} setRows={setRows} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
