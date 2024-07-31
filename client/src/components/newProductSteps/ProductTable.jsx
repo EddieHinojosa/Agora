@@ -35,12 +35,12 @@ import { Link } from "react-router-dom";
           {
             category: "",
             color: "",
-            height: "",
             image_urls: [],
             material: "",
             packedLength: "",
             packedWidth: "",
             packedHeight: "",
+            productHeight: "",
             productLength: "",
             productName: "",
             productWeight: "",
@@ -49,7 +49,6 @@ import { Link } from "react-router-dom";
             size: "",
             tags: [],
             quantity: "",
-            width: "",
 
           },
         ]);

@@ -11,37 +11,36 @@ import ProductTable from '../../components/newProductSteps/ProductTable'
 
 const NewProduct = () => {
     
-const [rows, setRows] = useState([
+const [rows, setRows] = useState(
   {
     category: "",
     color: "",
-    cost: "",
-    height: "",
     image_urls: [],
     material: "",
     packedLength: "",
     packedWidth: "",
     packedHeight: "",
+    productHeight: "",
     productLength: "",
     productName: "",
+    productWeight: "",
     price: "",
     status: "",
     size: "",
     tags: [],
     quantity: "",
-    width: "",
-    weight: ""
+
   },
-]);
+);
 
   const [currentStep, setCurrentStep] = useState(0);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    const updatedRows = [...rows];
+    const updatedRows = {...rows};
     console.log(updatedRows)
     console.log(name)
-    updatedRows[0][name] = value;
+    updatedRows[name] = value;
     setRows(updatedRows);
   };
 
@@ -49,7 +48,7 @@ const [rows, setRows] = useState([
   const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} />,
     <ProductType key="productType" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductImages key="productImages" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
+    <ProductImages key="productImages" rows={rows} setRows={setRows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductOptions key="productOptions" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
