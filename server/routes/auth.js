@@ -100,8 +100,9 @@ router.post('/set-username-password', authenticate, async (req, res) => {
     }
 });
 
-router.post('/register', async (req, res) => {
-    const { uid, email, username, password, ...otherFields } = req.body;
+if (!uid || !email || !username || !password || !firstName || !lastName || !billingStreetAddress || !billingCity || !billingState || !billingCountry || !billingZipcode || !shopName) {
+    return res.status(400).json({ message: 'All fields are required' });
+}
 
     // Log the incoming request body for debugging
     console.log('Incoming registration request:', req.body);
@@ -137,7 +138,7 @@ router.post('/register', async (req, res) => {
         console.log('User saved to Firebase successfully');
 
         // Create a new user for MongoDB
-        user = new User({ uid, email, username, password: hashedPassword, ...otherFields });
+        user = new User({ uid, email, username, password: hashedPassword, firstName, lastName, billingStreetAddress, billingCity, billingState, billingCountry, billingZipcode, shopName});
 
         // Save the user to the database
         await user.save();
