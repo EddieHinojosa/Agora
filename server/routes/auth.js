@@ -100,12 +100,10 @@ router.post('/register', async (req, res) => {
     console.log('Incoming registration request:', req.body);
 
     // Validate incoming request
-    if (
-        !uid || !email || !username || !password || !firstName || !lastName ||
+    if (!uid || !email || !username || !password || !firstName || !lastName ||
         !billingStreetAddress || !billingCity || !billingState || !billingCountry ||
         !billingZipcode || !shopName || !mailingStreetAddress || !mailingCity ||
-        !mailingState || !mailingCountry || !mailingZipcode
-    ) {
+        !mailingState || !mailingCountry || !mailingZipcode) {
         console.log('Missing required fields');
         return res.status(400).json({ message: 'All fields are required' });
     }
@@ -186,7 +184,11 @@ router.post('/register', async (req, res) => {
         res.json({ user });
     } catch (error) {
         console.error('Error during registration:', error);
-        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+        if (error.message.includes('network')) {
+            res.status(500).json({ message: 'Network error, please try again later.' });
+        } else {
+            res.status(500).json({ message: 'Internal Server Error', error: error.message });
+        }
     }
 });
 
