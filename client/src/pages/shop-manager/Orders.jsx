@@ -7,7 +7,7 @@ const Orders = () => {
             <h2 className="text-2xl">Orders</h2>
         </div>
         <div className="flex justify-end">
-            <div className="w-full bg-gray-100 flex p-1 space-x-4">
+            <div className="w-full bg-gray-100 flex p-1 space-x-4 text-sm">
                 <Link to="#" className="p-2 hover:underline">New</Link>
                 <Link to="#" className="p-2 hover:underline">Completed</Link>
             </div>
