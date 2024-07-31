@@ -56,7 +56,7 @@ import { Link } from "react-router-dom";
 
       const uploadProduct = async (data) => {
         try{
-        const response = await axios.post("http://localhost:5000/newProduct", "https://agora-crafts.onrender.com/newProduct", data)
+        const response = await axios.post("http://localhost:5000/shopManager/newProduct", "https://agora-crafts.onrender.com/newProduct", data)
          console.log(response);
          navigate('/');
         } catch (error) {
