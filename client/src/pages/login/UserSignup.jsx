@@ -43,10 +43,15 @@ const UserSignup = () => {
 
     const onSubmit = async (data) => {
         try {
+            console.log('Submitting registration data:', data); 
             await registerUser(data, navigate);
             alert('Registration successful');
         } catch (error) {
-            alert('Registration failed: ' + error.message);
+            if (error.response && error.response.data) {
+                alert('Registration failed: ' + error.response.data.message);
+            } else {
+                alert('Registration failed: ' + error.message);
+            }
             console.error('Registration error details:', error);
         }
     };
