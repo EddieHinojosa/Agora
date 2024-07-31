@@ -18,7 +18,7 @@ const ProductPricing = ({ onNext, onPrevious, rows, handleChange }) => (
           <input
             type="text"
             id="price"
-            name="Price"
+            name="price"
             value={rows.price}
             className="p-2 block w-1/4 pl-7 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="0.00"
