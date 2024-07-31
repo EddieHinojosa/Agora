@@ -104,19 +104,33 @@ router.post('/register', async (req, res) => {
     const { uid, email, username, password } = req.body;
 
     try {
+        console.log('Registering user:', { uid, email, username });
+
+        // Check if user already exists
         let user = await User.findOne({ uid });
-        if (user) return res.status(400).json({ message: 'User already exists' });
+        if (user) {
+            console.log('User already exists:', uid);
+            return res.status(400).json({ message: 'User already exists' });
+        }
 
+        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 12);
+        console.log('Password hashed successfully');
 
+        // Create a new user
         user = new User({ uid, email, username, password: hashedPassword });
+
+        // Save the user to the database
         await user.save();
+        console.log('User registered successfully:', user);
 
         res.json({ user });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Error during registration:', error);
+        res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 });
+
 export { authenticate };
 export default  router;
 

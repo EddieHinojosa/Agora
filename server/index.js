@@ -85,7 +85,7 @@ app.use(session({
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', userRoutes); // User routes
+app.use('/api', userRoutes);
 app.use('/api', shopRoutes);
 
 
