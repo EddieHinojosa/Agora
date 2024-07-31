@@ -29,7 +29,6 @@ const [rows, setRows] = useState(
     size: "",
     tags: [],
     quantity: "",
-
   },
 );
 
@@ -50,7 +49,7 @@ const [rows, setRows] = useState(
     <ProductType key="productType" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductImages key="productImages" rows={rows} setRows={setRows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductOptions key="productOptions" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
+    <ProductOptions key="productOptions" rows={rows} handleChange={handleChange} setRows={setRows} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductTable key="productTable" onPrevious={() => setCurrentStep(currentStep - 1)} />,
