@@ -1,7 +1,7 @@
  import React from "react";
  
  // Product Type Section
- const ProductType = ({ onNext, onPrevious }) => (
+ const ProductType = ({ onNext, onPrevious, rows, handleChange  }) => (
     <div className="w-full flex flex-col space-y-4">
       {/* Physical or Digital */}
       <div className="flex space-x-4">
@@ -45,10 +45,14 @@
         </label>
         <input
           type="text"
-          id="productType"
-          name="productType"
+          id="category"
+          name="category"
+          value={rows.category}
           className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          placeholder="Enter product type"
+          placeholder="Enter category"
+          onChange = {handleChange}
+          onBlur = {handleChange}
+
         />
       </div>
 

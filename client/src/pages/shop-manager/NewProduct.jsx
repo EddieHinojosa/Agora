@@ -13,19 +13,21 @@ const NewProduct = () => {
     
 const [rows, setRows] = useState([
   {
+    category: "",
     color: "",
     cost: "",
     height: "",
+    image_urls: [],
     material: "",
     packedLength: "",
     packedWidth: "",
     packedHeight: "",
     productLength: "",
-    processingTime: "",
+    productName: "",
     price: "",
     status: "",
     size: "",
-    photo: "",
+    tags: [],
     quantity: "",
     width: "",
     weight: ""
@@ -45,8 +47,8 @@ const [rows, setRows] = useState([
 
   const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} />,
-    <ProductType key="productType" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductImages key="productImages" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
+    <ProductType key="productType" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
+    <ProductImages key="productImages" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductOptions key="productOptions" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
