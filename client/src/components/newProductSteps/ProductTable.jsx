@@ -5,7 +5,7 @@ import { IoIosAdd } from "react-icons/io";
 import { Link } from "react-router-dom";
  
  // Product Table Section
- const ProductTable = ({ onPrevious }) => {
+ const ProductTable = () => {
     const [rows, setRows] = useState([
         {
           category: "",
@@ -362,12 +362,6 @@ import { Link } from "react-router-dom";
       </table>
       <div className="flex space-x-4 mt-6">
         <button
-          onClick={onPrevious}
-          className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-        >
-          Previous
-        </button>
-        <button
           type="submit"
           onClick={uploadProduct}
           to="/shopmanager/products"
@@ -377,6 +371,7 @@ import { Link } from "react-router-dom";
         </button>
       </div>
     </div>
+  
   );
  };
 
