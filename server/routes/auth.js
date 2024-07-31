@@ -100,12 +100,16 @@ router.post('/set-username-password', authenticate, async (req, res) => {
     }
 });
 
-if (!uid || !email || !username || !password || !firstName || !lastName || !billingStreetAddress || !billingCity || !billingState || !billingCountry || !billingZipcode || !shopName) 
-    { return res.status(400).json({ message: 'All fields are required' });
-}
+router.post('/register', async (req, res) => {
+    const { uid, email, username, password, firstName, lastName, billingStreetAddress, billingCity, billingState, billingCountry, billingZipcode, shopName } = req.body;
 
     // Log the incoming request body for debugging
     console.log('Incoming registration request:', req.body);
+
+    // Validate incoming request
+    if (!uid || !email || !username || !password || !firstName || !lastName || !billingStreetAddress || !billingCity || !billingState || !billingCountry || !billingZipcode || !shopName) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
 
     try {
         console.log('Registering user:', { uid, email, username });
@@ -128,12 +132,36 @@ if (!uid || !email || !username || !password || !firstName || !lastName || !bill
             uid,
             email,
             username,
-            ...otherFields
+            firstName,
+            lastName,
+            billingAddress: {
+                street: billingStreetAddress,
+                city: billingCity,
+                state: billingState,
+                country: billingCountry,
+                zipcode: billingZipcode,
+            },
+            shopName
         });
         console.log('User saved to Firebase successfully');
 
         // Create a new user for MongoDB
-        user = new User({ uid, email, username, password: hashedPassword, firstName, lastName, billingStreetAddress, billingCity, billingState, billingCountry, billingZipcode, shopName});
+        user = new User({
+            uid,
+            email,
+            username,
+            password: hashedPassword,
+            firstName,
+            lastName,
+            billingAddress: {
+                street: billingStreetAddress,
+                city: billingCity,
+                state: billingState,
+                country: billingCountry,
+                zipcode: billingZipcode,
+            },
+            shopName
+        });
 
         // Save the user to the database
         await user.save();
@@ -143,7 +171,8 @@ if (!uid || !email || !username || !password || !firstName || !lastName || !bill
     } catch (error) {
         console.error('Error during registration:', error);
         res.status(500).json({ message: 'Internal Server Error', error: error.message });
-    };
+    }
+});
 
 export { authenticate };
 export default router;
