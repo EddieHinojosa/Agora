@@ -17,6 +17,9 @@ import MongoStore from 'connect-mongo';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)  //to initialize stripe...hopefully
+
+
 // Ensure environment variables are being read
 
 
