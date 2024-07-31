@@ -101,7 +101,7 @@ router.post('/set-username-password', authenticate, async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-    const { uid, email, username, password } = req.body;
+    const { uid, email, username, password, ...otherFields } = req.body;
 
     // Log the incoming request body for debugging
     console.log('Incoming registration request:', req.body);
@@ -114,7 +114,7 @@ router.post('/register', async (req, res) => {
     try {
         console.log('Registering user:', { uid, email, username });
 
-        // Check if user already exists
+        // Check if user already exists in MongoDB
         let user = await User.findOne({ uid });
         if (user) {
             console.log('User already exists:', uid);
@@ -125,12 +125,23 @@ router.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
         console.log('Password hashed successfully');
 
-        // Create a new user
-        user = new User({ uid, email, username, password: hashedPassword });
+        // Save user to Firebase
+        const firestore = admin.firestore();
+        const userDoc = firestore.collection('users').doc(uid);
+        await userDoc.set({
+            uid,
+            email,
+            username,
+            ...otherFields
+        });
+        console.log('User saved to Firebase successfully');
+
+        // Create a new user for MongoDB
+        user = new User({ uid, email, username, password: hashedPassword, ...otherFields });
 
         // Save the user to the database
         await user.save();
-        console.log('User registered successfully:', user);
+        console.log('User registered successfully in MongoDB:', user);
 
         res.json({ user });
     } catch (error) {
@@ -140,7 +151,7 @@ router.post('/register', async (req, res) => {
 });
 
 export { authenticate };
-export default  router;
+export default router;
 
 
 

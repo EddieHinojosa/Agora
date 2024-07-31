@@ -8,7 +8,6 @@ import SelectField from '../../components/SelectField';
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 
-
 const schema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),
     lastName: yup.string().required('Last Name is required'),
