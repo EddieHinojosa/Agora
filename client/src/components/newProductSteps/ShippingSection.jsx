@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // Shipping Section
-const ShippingSection = ({ onNext, onPrevious, rows, handleChange }) => {
+const ShippingSection = ({ rows, handleChange }) => {
 
   const [selectedAddress, setSelectedAddress] = useState('');
 
@@ -153,21 +153,7 @@ const ShippingSection = ({ onNext, onPrevious, rows, handleChange }) => {
         </div>
       </div>
 
-      {/* Next/Previous Buttons */}
-      <div className="flex space-x-4 mt-10">
-        <button
-          onClick={onPrevious}
-          className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-        >
-          Previous
-        </button>
-        <button
-          onClick={onNext}
-          className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
-        >
-          Next
-        </button>
-      </div>
+      
     </div>
   );
 };

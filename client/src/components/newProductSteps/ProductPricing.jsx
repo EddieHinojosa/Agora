@@ -1,7 +1,7 @@
 import React from "react";
 
 // Product Price and Quantity Section
-const ProductPricing = ({ onNext, onPrevious, rows, handleChange }) => (
+const ProductPricing = ({ rows, handleChange }) => (
     <div>
       {/* Price */}
       <div>
@@ -48,21 +48,7 @@ const ProductPricing = ({ onNext, onPrevious, rows, handleChange }) => (
         />
       </div>
 
-      {/* Next/Previous Buttons */}
-      <div className="flex space-x-4 mt-6">
-        <button
-          onClick={onPrevious}
-          className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-        >
-          Previous
-        </button>
-        <button
-          onClick={onNext}
-          className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
-        >
-          Next
-        </button>
-      </div>
+     
     </div>
   );
 

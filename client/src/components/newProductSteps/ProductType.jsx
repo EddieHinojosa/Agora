@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // Product Type Section
-const ProductType = ({ onNext, onPrevious, rows, handleChange, setRows }) => {
+const ProductType = ({ rows, handleChange, setRows }) => {
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
   const [tagLimitReached, setTagLimitReached] = useState(false);
@@ -152,21 +152,7 @@ const ProductType = ({ onNext, onPrevious, rows, handleChange, setRows }) => {
         </div>
       </div>
 
-      {/* Next/Previous Buttons */}
-      <div className="flex space-x-4">
-        <button
-          onClick={onPrevious}
-          className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-        >
-          Previous
-        </button>
-        <button
-          onClick={onNext}
-          className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
-        >
-          Next
-        </button>
-      </div>
+     
     </div>
   );
 };
