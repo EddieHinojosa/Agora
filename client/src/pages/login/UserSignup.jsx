@@ -48,6 +48,7 @@ const UserSignup = () => {
             alert('Registration successful');
         } catch (error) {
             alert('Registration failed: ' + error.message);
+            console.error('Registration error details:', error);
         }
     };
 

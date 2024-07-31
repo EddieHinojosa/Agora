@@ -103,6 +103,14 @@ router.post('/set-username-password', authenticate, async (req, res) => {
 router.post('/register', async (req, res) => {
     const { uid, email, username, password } = req.body;
 
+    // Log the incoming request body for debugging
+    console.log('Incoming registration request:', req.body);
+
+    // Validate incoming request
+    if (!uid || !email || !username || !password) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+
     try {
         console.log('Registering user:', { uid, email, username });
 
