@@ -1,6 +1,6 @@
 import express from 'express';
 import admin from 'firebase-admin';
-import Product from '../models/Product';
+import Product from '../models/Product.js';
 
 const router = express.Router()
 
