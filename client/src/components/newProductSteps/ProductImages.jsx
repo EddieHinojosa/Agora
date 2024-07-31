@@ -2,8 +2,16 @@ import { useState } from "react";
 import { MdUpload } from "react-icons/md";
 import CloudinaryUploadWidget from "../cloudinaryUploadWidget";
 
-const ProductImages = ({ onNext, onPrevious }) => {
+const ProductImages = ({ onNext, onPrevious, rows, setRows  }) => {
   const [images, setImages] = useState([]);
+
+  const pushImages = (images, rows) => {
+    const imagesArray = images.map((images) => images.url);
+    rows.image_urls.push(...imagesArray);
+    setRows({ ...rows });
+    console.log(rows)
+    // console.log(imagesArray);
+  }
 
   return (
     <div className="mt-6">
@@ -42,7 +50,12 @@ const ProductImages = ({ onNext, onPrevious }) => {
           Previous
         </button>
         <button
-          onClick={onNext}
+          onClick={() => {
+            if (images.length > 0) {
+              pushImages(images, rows);
+            }
+            onNext();
+          }}
           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
         >
           Next
