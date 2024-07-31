@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // Shipping Section
-const ShippingSection = ({ onNext, onPrevious }) => {
+const ShippingSection = ({ onNext, onPrevious, rows, handleChange }) => {
 
     // incorporate a fetch or something for the dropdown?
 
@@ -47,7 +47,10 @@ const ShippingSection = ({ onNext, onPrevious }) => {
               id="shippingAddress"
               name="shippingAddress"
               value={selectedAddress}
-              onChange={(e) => setSelectedAddress(e.target.value)}
+              onChange={(e) =>{ 
+                setSelectedAddress(e.target.value);
+                handleChange(e);
+              }}
               className="p-2 block w-2/6 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
               {addresses.map((address, index) => (
@@ -113,8 +116,11 @@ const ShippingSection = ({ onNext, onPrevious }) => {
               type="text"
               id="itemWeight"
               name="itemWeight"
+              value={rows.packedWeight}
               className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder=""
+              onChange = {handleChange}
+              onBlur = {handleChange}
             />
             <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <option value="kg">kg</option>
@@ -135,8 +141,11 @@ const ShippingSection = ({ onNext, onPrevious }) => {
               type="text"
               id="packedLength"
               name="packedLength"
+              value={rows.packedLength}
               className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder=""
+              onChange = {handleChange}
+              onBlur = {handleChange}
             />
             <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <option value="cm">cm</option>
@@ -156,8 +165,11 @@ const ShippingSection = ({ onNext, onPrevious }) => {
               type="text"
               id="packedWidth"
               name="packedWidth"
+              value={rows.packedWidth}
               className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder=""
+              onChange = {handleChange}
+              onBlur = {handleChange}
             />
             <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <option value="cm">cm</option>
@@ -177,8 +189,11 @@ const ShippingSection = ({ onNext, onPrevious }) => {
               type="text"
               id="processingTime"
               name="processingTime"
+              value={rows.packedHeight}
               className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder=""
+              onChange = {handleChange}
+              onBlur = {handleChange}
             />
             <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <option value="cm">cm</option>
@@ -198,8 +213,11 @@ const ShippingSection = ({ onNext, onPrevious }) => {
               type="text"
               id="processingTime"
               name="processingTime"
+              value={rows.processingTime}
               className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder=""
+              onChange = {handleChange}
+              onBlur = {handleChange}
             />
           </div>
         </div>
