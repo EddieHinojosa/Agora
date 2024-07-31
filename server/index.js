@@ -9,6 +9,8 @@ import helmet from 'helmet';
 import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/user.js';
+import newProduct from './routes/newProduct.js'
+import getProduct from './routes/getProduct.js'
 
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
@@ -75,6 +77,8 @@ app.use(session({
 app.use('/api/auth', authRoutes);
 app.use('/api', shopRoutes);
 app.use('/api', userRoutes); // User routes
+app.use('/api', newProduct);
+app.use('/api', getProduct);
 
 
 
