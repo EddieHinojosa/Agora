@@ -8,18 +8,21 @@ import { Link } from "react-router-dom";
  const ProductTable = ({ onPrevious }) => {
     const [rows, setRows] = useState([
         {
+          category: "",
           color: "",
           cost: "",
           height: "",
+          image_urls: [],
           material: "",
           packedLength: "",
           packedWidth: "",
           packedHeight: "",
           productLength: "",
+          productName: "",
           price: "",
           status: "",
           size: "",
-          photo: "",
+          tags: [],
           quantity: "",
           width: "",
           weight: ""
@@ -30,17 +33,24 @@ import { Link } from "react-router-dom";
         setRows([
           ...rows,
           {
-            photo: "",
-            status: "",
-            size: "",
+            category: "",
             color: "",
             cost: "",
-            quantity: "",
-            material: "",
-            weight: "",
-            productLength: "",
-            width: "",
             height: "",
+            image_urls: [],
+            material: "",
+            packedLength: "",
+            packedWidth: "",
+            packedHeight: "",
+            productLength: "",
+            productName: "",
+            price: "",
+            status: "",
+            size: "",
+            tags: [],
+            quantity: "",
+            width: "",
+            weight: ""
           },
         ]);
       };
