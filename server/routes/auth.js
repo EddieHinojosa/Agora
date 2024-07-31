@@ -105,11 +105,14 @@ router.post('/register', async (req, res) => {
         uid,
         email,
         username,
-        password,
+        password, // Ensure password is included
         firstName,
         lastName,
-        billingAddress,
-        mailingAddress,
+        billingStreetAddress,
+        billingCity,
+        billingState,
+        billingCountry,
+        billingZipcode,
         shopName
     } = req.body;
 
@@ -119,8 +122,8 @@ router.post('/register', async (req, res) => {
     // Validate incoming request
     if (
         !uid || !email || !username || !password || !firstName || !lastName ||
-        !billingAddress || !billingAddress.street || !billingAddress.city || 
-        !billingAddress.state || !billingAddress.country || !billingAddress.zip || !shopName
+        !billingStreetAddress || !billingCity || !billingState || !billingCountry ||
+        !billingZipcode || !shopName
     ) {
         console.log('Missing required fields');
         return res.status(400).json({ message: 'All fields are required' });
@@ -149,8 +152,13 @@ router.post('/register', async (req, res) => {
             username,
             firstName,
             lastName,
-            billingAddress,
-            mailingAddress,
+            billingAddress: {
+                street: billingStreetAddress,
+                city: billingCity,
+                state: billingState,
+                country: billingCountry,
+                zipcode: billingZipcode,
+            },
             shopName
         };
         
@@ -166,8 +174,13 @@ router.post('/register', async (req, res) => {
             password: hashedPassword,
             firstName,
             lastName,
-            billingAddress,
-            mailingAddress,
+            billingAddress: {
+                street: billingStreetAddress,
+                city: billingCity,
+                state: billingState,
+                country: billingCountry,
+                zipcode: billingZipcode,
+            },
             shopName
         });
 
