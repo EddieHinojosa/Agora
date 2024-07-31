@@ -12,7 +12,9 @@ const schema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),
     lastName: yup.string().required('Last Name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
-    password: yup.string().min(8, 'Password must be at least 8 characters').matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,'Password must contain at least one uppercase letter, one number, and one special character').required('Password is required'),
+    password: yup.string().min(8, 'Password must be at least 8 characters')
+                .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,'Password must contain at least one uppercase letter, one number, and one special character')
+                .required('Password is required'),
     confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
     billingStreetAddress: yup.string().required('Billing Street Address is required'),
     billingZipcode: yup.string().required('Billing Zipcode is required'),
@@ -47,12 +49,16 @@ const UserSignup = () => {
             await registerUser(data, navigate);
             alert('Registration successful');
         } catch (error) {
+            console.error('Registration error details:', error);
             if (error.response && error.response.data) {
                 alert('Registration failed: ' + error.response.data.message);
+            } else if (error.code === 'auth/email-already-in-use') {
+                alert('Email is already in use. Please use a different email.');
+            } else if (error.code === 'auth/network-request-failed') {
+                alert('Network error: Please check your internet connection and try again.');
             } else {
                 alert('Registration failed: ' + error.message);
             }
-            console.error('Registration error details:', error);
         }
     };
 

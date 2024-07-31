@@ -96,10 +96,8 @@ router.post('/register', async (req, res) => {
         mailingZipcode
     } = req.body;
 
-    // Log the incoming request body for debugging
     console.log('Incoming registration request:', req.body);
 
-    // Validate incoming request
     if (!uid || !email || !username || !password || !firstName || !lastName ||
         !billingStreetAddress || !billingCity || !billingState || !billingCountry ||
         !billingZipcode || !shopName || !mailingStreetAddress || !mailingCity ||
@@ -111,18 +109,15 @@ router.post('/register', async (req, res) => {
     try {
         console.log('Registering user:', { uid, email, username });
 
-        // Check if user already exists in MongoDB
         let user = await User.findOne({ uid });
         if (user) {
             console.log('User already exists:', user);
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 12);
         console.log('Password hashed successfully');
 
-        // Save user to Firebase
         const firestore = admin.firestore();
         const userDoc = firestore.collection('users').doc(uid);
         const userData = {
@@ -147,12 +142,11 @@ router.post('/register', async (req, res) => {
             },
             shopName
         };
-        
+
         console.log('Saving to Firebase:', userData);
         await userDoc.set(userData);
         console.log('User saved to Firebase successfully');
 
-        // Create a new user for MongoDB
         user = new User({
             uid,
             email,
@@ -177,7 +171,6 @@ router.post('/register', async (req, res) => {
             shopName
         });
 
-        // Save the user to the database
         await user.save();
         console.log('User registered successfully in MongoDB:', user);
 
@@ -192,7 +185,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-export { authenticate };
 export default router;
 
 
