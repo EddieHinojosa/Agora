@@ -1,8 +1,8 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import admin from 'firebase-admin';
 import User from '../models/User.js';
-import dotenv from 'dotenv';
-import { getFirestore } from 'firebase-admin/firestore';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -53,6 +53,7 @@ router.post('/firebase-login', async (req, res) => {
             console.log('User saved to MongoDB:', user);
 
             // Save to Firestore
+            const firestore = admin.firestore();
             const userDoc = firestore.collection('users').doc(uid);
             await userDoc.set({
                 email: decodedToken.email,
