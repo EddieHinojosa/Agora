@@ -75,37 +75,12 @@ router.post('/firebase-login', async (req, res) => {
     }
 });
 
-router.post('/set-username-password', authenticate, async (req, res) => {
-    const { username, password } = req.body;
-
-    try {
-        const existingUser = await User.findOne({ username });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Username already taken' });
-        }
-
-        const user = await User.findOne({ uid: req.user.uid });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        user.username = username;
-        user.password = await bcrypt.hash(password, 10);
-        await user.save();
-
-        res.json({ message: 'Username and password set successfully', user });
-    } catch (error) {
-        console.error('Error setting username and password:', error);
-        res.status(500).json({ message: error.message });
-    }
-});
-
 router.post('/register', async (req, res) => {
     const {
         uid,
         email,
         username,
-        password, // Ensure password is included
+        password,
         firstName,
         lastName,
         billingStreetAddress,
@@ -113,7 +88,12 @@ router.post('/register', async (req, res) => {
         billingState,
         billingCountry,
         billingZipcode,
-        shopName
+        shopName,
+        mailingStreetAddress,
+        mailingCity,
+        mailingState,
+        mailingCountry,
+        mailingZipcode
     } = req.body;
 
     // Log the incoming request body for debugging
@@ -123,7 +103,8 @@ router.post('/register', async (req, res) => {
     if (
         !uid || !email || !username || !password || !firstName || !lastName ||
         !billingStreetAddress || !billingCity || !billingState || !billingCountry ||
-        !billingZipcode || !shopName
+        !billingZipcode || !shopName || !mailingStreetAddress || !mailingCity ||
+        !mailingState || !mailingCountry || !mailingZipcode
     ) {
         console.log('Missing required fields');
         return res.status(400).json({ message: 'All fields are required' });
@@ -135,7 +116,7 @@ router.post('/register', async (req, res) => {
         // Check if user already exists in MongoDB
         let user = await User.findOne({ uid });
         if (user) {
-            console.log('User already exists:', uid);
+            console.log('User already exists:', user);
             return res.status(400).json({ message: 'User already exists' });
         }
 
@@ -159,6 +140,13 @@ router.post('/register', async (req, res) => {
                 country: billingCountry,
                 zipcode: billingZipcode,
             },
+            mailingAddress: {
+                street: mailingStreetAddress,
+                city: mailingCity,
+                state: mailingState,
+                country: mailingCountry,
+                zipcode: mailingZipcode,
+            },
             shopName
         };
         
@@ -181,6 +169,13 @@ router.post('/register', async (req, res) => {
                 country: billingCountry,
                 zipcode: billingZipcode,
             },
+            mailingAddress: {
+                street: mailingStreetAddress,
+                city: mailingCity,
+                state: mailingState,
+                country: mailingCountry,
+                zipcode: mailingZipcode,
+            },
             shopName
         });
 
@@ -197,7 +192,6 @@ router.post('/register', async (req, res) => {
 
 export { authenticate };
 export default router;
-
 
 
 
