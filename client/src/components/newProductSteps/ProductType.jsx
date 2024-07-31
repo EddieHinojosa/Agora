@@ -6,6 +6,7 @@ const ProductType = ({ onNext, onPrevious, rows, handleChange }) => {
   const [newTag, setNewTag] = useState("");
   const [tagLimitReached, setTagLimitReached] = useState(false);
   const [itemType, setItemType] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   // Add tag and limit
   const addTag = () => {
@@ -64,23 +65,34 @@ const ProductType = ({ onNext, onPrevious, rows, handleChange }) => {
         </div>
       </div>
 
-      {/* Product Type */}
+      {/* Category Dropdown -- Previously Product Type*/}
       <div>
         <label
-          htmlFor="productType"
+          htmlFor="category"
           className="block text-sm font-medium text-gray-700"
         >
-          Product Type
+          Category
         </label>
-        <input
-          type="text"
+        <select
           id="category"
           name="category"
-          value={rows.category}
           className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          placeholder="Enter category"
-          onChange={handleChange}
-        />
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="">Select category</option>
+          <option value="accessories">Accessories</option>
+          <option value="art">Art</option>
+          <option value="collectible">Collectible</option>
+          <option value="clothing">Clothing</option>
+          <option value="homedecor">Home Decor</option>
+          <option value="tableware">Tableware</option>
+          <option value="drinkware">Drinkware</option>
+          <option value="jewelry">Jewelry</option>
+          <option value="paper">Paper</option>
+          <option value="novelty">Novelty</option>
+          <option value="pets">Pets</option>
+        </select>
       </div>
 
       {/* Item Tags */}
@@ -103,7 +115,7 @@ const ProductType = ({ onNext, onPrevious, rows, handleChange }) => {
           />
           <button
             onClick={addTag}
-            className="ml-2 py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
+            className="ml-2 py-2 px-4 text-sm bg-black text-white rounded-md hover:bg-gray-300"
           >
             Add
           </button>
