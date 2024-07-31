@@ -33,6 +33,7 @@ import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx';
 import NewMessage  from './pages/shop-manager/NewMessage.jsx';
+import EditProduct from './pages/shop-manager/EditProduct.jsx';
 
 
 
@@ -125,6 +126,10 @@ const router = createBrowserRouter([
       {
         path: 'newproduct',
         element: <NewProduct />
+      },
+      {
+        path: 'editproduct/:id',
+        element: <EditProduct />
       },
       {
         path: 'finances',
