@@ -1,7 +1,7 @@
  import React from "react";
  
  // Product Dimensions Section
- const ProductDimensions = ({ onNext, onPrevious }) => (
+ const ProductDimensions = ({ onNext, onPrevious, rows, handleChange }) => (
     <div>
       {/* Length */}
       <div>
@@ -16,8 +16,11 @@
             type="text"
             id="length"
             name="length"
+            value={rows.productLength}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder=""
+            onChange ={handleChange}
+            onBlur={handleChange}
+            placeholder="Enter item length"
           />
           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             <option value="cm">cm</option>
@@ -41,8 +44,11 @@
             type="text"
             id="width"
             name="width"
+            value={rows.width}
+            onChange ={handleChange}
+            onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder=""
+            placeholder="Enter item width"
           />
           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             <option value="cm">cm</option>
@@ -66,8 +72,11 @@
             type="text"
             id="height"
             name="height"
+            value={rows.height}
+            onChange ={handleChange}
+            onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder=""
+            placeholder="Enter item height"
           />
           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             <option value="cm">cm</option>
@@ -81,6 +90,8 @@
       {/* Would like to incorporate previous options size answers to this 
       so if they choose yes the size answers come up and you can add more sizes*/}
       {/* Multiple Options  */}
+
+      {/* Still Need To Implement this logic*/}
       <div className="mt-6">
         <span className="block text-sm font-medium text-gray-700">
           Does this come in multiple options?
