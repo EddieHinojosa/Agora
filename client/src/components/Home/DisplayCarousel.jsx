@@ -15,7 +15,7 @@ const DisplayCarousel = ({ products, user }) => {
 
   return (
     <div className='mt-8 w-full'>
-      <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
+      <div className='grid grid-cols-1 md:grid-cols-5 gap-4'>
         {displayedProducts.map((product) => (
           <DisplayCard
             key={product.id}
@@ -38,3 +38,4 @@ const DisplayCarousel = ({ products, user }) => {
 };
 
 export default DisplayCarousel;
+

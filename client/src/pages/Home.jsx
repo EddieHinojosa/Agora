@@ -3,28 +3,83 @@ import axios from 'axios'
 import Banner from '../components/Home/Banner'
 import DisplayCarousel from '../components/Home/DisplayCarousel'
 
+const testProducts = [
+  {
+    id: '1',
+    name: 'bubblegum',
+    price: 1.99,
+    image_urls: [''],
+    shopName: 'Shop A',
+  },
+  {
+    id: '2',
+    name: 'baseball',
+    price: 20.99,
+    image_urls: [''],
+    shopName: 'Shop B',
+  },
+  {
+    id: '3',
+    name: 'shoes',
+    price: 30.99,
+    image_urls: [''],
+    shopName: 'Shop C',
+  },
+  {
+    id: '4',
+    name: 'hat',
+    price: 10.99,
+    image_urls: [''],
+    shopName: 'Shop D',
+  },
+];
+
+const testUser = {
+  shopName: 'Testy Shop',
+};
+
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [user, setUser] = useState(null) // May not be needed depending on db
 
-  const getProducts = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/shopmanager/products')
-      setProducts(response.data)
-    } catch (error) {
-      console.error('Error getting products:', error);
-    }
-  }
+  // implement once db is up
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/user')
-      setUser(response.data)
-    } catch (error) {
-      console.error('Error getting user:', error)
-    }
-  }
+  // const [products, setProducts] = useState([]);
+  // const [user, setUser] = useState(null) // May not be needed depending on db
+
+  // const getProducts = async () => {
+  //   try {
+  //     const response = await axios.get('http://localhost:5000/api/shopmanager/products')
+  //     setProducts(response.data)
+  //   } catch (error) {
+  //     console.error('Error getting products:', error);
+  //   }
+  // }
+
+  // const getUser = async () => {
+  //   try {
+  //     const response = await axios.get('http://localhost:5000/api/user')
+  //     setUser(response.data)
+  //   } catch (error) {
+  //     console.error('Error getting user:', error)
+  //   }
+  // }
+  // useEffect(() => {
+  //   getProducts();
+  //   getUser();
+  // }, [])
+  
+  const [products, setProducts] = useState(testProducts)
+  const [user, setUser] = useState(testUser)
+
+  return (
+    <div className="min-h-screen flex flex-col items-start justify-start bg-gray-50 px-4 md:px-10 pt-0">
+      <Banner />
+      <DisplayCarousel products={products} user={user} />
+    </div>
+  );
+
 }
+
+export default Home
 
 
 
