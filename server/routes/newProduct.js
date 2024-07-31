@@ -1,5 +1,5 @@
 import express from 'express';
-import admin from 'firebase-admin';
+// import admin from 'firebase-admin';
 import Product from '../models/Product';
 
 const router = express.Router()
@@ -24,9 +24,9 @@ const authenticate = async (req, res, next) => {
 
 // Create a new Product
 
-router.post('/newProduct', authenticate, async (req , res) => {
+router.post('/newProduct', async (req , res) => {
 
-    const newProductData = {...req.query}
+    const newProductData = {...req.body}
 
     try {
         const newProduct = await Product.create(newProductData);

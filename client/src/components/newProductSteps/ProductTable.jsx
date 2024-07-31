@@ -35,7 +35,6 @@ import { Link } from "react-router-dom";
           {
             category: "",
             color: "",
-            cost: "",
             height: "",
             image_urls: [],
             material: "",
@@ -44,16 +43,34 @@ import { Link } from "react-router-dom";
             packedHeight: "",
             productLength: "",
             productName: "",
+            productWeight: "",
             price: "",
             status: "",
             size: "",
             tags: [],
             quantity: "",
             width: "",
-            weight: ""
+
           },
         ]);
       };
+
+      const uploadProduct = async (data) => {
+        try{
+        const response = await axios.post("http://localhost:5000/newProduct", "https://agora-crafts.onrender.com/newProduct", data)
+         console.log(response);
+         navigate('/');
+        } catch (error) {
+          if (error.response) {
+            alert("Product failed to create:"+ error.response.data)
+          } else {
+            alert('product created!:');
+            } 
+          }
+          body: JSON.stringify(rows)
+        }
+        
+    
     
       const handleChange = (event) => {
         const { name, value } = event.target;
@@ -64,22 +81,6 @@ import { Link } from "react-router-dom";
         setRows(updatedRows);
       };
       
-      // const handleChange = (index, event) => {
-      //   const updatedRows = [...rows];
-      //   const { name, value } = event.target;
-      //   updatedRows[index] = {
-      //     ...updatedRows[index],
-      //     [name]: value,
-      //   };
-      //   setRows(updatedRows);
-      // };
-    
-    
-      // const handleHide = (index) => {
-      //   const updatedRows = [...rows];
-      //   updatedRows[index].hidden = !updatedRows[index].hidden;
-      //   setRows(updatedRows);
-      // };
     
       const handleDelete = (index) => {
         const updatedRows = rows.filter((_, i) => i !== index);
@@ -184,14 +185,14 @@ import { Link } from "react-router-dom";
           {rows.map((row, index) => (
             <tr key={index} className={row.hidden ? "hidden" : ""}>
               <td className="px-6 py-4">
-                {/* Devon, feel free to change photo code tp fit however you've done it!*/}
+                {/* Devon, feel free to change photo code to fit however you've done it!*/}
                 {/* Photo Row - has click in case you want to incorporate*/}
                 <div
                   className="w-full p-4 bg-gray-100 shadow rounded cursor-pointer"
                   onClick={() => handleCardClick(index)}
                 >
                   <img
-                    src={row.photo}
+                    src={rows.image_urls}
                     alt="Photo"
                     className="w-full h-auto rounded"
                   />
@@ -367,12 +368,14 @@ import { Link } from "react-router-dom";
         >
           Previous
         </button>
-        <Link
+        <button
+          type="submit"
+          onClick={uploadProduct}
           to="/shopmanager/products"
           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
         >
           Publish
-        </Link>
+        </button>
       </div>
     </div>
   );

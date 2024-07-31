@@ -108,14 +108,14 @@ const ShippingSection = ({ onNext, onPrevious, rows, handleChange }) => {
   
         {/* Item Weight */}
         <div>
-          <label htmlFor="itemWeight" className="mt-4 block text-sm font-medium text-gray-700">
+          <label htmlFor="productWeight" className="mt-4 block text-sm font-medium text-gray-700">
             Item Weight
           </label>
           <div className="flex items-center mt-1">
             <input
               type="text"
-              id="itemWeight"
-              name="itemWeight"
+              id="productWeight"
+              name="productWeight"
               value={rows.packedWeight}
               className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder=""
@@ -181,14 +181,14 @@ const ShippingSection = ({ onNext, onPrevious, rows, handleChange }) => {
         </div>
   
         <div>
-          <label htmlFor="processingTime" className="mt-4 block text-sm font-medium text-gray-700">
+          <label htmlFor="packedHeight" className="mt-4 block text-sm font-medium text-gray-700">
             Packed Height
           </label>
           <div className="flex items-center mt-1">
             <input
               type="text"
-              id="processingTime"
-              name="processingTime"
+              id="packedHeight"
+              name="packedHeight"
               value={rows.packedHeight}
               className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               placeholder=""
