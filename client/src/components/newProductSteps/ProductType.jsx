@@ -20,27 +20,31 @@ const ProductType = ({ rows, handleChange, setRows }) => {
     
       // State change logic below
 
-      console.log(tags)
       let newTagRowArray = [...new Set([...tags, newTag.trim()])]
-      rows.tags[0] = newTagRowArray
+      rows.tags = newTagRowArray
       let updatedRows = {...rows}
       setRows(updatedRows)
       console.log(updatedRows)
-      // console.log(addTag)
+      // console.log(tags)
+      // console.log(newTag)
       // console.log(addTag[index].option)
       // console.log(addTag[index].values[index])
-      // const stateRow = newTag.toLowerCase()
-      // const stateRowValue = newTag.values
-      // const updatedRows = {...rows}
-      // updatedRows[stateRow] = stateRowValue
-      // setRows(updatedRows)
       // console.log(updatedRows)
+      // console.log(rows)
+      // console.log(newTagRowArray)
   };
 
   // Delete Tag
   const deleteTag = (index) => {
     setTags(tags.filter((_, i) => i !== index));
     setTagLimitReached(false);
+
+    // State change logic below
+    let newTagRowArray = [...new Set (tags.filter((_, i) => i !== index))]
+    rows.tags = newTagRowArray
+    let updatedRows = {...rows}
+    setRows(updatedRows)
+    console.log(updatedRows)
   };
 
   return (
