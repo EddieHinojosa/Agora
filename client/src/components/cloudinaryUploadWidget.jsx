@@ -8,12 +8,9 @@ const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 // console.log(cloudName, uploadPreset);
 
-
-
 function CloudinaryUploadWidget({ uwConfig, setImages }) {
-
-    const [uploadImages, setUploadImages] = useState([]);  
-    const [loaded, setLoaded] = useState(false);
+  const [uploadImages, setUploadImages] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     // Check if the script is already loaded
@@ -35,34 +32,44 @@ function CloudinaryUploadWidget({ uwConfig, setImages }) {
   }, [loaded]);
 
   const initializeCloudinaryWidget = () => {
-    if (loaded)  {
+    if (loaded) {
       var myWidget = window.cloudinary.createUploadWidget(
         {
-        cloudName: cloudName,
-        uploadPreset: uploadPreset,
-        clientAllowedFormats: ["png", "jpeg", "jpg", "svg", "gif", "webp", "gifi",],
-        cropping: true,
-        showSkipCropButton: true,
-        gravity: "custom",
-        croppingAspectRatio: 1,
-        croppingCoordinatesMode: 'custom',
-        maxFiles: 10,
-        thumbnails: ".thumbnails",
-      },
+          cloudName: cloudName,
+          uploadPreset: uploadPreset,
+          clientAllowedFormats: [
+            "png",
+            "jpeg",
+            "jpg",
+            "svg",
+            "gif",
+            "webp",
+            "gifi",
+          ],
+          cropping: true,
+          showSkipCropButton: true,
+          gravity: "custom",
+          croppingAspectRatio: 1,
+          croppingCoordinatesMode: "custom",
+          maxFiles: 10,
+          thumbnails: ".thumbnails",
+        },
         (error, result) => {
           if (!error && result && result.event === "success") {
-            console.log("Done! Here is the image info: ", result.info);
-            console.log("And here is the image URL:", result.info.secure_url);
-
+            console.log(
+              "Image uploaded to cloudinary! Here is the image info: ",
+              result.info,
+              "And here is the image URL:",
+              result.info.secure_url
+            );
             setImages((prevImages) => [
-                ...prevImages,
-                {
-                    url: result.info.secure_url,
-                    coordinates: result.info.coordinates.custom
-                },
+              ...prevImages,
+              {
+                url: result.info.secure_url,
+                coordinates: result.info.coordinates.custom,
+              },
             ]);
           }
-
         }
       );
 

@@ -14,21 +14,27 @@ const ProductType = ({ rows, handleChange, setRows }) => {
       setTags([...tags, newTag.trim()]);
       setNewTag("");
       setTagLimitReached(false);
-
-      // State change logic below
-          // console.log(addTag)
-          // console.log(addTag[index].option)
-          // console.log(addTag[index].values[index])
-          const stateRow = newTag.toLowerCase()
-          const stateRowValue = newTag.values
-          const updatedRows = {...rows}
-          updatedRows[stateRow] = stateRowValue
-          setRows(updatedRows)
-          console.log(updatedRows)
-
     } else if (tags.length >= 10) {
       setTagLimitReached(true);
     }
+    
+      // State change logic below
+
+      console.log(tags)
+      let newTagRowArray = [...new Set([...tags, newTag.trim()])]
+      rows.tags[0] = newTagRowArray
+      let updatedRows = {...rows}
+      setRows(updatedRows)
+      console.log(updatedRows)
+      // console.log(addTag)
+      // console.log(addTag[index].option)
+      // console.log(addTag[index].values[index])
+      // const stateRow = newTag.toLowerCase()
+      // const stateRowValue = newTag.values
+      // const updatedRows = {...rows}
+      // updatedRows[stateRow] = stateRowValue
+      // setRows(updatedRows)
+      // console.log(updatedRows)
   };
 
   // Delete Tag
@@ -48,7 +54,10 @@ const ProductType = ({ rows, handleChange, setRows }) => {
             name="itemType"
             value="physical"
             checked={itemType === "physical"}
-            onChange={(e) => setItemType(e.target.value)}
+            onChange={(e) => { 
+              setItemType(e.target.value);
+              handleChange(e);
+            }}
             className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
           />
           <label
@@ -65,7 +74,10 @@ const ProductType = ({ rows, handleChange, setRows }) => {
             name="itemType"
             value="digital"
             checked={itemType === "digital"}
-            onChange={(e) => setItemType(e.target.value)}
+            onChange={(e) => { 
+              setItemType(e.target.value);
+              handleChange(e);
+            }}
             className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
           />
           <label
@@ -90,7 +102,10 @@ const ProductType = ({ rows, handleChange, setRows }) => {
           name="category"
           className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+            handleChange(e);
+          }}
         >
           <option value="">Select category</option>
           <option value="accessories">Accessories</option>

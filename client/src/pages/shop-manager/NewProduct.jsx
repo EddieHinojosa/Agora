@@ -11,35 +11,35 @@ import ProductTable from '../../components/newProductSteps/ProductTable'
 
 const NewProduct = () => {
     
-const [rows, setRows] = useState([
+const [rows, setRows] = useState(
   {
+    category: "",
     color: "",
-    cost: "",
-    height: "",
+    image_urls: [],
     material: "",
     packedLength: "",
     packedWidth: "",
     packedHeight: "",
+    productHeight: "",
     productLength: "",
-    processingTime: "",
+    productName: "",
+    productWeight: "",
     price: "",
     status: "",
     size: "",
-    photo: "",
+    tags: [],
     quantity: "",
-    width: "",
-    weight: ""
   },
-]);
+);
 
 const [currentStep, setCurrentStep] = useState(0);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    const updatedRows = [...rows];
+    const updatedRows = {...rows};
     console.log(updatedRows)
     console.log(name)
-    updatedRows[0][name] = value;
+    updatedRows[name] = value;
     setRows(updatedRows);
   };
 

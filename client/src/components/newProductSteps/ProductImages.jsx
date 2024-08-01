@@ -7,7 +7,8 @@ const ProductImages = ({ rows, setRows  }) => {
 
   const pushImages = (images, rows) => {
     const imagesArray = images.map((images) => images.url);
-    rows.image_urls.push(...imagesArray);
+    const uniqueImages = [...new Set([...rows.image_urls, ...imagesArray])];
+    rows.image_urls = uniqueImages;
     setRows({ ...rows });
     console.log(rows)
     // console.log(imagesArray);
@@ -28,6 +29,8 @@ const ProductImages = ({ rows, setRows  }) => {
         <li>Select an image from any location supported by the widget</li>
         <br/>
         <li>Crop your image, if you'd like</li>
+        <br/>
+        <li>Don't forget to click the SAVE IMAGES button below</li>
           </ol>
       </div>
       <div className="w-3/4 grid grid-cols-6">
@@ -41,7 +44,17 @@ const ProductImages = ({ rows, setRows  }) => {
         ))}
       </div>
     </div>
-      
+      <button
+          onClick={() => {
+            if (images.length > 0) {
+              pushImages(images, rows);
+            }
+          }}
+          className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
+        >
+          Save Images
+        </button> 
+
     </div>
   );
 };
