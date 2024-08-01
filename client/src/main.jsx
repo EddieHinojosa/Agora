@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.jsx';
 import LoginApp from './LoginApp.jsx';
 import ShopApp from './ShopApp.jsx';
@@ -21,7 +21,6 @@ import UpdateProfile from './pages/UpdateProfile.jsx';
 import Login from './pages/login/Login.jsx';
 import ShopSignup from './pages/login/ShopSignup.jsx';
 import UserSignup from './pages/login/UserSignup.jsx';
-import CompleteProfile from './pages/login/CompleteProfile.jsx';
 
 // Shop Manager Pages
 import ShopManager from './pages/shop-manager/ShopManager.jsx';
@@ -32,125 +31,47 @@ import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx';
-import NewMessage  from './pages/shop-manager/NewMessage.jsx';
+import NewMessage from './pages/shop-manager/NewMessage.jsx';
 import EditProduct from './pages/shop-manager/EditProduct.jsx';
 
-
-
-
-const router = createBrowserRouter([
-  // Home-Main Pages
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <Error />,
-    children: [
-      {
-        index: true,
-        element: <Home />
-      },
-      {
-        path: 'home',
-        element: <Home />
-      },
-      {
-        path: 'user',
-        element: <User />
-      },
-      {
-        path: 'cart',
-        element: <Cart />
-      },
-      {
-        path: 'checkout',
-        element: <Checkout />
-      },
-      {
-        path: 'update-profile',
-        element: <UpdateProfile />
-      },
-      {
-        path: 'complete-profile',
-        element: <CompleteProfile />  // Add route for CompleteProfile
-      }
-    ]
-  },
-
-  // Login-Signup Pages
-  {
-    path: 'login',
-    element: <LoginApp />,
-    errorElement: <Error />,
-    children: [
-      {
-        index: true,
-        element: <Login />
-      },
-      {
-        path: 'usersignup',
-        element: <UserSignup />
-      },
-      {
-        path: 'shopsignup',
-        element: <ShopSignup />
-      }
-    ]
-  },
-
-  // Shop Manager Pages
-  {
-    path: 'shopmanager',
-    element: <ShopApp />,
-    errorElement: <Error />,
-    children: [
-      {
-        index: true,
-        element: <ShopManager />
-      },
-      {
-        path: 'orders',
-        element: <Orders />
-      },
-      {
-        path: 'messages',
-        element: <Messages />
-      },
-      {
-        path: 'newmessage',
-        element: <NewMessage />
-      },
-      {
-        path: 'products',
-        element: <Products />
-      },
-      {
-        path: 'newproduct',
-        element: <NewProduct />
-      },
-      {
-        path: 'editproduct',
-        element: <EditProduct />
-      },
-      {
-        path: 'finances',
-        element: <Finances />
-      },
-      {
-        path: 'calendar',
-        element: <Calendar />
-      },
-      {
-        path: 'settings',
-        element: <Settings />
-      }
-    ]
-  }
-]);
+const router = (
+  <BrowserRouter>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
+          <Route path="user" element={<User />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="update-profile" element={<UpdateProfile />} />
+        </Route>
+        <Route path="login" element={<LoginApp />}>
+          <Route index element={<Login />} />
+          <Route path="usersignup" element={<UserSignup />} />
+          <Route path="shopsignup" element={<ShopSignup />} />
+        </Route>
+        <Route path="shopmanager" element={<ShopApp />}>
+          <Route index element={<ShopManager />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="messages" element={<Messages />} />
+          <Route path="newmessage" element={<NewMessage />} />
+          <Route path="products" element={<Products />} />
+          <Route path="newproduct" element={<NewProduct />} />
+          <Route path="editproduct/:id" element={<EditProduct />} />
+          <Route path="finances" element={<Finances />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </AuthProvider>
+  </BrowserRouter>
+);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    {router}
   </React.StrictMode>
 );
+
