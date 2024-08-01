@@ -1,93 +1,42 @@
 import mongoose from "mongoose";
 
 const AddressSchema = new mongoose.Schema({
-  street: {
-    type: String,
-    default: "", // Default value for street
-  },
-  city: {
-    type: String,
-    default: "", // Default value for city
-  },
-  state: {
-    type: String,
-    default: "", // Default value for state
-  },
-  zip: {
-    type: String,    
-    default: "", // Default value for zip
-  },
-  country: {
-    type: String,
-    default: "", // Default value for country
-  },
+  street: String,
+  city: String,
+  state: String,
+  zip: String,
+  country: String,
 });
 
 const UserSchema = new mongoose.Schema({
   uid: {
     type: String,
     unique: true,
-    required: true
-},
-  _id: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: () => new mongoose.Types.ObjectId(),
+    sparse: true,
   },
-  firstName: {
-    type: String,
-    required: false, // Change to false
-  },
-  lastName: {
-    type: String,
-    required: false, // Change to false
-  },
+  firstName: String,
+  lastName: String,
   email: {
     type: String,
     required: true,
     unique: true,
   },
-  username: {
-    type: String,
-    required: function () {
-      return !this.googleId && !this.uid;
-    },
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: function () {
-      return !this.googleId && !this.uid;
-    },
-  },
+  username: String,
+  password: String,
   googleId: {
     type: String,
     unique: true,
     sparse: true,
   },
-  uid: {
-    type: String,
-    unique: true,
-    sparse: true,
-  },
-  billingAddress: {
-    type: AddressSchema,
-  },
-  mailingAddress: {
-    type: AddressSchema,
-  },
-  shopId: {
-    type: mongoose.Schema.Types.ObjectId,
-  },
-  shopName: {
-    type: String,
-  },
+  billingAddress: AddressSchema,
+  mailingAddress: AddressSchema,
+  shopName: String,
   isGmail: {
     type: Boolean,
     default: false,
   },
 });
 
-// Shop ID if shop is created
 UserSchema.pre("save", function (next) {
   if (this.shopName && !this.shopId) {
     this.shopId = new mongoose.Types.ObjectId();

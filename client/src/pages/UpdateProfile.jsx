@@ -56,13 +56,13 @@ const UpdateProfile = () => {
             setValue('firstName', user.firstName);
             setValue('lastName', user.lastName);
             setValue('email', user.email);
-            setValue('billingStreetAddress', user.billingAddress?.street || '');
-            setValue('billingZipcode', user.billingAddress?.zip || '');
+            setValue('billingStreetAddress', user.billingAddress?.streetAddress || '');
+            setValue('billingZipcode', user.billingAddress?.zipcode || '');
             setValue('billingCity', user.billingAddress?.city || '');
             setValue('billingState', user.billingAddress?.state || '');
             setValue('billingCountry', user.billingAddress?.country || '');
-            setValue('mailingStreetAddress', user.mailingAddress?.street || '');
-            setValue('mailingZipcode', user.mailingAddress?.zip || '');
+            setValue('mailingStreetAddress', user.mailingAddress?.streetAddress || '');
+            setValue('mailingZipcode', user.mailingAddress?.zipcode || '');
             setValue('mailingCity', user.mailingAddress?.city || '');
             setValue('mailingState', user.mailingAddress?.state || '');
             setValue('mailingCountry', user.mailingAddress?.country || '');
