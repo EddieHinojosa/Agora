@@ -1,3 +1,4 @@
+import { set } from "mongoose";
 import React, { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
@@ -48,6 +49,17 @@ import { MdDelete } from "react-icons/md";
       const updatedOptionRows = [...optionRows];
       updatedOptionRows[optionIndex].values.splice(valueIndex, 1);
       setOptionRows(updatedOptionRows);
+
+
+      // State change logic below
+      const stateRow = updatedOptionRows[optionIndex].option.toLowerCase()
+      // console.log(updatedOptionRows[optionIndex].option.toLowerCase())
+      const stateRowValue = ""
+      const updatedRows = {...rows}
+      updatedRows[stateRow] = stateRowValue
+      setRows(updatedRows)
+      console.log(updatedRows)
+ 
     };
 
     const addOptionRow = () => {

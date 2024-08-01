@@ -53,7 +53,11 @@ const ShippingSection = ({ rows, handleChange }) => {
             onChange={handleChange}
             onBlur={handleChange}
           />
-          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  name="packedWeightUnit"
+                  value={rows.packedWeightUnit}
+                  onChange={handleChange}
+          >
             <option value="kg">kg</option>
             <option value="lb">lb</option>
             <option value="g">g</option>
@@ -78,7 +82,11 @@ const ShippingSection = ({ rows, handleChange }) => {
             onChange={handleChange}
             onBlur={handleChange}
           />
-          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  name="packedLengthUnit"
+                  value={rows.packedLengthUnit}
+                  onChange={handleChange}
+          >
             <option value="cm">cm</option>
             <option value="in">in</option>
             <option value="mm">mm</option>
@@ -102,8 +110,11 @@ const ShippingSection = ({ rows, handleChange }) => {
             onChange={handleChange}
             onBlur={handleChange}
           />
-          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            <option value="cm">cm</option>
+           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  name="packedWidthUnit"
+                  value={rows.packedWidthUnit}
+                  onChange={handleChange}
+          >
             <option value="in">in</option>
             <option value="mm">mm</option>
             <option value="ft">ft</option>
@@ -126,7 +137,11 @@ const ShippingSection = ({ rows, handleChange }) => {
             onChange={handleChange}
             onBlur={handleChange}
           />
-          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  name="packedHeightUnit"
+                  value={rows.packedHeightUnit}
+                  onChange={handleChange}
+          >
             <option value="cm">cm</option>
             <option value="in">in</option>
             <option value="mm">mm</option>
