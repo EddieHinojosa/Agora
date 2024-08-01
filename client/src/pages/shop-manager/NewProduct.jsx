@@ -17,13 +17,32 @@ const [rows, setRows] = useState(
     color: "",
     image_urls: [],
     material: "",
+    
     packedLength: "",
+    packedLengthUnit: "",
+    
     packedWidth: "",
+    packedWidthUnit: "",
+
     packedHeight: "",
+    packedHeightUnit: "",
+
     productHeight: "",
+    productHeightUnit: "",
+
     productLength: "",
-    productName: "",
+    productLengthUnit: "",
+
+    productWidth: "",
+    productWidthUnit: "",
+
     productWeight: "",
+    productWeightUnit: "",
+    
+    productName: "",
+
+    processingTime: "",
+  
     price: "",
     status: "",
     size: "",

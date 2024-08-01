@@ -11,21 +11,39 @@ import { Link } from "react-router-dom";
           category: "",
           color: "",
           image_urls: [],
-          itemType: "",
           material: "",
+          
           packedLength: "",
+          packedLengthUnit: "",
+          
           packedWidth: "",
+          packedWidthUnit: "",
+      
           packedHeight: "",
+          packedHeightUnit: "",
+      
           productHeight: "",
+          productHeightUnit: "",
+      
           productLength: "",
-          productName: "",
+          productLengthUnit: "",
+      
+          productWidth: "",
+          productWidthUnit: "",
+      
           productWeight: "",
+          productWeightUnit: "",
+          
+          productName: "",
+
           processingTime: "",
+        
           price: "",
           status: "",
           size: "",
           tags: [],
           quantity: "",
+        
         },
       ]);
     
@@ -36,22 +54,37 @@ import { Link } from "react-router-dom";
             category: "",
             color: "",
             image_urls: [],
-            itemType: "",
             material: "",
+            
             packedLength: "",
+            packedLengthUnit: "",
+            
             packedWidth: "",
+            packedWidthUnit: "",
+        
             packedHeight: "",
+            packedHeightUnit: "",
+        
             productHeight: "",
+            productHeightUnit: "",
+        
             productLength: "",
-            productName: "",
+            productLengthUnit: "",
+        
+            productWidth: "",
+            productWidthUnit: "",
+        
             productWeight: "",
-            proccessingTime: "",
+            productWeightUnit: "",
+            
+            productName: "",
+          
             price: "",
             status: "",
             size: "",
             tags: [],
             quantity: "",
-
+          
           },
         ]);
       };

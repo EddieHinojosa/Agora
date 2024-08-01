@@ -14,7 +14,7 @@
         <div className="flex items-center mt-1">
           <input
             type="text"
-            id="procductLength"
+            id="productLength"
             name="productLength"
             value={rows.productLength}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -22,7 +22,11 @@
             onBlur={handleChange}
             placeholder="Enter item length"
           />
-          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          name= "productLengthUnit"
+          value={rows.productLengthUnit} 
+          onChange={handleChange} 
+         >
             <option value="cm">cm</option>
             <option value="in">in</option>
             <option value="mm">mm</option>
@@ -43,14 +47,18 @@
           <input
             type="text"
             id="width"
-            name="producdtWidth"
-            value={rows.productWidth}
+            name="productWidth"
+            value={rows.width}
             onChange ={handleChange}
             onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="Enter item width"
           />
-          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          name= "productWidthUnit"
+          value={rows.productWidthUnit} 
+          onChange={handleChange} 
+         >
             <option value="cm">cm</option>
             <option value="in">in</option>
             <option value="mm">mm</option>
@@ -70,15 +78,19 @@
         <div className="flex items-center mt-1">
           <input
             type="text"
-            id="productHeight"
+            id="height"
             name="productHeight"
-            value={rows.productHeight}
+            value={rows.height}
             onChange ={handleChange}
             onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="Enter item height"
           />
-          <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          name= "productHeightUnit"
+          value={rows.productHeightUnit} 
+          onChange={handleChange} 
+         >
             <option value="cm">cm</option>
             <option value="in">in</option>
             <option value="mm">mm</option>
@@ -92,7 +104,7 @@
       {/* Multiple Options  */}
 
       {/* Still Need To Implement this logic*/}
-      <div className="mt-6">
+      {/* <div className="mt-6">
         <span className="block text-sm font-medium text-gray-700">
           Does this come in multiple options?
         </span>
@@ -126,7 +138,7 @@
             </label>
           </div>
         </div>
-      </div>
+      </div> */}
 
     </div>
   );
