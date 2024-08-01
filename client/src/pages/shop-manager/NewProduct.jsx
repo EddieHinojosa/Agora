@@ -70,7 +70,7 @@ const [currentStep, setCurrentStep] = useState(0);
     <ProductOptions key="productOptions" rows={rows} handleChange={handleChange} setRows={setRows} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
     <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} />,
-    <ProductTable key="productTable" />,
+    <ProductTable rows={rows} handleChange={handleChange} key="productTable" />,
   ];
 
   const handleNext = () => {

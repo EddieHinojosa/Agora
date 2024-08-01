@@ -236,7 +236,7 @@ import { Link } from "react-router-dom";
                 <select
                   name="status"
                   value={row.status}
-                  onChange={(e) => handleChange(index, e)}
+                  onChange={handleChange}
                   className="w-full p-2 rounded bg-white border"
                 >
                   <option value="active">Active</option>
