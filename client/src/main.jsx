@@ -63,6 +63,7 @@ const router = (
           <Route path="calendar" element={<Calendar />} />
           <Route path="settings" element={<Settings />} />
         </Route>
+        <Route path="*" element={<Error />} />
       </Routes>
     </AuthProvider>
   </BrowserRouter>
