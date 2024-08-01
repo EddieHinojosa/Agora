@@ -1,7 +1,7 @@
   import React from "react";
   
   // Product Info Section
-  const ProductInfo = ({ onNext, rows, handleChange }) => (
+  const ProductInfo = ({ rows, handleChange }) => (
    <div className="w-full flex flex-col space-y-4">
       {/* Product Name */}
       <div>
@@ -41,13 +41,7 @@
         />
       </div>
 
-      {/* Next Button */}
-      <button
-        onClick={onNext}
-        className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
-      >
-        Next
-      </button>
+     
     </div>
   );
 

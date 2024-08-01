@@ -24,9 +24,9 @@ const authenticate = async (req, res, next) => {
 
 // Create a new Product
 
-router.post('/newProduct', authenticate, async (req , res) => {
+router.post('shopManager/newProduct', authenticate, async (req , res) => {
 
-    const newProductData = {...req.query}
+    const newProductData = {...req.body}
 
     try {
         const newProduct = await Product.create(newProductData);

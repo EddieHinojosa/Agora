@@ -1,7 +1,7 @@
 import React from "react";
 
 // Product Price and Quantity Section
-const ProductPricing = ({ onNext, onPrevious, rows, handleChange }) => (
+const ProductPricing = ({ rows, handleChange }) => (
     <div>
       {/* Price */}
       <div>
@@ -18,7 +18,7 @@ const ProductPricing = ({ onNext, onPrevious, rows, handleChange }) => (
           <input
             type="text"
             id="price"
-            name="Price"
+            name="price"
             value={rows.price}
             className="p-2 block w-1/4 pl-7 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="0.00"
@@ -48,21 +48,7 @@ const ProductPricing = ({ onNext, onPrevious, rows, handleChange }) => (
         />
       </div>
 
-      {/* Next/Previous Buttons */}
-      <div className="flex space-x-4 mt-6">
-        <button
-          onClick={onPrevious}
-          className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-        >
-          Previous
-        </button>
-        <button
-          onClick={onNext}
-          className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
-        >
-          Next
-        </button>
-      </div>
+     
     </div>
   );
 

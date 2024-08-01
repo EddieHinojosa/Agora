@@ -3,9 +3,13 @@ import { IoIosAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 
 // Product Options Section
-  const ProductOptions = ({ onNext, onPrevious }) => {
+  const ProductOptions = ({ rows, onChange, setRows }) => {
     const [optionRows, setOptionRows] = useState([
-      { option: "", values: [], newValue: "" },
+      { 
+        option: "", 
+        values: [], 
+        newValue: "" 
+      },
     ]);
 
     const handleOptionChange = (index, event) => {
@@ -26,6 +30,17 @@ import { MdDelete } from "react-icons/md";
         updatedOptionRows[index].values.push(updatedOptionRows[index].newValue);
         updatedOptionRows[index].newValue = "";
         setOptionRows(updatedOptionRows);
+
+          // State change logic below
+          // console.log(updatedOptionRows)
+          // console.log(updatedOptionRows[index].option)
+          // console.log(updatedOptionRows[index].values[index])
+        const stateRow = updatedOptionRows[index].option.toLowerCase()
+        const stateRowValue = updatedOptionRows[index].values[updatedOptionRows[index].values.length - 1]
+        const updatedRows = {...rows}
+        updatedRows[stateRow] = stateRowValue
+        setRows(updatedRows)
+        console.log(updatedRows)
       }
     };
 
@@ -44,6 +59,10 @@ import { MdDelete } from "react-icons/md";
       setOptionRows(updatedOptionRows);
     };
 
+    const pushOptions = () => {
+      
+    }
+    
     return (
       // Option Table
       <div className="mt-6">
@@ -161,23 +180,33 @@ import { MdDelete } from "react-icons/md";
           </div>
         </div>
 
-        {/* Next/Previous Buttons */}
-        <div className="flex space-x-4 mt-6">
-          <button
-            onClick={onPrevious}
-            className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-          >
-            Previous
-          </button>
-          <button
-            onClick={onNext}
-            className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
-          >
-            Next
-          </button>
-        </div>
+
       </div>
     );
   };
 
   export default ProductOptions
+
+//     {/* Next/Previous Buttons */}
+//     <div className="flex space-x-4 mt-6">
+//     <button
+//       onClick={onPrevious}
+//       className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
+//     >
+//       Previous
+//     </button>
+//     <button
+//       onClick={() => {
+//         if (rows.values > 0) {
+//           pushOptions()
+//         } 
+//         onNext();
+//       }}
+//       className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
+//     >
+//       Next
+//     </button>
+//   </div>
+// </div>
+// );
+// };

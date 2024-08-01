@@ -10,7 +10,7 @@ import authRoutes from './routes/auth.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/user.js';
 import newProduct from './routes/newProduct.js'
-import getProduct from './routes/getProduct.js'
+import getProduct from './routes/Products.js'
 
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';

@@ -1,12 +1,12 @@
  import React from "react";
  
  // Product Dimensions Section
- const ProductDimensions = ({ onNext, onPrevious, rows, handleChange }) => (
+ const ProductDimensions = ({ rows, handleChange }) => (
     <div>
       {/* Length */}
       <div>
         <label
-          htmlFor="length"
+          htmlFor="productLength"
           className="mt-14 block text-sm font-medium text-gray-700"
         >
           Length
@@ -14,8 +14,8 @@
         <div className="flex items-center mt-1">
           <input
             type="text"
-            id="length"
-            name="length"
+            id="procductLength"
+            name="productLength"
             value={rows.productLength}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             onChange ={handleChange}
@@ -43,8 +43,8 @@
           <input
             type="text"
             id="width"
-            name="width"
-            value={rows.width}
+            name="producdtWidth"
+            value={rows.productWidth}
             onChange ={handleChange}
             onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -70,9 +70,9 @@
         <div className="flex items-center mt-1">
           <input
             type="text"
-            id="height"
-            name="height"
-            value={rows.height}
+            id="productHeight"
+            name="productHeight"
+            value={rows.productHeight}
             onChange ={handleChange}
             onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -128,21 +128,6 @@
         </div>
       </div>
 
-      {/* Next/Previous Buttons */}
-      <div className="flex space-x-4 mt-10">
-        <button
-          onClick={onPrevious}
-          className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-        >
-          Previous
-        </button>
-        <button
-          onClick={onNext}
-          className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
-        >
-          Next
-        </button>
-      </div>
     </div>
   );
 

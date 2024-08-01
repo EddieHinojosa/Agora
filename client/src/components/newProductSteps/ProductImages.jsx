@@ -2,8 +2,17 @@ import { useState } from "react";
 import { MdUpload } from "react-icons/md";
 import CloudinaryUploadWidget from "../cloudinaryUploadWidget";
 
-const ProductImages = ({ onNext, onPrevious }) => {
+const ProductImages = ({ rows, setRows  }) => {
   const [images, setImages] = useState([]);
+
+  const pushImages = (images, rows) => {
+    const imagesArray = images.map((images) => images.url);
+    const uniqueImages = [...new Set([...rows.image_urls, ...imagesArray])];
+    rows.image_urls = uniqueImages;
+    setRows({ ...rows });
+    console.log(rows)
+    // console.log(imagesArray);
+  }
 
   return (
     <div className="mt-6">
@@ -20,6 +29,8 @@ const ProductImages = ({ onNext, onPrevious }) => {
         <li>Select an image from any location supported by the widget</li>
         <br/>
         <li>Crop your image, if you'd like</li>
+        <br/>
+        <li>Don't forget to click the SAVE IMAGES button below</li>
           </ol>
       </div>
       <div className="w-3/4 grid grid-cols-6">
@@ -33,21 +44,17 @@ const ProductImages = ({ onNext, onPrevious }) => {
         ))}
       </div>
     </div>
-      {/* Next/Previous Button */}
-      <div className="flex space-x-4 mt-6">
-        <button
-          onClick={onPrevious}
-          className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-        >
-          Previous
-        </button>
-        <button
-          onClick={onNext}
+      <button
+          onClick={() => {
+            if (images.length > 0) {
+              pushImages(images, rows);
+            }
+          }}
           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
         >
-          Next
-        </button>
-      </div>
+          Save Images
+        </button> 
+
     </div>
   );
 };

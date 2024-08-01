@@ -11,62 +11,88 @@ import ProductTable from '../../components/newProductSteps/ProductTable'
 
 const NewProduct = () => {
     
-const [rows, setRows] = useState([
+const [rows, setRows] = useState(
   {
     category: "",
     color: "",
-    cost: "",
-    height: "",
     image_urls: [],
     material: "",
     packedLength: "",
     packedWidth: "",
     packedHeight: "",
+    productHeight: "",
     productLength: "",
     productName: "",
+    productWeight: "",
     price: "",
     status: "",
     size: "",
     tags: [],
     quantity: "",
-    width: "",
-    weight: ""
   },
-]);
+);
 
-  const [currentStep, setCurrentStep] = useState(0);
+const [currentStep, setCurrentStep] = useState(0);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    const updatedRows = [...rows];
+    const updatedRows = {...rows};
     console.log(updatedRows)
     console.log(name)
-    updatedRows[0][name] = value;
+    updatedRows[name] = value;
     setRows(updatedRows);
   };
 
   const steps = [
-    <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} />,
-    <ProductType key="productType" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductImages key="productImages" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductOptions key="productOptions" onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} onNext={() => setCurrentStep(currentStep + 1)} onPrevious={() => setCurrentStep(currentStep - 1)} />,
-    <ProductTable key="productTable" onPrevious={() => setCurrentStep(currentStep - 1)} />,
+    <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} />,
+    <ProductType key="productType" rows={rows} handleChange={handleChange} setRows={setRows} />,
+    <ProductImages key="productImages" rows={rows} setRows={setRows} handleChange={handleChange} />,
+    <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} />,
+    <ProductOptions key="productOptions" rows={rows} handleChange={handleChange} setRows={setRows} />,
+    <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
+    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} />,
+    <ProductTable key="productTable" />,
   ];
+
+  const handleNext = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
 
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-bold">New Product</h2>
       <div className="mt-4">{steps[currentStep]}</div>
+      <div className="flex justify-start mt-4 space-x-4">
+        {currentStep !== 0 && (
+          <button
+            onClick={handlePrevious}
+            className="py-2 px-4 bg-gray-300 text-black rounded-md hover:bg-gray-400"
+          >
+            Previous
+          </button>
+        )}
+        {currentStep !== steps.length - 1 && (
+          <button
+            onClick={handleNext}
+            className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
+          >
+            Next
+          </button>
+        )}
+      </div>
     </div>
   )
-
 }
 
 export default NewProduct
-
 
 
 
