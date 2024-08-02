@@ -23,6 +23,7 @@ const authenticate = async (req, res, next) => {
     }
 };
 
+// Check unique email
 router.get('/check-unique-email', async (req, res) => {
     const { email } = req.query;
     try {
@@ -36,6 +37,7 @@ router.get('/check-unique-email', async (req, res) => {
     }
 });
 
+// Check unique username
 router.get('/check-unique-username', async (req, res) => {
     const { username } = req.query;
     try {
@@ -49,6 +51,7 @@ router.get('/check-unique-username', async (req, res) => {
     }
 });
 
+// Check unique shop name
 router.get('/check-unique-shopname', async (req, res) => {
     const { shopName } = req.query;
     try {
@@ -62,6 +65,7 @@ router.get('/check-unique-shopname', async (req, res) => {
     }
 });
 
+// Register route
 router.post('/register', async (req, res) => {
     const {
         email, password, firstName, lastName, username,
@@ -107,6 +111,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// Firebase login route
 router.post('/firebase-login', async (req, res) => {
     const { token } = req.body;
 
@@ -126,6 +131,7 @@ router.post('/firebase-login', async (req, res) => {
     }
 });
 
+// Complete registration
 router.post('/complete-registration', authenticate, async (req, res) => {
     const {
         firstName, lastName, username,
@@ -171,6 +177,7 @@ router.post('/complete-registration', authenticate, async (req, res) => {
     }
 });
 
+// Update profile
 router.post('/update-profile', authenticate, async (req, res) => {
     try {
         const user = await User.findById(req.user.uid);

@@ -106,8 +106,7 @@ const UserSignup = () => {
 
   const onSubmit = async (data) => {
     try {
-      const token = location.state?.token;
-      await completeRegistration(data, token);
+      await completeRegistration(data);
       alert('Registration successful');
       navigate('/');
     } catch (error) {
@@ -133,7 +132,7 @@ const UserSignup = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <FormField label="First Name" name="firstName" register={register} errors={errors} />
         <FormField label="Last Name" name="lastName" register={register} errors={errors} />
-        <FormField label="Email" name="email" register={register} errors={errors} />
+        <FormField label="Email" name="email" register={register} errors={errors} disabled={!!location.state} />
         {emailError && <p className="text-red-600 text-sm">{emailError}</p>}
         <FormField label="Password" name="password" type="password" register={register} errors={errors} />
         <FormField label="Confirm Password" name="confirmPassword" type="password" register={register} errors={errors} />
