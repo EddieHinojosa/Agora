@@ -3,119 +3,110 @@ import { MdDelete, MdEdit, MdSave } from "react-icons/md";
 import { IoIosAdd } from "react-icons/io";
 // import { GrHide } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
  
  // Product Table Section
- const ProductTable = () => {
-    const [rows, setRows] = useState([
+ const ProductTable = ({rows, handleChange}) => {
+    const [tableRows, setTableRows] = useState([
         {
-          category: "",
-          color: "",
-          image_urls: [],
-          material: "",
-          
-          packedLength: "",
-          packedLengthUnit: "",
-          
-          packedWidth: "",
-          packedWidthUnit: "",
-      
-          packedHeight: "",
-          packedHeightUnit: "",
-      
-          productHeight: "",
-          productHeightUnit: "",
-      
-          productLength: "",
-          productLengthUnit: "",
-      
-          productWidth: "",
-          productWidthUnit: "",
-      
-          productWeight: "",
-          productWeightUnit: "",
-          
-          productName: "",
-
-          processingTime: "",
-        
-          price: "",
-          status: "",
-          size: "",
-          tags: [],
-          quantity: "",
-        
-        },
-      ]);
-    
-      const addRow = () => {
-        setRows([
-          ...rows,
-          {
-            category: "",
-            color: "",
-            image_urls: [],
-            material: "",
-            
-            packedLength: "",
-            packedLengthUnit: "",
-            
-            packedWidth: "",
-            packedWidthUnit: "",
-        
-            packedHeight: "",
-            packedHeightUnit: "",
-        
-            productHeight: "",
-            productHeightUnit: "",
-        
-            productLength: "",
-            productLengthUnit: "",
-        
-            productWidth: "",
-            productWidthUnit: "",
-        
-            productWeight: "",
-            productWeightUnit: "",
-            
-            productName: "",
-          
-            price: "",
-            status: "",
-            size: "",
-            tags: [],
-            quantity: "",
-          
-          },
-        ]);
-      };
-
-      const uploadProduct = async (data) => {
-        try{
-        const response = await axios.post("http://localhost:5000/shopManager/newProduct", "https://agora-crafts.onrender.com/newProduct", data)
-         console.log(response);
-         navigate('/');
-        } catch (error) {
-          if (error.response) {
-            alert("Product failed to create:"+ error.response.data)
-          } else {
-            alert('product created!:');
-            } 
-          }
-          body: JSON.stringify(rows)
+          rows
         }
+      ]);
+
+    //   const [rows, setRows] = useState([
+    //     {
+    // category: "",
+    // color: "",
+    // image_urls: [],
+    // material: "",
+    
+    // packedLength: "",
+    // packedLengthUnit: "",
+    
+    // packedWidth: "",
+    // packedWidthUnit: "",
+
+    // packedHeight: "",
+    // packedHeightUnit: "",
+
+    // productHeight: "",
+    // productHeightUnit: "",
+
+    // productLength: "",
+    // productLengthUnit: "",
+
+    // productWidth: "",
+    // productWidthUnit: "",
+
+    // productWeight: "",
+    // productWeightUnit: "",
+    
+    // productName: "",
+
+    // processingTime: "",
+  
+    // price: "",
+    // status: "",
+    // size: "",
+    // tags: [],
+    // quantity: "",
+    //     },
+    //   ]);
+    //   const addRow = () => {
+    //     setRows([
+    //       ...rows,
+    //       {
+    //         category: "",
+    //         color: "",
+    //         image_urls: [],
+    //         material: "",
+            
+    //         packedLength: "",
+    //         packedLengthUnit: "",
+            
+    //         packedWidth: "",
+    //         packedWidthUnit: "",
         
+    //         packedHeight: "",
+    //         packedHeightUnit: "",
+        
+    //         productHeight: "",
+    //         productHeightUnit: "",
+        
+    //         productLength: "",
+    //         productLengthUnit: "",
+        
+    //         productWidth: "",
+    //         productWidthUnit: "",
+        
+    //         productWeight: "",
+    //         productWeightUnit: "",
+            
+    //         productName: "",
+        
+    //         processingTime: "",
+          
+    //         price: "",
+    //         status: "",
+    //         size: "",
+    //         tags: [],
+    //         quantity: "",
+    //       },
+    //     ]);
+    //   };
     
-    
-      const handleChange = (event) => {
-        const { name, value } = event.target;
-        const updatedRows = [...rows];
-        console.log(updatedRows)
-        console.log(name)
-        updatedRows[0][name] = value;
-        setRows(updatedRows);
+       const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.post(`${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct`, rows)
+          
+          console.log("Poop submitted:",  response);
+        } catch (error) {
+          // console.error("Error submitting poop:", error);
+        }
       };
-      
-    
+
       const handleDelete = (index) => {
         const updatedRows = rows.filter((_, i) => i !== index);
         setRows(updatedRows);
@@ -216,7 +207,7 @@ import { Link } from "react-router-dom";
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 text-sm">
-          {rows.map((row, index) => (
+          {tableRows.map((row, index) => (
             <tr key={index} className={row.hidden ? "hidden" : ""}>
               <td className="px-6 py-4">
                 {/* Devon, feel free to change photo code to fit however you've done it!*/}
@@ -384,7 +375,7 @@ import { Link } from "react-router-dom";
                     <MdDelete />
                   </button>
                   <button
-                    onClick={addRow}
+                 
                     className="px-4 py-2 rounded hover:bg-gray-300"
                   >
                     <IoIosAdd />
@@ -398,7 +389,7 @@ import { Link } from "react-router-dom";
       <div className="flex space-x-4 mt-6">
         <button
           type="submit"
-          onClick={uploadProduct}
+          onClick={handleSubmit}
           to="/shopmanager/products"
           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
         >

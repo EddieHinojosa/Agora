@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 
 const ProductSchema = new mongoose.Schema({
-    name: {
+    productName: {
         type: String,
         required: true,
     },
-    description: {
+    productDetails: {
         type: String,
         required: true,
     },
-        //instead of "product type" we can use "category"
+        //instead of "productType" we can use "category"
     category: {
         type: String,
         required: true,
@@ -22,7 +22,7 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: false,
     }, 
-    //instaed of "Images" we can use "image_url"
+    //instaed of "Images" we can use "image_urls"
     image_urls: {
         type: [String],
         required: false,
@@ -31,37 +31,37 @@ const ProductSchema = new mongoose.Schema({
         type: [String],
         required: false,
     },
-    length: {
+    productLength: {
         type: Number,
         required: true,
     },
-    width: {
+    productWidth: {
         type: Number,
         required: true,
     },
-    height: {
+    productHeight: {
         type: Number,
         required: true,
     },
-    weight: {
+    packedLength: {
         type: Number,
         required: true,
     },
-    package_length: {
+    packedWidth: {
         type: Number,
         required: true,
     },
-    package_width: {
+    packedHeight: {
         type: Number,
         required: true,
     },
-    package_height: {
+    packedWeight: {
         type: Number,
         required: true,
     },
-    package_weight: {
-        type: Number,
-        required: true,
+    status: {
+        type: String,
+        required: false,
     },
 
 });
