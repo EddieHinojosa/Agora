@@ -1,13 +1,27 @@
 import React, { useState } from "react";
 
 // Shipping Section
-const ShippingSection = ({ rows, handleChange, handleSubmit }) => {
+const ShippingSection = ({ rows, handleChange }) => {
   const [selectedAddress, setSelectedAddress] = useState("");
 
   const addresses = [
     "123 Main, Atlanta, GA 12345",
     "456 Marty St, Atlanta, GA, 12345",
   ];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct`,
+        rows
+      );
+
+      console.log("Poop submitted:", response);
+    } catch (error) {
+      // console.error("Error submitting poop:", error);
+    }
+  };
 
   return (
     <div>

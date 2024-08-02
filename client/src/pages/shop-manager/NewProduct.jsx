@@ -62,19 +62,19 @@ const [currentStep, setCurrentStep] = useState(0);
     setRows(updatedRows);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct`,
-        rows
-      );
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct`,
+  //       rows
+  //     );
 
-      console.log("Poop submitted:", response);
-    } catch (error) {
-      // console.error("Error submitting poop:", error);
-    }
-  };
+  //     console.log("Poop submitted:", response);
+  //   } catch (error) {
+  //     // console.error("Error submitting poop:", error);
+  //   }
+  // };
 
   const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} />,
@@ -83,7 +83,7 @@ const [currentStep, setCurrentStep] = useState(0);
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} />,
     <ProductOptions key="productOptions" rows={rows} handleChange={handleChange} setRows={setRows} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
-    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}/>,
+    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} />,
     // <ProductTable rows={rows} handleChange={handleChange} key="productTable" />,
   ];
 
