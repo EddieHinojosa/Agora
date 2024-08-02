@@ -23,11 +23,13 @@ export const AuthProvider = ({ children }) => {
                     const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
                     if (response.data.profileIncomplete) {
                         setProfileIncomplete(true);
+                        setSignupMessage('You need to create an account by signing up.');
                         navigate('/login/usersignup', {
                             state: {
                                 email: response.data.email,
                                 name: response.data.name,
                                 token,
+                                signupMessage: 'You need to create an account by signing up.'
                             }
                         });
                     } else {
@@ -94,29 +96,14 @@ export const AuthProvider = ({ children }) => {
 
     
 
-const googleLogin = async () => {
-    try {
-        const provider = new GoogleAuthProvider();
-        const result = await signInWithRedirect(auth, provider);
-        const token = await result.user.getIdToken();
-        const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
-
-        if (response.data.profileIncomplete) {
-            navigate('/login/usersignup', {
-                state: {
-                    email: response.data.email,
-                    name: response.data.name,
-                    token,
-                }
-            });
-        } else {
-            setUser(response.data.user);
-            localStorage.setItem('token', token);
+    const googleLogin = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+            await signInWithRedirect(auth, provider);
+        } catch (error) {
+            console.error("Error during Google login:", error);
         }
-    } catch (error) {
-        alert(error.message);
-    }
-};
+    };
 
     const completeRegistration = async (data, token) => {
         try {
