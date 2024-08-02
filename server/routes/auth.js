@@ -3,8 +3,6 @@ import admin from 'firebase-admin';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 
-const router = express.Router();
-
 // Middleware to verify Firebase ID Token
 const authenticate = async (req, res, next) => {
     const idToken = req.headers.authorization?.split('Bearer ')[1];
@@ -71,19 +69,6 @@ router.get('/check-unique-shopname', async (req, res) => {
     }
 });
 
-// Route to check if user is registered
-router.get('/check-registration', authenticate, async (req, res) => {
-    try {
-        const user = await User.findOne({ uid: req.user.uid });
-        if (user) {
-            return res.json({ isRegistered: true });
-        }
-        res.json({ isRegistered: false });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
 // Register route
 router.post('/register', async (req, res) => {
     const {
@@ -136,12 +121,12 @@ router.post('/firebase-login', async (req, res) => {
 
     try {
         const decodedToken = await admin.auth().verifyIdToken(token);
-        const { uid, email, name } = decodedToken;
+        const { uid, email } = decodedToken;
 
-        let user = await User.findOne({ uid });
+        let user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true, email, name });
+            return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true });
         }
 
         res.json({ user });
@@ -197,7 +182,7 @@ router.post('/complete-registration', authenticate, async (req, res) => {
 
 router.post('/update-profile', authenticate, async (req, res) => {
     try {
-        const user = await User.findOne({ uid: req.user.uid });
+        const user = await User.findById(req.user.uid);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -206,18 +191,18 @@ router.post('/update-profile', authenticate, async (req, res) => {
         user.lastName = req.body.lastName;
         user.email = req.body.email;
         user.billingAddress = {
-            street: req.body.billingStreetAddress,
+            streetAddress: req.body.billingStreetAddress,
+            zipcode: req.body.billingZipcode,
             city: req.body.billingCity,
             state: req.body.billingState,
             country: req.body.billingCountry,
-            zip: req.body.billingZipcode,
         };
         user.mailingAddress = {
-            street: req.body.mailingStreetAddress,
+            streetAddress: req.body.mailingStreetAddress,
+            zipcode: req.body.mailingZipcode,
             city: req.body.mailingCity,
             state: req.body.mailingState,
             country: req.body.mailingCountry,
-            zip: req.body.mailingZipcode,
         };
         user.username = req.body.username;
         user.shopName = req.body.shopName;
