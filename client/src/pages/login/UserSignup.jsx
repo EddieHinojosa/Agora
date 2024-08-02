@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
-import {AuthContext} from '../../context/AuthContext';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 
@@ -38,7 +37,6 @@ const states = [
 const countries = ["United States", "Canada", "Mexico"];
 
 const UserSignup = () => {
-  const { regularRegister } = useContext(AuthContext);
   const { register, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange',
@@ -60,7 +58,7 @@ const UserSignup = () => {
       setSignupMessage(signupMessage || '');
     }
   }, [location.state, setValue]);
-
+  
   const apiUrl = import.meta.env.MODE === 'production'
     ? import.meta.env.VITE_PROD_API_URL
     : import.meta.env.VITE_DEV_API_URL;
@@ -107,7 +105,7 @@ const UserSignup = () => {
 
   const onSubmit = async (data) => {
     try {
-      await regularRegister(data);
+      await axios.post(`${apiUrl}/api/auth/register`, data);
       alert('Registration successful');
       navigate('/');
     } catch (error) {
@@ -122,6 +120,7 @@ const UserSignup = () => {
     setValue('mailingState', watch('billingState'));
     setValue('mailingCountry', watch('billingCountry'));
   };
+
 
   return (
     <div className="max-w-md mx-auto bg-white p-8 mt-10 shadow-md rounded">

@@ -6,7 +6,7 @@ import LoginApp from './LoginApp.jsx';
 import ShopApp from './ShopApp.jsx';
 import './index.css';
 import { AuthProvider, AuthContext } from './context/AuthContext.jsx';
-import { FirebaseAuthProvider, FirebaseAuthContext } from './context/FirebaseAuthContext.jsx';
+// import { FirebaseAuthProvider, FirebaseAuthContext } from './context/FirebaseAuthContext.jsx';
 
 // Error page
 import Error from './pages/Error.jsx';
@@ -22,6 +22,7 @@ import UpdateProfile from './pages/UpdateProfile.jsx';
 import Login from './pages/login/Login.jsx';
 import ShopSignup from './pages/login/ShopSignup.jsx';
 import UserSignup from './pages/login/UserSignup.jsx';
+// import FirebaseLogin from './pages/login/FirebaseLogin.jsx';
 
 // Shop Manager Pages
 import ShopManager from './pages/shop-manager/ShopManager.jsx';
@@ -40,13 +41,17 @@ const ProtectedRoute = ({ element }) => {
   const { user: firebaseUser } = useContext(FirebaseAuthContext);
   return regularUser || firebaseUser ? element : <Navigate to="/login" />;
 };
+// const FirebaseProtectedRoute = ({ element }) => {
+//   const { firebaseUser } = useContext(FirebaseAuthContext);
+//   return firebaseUser ? element : <Navigate to="/firebase-login" />;
+// };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <FirebaseAuthProvider>
+        {/* <FirebaseAuthProvider> */}
           <Routes>
             {/* Public routes */}
             <Route path="/" element={<App />}>
@@ -65,6 +70,8 @@ root.render(
               <Route path="shopsignup" element={<ShopSignup />} />
             </Route>
 
+            {/* <Route path="firebase-login" element={<FirebaseLogin />} /> */}
+
             {/* Protected Shop Manager Pages */}
             <Route path="shopmanager" element={<ProtectedRoute element={<ShopApp />} />}>
               <Route index element={<ShopManager />} />
@@ -79,9 +86,21 @@ root.render(
               <Route path="settings" element={<Settings />} />
             </Route>
 
+            {/* Firebase Protected Shop Manager Pages
+            <Route path="firebase-shopmanager" element={<FirebaseProtectedRoute element={<ShopApp />} />}>
+              <Route index element={<ShopManager />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="products" element={<Products />} />
+              <Route path="newproduct" element={<NewProduct />} />
+              <Route path="editproduct/:id" element={<EditProduct />} />
+              <Route path="finances" element={<Finances />} />
+              <Route path="calendar" element={<Calendar />} />
+              <Route path="settings" element={<Settings />} />
+            </Route> */}
+
             <Route path="*" element={<Error />} />
           </Routes>
-        </FirebaseAuthProvider>
+        {/* </FirebaseAuthProvider> */}
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

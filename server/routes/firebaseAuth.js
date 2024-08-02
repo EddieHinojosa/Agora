@@ -1,92 +1,55 @@
-import express from 'express';
-import admin from 'firebase-admin';
-import User from '../models/User.js';
-import jwt from 'jsonwebtoken';
+// import express from 'express';
+// import admin from 'firebase-admin';
+// import User from '../models/User.js';
+// import jwt from 'jsonwebtoken';
 
-const router = express.Router();
+// const router = express.Router();
 
-// Middleware to verify Firebase ID Token
-const authenticateFirebaseToken = async (req, res, next) => {
-  const idToken = req.headers.authorization?.split('Bearer ')[1];
-  if (!idToken) return res.status(401).json({ message: 'Unauthorized' });
+// // Middleware to verify Firebase ID Token
+// const firebaseAuthenticate = async (req, res, next) => {
+//   const idToken = req.headers.authorization?.split('Bearer ')[1];
 
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    req.user = decodedToken;
-    next();
-  } catch (error) {
-    console.error('Error verifying token:', error);
-    res.status(401).json({ message: 'Unauthorized: Invalid token' });
-  }
-};
+//   if (!idToken) {
+//     return res.status(401).json({ message: 'Unauthorized: No token provided' });
+//   }
 
-// Firebase login
-router.post('/login', async (req, res) => {
-  const { token } = req.body;
+//   try {
+//     const decodedToken = await admin.auth().verifyIdToken(idToken);
+//     req.user = decodedToken;
+//     next();
+//   } catch (error) {
+//     console.error('Error verifying token:', error);
+//     res.status(401).json({ message: 'Unauthorized: Invalid token' });
+//   }
+// };
 
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(token);
-    const { uid, email } = decodedToken;
+// // Firebase login
+// router.post('/firebase-login', async (req, res) => {
+//   const { token } = req.body;
 
-    let user = await User.findOne({ email });
+//   try {
+//     const decodedToken = await admin.auth().verifyIdToken(token);
+//     const { uid, email } = decodedToken;
 
-    if (!user) {
-      user = new User({
-        email,
-        firebaseId: uid,
-        firstName: '',
-        lastName: '',
-      });
-      await user.save();
-    }
+//     let user = await User.findOne({ email });
 
-    const jwtToken = jwt.sign({ userId: user._id }, process.env.VITE_JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token: jwtToken, user });
-  } catch (error) {
-    console.error('Error during Firebase login:', error);
-    res.status(500).json({ message: 'Internal Server Error', error: error.message });
-  }
-});
+//     if (!user) {
+//       user = new User({
+//         email,
+//         firebaseId: uid,
+//         firstName: '',
+//         lastName: '',
+//       });
+//       await user.save();
+//     }
 
-// Firebase user registration (if needed)
-router.post('/register', authenticateFirebaseToken, async (req, res) => {
-  const { firstName, lastName, username, shopName, billingStreetAddress, billingCity, billingState, billingCountry, billingZipcode, mailingStreetAddress, mailingCity, mailingState, mailingCountry, mailingZipcode } = req.body;
+//     const jwtToken = jwt.sign({ userId: user._id }, process.env.VITE_SESSION_SECRET, { expiresIn: '1h' });
+//     res.json({ token: jwtToken, user });
+//   } catch (error) {
+//     console.error('Error during Firebase login:', error);
+//     res.status(500).json({ message: 'Internal Server Error', error: error.message });
+//   }
+// });
 
-  try {
-    let user = await User.findOne({ email: req.user.email });
-    if (user) {
-      return res.status(400).json({ message: 'User already exists' });
-    }
-
-    user = new User({
-      email: req.user.email,
-      firstName,
-      lastName,
-      username,
-      billingAddress: {
-        street: billingStreetAddress,
-        city: billingCity,
-        state: billingState,
-        country: billingCountry,
-        zip: billingZipcode,
-      },
-      mailingAddress: {
-        street: mailingStreetAddress,
-        city: mailingCity,
-        state: mailingState,
-        country: mailingCountry,
-        zip: mailingZipcode,
-      },
-      shopName
-    });
-
-    await user.save();
-    res.json({ user });
-  } catch (error) {
-    console.error('Error during registration:', error);
-    res.status(500).json({ message: 'Internal Server Error', error: error.message });
-  }
-});
-
-export { authenticateFirebaseToken };
-export default router;
+// export { firebaseAuthenticate };
+// export default router;

@@ -16,6 +16,50 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
+// Check unique email
+// User registration
+router.get('/check-unique-email', async (req, res) => {
+  const { email } = req.query;
+  try {
+      const user = await User.findOne({ email });
+      if (user) {
+          return res.status(400).json({ message: 'Email already in use' });
+      }
+      res.json({ message: 'Email is unique' });
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
+
+// Check unique username
+router.get('/check-unique-username', async (req, res) => {
+  const { username } = req.query;
+  try {
+      const user = await User.findOne({ username });
+      if (user) {
+          return res.status(400).json({ message: 'Username already in use' });
+      }
+      res.json({ message: 'Username is unique' });
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
+
+// Check unique shop name
+router.get('/check-unique-shopname', async (req, res) => {
+  const { shopName } = req.query;
+  try {
+      const user = await User.findOne({ shopName });
+      if (user) {
+          return res.status(400).json({ message: 'Shop name already in use' });
+      }
+      res.json({ message: 'Shop name is unique' });
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
+
+
 
 // User registration
 router.post('/register', async (req, res) => {

@@ -4,17 +4,17 @@ import { FaSearch } from "react-icons/fa";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { CiUser, CiShop } from "react-icons/ci";
 import { AuthContext } from "../context/AuthContext";
-import { FirebaseAuthContext } from "../context/FirebaseAuthContext";
+// import { FirebaseAuthContext } from "../context/FirebaseAuthContext";
 import { IoMenu, IoClose } from "react-icons/io5";
 
 const Navbar = ({ setModalIsOpen }) => {
   const { user: regularUser, logout: regularLogout } = useContext(AuthContext);
-  const { user: firebaseUser, logout: firebaseLogout } = useContext(FirebaseAuthContext);
+  // const { user: firebaseUser, logout: firebaseLogout } = useContext(FirebaseAuthContext);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  const user = regularUser || firebaseUser;
-  const logout = regularUser ? regularLogout : firebaseLogout;
+  const user = regularUser;
+  const logout = regularUser;
 
   const handleLogout = () => {
     logout();
