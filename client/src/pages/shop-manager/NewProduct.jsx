@@ -36,8 +36,8 @@ const [rows, setRows] = useState(
     productWidth: "",
     productWidthUnit: "",
 
-    productWeight: "",
-    productWeightUnit: "",
+    packedWeight: "",
+    packedWeightUnit: "",
     
     productName: "",
 
