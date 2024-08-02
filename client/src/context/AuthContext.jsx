@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }) => {
                     const token = await firebaseUser.getIdToken();
                     const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
                     if (response.data.profileIncomplete) {
-                        setProfileIncomplete(true);
                         navigate('/login/usersignup', {
                             state: {
                                 email: response.data.email,
@@ -32,8 +31,7 @@ export const AuthProvider = ({ children }) => {
                         });
                     } else {
                         setUser(response.data.user);
-                        localStorage.setItem('token', token);
-                        setProfileIncomplete(false);
+                        localStorage.setItem('token', token);                        
                     }
                 } catch (error) {
                     console.error("Error fetching user profile:", error);
@@ -55,26 +53,10 @@ export const AuthProvider = ({ children }) => {
         }
       };
 
-    const googleLogin = async () => {
+      const googleLogin = async () => {
         try {
             const provider = new GoogleAuthProvider();
-            const result = await signInWithPopup(auth, provider);
-            const token = await result.user.getIdToken();
-            const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
-
-            if (response.data.profileIncomplete) {
-                navigate('/login/usersignup', {
-                    state: {
-                        email: response.data.email,
-                        name: response.data.name,
-                        token,
-                    }
-                });
-            } else {
-                setUser(response.data.user);
-                localStorage.setItem('token', token);
-                setProfileIncomplete(false);
-            }
+            await signInWithPopup(auth, provider);
         } catch (error) {
             alert(error.message);
         }
@@ -82,10 +64,11 @@ export const AuthProvider = ({ children }) => {
 
     const completeRegistration = async (data, token) => {
         try {
-            const headers = token ? { Authorization: `Bearer ${token}` } : {};
-            const endpoint = token ? `${apiUrl}/api/auth/complete-registration` : `${apiUrl}/api/auth/register`;
-    
-            const response = await axios.post(endpoint, data, { headers });
+            const response = await axios.post(`${apiUrl}/api/auth/complete-registration`, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setUser(response.data.user);
             navigate('/');
         } catch (error) {

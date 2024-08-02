@@ -116,16 +116,13 @@ router.post('/firebase-login', async (req, res) => {
 
     try {
         const decodedToken = await admin.auth().verifyIdToken(token);
-        const { uid, email } = decodedToken;
+        const { uid, email, name } = decodedToken;
 
         let user = await User.findOne({ email });
 
         if (!user) {
             // User not found in MongoDB, redirect to registration
-            return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true });
-        } else if (!user.firstName || !user.lastName || !user.username || !user.billingAddress || !user.mailingAddress || !user.shopName) {
-            // User found but profile incomplete, redirect to registration
-            return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true });
+            return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true, email, name });
         }
 
         // User found and profile complete
@@ -165,7 +162,7 @@ router.post('/complete-registration', authenticate, async (req, res) => {
             mailingAddress: {
                 street: mailingStreetAddress,
                 city: mailingCity,
-                state: mailingState,
+                state: billingState,
                 country: mailingCountry,
                 zip: mailingZipcode,
             },

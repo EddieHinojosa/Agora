@@ -35,44 +35,52 @@ import Finances from './pages/shop-manager/Finances.jsx';
 import NewMessage from './pages/shop-manager/NewMessage.jsx';
 import EditProduct from './pages/shop-manager/EditProduct.jsx';
 
-const router = (
-  <BrowserRouter>
-    <AuthProvider>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-          <Route path="home" element={<Home />} />
-          <Route path="user" element={<User />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="update-profile" element={<UpdateProfile />} />
-        </Route>
-        <Route path="login" element={<LoginApp />}>
-          <Route index element={<Login />} />
-          <Route path="usersignup" element={<UserSignup />} />
-          <Route path="shopsignup" element={<ShopSignup />} />
-        </Route>
-        <Route path="shopmanager" element={<ShopApp />}>
-          <Route index element={<ShopManager />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="messages" element={<Messages />} />
-          <Route path="newmessage" element={<NewMessage />} />
-          <Route path="products" element={<Products />} />
-          <Route path="newproduct" element={<NewProduct />} />
-          <Route path="editproduct/:id" element={<EditProduct />} />
-          <Route path="finances" element={<Finances />} />
-          <Route path="calendar" element={<Calendar />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
-        <Route path="*" element={<Error />} />
-      </Routes>
-    </AuthProvider>
-  </BrowserRouter>
-);
+const ProtectedRoute = ({ element }) => {
+  const { user } = useContext(AuthContext);
+  return user ? element : <Navigate to="/login" />;
+};
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
-    {router}
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<App />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="user" element={<User />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="update-profile" element={<UpdateProfile />} />
+          </Route>
+
+          {/* Login-Signup Pages */}
+          <Route path="login" element={<LoginApp />}>
+            <Route index element={<Login />} />
+            <Route path="usersignup" element={<UserSignup />} />
+            <Route path="shopsignup" element={<ShopSignup />} />
+          </Route>
+
+          {/* Protected Shop Manager Pages */}
+          <Route path="shopmanager" element={<ProtectedRoute element={<ShopApp />} />}>
+            <Route index element={<ShopManager />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="messages" element={<Messages />} />
+            <Route path="newmessage" element={<NewMessage />} />
+            <Route path="products" element={<Products />} />
+            <Route path="newproduct" element={<NewProduct />} />
+            <Route path="editproduct/:id" element={<EditProduct />} />
+            <Route path="finances" element={<Finances />} />
+            <Route path="calendar" element={<Calendar />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
