@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Banner from '../components/Home/Banner'
 import DisplayCarousel from '../components/Home/DisplayCarousel'
+import DiscoverBanner from '../components/Home/DiscoverBanner'
 
 const testProducts = [
   {

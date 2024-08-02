@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import HeaderImg from '../../assets/img/annie-spratt-TywjkDHf0Ps-unsplash.jpg'
 
-const Banner = () => {
+const DiscoverBanner = () => {
     return (
         <div className='w-full flex flex-col md:flex-row items-center justify-center bg-[#4a000a] rounded-lg shadow-lg'>
             <div className='flex-1 text-center md:flex md:flex-col md:justify-center'>
@@ -26,4 +26,4 @@ const Banner = () => {
     )
 }
 
-export default Banner;
+export default DiscoverBanner;
