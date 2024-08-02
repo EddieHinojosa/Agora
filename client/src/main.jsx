@@ -39,7 +39,7 @@ import EditProduct from './pages/shop-manager/EditProduct.jsx';
 const ProtectedRoute = ({ element }) => {
   const { user: regularUser } = useContext(AuthContext);
   // const { user: firebaseUser } = useContext(FirebaseAuthContext);
-  return regularUser || firebaseUser ? element : <Navigate to="/login" />;
+  return regularUser ? element : <Navigate to="/login" />;
 };
 // const FirebaseProtectedRoute = ({ element }) => {
 //   const { firebaseUser } = useContext(FirebaseAuthContext);
