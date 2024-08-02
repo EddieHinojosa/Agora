@@ -13,6 +13,89 @@ import axios from "axios";
           rows
         }
       ]);
+
+    //   const [rows, setRows] = useState([
+    //     {
+    // category: "",
+    // color: "",
+    // image_urls: [],
+    // material: "",
+    
+    // packedLength: "",
+    // packedLengthUnit: "",
+    
+    // packedWidth: "",
+    // packedWidthUnit: "",
+
+    // packedHeight: "",
+    // packedHeightUnit: "",
+
+    // productHeight: "",
+    // productHeightUnit: "",
+
+    // productLength: "",
+    // productLengthUnit: "",
+
+    // productWidth: "",
+    // productWidthUnit: "",
+
+    // productWeight: "",
+    // productWeightUnit: "",
+    
+    // productName: "",
+
+    // processingTime: "",
+  
+    // price: "",
+    // status: "",
+    // size: "",
+    // tags: [],
+    // quantity: "",
+    //     },
+    //   ]);
+    //   const addRow = () => {
+    //     setRows([
+    //       ...rows,
+    //       {
+    //         category: "",
+    //         color: "",
+    //         image_urls: [],
+    //         material: "",
+            
+    //         packedLength: "",
+    //         packedLengthUnit: "",
+            
+    //         packedWidth: "",
+    //         packedWidthUnit: "",
+        
+    //         packedHeight: "",
+    //         packedHeightUnit: "",
+        
+    //         productHeight: "",
+    //         productHeightUnit: "",
+        
+    //         productLength: "",
+    //         productLengthUnit: "",
+        
+    //         productWidth: "",
+    //         productWidthUnit: "",
+        
+    //         productWeight: "",
+    //         productWeightUnit: "",
+            
+    //         productName: "",
+        
+    //         processingTime: "",
+          
+    //         price: "",
+    //         status: "",
+    //         size: "",
+    //         tags: [],
+    //         quantity: "",
+    //       },
+    //     ]);
+    //   };
+    
        const handleSubmit = async (e) => {
         e.preventDefault();
         try {

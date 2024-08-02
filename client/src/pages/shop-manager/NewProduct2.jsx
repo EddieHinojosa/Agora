@@ -12,10 +12,6 @@ import { Link } from "react-router-dom";
 // import { ShippingSection } from "../../components/newProductSteps/ShippingSection";
 import CloudinaryUploadWidget from "../../components/cloudinaryUploadWidget";
 
-
-
-
-
 const NewProduct = () => {
   // For Next/Previous Sections
   const [currentStep, setCurrentStep] = useState(0);
@@ -23,55 +19,93 @@ const NewProduct = () => {
   // This code will probably have to change to sync up to DB - just wrote for table test
   const [rows, setRows] = useState([
     {
-      productName: "",
-      productDetails: "",
       category: "",
-      tags: [],
-      photo: "",
+      color: "",
+      image_urls: [],
+      material: "",
+
+      packedLength: "",
+      packedLengthUnit: "",
+
+      packedWidth: "",
+      packedWidthUnit: "",
+
+      packedHeight: "",
+      packedHeightUnit: "",
+
+      productHeight: "",
+      productHeightUnit: "",
+
+      productLength: "",
+      productLengthUnit: "",
+
+      productWidth: "",
+      productWidthUnit: "",
+
+      productWeight: "",
+      productWeightUnit: "",
+
+      productName: "",
+
+      processingTime: "",
+
+      price: "",
       status: "",
       size: "",
-      color: "",
-      price: "",
+      tags: [],
       quantity: "",
-      material: "",
-      weight: "",
-      length: "",
-      width: "",
-      height: "",
     },
   ]);
-
   const addRow = () => {
     setRows([
       ...rows,
       {
-      productName: "",
-      productDetails: "",
-      category: "",
-      tags: [],
-      photo: "",
-      status: "",
-      size: "",
-      color: "",
-      price: "",
-      quantity: "",
-      material: "",
-      weight: "",
-      length: "",
-      width: "",
-      height: "",
+        category: "",
+        color: "",
+        image_urls: [],
+        material: "",
+
+        packedLength: "",
+        packedLengthUnit: "",
+
+        packedWidth: "",
+        packedWidthUnit: "",
+
+        packedHeight: "",
+        packedHeightUnit: "",
+
+        productHeight: "",
+        productHeightUnit: "",
+
+        productLength: "",
+        productLengthUnit: "",
+
+        productWidth: "",
+        productWidthUnit: "",
+
+        productWeight: "",
+        productWeightUnit: "",
+
+        productName: "",
+
+        processingTime: "",
+
+        price: "",
+        status: "",
+        size: "",
+        tags: [],
+        quantity: "",
       },
     ]);
   };
 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     const updatedRows = [...rows];
-    console.log(updatedRows)
-    console.log(name)
+    console.log(updatedRows);
+    console.log(name);
     updatedRows[0][name] = value;
-    console.log(updatedRows)
+    console.log(updatedRows);
     setRows(updatedRows);
   };
 
@@ -131,8 +165,8 @@ const NewProduct = () => {
           value={rows[0].productName}
           className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Enter product name"
-          onChange = {() => {}}
-          onBlur = {handleChange}
+          onChange={() => {}}
+          onBlur={handleChange}
         />
       </div>
 
@@ -149,7 +183,7 @@ const NewProduct = () => {
           name="productDetails"
           className="mt-1 p-2 block w-full h-32 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Enter product details"
-          onChange = {handleChange}
+          onChange={handleChange}
         />
       </div>
 
@@ -250,18 +284,17 @@ const NewProduct = () => {
     </div>
   );
 
-
-  function selectImages () {
-    document.querySelector('[name = "img"]').click()
+  function selectImages() {
+    document.querySelector('[name = "img"]').click();
   }
-   
-  function uploadImages (event) {
-console.log(event.currentTarget, event.currentTarget.files)
-   }
+
+  function uploadImages(event) {
+    console.log(event.currentTarget, event.currentTarget.files);
+  }
 
   // For Devon!
   // Image Section
-   const [images, setImages] = useState([]);
+  const [images, setImages] = useState([]);
 
   const ProductImages = () => (
     <div className="mt-6">
@@ -273,19 +306,25 @@ console.log(event.currentTarget, event.currentTarget.files)
             Please follow these steps to upload images:
           </p>
           <ol className="list-decimal ml-4 mt-2">
-          <li>Click the "Upload" button to the right, you may need to click twice</li>
-          <br/>
-          <li>Select an image from any location supported by the widget</li>
-          <br/>
-          <li>Crop your image, if you'd like</li>
-            </ol>
+            <li>
+              Click the "Upload" button to the right, you may need to click
+              twice
+            </li>
+            <br />
+            <li>Select an image from any location supported by the widget</li>
+            <br />
+            <li>Crop your image, if you'd like</li>
+          </ol>
         </div>
         <div className="w-3/4 grid grid-cols-6">
           <div className="border bg-gray-200 rounded-md flex h-32 w-32">
-            <CloudinaryUploadWidget setImages={setImages}/>
+            <CloudinaryUploadWidget setImages={setImages} />
           </div>
           {images.map((image, index) => (
-            <div key={index} className="border border-gray-300 rounded-md h-32 w-32 thumbnails">
+            <div
+              key={index}
+              className="border border-gray-300 rounded-md h-32 w-32 thumbnails"
+            >
               <img src={image.url} alt={`Uploaded ${index}`} />
             </div>
           ))}
@@ -309,7 +348,6 @@ console.log(event.currentTarget, event.currentTarget.files)
       </div>
     </div>
   );
-
 
   // Product Price and Quantity Section
   const ProductPricing = () => (
@@ -686,44 +724,45 @@ console.log(event.currentTarget, event.currentTarget.files)
 
   // Shipping Section
   const ShippingSection = () => {
-
     // incorporate a fetch or something for the dropdown?
 
     const [showAddAddress, setShowAddAddress] = useState(false);
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [zip, setZip] = useState('');
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [zip, setZip] = useState("");
     const [addresses, setAddresses] = useState([
-
       // Hard Coded for now.
-      '123 Main, Atlanta, GA 12345',
-      '456 Marty St, Atlanta, GA, 12345',
+      "123 Main, Atlanta, GA 12345",
+      "456 Marty St, Atlanta, GA, 12345",
     ]);
-    const [selectedAddress, setSelectedAddress] = useState('');
-  
+    const [selectedAddress, setSelectedAddress] = useState("");
+
     const handleAddAddressClick = () => {
       setShowAddAddress(true);
     };
-  
+
     const handleSaveAddress = () => {
       if (address.trim() && city.trim() && state.trim() && zip.trim()) {
         const newAddress = `${address}, ${city}, ${state}, ${zip}`;
         setAddresses([...addresses, newAddress]);
         setSelectedAddress(newAddress);
-        setAddress('');
-        setCity('');
-        setState('');
-        setZip('');
+        setAddress("");
+        setCity("");
+        setState("");
+        setZip("");
         setShowAddAddress(false);
       }
     };
-  
+
     return (
       <div>
         {/* Shipping Address */}
         <div>
-          <label htmlFor="shippingAddress" className="mt-14 block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="shippingAddress"
+            className="mt-14 block text-sm font-medium text-gray-700"
+          >
             Shipping Address
           </label>
           <div className="flex items-center mt-1">
@@ -786,10 +825,13 @@ console.log(event.currentTarget, event.currentTarget.files)
             </div>
           )}
         </div>
-  
+
         {/* Item Weight */}
         <div>
-          <label htmlFor="itemWeight" className="mt-4 block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="itemWeight"
+            className="mt-4 block text-sm font-medium text-gray-700"
+          >
             Item Weight
           </label>
           <div className="flex items-center mt-1">
@@ -808,10 +850,13 @@ console.log(event.currentTarget, event.currentTarget.files)
             </select>
           </div>
         </div>
-  
+
         {/* Item Dimensions When Packed */}
         <div>
-          <label htmlFor="packedLength" className="mt-4 block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="packedLength"
+            className="mt-4 block text-sm font-medium text-gray-700"
+          >
             Packed Length
           </label>
           <div className="flex items-center mt-1">
@@ -830,9 +875,12 @@ console.log(event.currentTarget, event.currentTarget.files)
             </select>
           </div>
         </div>
-  
+
         <div>
-          <label htmlFor="packedWidth" className="mt-4 block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="packedWidth"
+            className="mt-4 block text-sm font-medium text-gray-700"
+          >
             Packed Width
           </label>
           <div className="flex items-center mt-1">
@@ -851,9 +899,12 @@ console.log(event.currentTarget, event.currentTarget.files)
             </select>
           </div>
         </div>
-  
+
         <div>
-          <label htmlFor="processingTime" className="mt-4 block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="processingTime"
+            className="mt-4 block text-sm font-medium text-gray-700"
+          >
             Packed Height
           </label>
           <div className="flex items-center mt-1">
@@ -874,7 +925,10 @@ console.log(event.currentTarget, event.currentTarget.files)
         </div>
 
         <div>
-          <label htmlFor="packedHeight" className="mt-4 block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="packedHeight"
+            className="mt-4 block text-sm font-medium text-gray-700"
+          >
             Processing Time
           </label>
           <div className="flex items-center mt-1">
@@ -887,7 +941,7 @@ console.log(event.currentTarget, event.currentTarget.files)
             />
           </div>
         </div>
-  
+
         {/* Next/Previous Buttons */}
         <div className="flex space-x-4 mt-10">
           <button
@@ -1210,7 +1264,6 @@ export default NewProduct;
 // import { MdUpload } from "react-icons/md";
 // import CloudinaryUploadWidget from "../cloudinaryUploadWidget";
 
-
 // const handleChange = (event) => {
 //     const { name, value } = event.target;
 //     const updatedRows = [...rows];
@@ -1224,7 +1277,7 @@ export default NewProduct;
 //   function selectImages () {
 //     document.querySelector('[name = "img"]').click()
 //   }
-   
+
 //   function uploadImages (event) {
 // console.log(event.currentTarget, event.currentTarget.files)
 //    }
@@ -1258,7 +1311,7 @@ export default NewProduct;
 //            ))}
 //          </div>
 //        </div>
- 
+
 //        {/* Next/Previous Button */}
 //        <div className="flex space-x-4 mt-6">
 //          <button
@@ -1276,6 +1329,5 @@ export default NewProduct;
 //        </div>
 //      </div>
 //    );
- 
 
 //   export { ProductImages };
