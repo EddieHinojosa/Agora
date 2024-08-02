@@ -8,6 +8,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [profileIncomplete, setProfileIncomplete] = useState(false);
     const apiUrl = import.meta.env.MODE === 'production'
         ? import.meta.env.VITE_PROD_API_URL
         : import.meta.env.VITE_DEV_API_URL;
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
                     const token = await firebaseUser.getIdToken();
                     const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
                     if (response.data.profileIncomplete) {
+                        setProfileIncomplete(true);
                         navigate('/login/usersignup', {
                             state: {
                                 email: response.data.email,
@@ -31,6 +33,7 @@ export const AuthProvider = ({ children }) => {
                     } else {
                         setUser(response.data.user);
                         localStorage.setItem('token', token);
+                        setProfileIncomplete(false);
                     }
                 } catch (error) {
                     console.error("Error fetching user profile:", error);
@@ -44,13 +47,34 @@ export const AuthProvider = ({ children }) => {
     }, [apiUrl, navigate]);
 
     const login = async (email, password) => {
-        await signInWithEmailAndPassword(auth, email, password);
-    };
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+          console.error("Error during login:", error);
+          throw new Error('Login failed. Please check your email and password.');
+        }
+      };
 
     const googleLogin = async () => {
         try {
             const provider = new GoogleAuthProvider();
-            await signInWithPopup(auth, provider);
+            const result = await signInWithPopup(auth, provider);
+            const token = await result.user.getIdToken();
+            const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
+
+            if (response.data.profileIncomplete) {
+                navigate('/login/usersignup', {
+                    state: {
+                        email: response.data.email,
+                        name: response.data.name,
+                        token,
+                    }
+                });
+            } else {
+                setUser(response.data.user);
+                localStorage.setItem('token', token);
+                setProfileIncomplete(false);
+            }
         } catch (error) {
             alert(error.message);
         }
@@ -58,11 +82,10 @@ export const AuthProvider = ({ children }) => {
 
     const completeRegistration = async (data, token) => {
         try {
-            const response = await axios.post(`${apiUrl}/api/auth/complete-registration`, data, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+            const endpoint = token ? `${apiUrl}/api/auth/complete-registration` : `${apiUrl}/api/auth/register`;
+    
+            const response = await axios.post(endpoint, data, { headers });
             setUser(response.data.user);
             navigate('/');
         } catch (error) {
@@ -92,7 +115,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, googleLogin, completeRegistration, updateProfile, logout }}>
+        <AuthContext.Provider value={{ user, profileIncomplete, login, googleLogin, completeRegistration, updateProfile, logout }}>
             {children}
         </AuthContext.Provider>
     );
