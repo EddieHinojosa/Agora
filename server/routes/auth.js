@@ -3,6 +3,8 @@ import admin from 'firebase-admin';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 
+const router = express.Router();
+
 // Middleware to verify Firebase ID Token
 const authenticate = async (req, res, next) => {
     const idToken = req.headers.authorization?.split('Bearer ')[1];
