@@ -2,6 +2,8 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
+import nodemailer from 'nodemailer';
+
 
 const router = express.Router();
 
@@ -58,8 +60,6 @@ router.get('/check-unique-shopname', async (req, res) => {
       res.status(500).json({ message: error.message });
   }
 });
-
-
 
 // User registration
 router.post('/register', async (req, res) => {
@@ -138,6 +138,72 @@ router.get('/me', authenticateToken, async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 });
+
+// Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: process.env.EMAIL, // your email
+    pass: process.env.EMAIL_PASSWORD // your email password
+  }
+});
+
+// Password Reset Request
+router.post('/password-reset-request', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.VITE_JWT_SECRET, { expiresIn: '1h' });
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: user.email,
+      subject: 'Password Reset',
+      text: `Click the link to reset your password: ${resetLink}`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(500).json({ message: 'Error sending email', error: error.message });
+      } else {
+        res.status(200).json({ message: 'Password reset email sent successfully' });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Password Reset
+router.post('/reset-password', async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, process.env.VITE_JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+router.post('/logout', async (res) => {
+  res.status(200).json({ message: 'Logged out' });
+});
+
 
 export default router;
 

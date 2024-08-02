@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -39,6 +39,7 @@ const Login = () => {
           Login
         </button>
       </form>
+      <Link to="/forgot-password">Forgot Password?</Link>
     </div>
   );
 };

@@ -22,6 +22,8 @@ import UpdateProfile from './pages/UpdateProfile.jsx';
 import Login from './pages/login/Login.jsx';
 import ShopSignup from './pages/login/ShopSignup.jsx';
 import UserSignup from './pages/login/UserSignup.jsx';
+import ForgotPassword from './pages/login/ForgotPassword.jsx';
+import ResetPassword from './pages/login/ResetPassword.jsx';
 // import FirebaseLogin from './pages/login/FirebaseLogin.jsx';
 
 // Shop Manager Pages
@@ -68,6 +70,8 @@ root.render(
               <Route index element={<Login />} />
               <Route path="usersignup" element={<UserSignup />} />
               <Route path="shopsignup" element={<ShopSignup />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="reset-password" element={<ResetPassword />} />
             </Route>
 
             {/* <Route path="firebase-login" element={<FirebaseLogin />} /> */}
