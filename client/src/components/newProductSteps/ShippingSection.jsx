@@ -44,9 +44,9 @@ const ShippingSection = ({ rows, handleChange }) => {
         </label>
         <div className="flex items-center mt-1">
           <input
-            type="text"
-            id="productWeight"
-            name="productWeight"
+            type="number"
+            id="packedWeight"
+            name="packedWeight"
             value={rows.packedWeight}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder=""
@@ -73,7 +73,7 @@ const ShippingSection = ({ rows, handleChange }) => {
         </label>
         <div className="flex items-center mt-1">
           <input
-            type="text"
+            type="number"
             id="packedLength"
             name="packedLength"
             value={rows.packedLength}
@@ -81,6 +81,8 @@ const ShippingSection = ({ rows, handleChange }) => {
             placeholder=""
             onChange={handleChange}
             onBlur={handleChange}
+            step="0.01"
+            min="0"
           />
           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   name="packedLengthUnit"
@@ -101,7 +103,7 @@ const ShippingSection = ({ rows, handleChange }) => {
         </label>
         <div className="flex items-center mt-1">
           <input
-            type="text"
+            type="number"
             id="packedWidth"
             name="packedWidth"
             value={rows.packedWidth}
@@ -109,6 +111,8 @@ const ShippingSection = ({ rows, handleChange }) => {
             placeholder=""
             onChange={handleChange}
             onBlur={handleChange}
+            step="0.01"
+            min="0"
           />
            <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   name="packedWidthUnit"
@@ -128,7 +132,7 @@ const ShippingSection = ({ rows, handleChange }) => {
         </label>
         <div className="flex items-center mt-1">
           <input
-            type="text"
+            type="number"
             id="packedHeight"
             name="packedHeight"
             value={rows.packedHeight}
@@ -136,6 +140,8 @@ const ShippingSection = ({ rows, handleChange }) => {
             placeholder=""
             onChange={handleChange}
             onBlur={handleChange}
+            step="0.01"
+            min="0"
           />
            <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   name="packedHeightUnit"
@@ -164,6 +170,8 @@ const ShippingSection = ({ rows, handleChange }) => {
             placeholder=""
             onChange={handleChange}
             onBlur={handleChange}
+            step="0.01"
+            min="0"
           />
         </div>
       </div>

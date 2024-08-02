@@ -40,7 +40,7 @@ const ProductType = ({ rows, handleChange, setRows }) => {
     setTagLimitReached(false);
 
     // State change logic below
-    let newTagRowArray = [...new Set (tags.filter((_, i) => i !== index))]
+    let newTagRowArray = [...new Set(tags.filter((_, i) => i !== index))]
     rows.tags = newTagRowArray
     let updatedRows = {...rows}
     setRows(updatedRows)
