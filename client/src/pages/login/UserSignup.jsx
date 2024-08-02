@@ -49,13 +49,14 @@ const UserSignup = () => {
   const [emailError, setEmailError] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [shopNameError, setShopNameError] = useState('');
+  const [formValid, setFormValid] = useState(false);
 
   useEffect(() => {
     if (location.state) {
-      const { email, name, token } = location.state;
-      setValue('email', email);
-      setValue('firstName', name?.split(' ')[0]);
-      setValue('lastName', name?.split(' ').slice(1).join(' '));
+      const { email, name } = location.state;
+      setValue('email', email || '');
+      setValue('firstName', name?.split(' ')[0] || '');
+      setValue('lastName', name?.split(' ').slice(1).join(' ') || '');
     }
   }, [location.state, setValue]);
 
