@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
 const ProductSchema = new mongoose.Schema({
-    name: {
+    productName: {
         type: String,
         required: true,
     },
-    description: {
+    productDetails: {
         type: String,
         required: true,
     },
@@ -15,11 +15,11 @@ const ProductSchema = new mongoose.Schema({
         required: true,
     },
     price: {
-        type: Number,
+        type: String,
         required: true,
     },
     quantity: {
-        type: Number,
+        type: String,
         required: false,
     }, 
     //instaed of "Images" we can use "image_url"
@@ -31,37 +31,37 @@ const ProductSchema = new mongoose.Schema({
         type: [String],
         required: false,
     },
-    length: {
-        type: Number,
+    productLength: {
+        type: String,
         required: true,
     },
-    width: {
-        type: Number,
+    productWidth: {
+        type: String,
         required: true,
     },
-    height: {
-        type: Number,
+    productHeight: {
+        type: String,
         required: true,
     },
-    weight: {
-        type: Number,
+    packedLength: {
+        type: String,
         required: true,
     },
-    package_length: {
-        type: Number,
+    packedWidth: {
+        type: String,
         required: true,
     },
-    package_width: {
-        type: Number,
+    packedHeight: {
+        type: String,
         required: true,
     },
-    package_height: {
-        type: Number,
+    packedWeight: {
+        type: String,
         required: true,
     },
-    package_weight: {
-        type: Number,
-        required: true,
+    status: {
+        type: String,
+        required: false,
     },
 
 });

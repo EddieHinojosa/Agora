@@ -1,5 +1,5 @@
 import express from 'express';
-import admin from 'firebase-admin';
+// import admin from 'firebase-admin';
 import Product from '../models/Product.js';
 
 const router = express.Router()
@@ -24,15 +24,16 @@ const authenticate = async (req, res, next) => {
 
 // Create a new Product
 
-router.post('shopManager/newProduct', authenticate, async (req , res) => {
+router.post('/shopManager/newProduct', async (req , res) => {
 
-    const newProductData = {...req.body}
+    const newProductData = {...req.body};
+    console.log(newProductData);
 
     try {
         const newProduct = await Product.create(newProductData);
         res.status(201).json(newProduct);
     }
-    catch {
+    catch (err){
         console.error("Error creating product, product not created", err);
         res.status(500).json({message: "Error creating product"});
     }
