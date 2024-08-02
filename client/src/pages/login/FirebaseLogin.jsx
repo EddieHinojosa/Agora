@@ -5,15 +5,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import AuthContext from '../../context/AuthContext';
-import axios from 'axios';
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
   password: yup.string().required('Password is required'),
 });
 
-const Login = () => {
-  const { regularLogin } = useContext(AuthContext);
+const FirebaseLogin = () => {
+  const { firebaseLogin } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
@@ -22,16 +21,16 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      await regularLogin(data.email, data.password);
+      await firebaseLogin(data.email, data.password);
       navigate('/');
     } catch (error) {
-      setLoginError('Login failed: ' + error.message);
+      setLoginError('Firebase login failed: ' + error.message);
     }
   };
 
   return (
     <div className="max-w-md mx-auto bg-white p-8 mt-10 shadow-md rounded">
-      <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Firebase Login</h1>
       {loginError && <p className="text-red-600 text-sm text-center">{loginError}</p>}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <FormField label="Email" name="email" register={register} errors={errors} />
@@ -44,20 +43,4 @@ const Login = () => {
   );
 };
 
-export default Login;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default FirebaseLogin;

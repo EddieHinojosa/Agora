@@ -1,26 +1,20 @@
 import express from 'express';
-import admin from 'firebase-admin';
+import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 
-// Middleware to verify Firebase ID Token
-const authenticate = async (req, res, next) => {
-    const idToken = req.headers.authorization?.split('Bearer ')[1];
+// Middleware to verify jwt Token
+const authenticateToken = (req, res, next) => {
+  const token = req.headers.authorization?.split('Bearer ')[1];
+  if (!token) return res.status(401).json({ message: 'Unauthorized' });
 
-    if (!idToken) {
-        return res.status(401).json({ message: 'Unauthorized: No token provided' });
-    }
-
-    try {
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
-        req.user = decodedToken;
-        next();
-    } catch (error) {
-        console.error('Error verifying token:', error);
-        res.status(401).json({ message: 'Unauthorized: Invalid token' });
-    }
+  jwt.verify(token, process.env.VITE_JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: 'Forbidden' });
+    req.user = user;
+    next();
+  });
 };
 
 // Check unique email
@@ -65,117 +59,91 @@ router.get('/check-unique-shopname', async (req, res) => {
     }
 });
 
-// Register route
 router.post('/register', async (req, res) => {
-    const {
-        email, password, firstName, lastName, username,
-        billingStreetAddress, billingCity, billingState, billingCountry,
-        billingZipcode, mailingStreetAddress, mailingCity, mailingState, mailingCountry,
-        mailingZipcode, shopName
-    } = req.body;
+  const {
+    firstName, lastName, email, password,
+    billingStreetAddress, billingCity, billingState, billingCountry,
+    billingZipcode, mailingStreetAddress, mailingCity, mailingState, mailingCountry,
+    mailingZipcode, username, shopName
+  } = req.body;
 
-    try {
-        let user = await User.findOne({ email });
-        if (user) return res.status(400).json({ message: 'Email already in use' });
-
-        const hashedPassword = await bcrypt.hash(password, 12);
-
-        user = new User({
-            email,
-            password: hashedPassword,
-            firstName,
-            lastName,
-            username,
-            billingAddress: {
-                street: billingStreetAddress,
-                city: billingCity,
-                state: billingState,
-                country: billingCountry,
-                zip: billingZipcode,
-            },
-            mailingAddress: {
-                street: mailingStreetAddress,
-                city: mailingCity,
-                state: mailingState,
-                country: mailingCountry,
-                zip: mailingZipcode,
-            },
-            shopName
-        });
-
-        await user.save();
-        res.json({ user });
-    } catch (error) {
-        console.error('Error during registration:', error);
-        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+  try {
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ message: 'Email already in use' });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    user = new User({
+      email,
+      password: hashedPassword,
+      firstName,
+      lastName,
+      username,
+      billingAddress: {
+        street: billingStreetAddress,
+        city: billingCity,
+        state: billingState,
+        country: billingCountry,
+        zip: billingZipcode,
+      },
+      mailingAddress: {
+        street: mailingStreetAddress,
+        city: mailingCity,
+        state: mailingState,
+        country: mailingCountry,
+        zip: mailingZipcode,
+      },
+      shopName
+    });
+
+    await user.save();
+    res.status(201).json({ user });
+  } catch (error) {
+    console.error('Error during registration:', error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
+  }
 });
 
-router.post('/firebase-login', async (req, res) => {
-    const { token } = req.body;
-  
-    try {
-      const decodedToken = await admin.auth().verifyIdToken(token);
-      const { uid, email } = decodedToken;
-  
-      let user = await User.findOne({ email });
-  
-      if (!user) {
-        return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true });
-      }
-  
-      res.json({ user });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  });
-  
-  router.post('/complete-registration', authenticate, async (req, res) => {
-    const {
-      firstName, lastName, username,
-      billingStreetAddress, billingCity, billingState, billingCountry,
-      billingZipcode, mailingStreetAddress, mailingCity, mailingState, mailingCountry,
-      mailingZipcode, shopName
-    } = req.body;
-  
-    try {
-      let user = await User.findOne({ email: req.user.email });
-      if (user) {
-        return res.status(400).json({ message: 'User already exists' });
-      }
-  
-      user = new User({
-        uid: req.user.uid,
-        email: req.user.email,
-        firstName,
-        lastName,
-        username,
-        billingAddress: {
-          street: billingStreetAddress,
-          city: billingCity,
-          state: billingState,
-          country: billingCountry,
-          zip: billingZipcode,
-        },
-        mailingAddress: {
-          street: mailingStreetAddress,
-          city: mailingCity,
-          state: mailingState,
-          country: mailingCountry,
-          zip: mailingZipcode,
-        },
-        shopName
-      });
-  
-      await user.save();
-      res.json({ user });
-    } catch (error) {
-      console.error('Error during registration:', error);
-      res.status(500).json({ message: 'Internal Server Error', error: error.message });
-    }
-  });
 
-export { authenticate };
+// User login
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.VITE_JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token });
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
+  }
+});
+
+// Get current user
+router.get('/me', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select('-password'); // Exclude password from the returned user data
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json({ user });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
+  }
+});
+
 export default router;
 
 

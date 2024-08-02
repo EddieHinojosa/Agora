@@ -8,7 +8,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [profileIncomplete, setProfileIncomplete] = useState(false);
+    const [token, setToken] = useState(null);
+    const [signupMessage, setSignupMessage] = useState('');
     const apiUrl = import.meta.env.MODE === 'production'
         ? import.meta.env.VITE_PROD_API_URL
         : import.meta.env.VITE_DEV_API_URL;
@@ -20,81 +21,79 @@ export const AuthProvider = ({ children }) => {
             if (firebaseUser) {
                 try {
                     const token = await firebaseUser.getIdToken();
-                    const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
-                    if (response.data.profileIncomplete) {
-                        setProfileIncomplete(true);
-                        setSignupMessage('You need to create an account by signing up.');
-                        navigate('/login/usersignup', {
-                            state: {
-                                email: response.data.email,
-                                name: response.data.name,
-                                token,
-                                signupMessage: 'You need to create an account by signing up.'
-                            }
-                        });
-                    } else {
-                        setUser(response.data.user);
-                        setProfileIncomplete(false);
-                        localStorage.setItem('token', token);                        
-                    }
+                    setToken(token);
+                    const response = await axios.post(`${apiUrl}/api/firebase-login`, { token });
+                    setUser(response.data.user);
+                    localStorage.setItem('token', token);
                 } catch (error) {
                     console.error("Error fetching user profile:", error);
                     setUser(null);
-                    setProfileIncomplete(false);
                 }
             } else {
                 setUser(null);
-                setProfileIncomplete(false);
             }
         });
 
-        getRedirectResult(auth)
-        .then((result) => {
-            if (result) {
-                const user = result.user;
-                user.getIdToken().then((token) => {
-                    axios.post(`${apiUrl}/api/auth/firebase-login`, { token })
-                        .then((response) => {
-                            if (response.data.profileIncomplete) {
-                                setProfileIncomplete(true);
-                                setSignupMessage('You need to create an account by signing up.');
-                                navigate('/login/usersignup', {
-                                    state: {
-                                        email: response.data.email,
-                                        name: response.data.name,
-                                        token,
-                                        signupMessage: 'You need to create an account by signing up.'
-                                    }
-                                });
-                            } else {
-                                setUser(response.data.user);
-                                setProfileIncomplete(false);
-                                localStorage.setItem('token', token);
-                            }
-                        }).catch((error) => {
-                            console.error("Error fetching user profile:", error);
-                            setUser(null);
-                            setProfileIncomplete(false);
-                        });
-                });
-            }
-        }).catch((error) => {
-            console.error("Error getting redirect result:", error);
-        });
+        return () => unsubscribe();
+    }, [apiUrl]);
 
-    return () => unsubscribe();
-}, [apiUrl, navigate]);
-
-    const login = async (email, password) => {
+    const regularLogin = async (email, password) => {
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            const response = await axios.post(`${apiUrl}/api/auth/login`, { email, password });
+            setToken(response.data.token);
+            const userResponse = await axios.get(`${apiUrl}/api/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${response.data.token}`
+                }
+            });
+            setUser(userResponse.data.user);
+            localStorage.setItem('token', response.data.token);
         } catch (error) {
             console.error("Error during login:", error);
-            throw new Error('Login failed. Please check your email and password.');
+            if (error.response) {
+                console.error("Backend error message:", error.response.data.message);
+                throw new Error(error.response.data.message);
+            } else {
+                console.error("General error message:", error.message);
+                throw new Error('Login failed. Please check your email and password.');
+            }
         }
     };
 
-    
+    const regularRegister = async (data) => {
+        try {
+            const response = await axios.post(`${apiUrl}/api/auth/register`, data);
+            setToken(response.data.token);
+            setUser(response.data.user);
+            localStorage.setItem('token', response.data.token);
+            navigate('/');
+        } catch (error) {
+            console.error("Error during registration:", error);
+            throw new Error('Registration failed: ' + error.message);
+        }
+    };
+
+    const firebaseRegister = async (data, token) => {
+        try {
+            const response = await axios.post(`${apiUrl}/api/firebase-register`, { ...data, token });
+            setUser(response.data.user);
+            setToken(response.data.token);
+            localStorage.setItem('token', response.data.token);
+            navigate('/');
+        } catch (error) {
+            console.error("Error during Firebase registration:", error);
+            throw new Error('Firebase registration failed: ' + error.message);
+        }
+    };
+
+    const firebaseLogin = async (email, password) => {
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            console.error("Error during Firebase login:", error);
+            throw new Error('Firebase login failed. Please check your email and password.');
+        }
+    };
 
     const googleLogin = async () => {
         try {
@@ -105,34 +104,6 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const completeRegistration = async (data, token) => {
-        try {
-            const response = await axios.post(`${apiUrl}/api/auth/complete-registration`, data, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            setUser(response.data.user);
-            navigate('/');
-        } catch (error) {
-            if (error.response && error.response.data.message === 'Email already in use') {
-                alert('Registration failed: Email already in use');
-            } else {
-                alert('Registration failed: ' + error.message);
-            }
-        }
-    };
-
-    const updateProfile = async (data) => {
-        const token = localStorage.getItem('token');
-        await axios.post(`${apiUrl}/api/update-profile`, data, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        setUser({ ...user, ...data });
-    };
-
     const logout = async () => {
         await signOut(auth);
         localStorage.removeItem('token');
@@ -141,7 +112,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, googleLogin, completeRegistration, updateProfile, logout }}>
+        <AuthContext.Provider value={{ user, regularLogin, regularRegister, firebaseLogin, firebaseRegister, googleLogin, logout, signupMessage, token }}>
             {children}
         </AuthContext.Provider>
     );

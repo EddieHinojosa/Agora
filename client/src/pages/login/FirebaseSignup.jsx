@@ -37,8 +37,8 @@ const states = [
 ];
 const countries = ["United States", "Canada", "Mexico"];
 
-const UserSignup = () => {
-  const { regularRegister } = useContext(AuthContext);
+const FirebaseSignup = () => {
+  const { firebaseRegister } = useContext(AuthContext);
   const { register, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm({
     resolver: yupResolver(schema),
     mode: 'onChange',
@@ -53,11 +53,13 @@ const UserSignup = () => {
 
   useEffect(() => {
     if (location.state) {
-      const { email, name, signupMessage } = location.state;
+      const { email, name, signupMessage, token } = location.state;
       setValue('email', email || '');
       setValue('firstName', name?.split(' ')[0] || '');
       setValue('lastName', name?.split(' ').slice(1).join(' ') || '');
       setSignupMessage(signupMessage || '');
+      // Store the token in state to be used during registration
+      setToken(token || '');
     }
   }, [location.state, setValue]);
 
@@ -107,7 +109,7 @@ const UserSignup = () => {
 
   const onSubmit = async (data) => {
     try {
-      await regularRegister(data);
+      await firebaseRegister(data, token);
       alert('Registration successful');
       navigate('/');
     } catch (error) {
@@ -167,14 +169,4 @@ const UserSignup = () => {
   );
 };
 
-export default UserSignup;
-
-
-
-
-
-
-
-
-
-
+export default FirebaseSignup;
