@@ -111,7 +111,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// Firebase login route
 router.post('/firebase-login', async (req, res) => {
     const { token } = req.body;
 
@@ -122,16 +121,20 @@ router.post('/firebase-login', async (req, res) => {
         let user = await User.findOne({ email });
 
         if (!user) {
+            // User not found in MongoDB, redirect to registration
+            return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true });
+        } else if (!user.firstName || !user.lastName || !user.username || !user.billingAddress || !user.mailingAddress || !user.shopName) {
+            // User found but profile incomplete, redirect to registration
             return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true });
         }
 
+        // User found and profile complete
         res.json({ user });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// Complete registration
 router.post('/complete-registration', authenticate, async (req, res) => {
     const {
         firstName, lastName, username,
@@ -177,7 +180,6 @@ router.post('/complete-registration', authenticate, async (req, res) => {
     }
 });
 
-// Update profile
 router.post('/update-profile', authenticate, async (req, res) => {
     try {
         const user = await User.findById(req.user.uid);
