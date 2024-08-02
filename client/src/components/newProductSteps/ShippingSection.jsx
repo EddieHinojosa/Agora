@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 // Shipping Section
 const ShippingSection = ({ rows, handleChange }) => {
@@ -19,7 +20,7 @@ const ShippingSection = ({ rows, handleChange }) => {
 
       console.log("Poop submitted:", response);
     } catch (error) {
-      // console.error("Error submitting poop:", error);
+      console.error("Error submitting poop:", error);
     }
   };
 
