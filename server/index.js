@@ -7,33 +7,28 @@ import session from 'express-session';
 import helmet from 'helmet';
 import admin from './firebaseAdmin.js';
 import authRoutes from './routes/auth.js';
+import firebaseAuthRoutes from './routes/firebaseAuth.js';
 import shopRoutes from './routes/shop.js';
 import userRoutes from './routes/user.js';
-import newProduct from './routes/newProduct.js'
-import getProduct from './routes/Products.js'
+import newProduct from './routes/newProduct.js';
+import getProduct from './routes/Products.js';
 
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
-
 import MongoStore from 'connect-mongo';
 
 if (!admin.apps.length) {
   admin.initializeApp({
-      credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
+    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
   });
 }
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)  //to initialize stripe...hopefully
-
-
-// Ensure environment variables are being read
+const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
 
 app.set('trust proxy', 1);
 
-// Enable CORS
 const allowedOrigins = [
   process.env.VITE_DEV_API_URL,
   process.env.VITE_DEV_URL,
@@ -53,21 +48,15 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-// Parse JSON
 app.use(express.json());
-
-// Helmet for security headers
 app.use(helmet());
 
-// Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, 
-  max: 100 
+  windowMs: 15 * 60 * 1000,
+  max: 100,
 });
 app.use(limiter);
 
-// Connect to MongoDB
 const mongoUri = process.env.VITE_MONGO_URI;
 if (!mongoUri) {
   console.error('MONGO_URI is not defined in the environment variables');
@@ -75,28 +64,29 @@ if (!mongoUri) {
 }
 
 mongoose.connect(mongoUri)
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.error(err));
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error(err));
 
-// Session middleware
 app.use(session({
   secret: process.env.VITE_SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({ mongoUrl: mongoUri }),
   cookie: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
   }
 }));
 
-// Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes); // Regular auth routes
+app.use('/api/firebase-auth', firebaseAuthRoutes); // Firebase auth routes
 app.use('/api', shopRoutes);
-app.use('/api', userRoutes); // User routes
+app.use('/api', userRoutes);
 app.use('/api', newProduct);
 app.use('/api', getProduct);
+
+
 
 
 

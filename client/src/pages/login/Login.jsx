@@ -4,8 +4,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import FormField from '../../components/FormField';
-import AuthContext from '../../context/AuthContext';
-import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -17,14 +16,14 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
-  const navigate = useNavigate();
   const [loginError, setLoginError] = useState('');
 
   const onSubmit = async (data) => {
     try {
       await regularLogin(data.email, data.password);
-      navigate('/');
+      console.log('User logged in');  // Debugging
     } catch (error) {
+      console.log('Login error:', error);  // Debugging
       setLoginError('Login failed: ' + error.message);
     }
   };

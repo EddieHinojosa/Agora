@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FormField from '../../components/FormField';
 import SelectField from '../../components/SelectField';
-import AuthContext from '../../context/AuthContext';
+import {AuthContext} from '../../context/AuthContext';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 

@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App.jsx';
 import LoginApp from './LoginApp.jsx';
 import ShopApp from './ShopApp.jsx';
 import './index.css';
-import { AuthProvider } from './context/AuthContext.jsx';
-
+import { AuthProvider, AuthContext } from './context/AuthContext.jsx';
+import { FirebaseAuthProvider, FirebaseAuthContext } from './context/FirebaseAuthContext.jsx';
 
 // Error page
 import Error from './pages/Error.jsx';
@@ -36,8 +36,9 @@ import Finances from './pages/shop-manager/Finances.jsx';
 import EditProduct from './pages/shop-manager/EditProduct.jsx';
 
 const ProtectedRoute = ({ element }) => {
-  const { user } = useContext(AuthContext);
-  return user ? element : <Navigate to="/login" />;
+  const { user: regularUser } = useContext(AuthContext);
+  const { user: firebaseUser } = useContext(FirebaseAuthContext);
+  return regularUser || firebaseUser ? element : <Navigate to="/login" />;
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -45,40 +46,42 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<App />}>
-            <Route index element={<Home />} />
-            <Route path="home" element={<Home />} />
-            <Route path="user" element={<User />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="update-profile" element={<UpdateProfile />} />
-          </Route>
+        <FirebaseAuthProvider>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/" element={<App />}>
+              <Route index element={<Home />} />
+              <Route path="home" element={<Home />} />
+              <Route path="user" element={<User />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="update-profile" element={<UpdateProfile />} />
+            </Route>
 
-          {/* Login-Signup Pages */}
-          <Route path="login" element={<LoginApp />}>
-            <Route index element={<Login />} />
-            <Route path="usersignup" element={<UserSignup />} />
-            <Route path="shopsignup" element={<ShopSignup />} />
-          </Route>
+            {/* Login-Signup Pages */}
+            <Route path="login" element={<LoginApp />}>
+              <Route index element={<Login />} />
+              <Route path="usersignup" element={<UserSignup />} />
+              <Route path="shopsignup" element={<ShopSignup />} />
+            </Route>
 
-          {/* Protected Shop Manager Pages */}
-          <Route path="shopmanager" element={<ProtectedRoute element={<ShopApp />} />}>
-            <Route index element={<ShopManager />} />
-            <Route path="orders" element={<Orders />} />
-            {/* <Route path="messages" element={<Messages />} />
-            <Route path="newmessage" element={<NewMessage />} /> */}
-            <Route path="products" element={<Products />} />
-            <Route path="newproduct" element={<NewProduct />} />
-            <Route path="editproduct/:id" element={<EditProduct />} />
-            <Route path="finances" element={<Finances />} />
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="settings" element={<Settings />} />
-          </Route>
+            {/* Protected Shop Manager Pages */}
+            <Route path="shopmanager" element={<ProtectedRoute element={<ShopApp />} />}>
+              <Route index element={<ShopManager />} />
+              <Route path="orders" element={<Orders />} />
+              {/* <Route path="messages" element={<Messages />} />
+              <Route path="newmessage" element={<NewMessage />} /> */}
+              <Route path="products" element={<Products />} />
+              <Route path="newproduct" element={<NewProduct />} />
+              <Route path="editproduct/:id" element={<EditProduct />} />
+              <Route path="finances" element={<Finances />} />
+              <Route path="calendar" element={<Calendar />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
 
-          <Route path="*" element={<Error />} />
-        </Routes>
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </FirebaseAuthProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
