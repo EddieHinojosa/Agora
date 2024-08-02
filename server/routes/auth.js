@@ -25,39 +25,48 @@ const authenticate = async (req, res, next) => {
 
 router.get('/check-unique-email', async (req, res) => {
     const { email } = req.query;
+    console.log(`Checking uniqueness for email: ${email}`);
     try {
         const user = await User.findOne({ email });
         if (user) {
+            console.log(`Email ${email} is already in use.`);
             return res.status(400).json({ message: 'Email already in use' });
         }
         res.json({ message: 'Email is unique' });
     } catch (error) {
+        console.error('Error checking email uniqueness:', error);
         res.status(500).json({ message: error.message });
     }
 });
 
 router.get('/check-unique-username', async (req, res) => {
     const { username } = req.query;
+    console.log(`Checking uniqueness for username: ${username}`);
     try {
         const user = await User.findOne({ username });
         if (user) {
+            console.log(`Username ${username} is already in use.`);
             return res.status(400).json({ message: 'Username already in use' });
         }
         res.json({ message: 'Username is unique' });
     } catch (error) {
+        console.error('Error checking username uniqueness:', error);
         res.status(500).json({ message: error.message });
     }
 });
 
 router.get('/check-unique-shopname', async (req, res) => {
     const { shopName } = req.query;
+    console.log(`Checking uniqueness for shop name: ${shopName}`);
     try {
         const user = await User.findOne({ shopName });
         if (user) {
+            console.log(`Shop name ${shopName} is already in use.`);
             return res.status(400).json({ message: 'Shop name already in use' });
         }
         res.json({ message: 'Shop name is unique' });
     } catch (error) {
+        console.error('Error checking shop name uniqueness:', error);
         res.status(500).json({ message: error.message });
     }
 });
