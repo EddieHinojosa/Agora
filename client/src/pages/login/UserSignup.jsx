@@ -13,13 +13,16 @@ const schema = yup.object().shape({
   firstName: yup.string().required('First Name is required'),
   lastName: yup.string().required('Last Name is required'),
   email: yup.string().email('Invalid email').required('Email is required'),
+  username: yup.string().required('Username is required'),
+  shopName: yup.string().required('Shop Name is required'),
+  password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
   billingStreetAddress: yup.string().required('Billing Street Address is required'),
   billingZipcode: yup.string().required('Billing Zipcode is required'),
   billingCity: yup.string().required('Billing City is required'),
   billingState: yup.string().required('Billing State is required'),
   billingCountry: yup.string().required('Billing Country is required'),
-  username: yup.string().required('Username is required'),
-  shopName: yup.string().required('Shop Name is required'),
+  
 });
 
 const states = [
@@ -104,8 +107,8 @@ const UserSignup = () => {
 
   const onSubmit = async (data) => {
     try {
-      const token = location.state.token;
-      await completeRegistration(data, token);
+      const token = location.state?.token;  // Token will be undefined for regular signup
+      await completeRegistration(data, token);  // Pass token if it exists, otherwise undefined
       alert('Registration successful');
       navigate('/');
     } catch (error) {
@@ -131,8 +134,14 @@ const UserSignup = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <FormField label="First Name" name="firstName" register={register} errors={errors} />
         <FormField label="Last Name" name="lastName" register={register} errors={errors} />
+        <FormField label="Username" name="username" register={register} errors={errors} />
+        {usernameError && <p className="text-red-600 text-sm">{usernameError}</p>}
+        <FormField label="Shop Name" name="shopName" register={register} errors={errors} />
+        {shopNameError && <p className="text-red-600 text-sm">{shopNameError}</p>}
         <FormField label="Email" name="email" register={register} errors={errors} disabled={!!location.state} />
         {emailError && <p className="text-red-600 text-sm">{emailError}</p>}
+        <FormField label="Password" name="password" type="password" register={register} errors={errors} />
+        <FormField label="Confirm Password" name="confirmPassword" type="password" register={register} errors={errors} />
         <FormField label="Billing Street Address" name="billingStreetAddress" register={register} errors={errors} />
         <FormField label="Billing Zipcode" name="billingZipcode" register={register} errors={errors} />
         <FormField label="Billing City" name="billingCity" register={register} errors={errors} />
@@ -150,10 +159,7 @@ const UserSignup = () => {
         <SelectField label="Mailing State" name="mailingState" register={register} errors={errors} options={states} />
         <SelectField label="Mailing Country" name="mailingCountry" register={register} errors={errors} options={countries} />
         
-        <FormField label="Username" name="username" register={register} errors={errors} />
-        {usernameError && <p className="text-red-600 text-sm">{usernameError}</p>}
-        <FormField label="Shop Name" name="shopName" register={register} errors={errors} />
-        {shopNameError && <p className="text-red-600 text-sm">{shopNameError}</p>}
+        
         
         <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700" disabled={!formValid}>
           Register
