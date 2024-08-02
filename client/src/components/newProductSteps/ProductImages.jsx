@@ -6,6 +6,7 @@ const ProductImages = ({ rows, setRows  }) => {
   const [images, setImages] = useState([]);
 
   const pushImages = (images, rows) => {
+    // State change logic for image urls
     const imagesArray = images.map((images) => images.url);
     const uniqueImages = [...new Set([...rows.image_urls, ...imagesArray])];
     rows.image_urls = uniqueImages;
@@ -13,6 +14,14 @@ const ProductImages = ({ rows, setRows  }) => {
     console.log(rows)
     // console.log(imagesArray);
   }
+
+  // const pullImage = (e) => {
+  //   const { src } = e.target.previousSibling;
+  // console.log(e.target)
+  // console.log(e.target.previousSibling)
+  // console.log(src)
+
+  // }
 
   return (
     <div className="mt-6">
@@ -39,17 +48,18 @@ const ProductImages = ({ rows, setRows  }) => {
         </div>
         {images.map((image, index) => (
           <div key={index} className="border border-gray-300 rounded-md h-32 w-32">
+             <a href="#" onClick={pullImage} className="cloudinary-delete">x</a>
             <img src={image.url} alt={`Uploaded ${index}`} />
           </div>
         ))}
       </div>
     </div>
       <button
-          onClick={() => {
-            if (images.length > 0) {
-              pushImages(images, rows);
-            }
-          }}
+          // onClick={() => {
+          //   if (images.length > 0) {
+          //     pushImages(images, rows);
+          //   }
+          // }}
           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
         >
           Save Images

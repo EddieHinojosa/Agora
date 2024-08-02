@@ -9,20 +9,20 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-        //instead of "product type" we can use "category"
+        //instead of "productType" we can use "category"
     category: {
         type: String,
         required: true,
     },
     price: {
-        type: String,
+        type: Number,
         required: true,
     },
     quantity: {
-        type: String,
+        type: Number,
         required: false,
     }, 
-    //instaed of "Images" we can use "image_url"
+    //instaed of "Images" we can use "image_urls"
     image_urls: {
         type: [String],
         required: false,
@@ -32,31 +32,31 @@ const ProductSchema = new mongoose.Schema({
         required: false,
     },
     productLength: {
-        type: String,
+        type: Number,
         required: true,
     },
     productWidth: {
-        type: String,
+        type: Number,
         required: true,
     },
     productHeight: {
-        type: String,
+        type: Number,
         required: true,
     },
     packedLength: {
-        type: String,
+        type: Number,
         required: true,
     },
     packedWidth: {
-        type: String,
+        type: Number,
         required: true,
     },
     packedHeight: {
-        type: String,
+        type: Number,
         required: true,
     },
     packedWeight: {
-        type: String,
+        type: Number,
         required: true,
     },
     status: {

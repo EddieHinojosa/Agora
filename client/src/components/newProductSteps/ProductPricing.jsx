@@ -16,7 +16,7 @@ const ProductPricing = ({ rows, handleChange }) => (
             <span className="text-gray-500 sm:text-sm">$</span>
           </div>
           <input
-            type="text"
+            type="number"
             id="price"
             name="price"
             value={rows.price}
@@ -24,6 +24,8 @@ const ProductPricing = ({ rows, handleChange }) => (
             placeholder="0.00"
             onChange = {handleChange}
             onBlur = {handleChange}
+            step="0.01"
+            min="0"
           />
         </div>
       </div>
@@ -37,7 +39,7 @@ const ProductPricing = ({ rows, handleChange }) => (
           Quantity
         </label>
         <input
-          type="text"
+          type="number"
           id="quantity"
           name="quantity"
           value={rows.quantity}
@@ -45,6 +47,8 @@ const ProductPricing = ({ rows, handleChange }) => (
           placeholder=""
           onChange = {handleChange}
           onBlur = {handleChange}
+          step="1"
+          min="1"
         />
       </div>
 

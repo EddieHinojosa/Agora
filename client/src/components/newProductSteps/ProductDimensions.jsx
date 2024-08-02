@@ -13,7 +13,7 @@
         </label>
         <div className="flex items-center mt-1">
           <input
-            type="text"
+            type="number"
             id="productLength"
             name="productLength"
             value={rows.productLength}
@@ -21,6 +21,8 @@
             onChange ={handleChange}
             onBlur={handleChange}
             placeholder="Enter item length"
+            step="0.01"
+            min="0"
           />
           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           name= "productLengthUnit"
@@ -45,7 +47,7 @@
         </label>
         <div className="flex items-center mt-1">
           <input
-            type="text"
+            type="number"
             id="width"
             name="productWidth"
             value={rows.width}
@@ -53,6 +55,8 @@
             onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="Enter item width"
+            step="0.01"
+            min="0"
           />
           <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           name= "productWidthUnit"
@@ -77,7 +81,7 @@
         </label>
         <div className="flex items-center mt-1">
           <input
-            type="text"
+            type="number"
             id="height"
             name="productHeight"
             value={rows.height}
@@ -85,6 +89,8 @@
             onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="Enter item height"
+            step="0.01"
+            min="0"
           />
            <select className="ml-2 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           name= "productHeightUnit"
