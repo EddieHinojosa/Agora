@@ -37,10 +37,18 @@ app.set('trust proxy', 1);
 //temporarily added local and the link for testing
 const allowedOrigins = [process.env.VITE_DEV_API_URL, process.env.VITE_DEV_URL, process.env.VITE_PROD_API_URL, process.env.VITE_PROD_URL];
 app.use(cors({
-    origin: '*',
+    origin: true,
     credentials: true,
 }));
-
+// origin: function (origin, callback) {
+//   // allow requests with no origin (like mobile apps, curl, postman)
+//   if (!origin) return callback(null, true);
+//   if (allowedOrigins.indexOf(origin) === -1) {
+//       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+//       return callback(new Error(msg), false);
+//   }
+//   return callback(null, true);
+// },
 
 // Parse JSON
 app.use(express.json());
