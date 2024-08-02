@@ -27,3 +27,5 @@ const Banner = () => {
 }
 
 export default Banner;
+
+// #c5a1d2

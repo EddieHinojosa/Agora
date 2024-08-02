@@ -32,6 +32,14 @@ const testProducts = [
     image_urls: [''],
     shopName: 'Shop D',
   },
+  {
+    id: '5',
+    name: 'cat mug',
+    price: 11.99,
+    image_urls: [''],
+    shopName: 'Shop E',
+  },
+  
 ];
 
 const testUser = {

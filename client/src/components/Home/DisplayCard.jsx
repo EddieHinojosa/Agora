@@ -2,7 +2,7 @@ import React from 'react';
 
 const Card = ({ img, name, shop, price }) => {
   return (
-    <div className="bg-white">
+    <div className="pl-2 pb-2 bg-white">
       <img
         src={img}
         alt={name}
