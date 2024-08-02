@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -12,22 +12,39 @@ export const AuthProvider = ({ children }) => {
     : import.meta.env.VITE_DEV_API_URL;
   const navigate = useNavigate();
 
+  const fetchUser = async (token) => {
+    try {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const response = await axios.get(`${apiUrl}/api/auth/me`);
+      setUser(response.data.user);
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+      logout();
+    }
+  };
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      setToken(storedToken);
+      fetchUser(storedToken);
+    }
+  }, []);
+
   const regularLogin = async (email, password) => {
     try {
       const response = await axios.post(`${apiUrl}/api/auth/login`, { email, password });
       const { token } = response.data;
       localStorage.setItem('token', token);
       setToken(token);
-      
-      // Decode token to get user information (Assuming the token contains user info)
-      const user = JSON.parse(atob(token.split('.')[1])).userId; // Adjust this line based on your token structure
-      setUser({ id: user });
+      fetchUser(token);
       navigate('/');  // Navigate to home page after successful login
     } catch (error) {
       console.error("Login error:", error);
       throw new Error('Login failed. Please check your email and password.');
     }
   };
+
 
   const logout = () => {
     localStorage.removeItem('token');
