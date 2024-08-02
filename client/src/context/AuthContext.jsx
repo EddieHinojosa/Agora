@@ -47,8 +47,13 @@ export const AuthProvider = ({ children }) => {
     }, [apiUrl, navigate]);
 
     const login = async (email, password) => {
-        await signInWithEmailAndPassword(auth, email, password);
-    };
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+          console.error("Error during login:", error);
+          throw new Error('Login failed. Please check your email and password.');
+        }
+      };
 
     const googleLogin = async () => {
         try {

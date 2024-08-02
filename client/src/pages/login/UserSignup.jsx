@@ -36,142 +36,138 @@ const states = [
 const countries = ["United States", "Canada", "Mexico"];
 
 const UserSignup = () => {
-  const { completeRegistration } = useContext(AuthContext);
-  const { register, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm({
-    resolver: yupResolver(schema),
-    mode: 'onChange',
-  });
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const [emailError, setEmailError] = useState('');
-  const [usernameError, setUsernameError] = useState('');
-  const [shopNameError, setShopNameError] = useState('');
-  const [formValid, setFormValid] = useState(false);
-
-  useEffect(() => {
-    if (location.state) {
-      const { email, name } = location.state;
-      setValue('email', email);
-      setValue('firstName', name?.split(' ')[0]);
-      setValue('lastName', name?.split(' ').slice(1).join(' '));
-    }
-  }, [location.state, setValue]);
-
-  const apiUrl = import.meta.env.MODE === 'production'
-    ? import.meta.env.VITE_PROD_API_URL
-    : import.meta.env.VITE_DEV_API_URL;
-
-const checkEmail = debounce(async (email) => {
-    try {
-        await axios.get(`${apiUrl}/api/auth/check-unique-email`, { params: { email } });
-        setEmailError('');
-    } catch (error) {
-        setEmailError('Email already in use');
-    }
-}, 500);
-
-const checkUsername = debounce(async (username) => {
-    try {
-        await axios.get(`${apiUrl}/api/auth/check-unique-username`, { params: { username } });
-        setUsernameError('');
-    } catch (error) {
-        setUsernameError('Username already in use');
-    }
-}, 500);
-
-const checkShopName = debounce(async (shopName) => {
-    try {
-        await axios.get(`${apiUrl}/api/auth/check-unique-shopname`, { params: { shopName } });
-        setShopNameError('');
-    } catch (error) {
-        setShopNameError('Shop name already in use');
-    }
-}, 500);
-
-  useEffect(() => {
-    const subscription = watch((value, { name }) => {
-      if (name === 'email' && value.email) {
-        checkEmail(value.email);
-      } else if (name === 'username' && value.username) {
-        checkUsername(value.username);
-      } else if (name === 'shopName' && value.shopName) {
-        checkShopName(value.shopName);
-      }
-      setFormValid(
-        isValid &&
-        !emailError &&
-        !usernameError &&
-        !shopNameError
-      );
+    const { completeRegistration } = useContext(AuthContext);
+    const { register, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm({
+      resolver: yupResolver(schema),
+      mode: 'onChange',
     });
-    return () => subscription.unsubscribe();
-  }, [watch, isValid, emailError, usernameError, shopNameError]);
-
-  const onSubmit = async (data) => {
-    try {
-      await completeRegistration(data);
-      alert('Registration successful');
-      navigate('/');
-    } catch (error) {
-      if (error.response && error.response.data.message === 'Email already in use') {
-        alert('Registration failed: Email already in use');
-      } else {
-        alert('Registration failed: ' + error.message);
+    const navigate = useNavigate();
+    const location = useLocation();
+  
+    const [emailError, setEmailError] = useState('');
+    const [usernameError, setUsernameError] = useState('');
+    const [shopNameError, setShopNameError] = useState('');
+    const [formValid, setFormValid] = useState(false);
+  
+    useEffect(() => {
+      if (location.state) {
+        const { email, name } = location.state;
+        setValue('email', email);
+        setValue('firstName', name?.split(' ')[0]);
+        setValue('lastName', name?.split(' ').slice(1).join(' '));
       }
-    }
+    }, [location.state, setValue]);
+  
+    const checkEmail = debounce(async (email) => {
+      try {
+        await axios.get(`/api/auth/check-unique-email`, { params: { email } });
+        setEmailError('');
+      } catch (error) {
+        setEmailError('Email already in use');
+      }
+    }, 500);
+  
+    const checkUsername = debounce(async (username) => {
+      try {
+        await axios.get(`/api/auth/check-unique-username`, { params: { username } });
+        setUsernameError('');
+      } catch (error) {
+        setUsernameError('Username already in use');
+      }
+    }, 500);
+  
+    const checkShopName = debounce(async (shopName) => {
+      try {
+        await axios.get(`/api/auth/check-unique-shopname`, { params: { shopName } });
+        setShopNameError('');
+      } catch (error) {
+        setShopNameError('Shop name already in use');
+      }
+    }, 500);
+  
+    useEffect(() => {
+      const subscription = watch((value, { name }) => {
+        if (name === 'email' && value.email) {
+          checkEmail(value.email);
+        } else if (name === 'username' && value.username) {
+          checkUsername(value.username);
+        } else if (name === 'shopName' && value.shopName) {
+          checkShopName(value.shopName);
+        }
+        setFormValid(
+          isValid &&
+          !emailError &&
+          !usernameError &&
+          !shopNameError
+        );
+      });
+      return () => subscription.unsubscribe();
+    }, [watch, isValid, emailError, usernameError, shopNameError]);
+  
+    const onSubmit = async (data) => {
+      try {
+        await axios.post(`/api/auth/register`, data);
+        alert('Registration successful');
+        navigate('/');
+      } catch (error) {
+        if (error.response) {
+          alert('Registration failed: ' + error.response.data.message);
+        } else {
+          alert('Registration failed: ' + error.message);
+        }
+      }
+    };
+  
+    const handleAddressCheck = () => {
+      setValue('mailingStreetAddress', watch('billingStreetAddress'));
+      setValue('mailingZipcode', watch('billingZipcode'));
+      setValue('mailingCity', watch('billingCity'));
+      setValue('mailingState', watch('billingState'));
+      setValue('mailingCountry', watch('billingCountry'));
+    };
+  
+    return (
+      <div className="max-w-md mx-auto bg-white p-8 mt-10 shadow-md rounded">
+        <h1 className="text-2xl font-bold mb-6 text-center">User Signup</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <FormField label="First Name" name="firstName" register={register} errors={errors} />
+          <FormField label="Last Name" name="lastName" register={register} errors={errors} />
+          <FormField label="Email" name="email" register={register} errors={errors} disabled={!!location.state} />
+          {emailError && <p className="text-red-600 text-sm">{emailError}</p>}
+          <FormField label="Password" name="password" register={register} errors={errors} />
+          <FormField label="Confirm Password" name="confirmPassword" register={register} errors={errors} />
+          <FormField label="Billing Street Address" name="billingStreetAddress" register={register} errors={errors} />
+          <FormField label="Billing Zipcode" name="billingZipcode" register={register} errors={errors} />
+          <FormField label="Billing City" name="billingCity" register={register} errors={errors} />
+          <SelectField label="Billing State" name="billingState" register={register} errors={errors} options={states} />
+          <SelectField label="Billing Country" name="billingCountry" register={register} errors={errors} options={countries} />
+          
+          <div className="flex items-center">
+            <input type="checkbox" className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" onClick={handleAddressCheck} />
+            <label className="ml-2 block text-sm text-gray-900">Mailing address same as billing</label>
+          </div>
+          
+          <FormField label="Mailing Street Address" name="mailingStreetAddress" register={register} errors={errors} />
+          <FormField label="Mailing Zipcode" name="mailingZipcode" register={register} errors={errors} />
+          <FormField label="Mailing City" name="mailingCity" register={register} errors={errors} />
+          <SelectField label="Mailing State" name="mailingState" register={register} errors={errors} options={states} />
+          <SelectField label="Mailing Country" name="mailingCountry" register={register} errors={errors} options={countries} />
+          
+          <FormField label="Username" name="username" register={register} errors={errors} />
+          {usernameError && <p className="text-red-600 text-sm">{usernameError}</p>}
+          <FormField label="Shop Name" name="shopName" register={register} errors={errors} />
+          {shopNameError && <p className="text-red-600 text-sm">{shopNameError}</p>}
+          
+          <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700" disabled={!formValid}>
+            Register
+          </button>
+          {!formValid && <p className="text-red-600 text-sm text-center mt-4">Please fill out all fields correctly before continuing.</p>}
+        </form>
+      </div>
+    );
   };
-
-  const handleAddressCheck = () => {
-    setValue('mailingStreetAddress', watch('billingStreetAddress'));
-    setValue('mailingZipcode', watch('billingZipcode'));
-    setValue('mailingCity', watch('billingCity'));
-    setValue('mailingState', watch('billingState'));
-    setValue('mailingCountry', watch('billingCountry'));
-  };
-
-  return (
-    <div className="max-w-md mx-auto bg-white p-8 mt-10 shadow-md rounded">
-      <h1 className="text-2xl font-bold mb-6 text-center">User Signup</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <FormField label="First Name" name="firstName" register={register} errors={errors} />
-        <FormField label="Last Name" name="lastName" register={register} errors={errors} />
-        <FormField label="Email" name="email" register={register} errors={errors} disabled={!!location.state} />
-        {emailError && <p className="text-red-600 text-sm">{emailError}</p>}
-        <FormField label="Password" name="password" type="password" register={register} errors={errors} />
-        <FormField label="Confirm Password" name="confirmPassword" type="password" register={register} errors={errors} />
-        <FormField label="Billing Street Address" name="billingStreetAddress" register={register} errors={errors} />
-        <FormField label="Billing Zipcode" name="billingZipcode" register={register} errors={errors} />
-        <FormField label="Billing City" name="billingCity" register={register} errors={errors} />
-        <SelectField label="Billing State" name="billingState" register={register} errors={errors} options={states} />
-        <SelectField label="Billing Country" name="billingCountry" register={register} errors={errors} options={countries} />
-        
-        <div className="flex items-center">
-          <input type="checkbox" className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" onClick={handleAddressCheck} />
-          <label className="ml-2 block text-sm text-gray-900">Mailing address same as billing</label>
-        </div>
-        
-        <FormField label="Mailing Street Address" name="mailingStreetAddress" register={register} errors={errors} />
-        <FormField label="Mailing Zipcode" name="mailingZipcode" register={register} errors={errors} />
-        <FormField label="Mailing City" name="mailingCity" register={register} errors={errors} />
-        <SelectField label="Mailing State" name="mailingState" register={register} errors={errors} options={states} />
-        <SelectField label="Mailing Country" name="mailingCountry" register={register} errors={errors} options={countries} />
-        
-        <FormField label="Username" name="username" register={register} errors={errors} />
-        {usernameError && <p className="text-red-600 text-sm">{usernameError}</p>}
-        <FormField label="Shop Name" name="shopName" register={register} errors={errors} />
-        {shopNameError && <p className="text-red-600 text-sm">{shopNameError}</p>}
-        
-        <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700" disabled={!formValid}>
-          Register
-        </button>
-        {!formValid && <p className="text-red-600 text-sm text-center mt-4">Please fill out all fields correctly before continuing.</p>}
-      </form>
-    </div>
-  );
-};
-
-export default UserSignup;
+  
+  export default UserSignup;
 
 
 
