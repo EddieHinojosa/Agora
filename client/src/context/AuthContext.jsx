@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { auth } from '../utils/firebaseConfig';
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [profileIncomplete, setProfileIncomplete] = useState(false);
     const apiUrl = import.meta.env.MODE === 'production'
         ? import.meta.env.VITE_PROD_API_URL
         : import.meta.env.VITE_DEV_API_URL;
@@ -22,22 +23,65 @@ export const AuthProvider = ({ children }) => {
                     const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
                     if (response.data.profileIncomplete) {
                         setProfileIncomplete(true);
-                        setIsRegistering(true); // Set registering to true
+                        navigate('/login/usersignup', {
+                            state: {
+                                email: response.data.email,
+                                name: response.data.name,
+                                token,
+                            }
+                        });
                     } else {
                         setUser(response.data.user);
                         setProfileIncomplete(false);
-                        localStorage.setItem('token', token);
+                        localStorage.setItem('token', token);                        
                     }
                 } catch (error) {
                     console.error("Error fetching user profile:", error);
                     setUser(null);
+                    setProfileIncomplete(false);
                 }
             } else {
                 setUser(null);
+                setProfileIncomplete(false);
             }
         });
-        return () => unsubscribe();
-    }, [apiUrl, navigate]);
+
+        getRedirectResult(auth)
+        .then((result) => {
+            if (result) {
+                const user = result.user;
+                user.getIdToken().then((token) => {
+                    axios.post(`${apiUrl}/api/auth/firebase-login`, { token })
+                        .then((response) => {
+                            if (response.data.profileIncomplete) {
+                                setProfileIncomplete(true);
+                                setSignupMessage('You need to create an account by signing up.');
+                                navigate('/login/usersignup', {
+                                    state: {
+                                        email: response.data.email,
+                                        name: response.data.name,
+                                        token,
+                                        signupMessage: 'You need to create an account by signing up.'
+                                    }
+                                });
+                            } else {
+                                setUser(response.data.user);
+                                setProfileIncomplete(false);
+                                localStorage.setItem('token', token);
+                            }
+                        }).catch((error) => {
+                            console.error("Error fetching user profile:", error);
+                            setUser(null);
+                            setProfileIncomplete(false);
+                        });
+                });
+            }
+        }).catch((error) => {
+            console.error("Error getting redirect result:", error);
+        });
+
+    return () => unsubscribe();
+}, [apiUrl, navigate]);
 
     const login = async (email, password) => {
         try {
@@ -53,7 +97,7 @@ export const AuthProvider = ({ children }) => {
 const googleLogin = async () => {
     try {
         const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
+        const result = await signInWithRedirect(auth, provider);
         const token = await result.user.getIdToken();
         const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
 

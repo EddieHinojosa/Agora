@@ -52,6 +52,7 @@ const UserSignup = () => {
   const [formValid, setFormValid] = useState(false);
 
   useEffect(() => {
+    console.log('Location state:', location.state);
     if (location.state) {
       const { email, name } = location.state;
       setValue('email', email || '');
