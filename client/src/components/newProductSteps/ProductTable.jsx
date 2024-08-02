@@ -13,9 +13,6 @@ import axios from "axios";
           rows
         }
       ]);
-    
-
-
        const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -26,10 +23,7 @@ import axios from "axios";
           // console.error("Error submitting poop:", error);
         }
       };
-    
-    
-      
-    
+
       const handleDelete = (index) => {
         const updatedRows = rows.filter((_, i) => i !== index);
         setRows(updatedRows);

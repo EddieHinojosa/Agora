@@ -48,18 +48,18 @@ const ProductImages = ({ rows, setRows  }) => {
         </div>
         {images.map((image, index) => (
           <div key={index} className="border border-gray-300 rounded-md h-32 w-32">
-             <a href="#" onClick={pullImage} className="cloudinary-delete">x</a>
+             {/* <a href="#" onClick={pullImage} className="cloudinary-delete">x</a> */}
             <img src={image.url} alt={`Uploaded ${index}`} />
           </div>
         ))}
       </div>
     </div>
       <button
-          // onClick={() => {
-          //   if (images.length > 0) {
-          //     pushImages(images, rows);
-          //   }
-          // }}
+          onClick={() => {
+            if (images.length > 0) {
+              pushImages(images, rows);
+            }
+          }}
           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
         >
           Save Images
