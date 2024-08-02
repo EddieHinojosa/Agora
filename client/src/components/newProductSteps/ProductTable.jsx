@@ -96,16 +96,16 @@ import axios from "axios";
     //     ]);
     //   };
     
-       const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const response = await axios.post(`${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct`, rows)
+      //  const handleSubmit = async (e) => {
+      //   e.preventDefault();
+      //   try {
+      //     const response = await axios.post(`${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct`, rows)
           
-          console.log("Poop submitted:",  response);
-        } catch (error) {
-          // console.error("Error submitting poop:", error);
-        }
-      };
+      //     console.log("Poop submitted:",  response);
+      //   } catch (error) {
+      //     // console.error("Error submitting poop:", error);
+      //   }
+      // };
 
       const handleDelete = (index) => {
         const updatedRows = rows.filter((_, i) => i !== index);
