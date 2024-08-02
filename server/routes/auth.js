@@ -113,103 +113,67 @@ router.post('/register', async (req, res) => {
 
 router.post('/firebase-login', async (req, res) => {
     const { token } = req.body;
-
+  
     try {
-        const decodedToken = await admin.auth().verifyIdToken(token);
-        const { uid, email, name } = decodedToken;
-
-        let user = await User.findOne({ email });
-
-        if (!user) {
-            // User not found in MongoDB, redirect to registration
-            return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true, email, name });
-        }
-
-        // User found and profile complete
-        res.json({ user });
+      const decodedToken = await admin.auth().verifyIdToken(token);
+      const { uid, email } = decodedToken;
+  
+      let user = await User.findOne({ email });
+  
+      if (!user) {
+        return res.status(200).json({ message: 'User profile incomplete', profileIncomplete: true });
+      }
+  
+      res.json({ user });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
-});
-
-router.post('/complete-registration', authenticate, async (req, res) => {
+  });
+  
+  router.post('/complete-registration', authenticate, async (req, res) => {
     const {
-        firstName, lastName, username,
-        billingStreetAddress, billingCity, billingState, billingCountry,
-        billingZipcode, mailingStreetAddress, mailingCity, mailingState, mailingCountry,
-        mailingZipcode, shopName
+      firstName, lastName, username,
+      billingStreetAddress, billingCity, billingState, billingCountry,
+      billingZipcode, mailingStreetAddress, mailingCity, mailingState, mailingCountry,
+      mailingZipcode, shopName
     } = req.body;
-
+  
     try {
-        let user = await User.findOne({ uid: req.user.uid });
-        if (user) {
-            return res.status(400).json({ message: 'User already exists' });
-        }
-
-        user = new User({
-            uid: req.user.uid,
-            email: req.user.email,
-            firstName,
-            lastName,
-            username,
-            billingAddress: {
-                street: billingStreetAddress,
-                city: billingCity,
-                state: billingState,
-                country: billingCountry,
-                zip: billingZipcode,
-            },
-            mailingAddress: {
-                street: mailingStreetAddress,
-                city: mailingCity,
-                state: billingState,
-                country: mailingCountry,
-                zip: mailingZipcode,
-            },
-            shopName
-        });
-
-        await user.save();
-        res.json({ user });
+      let user = await User.findOne({ email: req.user.email });
+      if (user) {
+        return res.status(400).json({ message: 'User already exists' });
+      }
+  
+      user = new User({
+        uid: req.user.uid,
+        email: req.user.email,
+        firstName,
+        lastName,
+        username,
+        billingAddress: {
+          street: billingStreetAddress,
+          city: billingCity,
+          state: billingState,
+          country: billingCountry,
+          zip: billingZipcode,
+        },
+        mailingAddress: {
+          street: mailingStreetAddress,
+          city: mailingCity,
+          state: mailingState,
+          country: mailingCountry,
+          zip: mailingZipcode,
+        },
+        shopName
+      });
+  
+      await user.save();
+      res.json({ user });
     } catch (error) {
-        console.error('Error during registration:', error);
-        res.status(500).json({ message: 'Internal Server Error', error: error.message });
+      console.error('Error during registration:', error);
+      res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
-});
-
-router.post('/update-profile', authenticate, async (req, res) => {
-    try {
-        const user = await User.findById(req.user.uid);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        user.firstName = req.body.firstName;
-        user.lastName = req.body.lastName;
-        user.email = req.body.email;
-        user.billingAddress = {
-            streetAddress: req.body.billingStreetAddress,
-            zipcode: req.body.billingZipcode,
-            city: req.body.billingCity,
-            state: req.body.billingState,
-            country: req.body.billingCountry,
-        };
-        user.mailingAddress = {
-            streetAddress: req.body.mailingStreetAddress,
-            zipcode: req.body.mailingZipcode,
-            city: req.body.mailingCity,
-            state: req.body.mailingState,
-            country: req.body.mailingCountry,
-        };
-        user.username = req.body.username;
-        user.shopName = req.body.shopName;
-
-        await user.save();
-        res.json({ message: 'Profile updated successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
+  });
 
 export { authenticate };
 export default router;

@@ -26,13 +26,13 @@ import UserSignup from './pages/login/UserSignup.jsx';
 // Shop Manager Pages
 import ShopManager from './pages/shop-manager/ShopManager.jsx';
 import Orders from './pages/shop-manager/Orders.jsx';
-import Messages from './pages/shop-manager/Messages.jsx';
+// import Messages from './pages/shop-manager/Messages.jsx';
 import Products from './pages/shop-manager/Products.jsx';
 import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx';
-import NewMessage from './pages/shop-manager/NewMessage.jsx';
+// import NewMessage from './pages/shop-manager/NewMessage.jsx';
 import EditProduct from './pages/shop-manager/EditProduct.jsx';
 
 const ProtectedRoute = ({ element }) => {
@@ -67,8 +67,8 @@ root.render(
           <Route path="shopmanager" element={<ProtectedRoute element={<ShopApp />} />}>
             <Route index element={<ShopManager />} />
             <Route path="orders" element={<Orders />} />
-            <Route path="messages" element={<Messages />} />
-            <Route path="newmessage" element={<NewMessage />} />
+            {/* <Route path="messages" element={<Messages />} />
+            <Route path="newmessage" element={<NewMessage />} /> */}
             <Route path="products" element={<Products />} />
             <Route path="newproduct" element={<NewProduct />} />
             <Route path="editproduct/:id" element={<EditProduct />} />

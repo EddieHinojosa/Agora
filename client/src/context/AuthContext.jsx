@@ -1,14 +1,13 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { auth } from '../utils/firebaseConfig';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [profileIncomplete, setProfileIncomplete] = useState(false);
     const apiUrl = import.meta.env.MODE === 'production'
         ? import.meta.env.VITE_PROD_API_URL
         : import.meta.env.VITE_DEV_API_URL;
@@ -22,16 +21,12 @@ export const AuthProvider = ({ children }) => {
                     const token = await firebaseUser.getIdToken();
                     const response = await axios.post(`${apiUrl}/api/auth/firebase-login`, { token });
                     if (response.data.profileIncomplete) {
-                        navigate('/login/usersignup', {
-                            state: {
-                                email: response.data.email,
-                                name: response.data.name,
-                                token,
-                            }
-                        });
+                        setProfileIncomplete(true);
+                        setIsRegistering(true); // Set registering to true
                     } else {
                         setUser(response.data.user);
-                        localStorage.setItem('token', token);                        
+                        setProfileIncomplete(false);
+                        localStorage.setItem('token', token);
                     }
                 } catch (error) {
                     console.error("Error fetching user profile:", error);
@@ -46,14 +41,14 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-          await signInWithEmailAndPassword(auth, email, password);
+            await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
-          console.error("Error during login:", error);
-          throw new Error('Login failed. Please check your email and password.');
+            console.error("Error during login:", error);
+            throw new Error('Login failed. Please check your email and password.');
         }
-      };
+    };
 
-      const googleLogin = async () => {
+    const googleLogin = async () => {
         try {
             const provider = new GoogleAuthProvider();
             await signInWithPopup(auth, provider);
@@ -98,7 +93,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, profileIncomplete, login, googleLogin, completeRegistration, updateProfile, logout }}>
+        <AuthContext.Provider value={{ user, login, googleLogin, completeRegistration, updateProfile, logout }}>
             {children}
         </AuthContext.Provider>
     );

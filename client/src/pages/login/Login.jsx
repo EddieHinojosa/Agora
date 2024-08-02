@@ -29,7 +29,7 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      await googleLogin(navigate);
+      await googleLogin();
       navigate('/');
     } catch (error) {
       alert('Google login failed: ' + error.message);
@@ -61,6 +61,7 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
 
