@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MdUpload } from "react-icons/md";
 import CloudinaryUploadWidget from "../cloudinaryUploadWidget";
+import { set } from "mongoose";
 
 const ProductImages = ({ rows, setRows  }) => {
   const [images, setImages] = useState([]);
@@ -15,13 +16,21 @@ const ProductImages = ({ rows, setRows  }) => {
     // console.log(imagesArray);
   }
 
-  // const pullImage = (e) => {
-  //   const { src } = e.target.previousSibling;
-  // console.log(e.target)
-  // console.log(e.target.previousSibling)
-  // console.log(src)
+  const pullImage = (e) => {
+    const { src } = e.target.dataset;
+  console.log(e.target)
+  console.log(src)
 
-  // }
+  const updatedImages = images.filter((image) => image.url !== src);
+  setImages(updatedImages);
+
+// State change logic for image urls
+  const updatedRows = rows.image_urls.filter((image) => image !== src);
+  rows.image_urls = updatedRows;
+  setRows({ ...rows });
+  console.log(rows)
+
+  }
 
   return (
     <div className="mt-6">
@@ -48,7 +57,7 @@ const ProductImages = ({ rows, setRows  }) => {
         </div>
         {images.map((image, index) => (
           <div key={index} className="border border-gray-300 rounded-md h-32 w-32">
-             {/* <a href="#" onClick={pullImage} className="cloudinary-delete">x</a> */}
+             <a href="#" onClick={pullImage} data-src={image.url} className="cloudinary-delete">x</a>
             <img src={image.url} alt={`Uploaded ${index}`} />
           </div>
         ))}
