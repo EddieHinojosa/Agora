@@ -57,33 +57,37 @@ const UserSignup = () => {
         setValue('lastName', name?.split(' ').slice(1).join(' '));
       }
     }, [location.state, setValue]);
-  
-    const checkEmail = debounce(async (email) => {
-      try {
-        await axios.get(`/api/auth/check-unique-email`, { params: { email } });
+    
+    const apiUrl = import.meta.env.MODE === 'production'
+    ? import.meta.env.VITE_PROD_API_URL
+    : import.meta.env.VITE_DEV_API_URL;
+
+const checkEmail = debounce(async (email) => {
+    try {
+        await axios.get(`${apiUrl}/api/auth/check-unique-email`, { params: { email } });
         setEmailError('');
-      } catch (error) {
+    } catch (error) {
         setEmailError('Email already in use');
-      }
-    }, 500);
-  
-    const checkUsername = debounce(async (username) => {
-      try {
-        await axios.get(`/api/auth/check-unique-username`, { params: { username } });
+    }
+}, 500);
+
+const checkUsername = debounce(async (username) => {
+    try {
+        await axios.get(`${apiUrl}/api/auth/check-unique-username`, { params: { username } });
         setUsernameError('');
-      } catch (error) {
+    } catch (error) {
         setUsernameError('Username already in use');
-      }
-    }, 500);
-  
-    const checkShopName = debounce(async (shopName) => {
-      try {
-        await axios.get(`/api/auth/check-unique-shopname`, { params: { shopName } });
+    }
+}, 500);
+
+const checkShopName = debounce(async (shopName) => {
+    try {
+        await axios.get(`${apiUrl}/api/auth/check-unique-shopname`, { params: { shopName } });
         setShopNameError('');
-      } catch (error) {
+    } catch (error) {
         setShopNameError('Shop name already in use');
-      }
-    }, 500);
+    }
+}, 500);
   
     useEffect(() => {
       const subscription = watch((value, { name }) => {
