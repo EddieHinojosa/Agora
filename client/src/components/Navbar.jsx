@@ -6,7 +6,7 @@ import { CiUser, CiShop } from "react-icons/ci";
 import { AuthContext } from "../context/AuthContext";
 import { IoMenu, IoClose } from "react-icons/io5";
 
-const Navbar = ({ setModalIsOpen, id }) => {
+const Navbar = ({ setModalIsOpen }) => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -57,7 +57,7 @@ const Navbar = ({ setModalIsOpen, id }) => {
                 <CiUser size={22} className="text-gray-500 hover:text-black" />
               </Link>
               {user.shopName && (
-                <Link to={`/shopmanager/user/${id}`}>
+                <Link to={`/shopmanager/user/${user._id}`}>
                   <CiShop
                     size={22}
                     className="text-gray-500 hover:text-black"
