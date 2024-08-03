@@ -79,7 +79,7 @@ root.render(
             {/* <Route path="firebase-login" element={<FirebaseLogin />} /> */}
 
             {/* Protected Shop Manager Pages */}
-            <Route path="shopmanager" element={<ProtectedRoute element={<ShopApp />} />}>
+            <Route path="shopmanager/:id" element={<ProtectedRoute element={<ShopApp />} />}>
               <Route index element={<ShopManager />} />
               <Route path="orders" element={<Orders />} />
               {/* <Route path="messages" element={<Messages />} />

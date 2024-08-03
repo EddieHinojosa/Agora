@@ -1,7 +1,6 @@
 import express from 'express';
 import User from '../models/User.js';
 import authenticateToken from './unifiedAuth.js';
-import { updateShop } from '../controllers/shopURLController.js';
 
 const router = express.Router();
 
@@ -25,8 +24,6 @@ router.post('/update-profile', authenticateToken, async (req, res) => {
     res.status(500).json({ message: 'Failed to update profile', error });
   }
 });
-
-router.put('/update-shop', updateShop)
 
 export default router;
 
