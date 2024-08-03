@@ -13,10 +13,12 @@ const ShippingSection = ({ rows, handleChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_DEV_API_URL}` + `api/shopmanager/newproduct` ||`${import.meta.env.VITE_PROD_API_URL}` + `api/shopManager/newProduct`  ,
+      const response = await axios.post( 
+        `${import.meta.env.MODE === 'production' ? import.meta.env.VITE_PROD_API_URL : import.meta.env.VITE_DEV_API_URL}api/shopManager/newProduct`,
         rows
       );
+
+      
 
       console.log("Poop submitted:", response);
     } catch (error) {
