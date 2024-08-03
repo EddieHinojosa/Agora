@@ -86,7 +86,7 @@ root.render(
               <Route path="newmessage" element={<NewMessage />} /> */}
               <Route path="products" element={<Products />} />
               <Route path="newproduct" element={<NewProduct />} />
-              <Route path="editproduct/:id" element={<EditProduct />} />
+              <Route path="editproduct/product/:id" element={<EditProduct />} />
               <Route path="finances" element={<Finances />} />
               <Route path="calendar" element={<Calendar />} />
               <Route path="settings" element={<Settings />} />
