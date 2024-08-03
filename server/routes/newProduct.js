@@ -24,7 +24,7 @@ const authenticate = async (req, res, next) => {
 
 // Create a new Product
 
-router.post('/shopManager/newProduct', async (req , res) => {
+router.post('/shopmanager/newproduct', async (req , res) => {
 
     const newProductData = {...req.body};
     console.log(newProductData);

@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import {AuthContext} from '../context/AuthContext';
 import FormField from '../components/FormField';
 import SelectField from '../components/SelectField';
 

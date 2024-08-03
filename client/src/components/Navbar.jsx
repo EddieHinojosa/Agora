@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { CiUser, CiShop } from "react-icons/ci";
-import AuthContext from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { IoMenu, IoClose } from "react-icons/io5";
 
 const Navbar = ({ setModalIsOpen }) => {
@@ -11,16 +11,10 @@ const Navbar = ({ setModalIsOpen }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSellClick = () => {
-    if (user.shopName) {
-      navigate("/shopmanager");
-    } else {
-      navigate("/update-profile");
-    }
-  };
-
   const handleLogout = () => {
-    logout(navigate);
+    if (user) {
+      logout(navigate);
+    }
   };
 
   const toggleMenu = () => {
@@ -59,9 +53,9 @@ const Navbar = ({ setModalIsOpen }) => {
         <div className={`flex items-center space-x-4 md:flex-row md:space-y-0 ${isOpen ? 'flex' : 'hidden md:flex'}`}>
           {user ? (
             <>
-              <button onClick={handleSellClick} className="text-sm">
-                Sell
-              </button>
+              <Link to="/shopmanager" className="text-sm">
+                Shop Manager
+              </Link>
               <Link to="/user">
                 <CiUser size={22} className="text-gray-500 hover:text-black" />
               </Link>
@@ -136,6 +130,7 @@ const Navbar = ({ setModalIsOpen }) => {
 };
 
 export default Navbar;
+
 
 {
   /* If USER is logged in, navbar changes: */
