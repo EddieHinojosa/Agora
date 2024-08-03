@@ -53,9 +53,6 @@ const Navbar = ({ setModalIsOpen }) => {
         <div className={`flex items-center space-x-4 md:flex-row md:space-y-0 ${isOpen ? 'flex' : 'hidden md:flex'}`}>
           {user ? (
             <>
-              <Link to="/shopmanager" className="text-sm">
-                Shop Manager
-              </Link>
               <Link to="/user">
                 <CiUser size={22} className="text-gray-500 hover:text-black" />
               </Link>

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
 
 const AddressSchema = new mongoose.Schema({
   street: String,
@@ -37,9 +38,18 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-UserSchema.pre("save", function (next) {
-  if (this.shopName && !this.shopId) {
-    this.shopId = new mongoose.Types.ObjectId();
+// Pre-save hook to create a slug/URL from the shop name
+UserSchema.pre("save", async function (next) {
+  if (this.shopName && !this.shopURL) {
+    const slug = slugify(this.shopName, { lower: true, strict: true });
+    let urlExists = await mongoose.models.User.findOne({ shopURL: slug });
+
+    if (urlExists) {
+      const uniqueId = new mongoose.Types.ObjectId().toString();
+      this.shopURL = `${slug}-${uniqueId}`;
+    } else {
+      this.shopURL = slug;
+    }
   }
   next();
 });
