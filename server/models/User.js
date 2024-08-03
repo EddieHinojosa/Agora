@@ -37,12 +37,6 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-UserSchema.pre("save", function (next) {
-  if (this.shopName && !this.shopId) {
-    this.shopId = new mongoose.Types.ObjectId();
-  }
-  next();
-});
 
 const User = mongoose.model("User", UserSchema);
 

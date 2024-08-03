@@ -17,6 +17,7 @@ import User from './pages/User.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
 import UpdateProfile from './pages/UpdateProfile.jsx';
+import Shops from './pages/Shops.jsx';
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
@@ -63,6 +64,7 @@ root.render(
               <Route path="cart" element={<Cart />} />
               <Route path="checkout" element={<Checkout />} />
               <Route path="update-profile" element={<UpdateProfile />} />
+              <Route path="shops" element={<Shops />} />
             </Route>
 
             {/* Login-Signup Pages */}
@@ -77,7 +79,7 @@ root.render(
             {/* <Route path="firebase-login" element={<FirebaseLogin />} /> */}
 
             {/* Protected Shop Manager Pages */}
-            <Route path="shopmanager" element={<ProtectedRoute element={<ShopApp />} />}>
+            <Route path="shopmanager/user/:id" element={<ShopApp />}>
               <Route index element={<ShopManager />} />
               <Route path="orders" element={<Orders />} />
               {/* <Route path="messages" element={<Messages />} />
