@@ -39,7 +39,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Pre-save hook to create a slug/URL from the shop name
-UserSchema.pre("save", function (next) {
+UserSchema.pre("save", async function (next) {
   if (this.shopName && !this.shopURL) {
     const slug = slugify(this.shopName, { lower: true, strict: true });
     let urlExists = await mongoose.models.User.findOne({ shopURL: slug });
