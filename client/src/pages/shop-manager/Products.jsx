@@ -1,7 +1,10 @@
+import { useContext } from 'react';
 import { IoIosAddCircle } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import { IoMdSearch } from "react-icons/io";
 import ProductCard from '../../components/ProductCard';
+import { AuthContext } from '../../context/AuthContext';
+
 
 // Needs code to be dynamically replaced with actual data from DB
 // Actual card component is in components folder
@@ -14,13 +17,16 @@ const products = [
 ];
 
 const Products = () => {
+    const { user } = useContext(AuthContext); 
+
     return (
         <div className="container mx-auto p-4">
             <div className="flex items-center mb-4">
                 <h2 className="text-2xl">Products</h2>
-                <Link to='/shopmanager/newproduct' className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
+                <Link to={`/shopmanager/user/${user._id}/newproduct`} className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
                     <IoIosAddCircle className="mr-2 text-xl" /> Add A Product
                 </Link>
+
             </div>
             <div className="flex justify-end">
                 <div className="w-full bg-gray-100 flex p-1 space-x-4">
