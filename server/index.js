@@ -89,6 +89,7 @@ app.use(session({
 
 app.use('/api', routes);
 
+app.use('/api', routes);
 
 
 
