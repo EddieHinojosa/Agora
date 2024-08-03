@@ -14,7 +14,7 @@ const ShippingSection = ({ rows, handleChange }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct` ||`${import.meta.env.VITE_PROD_API_URL}` + `api/shopManager/newProduct`  ,
+        `${import.meta.env.VITE_DEV_API_URL}` + `api/shopmanager/newproduct` ||`${import.meta.env.VITE_PROD_API_URL}` + `api/shopManager/newProduct`  ,
         rows
       );
 
