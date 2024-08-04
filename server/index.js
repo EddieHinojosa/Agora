@@ -30,7 +30,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
 const server = createServer(app); 
-const io = new Server(server); 
+const io = new Server(server, {
+  cors: {
+    origin: process.env.NODE_ENV === 'production' ? process.env.VITE_PROD_APP_URL : process.env.VITE_DEV_APP_URL,
+    methods: ["GET", "POST"],
+  },
+});
+
 app.set('trust proxy', 1);
 
 const allowedOrigins = [
@@ -98,7 +104,7 @@ app.use('/api/users', userRoutes);
 app.use('/api', newProduct);
 app.use('/api', getProduct);
 app.use('/api/messages', (req, res, next) => {
-  req.io = io; // Attach the `io` instance to the request object
+  req.io = io;
   next();
 }, messageRoutes);
 
