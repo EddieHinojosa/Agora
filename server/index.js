@@ -13,7 +13,7 @@ import newProduct from './routes/newProduct.js';
 import getProduct from './routes/Products.js';
 // import routes from './routes/index.js';
 import shopRoutes from './routes/shopRoute.js';
-
+import messageRoutes from './routes/message.js';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import MongoStore from 'connect-mongo';
@@ -83,13 +83,10 @@ app.use(session({
 app.use('/api/auth', authRoutes); // Regular auth routes
 // // app.use('/api/firebase-auth', firebaseAuthRoutes); // Firebase auth routes
 app.use('/', shopRoutes);
-app.use('/api', userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api', newProduct);
 app.use('/api', getProduct);
-
-
-
-
+app.use('/api/messages', messageRoutes);
 
 
 //-----------------eddie calendar stuff in process-----------------

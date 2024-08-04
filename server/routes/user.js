@@ -4,6 +4,20 @@ import authenticateToken from './unifiedAuth.js';
 
 const router = express.Router();
 
+// Fetch user by username
+router.get('/username/:username', async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error('Error fetching user by username:', error);
+    res.status(500).json({ message: 'Failed to fetch user', error: error.message });
+  }
+});
+
 router.post('/update-profile', authenticateToken, async (req, res) => {
   const { firstName, lastName, billingAddress, mailingAddress, username, shopName } = req.body;
   try {

@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import { FaLink } from "react-icons/fa";
 import UserData from '../../components/ShopManager/Main/UserData';
 
-
 // Dynamic Status Cards - will pull information from DB
 const StatusCard = ({ status, count }) => {
   return (

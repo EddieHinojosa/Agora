@@ -1,3 +1,57 @@
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
+
+const Messages = () => {
+  const { user } = useContext(AuthContext);
+  const [messages, setMessages] = useState([]);
+
+  const fetchMessages = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.MODE === 'production' ? import.meta.env.VITE_PROD_API_URL : import.meta.env.VITE_DEV_API_URL}/api/messages/${user._id}`);
+      setMessages(response.data);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (user && user._id) {
+      fetchMessages();
+    }
+  }, [user]);
+
+  return (
+    <div className="max-w-4xl mx-auto p-8">
+      <h1 className="text-2xl font-bold mb-6">Messages</h1>
+      {messages.length > 0 ? (
+        <ul>
+          {messages.map((msg) => (
+            <li key={msg._id} className="border-b border-gray-300 p-2 mb-4">
+              <p><strong>From:</strong> {msg.senderId.username}</p>
+              <p><strong>To:</strong> {msg.receiverId.username}</p>
+              <p><strong>Message:</strong> {msg.content}</p>
+              <p><strong>Timestamp:</strong> {new Date(msg.timestamp).toLocaleString()}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No messages found.</p>
+      )}
+    </div>
+  );
+};
+
+export default Messages;
+
+
+
+
+
+
+
+
+
 // import { useEffect, useState } from 'react';
 // import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
 // import { auth, db } from '../../utils/firebaseConfig';
