@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Tab } from '@headlessui/react';
 import io from 'socket.io-client';
 import MessageModal from './MessageModal';
 
-const socket = io();
+const socket = io({
+  path: '/socket.io',
+  transports: ['websocket']
+});
 
 const MessageList = ({ userId, type, handleReply }) => {
   const [messages, setMessages] = useState([]);

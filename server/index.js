@@ -29,12 +29,19 @@ if (!admin.apps.length) {
 const app = express();
 const PORT = process.env.PORT || 5000;
 const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
-const server = createServer(app); 
+const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: process.env.NODE_ENV === 'production' ? process.env.VITE_PROD_APP_URL : process.env.VITE_DEV_APP_URL,
     methods: ["GET", "POST"],
   },
+});
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
 app.set('trust proxy', 1);
@@ -89,13 +96,6 @@ app.use(session({
   }
 }));
 
-// Socket.IO connection event
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-});
 
 app.use('/api/auth', authRoutes); // Regular auth routes
 // // app.use('/api/firebase-auth', firebaseAuthRoutes); // Firebase auth routes
