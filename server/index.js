@@ -17,6 +17,8 @@ import messageRoutes from './routes/message.js';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import MongoStore from 'connect-mongo';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -27,7 +29,8 @@ if (!admin.apps.length) {
 const app = express();
 const PORT = process.env.PORT || 5000;
 const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
-
+const server = createServer(app); 
+const io = new Server(server); 
 app.set('trust proxy', 1);
 
 const allowedOrigins = [
@@ -80,13 +83,24 @@ app.use(session({
   }
 }));
 
+// Socket.IO connection event
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
 app.use('/api/auth', authRoutes); // Regular auth routes
 // // app.use('/api/firebase-auth', firebaseAuthRoutes); // Firebase auth routes
 app.use('/', shopRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api', newProduct);
 app.use('/api', getProduct);
-app.use('/api/messages', messageRoutes);
+app.use('/api/messages', (req, res, next) => {
+  req.io = io; // Attach the `io` instance to the request object
+  next();
+}, messageRoutes);
 
 
 //-----------------eddie calendar stuff in process-----------------

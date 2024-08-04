@@ -37,7 +37,7 @@ import NewProduct from './pages/shop-manager/NewProduct.jsx';
 import Calendar from './pages/shop-manager/Calendar.jsx';
 import Settings from './pages/shop-manager/Settings.jsx';
 import Finances from './pages/shop-manager/Finances.jsx';
-import SendMessage from './pages/shop-manager/SendMessage.jsx';
+
 import EditProduct from './pages/shop-manager/EditProduct.jsx';
 
 // const ProtectedRoute = ({ element }) => {
@@ -85,7 +85,6 @@ root.render(
               <Route index element={<ShopManager />} />
               <Route path="orders" element={<Orders />} />
               <Route path="messages" element={<Messages />} />
-              <Route path="sendmessage" element={<SendMessage />} />
               <Route path="products" element={<Products />} />
               <Route path="newproduct" element={<NewProduct />} />
               <Route path="editproduct/product/:id" element={<EditProduct />} />

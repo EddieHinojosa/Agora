@@ -24,7 +24,6 @@ const ShopSidebar = () => {
                         <Link to={`/shopmanager/user/${user._id}`} className='mt-2 hover:underline text-sm text-center md:text-left'>Shop Home</Link>
                         <Link to={`/shopmanager/user/${user._id}/orders`} className='hover:underline text-sm text-center md:text-left'>Orders</Link>
                         <Link to={`/shopmanager/user/${user._id}/messages`} className='hover:underline text-sm text-center md:text-left'>Messages</Link>
-                        <Link to={`/shopmanager/user/${user._id}/sendmessage`} className='hover:underline text-sm text-center md:text-left'>Send Message</Link>
                         <Link to={`/shopmanager/user/${user._id}/products/`} className='hover:underline text-sm text-center md:text-left'>Products</Link>
                         <Link to={`/shopmanager/user/${user._id}/finances/`} className='hover:underline text-sm text-center md:text-left'>Finances</Link>
                         <Link to={`/shopmanager/user/${user._id}/calendar/`} className='hover:underline text-sm text-center md:text-left'>Calendar</Link>

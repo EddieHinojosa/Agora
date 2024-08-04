@@ -1,48 +1,73 @@
-import React, { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { Tab } from '@headlessui/react';
+import MessageList from '../../components/Messaging/MessageList';
+import SendMessage from '../../components/Messaging/SendMessage';
 
 const Messages = () => {
   const { user } = useContext(AuthContext);
-  const [messages, setMessages] = useState([]);
+  const [currentTab, setCurrentTab] = useState('Received');
+  const [replyTo, setReplyTo] = useState('');
 
-  const fetchMessages = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.MODE === 'production' ? import.meta.env.VITE_PROD_API_URL : import.meta.env.VITE_DEV_API_URL}/api/messages/${user._id}`);
-      setMessages(response.data);
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-    }
+  const handleReply = (username) => {
+    setReplyTo(username);
+    setCurrentTab('Send');
   };
 
-  useEffect(() => {
-    if (user && user._id) {
-      fetchMessages();
-    }
-  }, [user]);
+  const handleMessageSent = () => {
+    setCurrentTab('Sent');
+  };
 
   return (
-    <div className="max-w-4xl mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-6">Messages</h1>
-      {messages.length > 0 ? (
-        <ul>
-          {messages.map((msg) => (
-            <li key={msg._id} className="border-b border-gray-300 p-2 mb-4">
-              <p><strong>From:</strong> {msg.senderId.username}</p>
-              <p><strong>To:</strong> {msg.receiverId.username}</p>
-              <p><strong>Message:</strong> {msg.content}</p>
-              <p><strong>Timestamp:</strong> {new Date(msg.timestamp).toLocaleString()}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No messages found.</p>
-      )}
+    <div className="p-4">
+      <Tab.Group selectedIndex={currentTab === 'Received' ? 0 : currentTab === 'Sent' ? 1 : 2}>
+        <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
+          <Tab
+            className={({ selected }) =>
+              `w-full py-2.5 text-sm leading-5 font-medium text-blue-700 rounded-lg 
+              ${selected ? 'bg-white shadow' : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'}`
+            }
+            onClick={() => setCurrentTab('Received')}
+          >
+            Received Messages
+          </Tab>
+          <Tab
+            className={({ selected }) =>
+              `w-full py-2.5 text-sm leading-5 font-medium text-blue-700 rounded-lg 
+              ${selected ? 'bg-white shadow' : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'}`
+            }
+            onClick={() => setCurrentTab('Sent')}
+          >
+            Sent Messages
+          </Tab>
+          <Tab
+            className={({ selected }) =>
+              `w-full py-2.5 text-sm leading-5 font-medium text-blue-700 rounded-lg 
+              ${selected ? 'bg-white shadow' : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'}`
+            }
+            onClick={() => setCurrentTab('Send')}
+          >
+            Send Message
+          </Tab>
+        </Tab.List>
+        <Tab.Panels className="mt-2">
+          <Tab.Panel>
+            <MessageList userId={user._id} type="Received" handleReply={handleReply} />
+          </Tab.Panel>
+          <Tab.Panel>
+            <MessageList userId={user._id} type="Sent" />
+          </Tab.Panel>
+          <Tab.Panel>
+            <SendMessage userId={user._id} replyTo={replyTo} onMessageSent={handleMessageSent} />
+          </Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
     </div>
   );
 };
 
 export default Messages;
+
 
 
 
