@@ -1,17 +1,18 @@
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import UserData from '../components/ShopManager/Main/UserData';
 import DisplayGrid from '../components/Home/DisplayGrid';
-// will also need to import product data, possibly shop data?
 
-const Shops = () => {
-  const { id } = useParams();
+const Shop = () => {
+  const { slug } = useParams();
 
   return (
     <UserData
-      userId={id}
-      render={() => (
+      userId={slug}
+      isManager={false}
+      render={(userData) => (
         <div>
-          <h1>Welcome to {UserData.shopName}'s Shop!</h1>
+          <h2 className='flex justify-center items-center bg-gray-100 p-4 font-bold text-2xl'>Welcome to {userData.shopName}'s Shop!</h2>
           <DisplayGrid />
         </div>
       )}
@@ -19,5 +20,6 @@ const Shops = () => {
   );
 };
 
-export default Shops;
+export default Shop;
+
 

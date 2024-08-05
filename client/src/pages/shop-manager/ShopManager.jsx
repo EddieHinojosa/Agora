@@ -24,11 +24,12 @@ const ShopManager = () => {
   return (
     <UserData
       userId={id}
+      isManager={true}
       render={(userData) => (
         <div>
           <div className='justify-center text-center'>
             <h2 className='text-4xl'>Hello {userData.shopName}!</h2>
-            <Link to="#" className='flex items-center justify-center space-x-2 hover:underline'>
+            <Link to={`/shop/${userData.slug}`} className='flex items-center justify-center space-x-2 hover:underline'>
               <FaLink />
               <span>Shop Link</span>
             </Link>
