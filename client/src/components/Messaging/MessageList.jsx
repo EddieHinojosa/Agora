@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import io from 'socket.io-client';
+import { SocketContext } from '../../context/SocketContext';
 import MessageModal from './MessageModal';
 
-const socket = io('https://agora-1-h35b.onrender.com', {
-  path: '/socket.io',
-  transports: ['websocket'],
-});
+const apiUrl = import.meta.env.MODE === 'production'
+  ? import.meta.env.VITE_PROD_API_URL
+  : import.meta.env.VITE_DEV_API_URL;
 
 const MessageList = ({ userId, type, handleReply }) => {
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const url = type === 'Received' ? `/api/messages/${userId}` : `/api/messages/sent/${userId}`;
-        const response = await axios.get(url, {
+        const response = await axios.get(`${apiUrl}${url}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`, // Assuming token is stored in localStorage
           },
@@ -24,6 +24,13 @@ const MessageList = ({ userId, type, handleReply }) => {
         setMessages(response.data);
       } catch (error) {
         console.error('Error fetching messages:', error);
+        if (error.response) {
+          console.error('Error response:', error.response);
+        } else if (error.request) {
+          console.error('Error request:', error.request);
+        } else {
+          console.error('Error message:', error.message);
+        }
       }
     };
 
@@ -42,7 +49,7 @@ const MessageList = ({ userId, type, handleReply }) => {
     return () => {
       socket.off('newMessage');
     };
-  }, [userId, type]);
+  }, [userId, type, socket]);
 
   const openMessageModal = (message) => {
     setSelectedMessage(message);

@@ -8,6 +8,7 @@ import './index.css';
 import { AuthProvider } from './context/AuthContext.jsx';
 // import { FirebaseAuthProvider, FirebaseAuthContext } from './context/FirebaseAuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import { SocketProvider } from './context/SocketContext';
 
 // Error page
 import Error from './pages/Error.jsx';
@@ -55,7 +56,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        {/* <FirebaseAuthProvider> */}
+      <SocketProvider>
           <Routes>
             {/* Public routes */}
             <Route path="/" element={<App />}>
@@ -108,7 +109,7 @@ root.render(
 
             <Route path="*" element={<Error />} />
           </Routes>
-        {/* </FirebaseAuthProvider> */}
+          </SocketProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

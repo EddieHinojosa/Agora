@@ -17,9 +17,9 @@ const SendMessage = ({ userId, replyTo, onMessageSent }) => {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.get(`${import.meta.env.VITE_DEV_API_URL}/api/users/username/${receiverUsername}`);
+      const response = await axios.get(`${import.meta.env.VITE_PROD_API_URL}/api/users/username/${receiverUsername}`);
       const receiver = response.data;
-      await axios.post(`${import.meta.env.VITE_DEV_API_URL}/api/messages`, {
+      await axios.post(`${import.meta.env.VITE_PROD_API_URL}/api/messages`, {
         senderId: userId,
         receiverId: receiver._id,
         subject,
