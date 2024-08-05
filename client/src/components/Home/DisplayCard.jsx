@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Card = ({ img, name, shop, price, link }) => {
+const Card = ({ img, name, shop, price }) => {
   const handleClick = (event) => {
     event.preventDefault();
     console.log('clicked');
