@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DisplayCard from './DisplayCard';
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 
-const DisplayGrid = ({ products }) => {
+const DisplayGrid = ({ products = [] }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 20;
   const totalPages = Math.ceil(products.length / productsPerPage);
