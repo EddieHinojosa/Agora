@@ -19,7 +19,7 @@ router.get('/shopmanager/user/:id', authenticateToken, async (req, res) => {
   }
 });
 
-
+// Route to get url shopname slug
 router.get('/shop/:slug', async (req, res) => {
   try {
       const user = await User.findOne({ slug: req.params.slug });

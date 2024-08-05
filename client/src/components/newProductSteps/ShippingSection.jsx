@@ -233,7 +233,7 @@ const ShippingSection = ({ rows, handleChange, handleSubmit }) => {
         <button
           type="submit"
           onClick={handleSubmit}
-          to="/shopmanager/products"
+          to={`/shopmanager/user/${user._id}products`}
           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
         >
           Publish
