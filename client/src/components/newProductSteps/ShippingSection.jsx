@@ -1,32 +1,42 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import UserData from "../ShopManager/Main/UserData";
+import { AuthContext } from "../../context/AuthContext";
 
 // Shipping Section
-const ShippingSection = ({ rows, handleChange }) => {
+const ShippingSection = ({ rows, handleChange, handleSubmit }) => {
   const [selectedAddress, setSelectedAddress] = useState("");
 
-  const addresses = [
-    "123 Main, Atlanta, GA 12345",
-    "456 Marty St, Atlanta, GA, 12345",
-  ];
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post( 
-        `${import.meta.env.MODE === 'production' ? import.meta.env.VITE_PROD_API_URL : import.meta.env.VITE_DEV_API_URL}/api/shopmanager/newproduct`,
-        rows
-      );
+  const { user } = useContext(AuthContext);
 
-      
+    
+    
+    const addresses = [
+     `${user.mailingAddress.street}, ${user.mailingAddress.city}, ${user.mailingAddress.state}`
+    ];
+  
+ 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post( 
+  //       `${import.meta.env.MODE === 'production' 
+  //         ? import.meta.env.VITE_PROD_API_URL 
+  //         : import.meta.env.VITE_DEV_API_URL}/api/shopmanager/newproduct`,
+  //       rows
+  //     );
 
-      console.log("Poop submitted:", response);
-    } catch (error) {
-      console.error("Error submitting poop:", error);
-    }
-  };
+  //     console.log("Product submitted:", response);
+  //   } catch (error) {
+  //     console.error("Error submitting Product:", error);
+  //   }
+  // };
 
   return (
+    // <UserData 
+    // userId={id}
+    // render ={(userData) => (
     <div>
       {/* Shipping Address */}
       <div>
@@ -37,7 +47,8 @@ const ShippingSection = ({ rows, handleChange }) => {
           Shipping Address
         </label>
         <div className="flex items-center mt-1">
-          <select
+          <select 
+         
             id="shippingAddress"
             name="shippingAddress"
             value={selectedAddress}
@@ -47,6 +58,9 @@ const ShippingSection = ({ rows, handleChange }) => {
             }}
             className="p-2 block w-2/6 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
+            <option value = "" disabled >
+              Choose Mailing Address
+              </option>
             {addresses.map((address, index) => (
               <option key={index} value={address}>
                 {address}
@@ -55,6 +69,8 @@ const ShippingSection = ({ rows, handleChange }) => {
           </select>
         </div>
       </div>
+    {/* )}
+    /> */}
 
       {/* Item Weight */}
       <div>

@@ -6,6 +6,7 @@ import ProductPricing from '../../components/newProductSteps/ProductPricing'
 import ProductOptions from '../../components/newProductSteps/ProductOptions'
 import ProductDimensions from '../../components/newProductSteps/ProductDimensions'
 import ShippingSection from '../../components/newProductSteps/ShippingSection'
+import axios from 'axios'
 // import ProductTable from '../../components/newProductSteps/ProductTable'
 
 
@@ -62,19 +63,21 @@ const [currentStep, setCurrentStep] = useState(0);
     setRows(updatedRows);
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct`,
-  //       rows
-  //     );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post( 
+        `${import.meta.env.MODE === 'production' 
+          ? import.meta.env.VITE_PROD_API_URL 
+          : import.meta.env.VITE_DEV_API_URL}/api/shopmanager/newproduct`,
+        rows
+      );
 
-  //     console.log("Poop submitted:", response);
-  //   } catch (error) {
-  //     // console.error("Error submitting poop:", error);
-  //   }
-  // };
+      console.log("Product submitted:", response);
+    } catch (error) {
+      console.error("Error submitting Product:", error);
+    }
+  };
 
   const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} />,
@@ -83,8 +86,8 @@ const [currentStep, setCurrentStep] = useState(0);
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} />,
     <ProductOptions key="productOptions" rows={rows} handleChange={handleChange} setRows={setRows} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
-    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} />,
-    // <ProductTable rows={rows} handleChange={handleChange} key="productTable" />,
+    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} handleSubmit={handleSubmit} />,
+    // <ProductTable key="productTable"  rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}  />,
   ];
 
   const handleNext = () => {
