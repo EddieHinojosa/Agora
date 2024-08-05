@@ -3,9 +3,9 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import MessageModal from './MessageModal';
 
-const socket = io({
+const socket = io('https://agora-1-h35b.onrender.com', {
   path: '/socket.io',
-  transports: ['websocket']
+  transports: ['websocket'],
 });
 
 const MessageList = ({ userId, type, handleReply }) => {
@@ -16,7 +16,11 @@ const MessageList = ({ userId, type, handleReply }) => {
     const fetchMessages = async () => {
       try {
         const url = type === 'Received' ? `/api/messages/${userId}` : `/api/messages/sent/${userId}`;
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // Assuming token is stored in localStorage
+          },
+        });
         setMessages(response.data);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -59,7 +63,7 @@ const MessageList = ({ userId, type, handleReply }) => {
             className="border-b border-gray-300 p-2 cursor-pointer"
             onClick={() => openMessageModal(message)}
           >
-            <p><strong>{type === 'Received' ? 'From' : 'To'}:</strong> {type === 'Received' ? message.senderId.username : message.receiverId.username}</p>
+            <p><strong>{type === 'Received' ? 'From' : 'To'}:</strong> {message.senderId ? message.senderId.username : 'Unknown'}</p>
             <p><strong>Subject:</strong> {message.subject}</p>
           </div>
         ))
