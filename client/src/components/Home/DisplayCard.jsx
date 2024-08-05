@@ -1,8 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Card = ({ img, name, shop, price }) => {
+  const handleClick = (event) => {
+    event.preventDefault();
+    console.log('clicked');
+  }
+
   return (
-    <div className="pl-2 pb-2 bg-white">
+    <Link to='#' onClick={handleClick} className="block pl-2 pb-2 bg-white">
       <img
         src={img}
         alt={name}
@@ -11,7 +17,7 @@ const Card = ({ img, name, shop, price }) => {
       <h3 className="text-sm font-bold">{name}</h3>
       <p className="text-gray-700 text-sm">{shop}</p>
       <p className="text-gray-700 text-sm">{price}</p>
-    </div>
+    </Link>
   );
 };
 

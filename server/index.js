@@ -12,7 +12,7 @@ import userRoutes from './routes/user.js';
 import newProduct from './routes/newProduct.js';
 import getProduct from './routes/Products.js';
 // import routes from './routes/index.js';
-import shopRoutes from './routes/shopRoute.js';
+import shopRoutes from './routes/shopManagerRoute.js';
 
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
