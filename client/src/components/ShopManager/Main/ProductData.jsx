@@ -2,24 +2,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-const UserData = ({ render, userId }) => {
-  const [userData, setUserData] = useState(null);
+const ProductData = ({ render, productId }) => {
+  const [userData, setProductData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchProductData = async () => {
       try {
         const response = await axios.get(`${import.meta.env.MODE === 'production' 
-          ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${userId}`);
-        setUserData(response.data);
+            ? import.meta.env.VITE_PROD_API_URL 
+            : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${userId}`);
+        setProductData(response.data);
       } catch (error) {
         console.error('Error fetching user data', error);
         setError('Failed to load user data. Please try again later.');
       }
     };
 
-    fetchUserData();
+    fetchProductData();
   }, [userId]);
 
   if (error) {
@@ -33,9 +33,9 @@ const UserData = ({ render, userId }) => {
   return render(userData);
 };
 
-UserData.propTypes = {
+ProductData.propTypes = {
   render: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
 };
 
-export default UserData;
+export default ProductData;

@@ -66,7 +66,6 @@ function CloudinaryUploadWidget({ uwConfig, setImages }) {
               ...prevImages,
               {
                 url: result.info.secure_url,
-                coordinates: result.info.coordinates.custom,
               },
             ]);
           }

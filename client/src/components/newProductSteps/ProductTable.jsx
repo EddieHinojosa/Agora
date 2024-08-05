@@ -7,7 +7,7 @@ import axios from "axios";
 
  
  // Product Table Section
- const ProductTable = ({rows, handleChange}) => {
+ const ProductTable = ({rows, handleChange, handleSubmit}) => {
     const [tableRows, setTableRows] = useState([
         {
           rows
@@ -101,9 +101,9 @@ import axios from "axios";
       //   try {
       //     const response = await axios.post(`${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct`, rows)
           
-      //     console.log("Poop submitted:",  response);
+      //     console.log("Product submitted:",  response);
       //   } catch (error) {
-      //     // console.error("Error submitting poop:", error);
+      //     // console.error("Error submitting Product:", error);
       //   }
       // };
 
@@ -118,7 +118,7 @@ import axios from "axios";
       };
     
       const toggleEdit = (index) => {
-        const updatedRows = [...rows];
+        const updatedRows = {...rows};
         updatedRows[index].isEditing = !updatedRows[index].isEditing;
         setRows(updatedRows);
       };
@@ -217,7 +217,7 @@ import axios from "axios";
                   onClick={() => handleCardClick(index)}
                 >
                   <img
-                    src={rows.image_urls}
+                    src={rows.image_urls[0]}
                     alt="Photo"
                     className="w-full h-auto rounded"
                   />
@@ -262,13 +262,13 @@ import axios from "axios";
               <td className="px-6 py-4">
                 {row.isEditing ? (
                   <input
-                    name="cost"
+                    name="price"
                     className="border border-gray-300 p-1"
-                    value={row.cost}
+                    value={row.price}
                     onChange={(e) => handleChange(index, e)}
                   />
                 ) : (
-                  row.cost
+                  row.price
                 )}
               </td>
               <td className="px-6 py-4">
