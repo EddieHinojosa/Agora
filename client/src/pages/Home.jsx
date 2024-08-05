@@ -36,9 +36,6 @@ const testProducts = [
   
 ];
 
-const testUser = {
-  shopName: 'Testy Shop',
-};
 
 const Home = () => {
 
@@ -70,12 +67,11 @@ const Home = () => {
   // }, [])
   
   const [products, setProducts] = useState(testProducts)
-  const [user, setUser] = useState(testUser)
 
   return (
     <div className="min-h-screen flex flex-col items-start justify-start bg-gray-50 px-4 md:px-10 pt-0">
       <Banner />
-      <DisplayGrid products={products} user={user} />
+      <DisplayGrid products={products} />
     </div>
   );
 

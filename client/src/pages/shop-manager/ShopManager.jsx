@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import { FaLink } from "react-icons/fa";
 import UserData from '../../components/ShopManager/Main/UserData';
 
-
 // Dynamic Status Cards - will pull information from DB
 const StatusCard = ({ status, count }) => {
   return (
@@ -24,32 +23,40 @@ const ShopManager = () => {
   return (
     <UserData
       userId={id}
-      render={(userData) => (
-        <div>
-          <div className='justify-center text-center'>
-            <h2 className='text-4xl'>Hello {userData.shopName}!</h2>
-            <Link to="#" className='flex items-center justify-center space-x-2 hover:underline'>
-              <FaLink />
-              <span>Shop Link</span>
-            </Link>
-          </div>
-          <div className="flex justify-center mt-8">
-            <StatusCard status="Active" count={20} />
-            <StatusCard status="Inactive" count={10} />
-            <StatusCard status="Sold Out" count={5} />
-          </div>
+      isManager={true}
+      render={(userData) => {
+        // For shop url link
+        const baseUrl = window.location.origin;
+        const shopUrl = `${baseUrl}/shop/${userData.slug}`;
+
+        return (
           <div>
-            <h2>TEST PULL USER INFO</h2>
-            <p>Name: {userData.firstName} {userData.lastName}</p>
-            <p>Email: {userData.email}</p>
-            <p>Username: {userData.username}</p>
-            <p>Shop Name: {userData.shopName}</p>
+            <div className='justify-center text-center'>
+              <h2 className='text-4xl'>Hello {userData.shopName}!</h2>
+              <Link to={`/shop/${userData.slug}`} className='flex items-center justify-center space-x-2 hover:underline'>
+                <FaLink />
+                <span>{shopUrl}</span>
+              </Link>
+            </div>
+            <div className="flex justify-center mt-8">
+              <StatusCard status="Active" count={20} />
+              <StatusCard status="Inactive" count={10} />
+              <StatusCard status="Sold Out" count={5} />
+            </div>
+            <div>
+              <h2>TEST PULL USER INFO</h2>
+              <p>Name: {userData.firstName} {userData.lastName}</p>
+              <p>Email: {userData.email}</p>
+              <p>Username: {userData.username}</p>
+              <p>Shop Name: {userData.shopName}</p>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      }}
     />
   );
 };
 
 export default ShopManager;
+
 
