@@ -36,9 +36,6 @@ const testProducts = [
   
 ];
 
-const testUser = {
-  shopName: 'Testy Shop',
-};
 
 const Home = () => {
 
