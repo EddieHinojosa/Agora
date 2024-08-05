@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Banner from '../components/Home/Banner'
-import DisplayCarousel from '../components/Home/DisplayCarousel'
-import DiscoverBanner from '../components/Home/DiscoverBanner'
+import DisplayGrid from '../components/Home/DisplayGrid'
+// import DiscoverBanner from '../components/Home/DiscoverBanner'
 
 const testProducts = [
   {
@@ -32,13 +32,6 @@ const testProducts = [
     price: 10.99,
     image_urls: [''],
     shopName: 'Shop D',
-  },
-  {
-    id: '5',
-    name: 'cat mug',
-    price: 11.99,
-    image_urls: [''],
-    shopName: 'Shop E',
   },
   
 ];
@@ -82,7 +75,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col items-start justify-start bg-gray-50 px-4 md:px-10 pt-0">
       <Banner />
-      <DisplayCarousel products={products} user={user} />
+      <DisplayGrid products={products} user={user} />
     </div>
   );
 
