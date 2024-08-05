@@ -6,6 +6,7 @@ import ProductPricing from '../../components/newProductSteps/ProductPricing'
 import ProductOptions from '../../components/newProductSteps/ProductOptions'
 import ProductDimensions from '../../components/newProductSteps/ProductDimensions'
 import ShippingSection from '../../components/newProductSteps/ShippingSection'
+import axios from 'axios'
 // import ProductTable from '../../components/newProductSteps/ProductTable'
 
 
