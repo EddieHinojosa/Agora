@@ -29,7 +29,7 @@ const DisplayGrid = ({ products = [] }) => {
             id={product._id}
             img={product.image_urls[0]}
             name={product.productName}
-            shop={product.user?.shopName || 'Shop'}
+            shop={product.shopName || 'Shop'}
             price={`$` + `${product.price}`}
           />
         ))}
