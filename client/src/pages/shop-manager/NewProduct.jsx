@@ -75,19 +75,18 @@ const [currentStep, setCurrentStep] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // console.log(user._id);
-    
+
+
+    try {
+      
     const updatedUserRows = {...rows};
-
-    // console.log(updatedUserRows)
-
     updatedUserRows.user = user._id;
-
     console.log(updatedUserRows.user)
-    
     setRows(updatedUserRows)
-    
+
+    } catch (error) {
+      console.log("Error updating state array")
+    };
 
     try {
       const response = await axios.post( 
