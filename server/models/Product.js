@@ -64,14 +64,16 @@ const ProductSchema = new mongoose.Schema({
         required: false,
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+        type: String,
+        required: true
+        // type: mongoose.Schema.Types.ObjectId,
+        // ref: "User",
+        // required: true,
     },
     shopName: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true,
+        required: false,
     },
 
 });
