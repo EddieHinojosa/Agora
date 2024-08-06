@@ -30,31 +30,39 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row items-start mt-6 pl-20 pr-20">
-      <div className="w-full md:w-1/2 flex flex-col items-center ml-6">
-        <img
-          src={mainImage}
-          alt={product.productName}
-          className="w-full h-auto mb-4"
-        />
-        <div className="flex space-x-2">
-          {product.image_urls.slice(0, ).map((imageUrl, index) => (
-            <img
-              key={index}
-              src={imageUrl}
-              alt={`Thumbnail ${index + 1}`}
-              className="w-32 h-32 cursor-pointer object-cover"
-              onClick={() => setMainImage(imageUrl)}
-            />
-          ))}
-        </div>
-      </div>
-      <div className="w-full md:w-1/2 mt-4 md:mt-0 md:ml-6">
-        <h2 className="text-2xl font-bold">{product.productName}</h2>
-        <p className="text-xl text-gray-700 mt-2">${product.price}</p>
-        <p className="text-md text-gray-500 mt-2">{product.user?.shopName || 'shop'}</p>
+    <div className="flex flex-col md:flex-row items-start mt-6 pl-6 pr-6 md:pl-24 md:pr-20">
+    <div className="w-full md:w-1/2 flex flex-col items-center md:ml-6">
+      <img
+        src={mainImage}
+        alt={product.productName}
+        className="w-full h-auto mb-4"
+      />
+      <div className="flex space-x-2 md:space-x-2 md:flex-row flex-wrap justify-center">
+        {product.image_urls.map((imageUrl, index) => (
+          <img
+            key={index}
+            src={imageUrl}
+            alt={`Thumbnail ${index + 1}`}
+            className="w-16 h-16 md:w-32 md:h-32 cursor-pointer object-cover mb-2"
+            onClick={() => setMainImage(imageUrl)}
+          />
+        ))}
       </div>
     </div>
+    <div className="w-full md:w-1/2 mt-4 md:mt-0 md:ml-6 flex flex-col justify-start">
+      <div className="mb-4">
+        <h2 className="text-2xl font-bold">{product.productName}</h2>
+        <p className="text-xl text-gray-700 mt-2">${product.price}</p>
+        <p className="text-lg text-gray-700 mt-2">{product.productDetails}</p>
+        <p className="text-md text-gray-500 mt-2">{product.user?.shopName || 'shop'}</p>
+        <button
+          className="mt-4 px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-300 hover:text-black"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
   );
 };
 
