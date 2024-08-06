@@ -40,4 +40,18 @@ router.post('/shopmanager/user/:id/newproduct', async (req , res) => {
 
 })
 
+// Get all Products
+router.get('/shopmanager/user/:id/products', async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        const products = await Product.find({ user : userId });
+        res.status(200).json(products);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).json({ message: "Error fetching products" });
+    }
+});
+
+
 export default router;
