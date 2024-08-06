@@ -1,3 +1,82 @@
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { Tab } from '@headlessui/react';
+import MessageList from '../../components/Messaging/MessageList';
+import SendMessage from '../../components/Messaging/SendMessage';
+
+const Messages = () => {
+  const { user } = useContext(AuthContext);
+  const [currentTab, setCurrentTab] = useState('Received');
+  const [replyTo, setReplyTo] = useState('');
+
+  const handleReply = (username) => {
+    setReplyTo(username);
+    setCurrentTab('Send');
+  };
+
+  const handleMessageSent = () => {
+    setCurrentTab('Sent');
+  };
+
+  return (
+    <div className="p-4">
+      <Tab.Group selectedIndex={currentTab === 'Received' ? 0 : currentTab === 'Sent' ? 1 : 2}>
+        <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
+          <Tab
+            className={({ selected }) =>
+              `w-full py-2.5 text-sm leading-5 font-medium text-blue-700 rounded-lg 
+              ${selected ? 'bg-white shadow' : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'}`
+            }
+            onClick={() => setCurrentTab('Received')}
+          >
+            Received Messages
+          </Tab>
+          <Tab
+            className={({ selected }) =>
+              `w-full py-2.5 text-sm leading-5 font-medium text-blue-700 rounded-lg 
+              ${selected ? 'bg-white shadow' : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'}`
+            }
+            onClick={() => setCurrentTab('Sent')}
+          >
+            Sent Messages
+          </Tab>
+          <Tab
+            className={({ selected }) =>
+              `w-full py-2.5 text-sm leading-5 font-medium text-blue-700 rounded-lg 
+              ${selected ? 'bg-white shadow' : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'}`
+            }
+            onClick={() => setCurrentTab('Send')}
+          >
+            Send Message
+          </Tab>
+        </Tab.List>
+        <Tab.Panels className="mt-2">
+          <Tab.Panel>
+            <MessageList userId={user._id} type="Received" handleReply={handleReply} />
+          </Tab.Panel>
+          <Tab.Panel>
+            <MessageList userId={user._id} type="Sent" />
+          </Tab.Panel>
+          <Tab.Panel>
+            <SendMessage userId={user._id} replyTo={replyTo} onMessageSent={handleMessageSent} />
+          </Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
+    </div>
+  );
+};
+
+export default Messages;
+
+
+
+
+
+
+
+
+
+
 // import { useEffect, useState } from 'react';
 // import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
 // import { auth, db } from '../../utils/firebaseConfig';

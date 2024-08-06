@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Banner from '../components/Home/Banner'
-import DisplayGrid from '../components/Home/DisplayGrid'
-// import DiscoverBanner from '../components/Home/DiscoverBanner'
+import DisplayCarousel from '../components/Home/DisplayCarousel'
+import DiscoverBanner from '../components/Home/DiscoverBanner'
 
 const testProducts = [
   {
@@ -33,29 +33,35 @@ const testProducts = [
     image_urls: [''],
     shopName: 'Shop D',
   },
+  {
+    id: '5',
+    name: 'cat mug',
+    price: 11.99,
+    image_urls: [''],
+    shopName: 'Shop E',
+  },
   
 ];
 
+const testUser = {
+  shopName: 'Testy Shop',
+};
 
 const Home = () => {
 
-  const [products, setProducts] = useState([]);
-  const [user, setUser] = useState(null) // May not be needed depending on db
+  // implement once db is up
 
-  const fetchProducts = async () => {
-    try {
-        const response = await axios.get(
-            `${import.meta.env.MODE === 'production' 
-              ? import.meta.env.VITE_PROD_API_URL 
-              : import.meta.env.VITE_DEV_API_URL}`
-        );
-        setProducts(response.data);
-        console.log("Products fetched:", response.data);
-        console.log(`products poop`)
-    } catch (error) {
-        console.error("Error fetching products:", error);
-    }
-};
+  // const [products, setProducts] = useState([]);
+  // const [user, setUser] = useState(null) // May not be needed depending on db
+
+  // const getProducts = async () => {
+  //   try {
+  //     const response = await axios.get('http://localhost:5000/api/shopmanager/products')
+  //     setProducts(response.data)
+  //   } catch (error) {
+  //     console.error('Error getting products:', error);
+  //   }
+  // }
 
   // const getUser = async () => {
   //   try {
@@ -65,16 +71,18 @@ const Home = () => {
   //     console.error('Error getting user:', error)
   //   }
   // }
-  useEffect(() => {
-    fetchProducts();
-    // getUser();
-  }, [])
+  // useEffect(() => {
+  //   getProducts();
+  //   getUser();
+  // }, [])
   
+  const [products, setProducts] = useState(testProducts)
+  const [user, setUser] = useState(testUser)
 
   return (
     <div className="min-h-screen flex flex-col items-start justify-start bg-gray-50 px-4 md:px-10 pt-0">
       <Banner />
-      <DisplayGrid products={products} />
+      <DisplayCarousel products={products} user={user} />
     </div>
   );
 

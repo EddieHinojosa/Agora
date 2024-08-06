@@ -1,22 +1,19 @@
-import { useState, useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import { useState } from 'react';
 import MainSettings from '../../components/ShopManager/Settings/MainSettings'; 
 import ShippingSettings from '../../components/ShopManager/Settings/ShippingSettings'; 
 
 const Settings = () => {
-  const { user } = useContext(AuthContext);
   const [shopPhoto, setShopPhoto] = useState(null);
   const [bannerPhoto, setBannerPhoto] = useState(null);
   const [vacationMode, setVacationMode] = useState(false);
   const [activeTab, setActiveTab] = useState('main');
-  const [shopDescription, setShopDescription] = useState('');
   const [address, setAddress] = useState({
     line1: '',
     line2: '',
     city: '',
     state: '',
     zip: '',
-    country: ''
+    country: 'USA'
   });
   const [savedAddresses, setSavedAddresses] = useState([]);
 
@@ -30,11 +27,7 @@ const Settings = () => {
     'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
   ];
 
-  const countries = ['United States of America', 'Canada', 'Mexico'];
-
-  if (!user) {
-    return <div>Plays jepordy theme</div>;
-  }
+  const countries = ['USA', 'Canada', 'Mexico'];
 
   return (
     <div className="p-6 min-h-screen">
@@ -56,28 +49,23 @@ const Settings = () => {
 
       {activeTab === 'main' && (
         <MainSettings
-          userId={user._id}
           shopPhoto={shopPhoto}
           setShopPhoto={setShopPhoto}
           bannerPhoto={bannerPhoto}
           setBannerPhoto={setBannerPhoto}
           vacationMode={vacationMode}
           setVacationMode={setVacationMode}
-          shopDescription={shopDescription}
-          setShopDescription={setShopDescription}
         />
       )}
 
       {activeTab === 'shipping' && (
         <ShippingSettings
-          userId={user._id}
           address={address}
           setAddress={setAddress}
           savedAddresses={savedAddresses}
           setSavedAddresses={setSavedAddresses}
           states={states}
           countries={countries}
-          shopShippingAddress={user.shopShippingAddress}
         />
       )}
     </div>

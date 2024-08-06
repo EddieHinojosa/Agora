@@ -31,6 +31,7 @@
     "nodemailer": "^6.9.14",
     "react-modal": "^3.16.1",
     "serve-favicon": "^2.5.0",
+    "socket.io": "^4.7.5",
     "stripe": "^16.5.0"
   },
   "devDependencies": {

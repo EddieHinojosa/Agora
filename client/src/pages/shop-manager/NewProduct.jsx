@@ -1,6 +1,4 @@
-import { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../context/AuthContext'
+import { useState } from 'react'
 import ProductInfo from '../../components/newProductSteps/ProductInfo'
 import ProductType from '../../components/newProductSteps/ProductType'
 import ProductImages from '../../components/newProductSteps/ProductImages'
@@ -8,15 +6,10 @@ import ProductPricing from '../../components/newProductSteps/ProductPricing'
 import ProductOptions from '../../components/newProductSteps/ProductOptions'
 import ProductDimensions from '../../components/newProductSteps/ProductDimensions'
 import ShippingSection from '../../components/newProductSteps/ShippingSection'
-import axios from 'axios'
-
-
 // import ProductTable from '../../components/newProductSteps/ProductTable'
 
 
 const NewProduct = () => {
-const navigate = useNavigate();
-const { user } = useContext(AuthContext);
     
 const [rows, setRows] = useState(
   {
@@ -51,21 +44,16 @@ const [rows, setRows] = useState(
     processingTime: "",
   
     price: "",
-    shopName: "",
-    size: "",
     status: "",
-    
+    size: "",
     tags: [],
-    user: "",
     quantity: "",
   },
 );
 
 const [currentStep, setCurrentStep] = useState(0);
 
-
   const handleChange = (event) => {
-
     const { name, value } = event.target;
     const updatedRows = {...rows};
     console.log(updatedRows)
@@ -74,33 +62,19 @@ const [currentStep, setCurrentStep] = useState(0);
     setRows(updatedRows);
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_DEV_API_URL}` + `api/shopManager/newProduct`,
+  //       rows
+  //     );
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();    
-    
-    try {
-    const updatedRows = {...rows};
-
-
-    updatedRows.user = user._id;
-    updatedRows.shopName = user.shopName;
-    console.log(updatedRows.user)
-    setRows(updatedRows)
-
-    
-      const response = await axios.post( 
-        `${import.meta.env.MODE === 'production' 
-          ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/newproduct`,
-        updatedRows
-      );
-
-      console.log("Product submitted:", response);
-      navigate(`/shopmanager/user/${user._id}/products`)
-    } catch (error) {
-      console.error("Error submitting Product:", error);
-    }
-  };
+  //     console.log("Poop submitted:", response);
+  //   } catch (error) {
+  //     // console.error("Error submitting poop:", error);
+  //   }
+  // };
 
   const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} />,
@@ -109,8 +83,8 @@ const [currentStep, setCurrentStep] = useState(0);
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} />,
     <ProductOptions key="productOptions" rows={rows} handleChange={handleChange} setRows={setRows} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
-    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} handleSubmit={handleSubmit} />,
-    // <ProductTable key="productTable"  rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}  />,
+    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} />,
+    // <ProductTable rows={rows} handleChange={handleChange} key="productTable" />,
   ];
 
   const handleNext = () => {

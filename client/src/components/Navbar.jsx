@@ -92,8 +92,6 @@ const Navbar = ({ setModalIsOpen }) => {
           </button>
         </div>
       </div>
-
-      {/* Lower Navbar */}
       <div
         className={`flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-4 ${
           isOpen ? "flex" : "hidden md:flex"

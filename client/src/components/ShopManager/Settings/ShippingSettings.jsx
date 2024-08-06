@@ -1,15 +1,9 @@
-import { updateUserShopSettings } from '../../../api/shopSettingsApi';
+import { useState } from 'react';
 
-const ShippingSettings = ({ address, setAddress, states, countries, userId }) => {
-  const handleSaveAddress = async () => {
-    try {
-      const response =
-      await updateUserShopSettings(userId, null, address);
-      setAddress({ line1: '', line2: '', city: '', state: '', zip: '', country: '' });
-      console.log('Shipping address saved', response);
-    } catch (error) {
-      console.error('Error updating shipping address:', error);
-    }
+const ShippingSettings = ({ address, setAddress, savedAddresses, setSavedAddresses, states, countries }) => {
+  const handleSaveAddress = () => {
+    setSavedAddresses([...savedAddresses, address]);
+    setAddress({ line1: '', line2: '', city: '', state: '', zip: '', country: 'USA' });
   };
 
   return (
@@ -97,6 +91,17 @@ const ShippingSettings = ({ address, setAddress, states, countries, userId }) =>
         >
           Save Address
         </button>
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-2">Saved Addresses</label>
+        <select className="block w-full mt-1 p-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+          {savedAddresses.map((addr, index) => (
+            <option key={index} value={index}>
+              {`${addr.line1}, ${addr.line2} ${addr.city}, ${addr.state}, ${addr.country}`}
+            </option>
+          ))}
+        </select>
       </div>
     </div>
   );

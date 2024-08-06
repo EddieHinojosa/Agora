@@ -14,6 +14,8 @@
   "dependencies": {
     "@cloudinary/react": "^1.13.0",
     "@cloudinary/url-gen": "^1.19.0",
+    "@headlessui/react": "^2.1.2",
+    "@headlessui/tailwindcss": "^0.2.1",
     "@hookform/resolvers": "^3.9.0",
     "@stripe/react-stripe-js": "^2.7.3",
     "@stripe/stripe-js": "^4.1.0",
@@ -34,7 +36,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.25.1",
     "react-scripts": "^5.0.1",
-    "slug": "^9.1.0",
+    "socket.io-client": "^4.7.5",
     "stream-browserify": "^3.0.0",
     "stripe": "^16.5.0",
     "yup": "^1.4.0"

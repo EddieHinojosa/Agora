@@ -5,39 +5,56 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
 import helmet from 'helmet';
-import admin from './firebaseAdmin.js';
+// import admin from './firebaseAdmin.js';
 import authRoutes from './routes/auth.js';
 // import firebaseAuthRoutes from './routes/firebaseAuth.js';
 import userRoutes from './routes/user.js';
+import newProduct from './routes/newProduct.js';
+import getProduct from './routes/Products.js';
 // import routes from './routes/index.js';
 import shopRoutes from './routes/shopRoute.js';
-import productRoutes from './routes/newProduct.js';
+import messageRoutes from './routes/message.js';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import MongoStore from 'connect-mongo';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
-  });
-}
+// if (!admin.apps.length) {
+//   admin.initializeApp({
+//     credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
+//   });
+// }
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.NODE_ENV === 'production' ? process.env.VITE_PROD_APP_URL : process.env.VITE_DEV_APP_URL,
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
 
 app.set('trust proxy', 1);
 
 const allowedOrigins = [
   process.env.VITE_DEV_API_URL,
-  process.env.VITE_DEV_URL,
+  process.env.VITE_DEV_APP_URL,
   process.env.VITE_PROD_API_URL,
-  process.env.VITE_PROD_URL,
+  process.env.VITE_PROD_APP_URL,
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // console.log(origin, allowedOrigins);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -79,16 +96,17 @@ app.use(session({
   }
 }));
 
+
 app.use('/api/auth', authRoutes); // Regular auth routes
 // // app.use('/api/firebase-auth', firebaseAuthRoutes); // Firebase auth routes
 app.use('/', shopRoutes);
-app.use('/api', userRoutes);
-app.use('/' , productRoutes);
-
-
-
-
-
+app.use('/api/users', userRoutes);
+app.use('/api', newProduct);
+app.use('/api', getProduct);
+app.use('/api/messages', (req, res, next) => {
+  req.io = io;
+  next();
+}, messageRoutes);
 
 
 //-----------------eddie calendar stuff in process-----------------

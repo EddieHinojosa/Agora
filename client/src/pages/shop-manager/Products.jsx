@@ -1,50 +1,23 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { IoIosAddCircle } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import { IoMdSearch } from "react-icons/io";
-import axios from 'axios';
 import ProductCard from '../../components/ProductCard';
 import { AuthContext } from '../../context/AuthContext';
 
 
+// Needs code to be dynamically replaced with actual data from DB
+// Actual card component is in components folder
+const products = [
+    { id: 1, image: '', name: 'Product 1', stock: 0, price: 9.99 },
+    { id: 2, image: '', name: 'Product 2', stock: 5, price: 19.99 },
+    { id: 3, image: '', name: 'Product 3', stock: 10, price: 29.99 },
+    { id: 4, image: '', name: 'Product 4', stock: 15, price: 39.99 },
+    { id: 5, image: '', name: 'Product 5', stock: 20, price: 49.99 },
+];
+
 const Products = () => {
-    const { user } = useContext(AuthContext);
-    const [products, setProducts] = useState([]);
-    
-    const onDelete = async (_id) => {
-        try { 
-            const response = await axios.delete(
-                `${import.meta.env.MODE === 'production' 
-                      ? import.meta.env.VITE_PROD_API_URL 
-                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/products/${_id}
-                      `
-            )
-            setProducts(products.filter(product => product._id !== _id)); 
-        } catch (error) {
-            console.log("Error Deleting Product:", error)
-        }
-    }
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get(
-                    `${import.meta.env.MODE === 'production' 
-                      ? import.meta.env.VITE_PROD_API_URL 
-                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/products
-                      `
-                );
-                setProducts(response.data);
-                console.log("Products fetched:", response.data);
-                console.log(`products poop`)
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        };
-
-        fetchProducts();
-   //// deleting line 45 creates an endless loop that withh result in error code 429
-    }, [user._id]);
+    const { user } = useContext(AuthContext); 
 
     return (
         <div className="container mx-auto p-4">
@@ -53,6 +26,7 @@ const Products = () => {
                 <Link to={`/shopmanager/user/${user._id}/newproduct`} className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
                     <IoIosAddCircle className="mr-2 text-xl" /> Add A Product
                 </Link>
+
             </div>
             <div className="flex justify-end">
                 <div className="w-full bg-gray-100 flex p-1 space-x-4">
@@ -76,9 +50,11 @@ const Products = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Card Code -- Currently clickable but leads nowhere*/}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
                 {products.map(product => (
-                    <ProductCard key={products.userId} {...product} onDelete={onDelete} />
+                    <ProductCard key={product.id} {...product} />
                 ))}
             </div>
         </div>

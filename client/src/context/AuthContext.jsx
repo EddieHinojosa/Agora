@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     : import.meta.env.VITE_DEV_API_URL;
   const navigate = useNavigate();
 
-  const fetchUser = async (token) => {
+  const fetchUser = useCallback(async (token) => {
     try {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get(`${apiUrl}/api/auth/me`);
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       console.error("Failed to fetch user:", error);
       logout();
     }
-  };
+  }, [apiUrl]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
       setToken(storedToken);
       fetchUser(storedToken);
     }
-  }, []);
+  }, [fetchUser]);
 
   const regularLogin = async (email, password) => {
     try {
@@ -45,7 +45,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
@@ -53,8 +52,18 @@ export const AuthProvider = ({ children }) => {
     navigate('/login');
   };
 
+  const getUserByUsername = async (username) => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/users/username/${username}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user by username:', error);
+      throw error;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, regularLogin, logout }}>
+    <AuthContext.Provider value={{ user, regularLogin, logout, getUserByUsername, fetchUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -33,15 +33,15 @@ const ProductSchema = new mongoose.Schema({
     },
     productLength: {
         type: Number,
-        required: false,
+        required: true,
     },
     productWidth: {
         type: Number,
-        required: false,
+        required: true,
     },
     productHeight: {
         type: Number,
-        required: false,
+        required: true,
     },
     packedLength: {
         type: Number,
@@ -62,21 +62,6 @@ const ProductSchema = new mongoose.Schema({
     status: {
         type: String,
         required: false,
-    },
-    user: {
-        type: String,
-        required: true
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: "User",
-        // required: true,
-    },
-    shopName: {
-        type: String,
-        required: true,
-        
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: "User",
-        // required: false,
     },
 
 });
