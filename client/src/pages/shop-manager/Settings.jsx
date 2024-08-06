@@ -13,7 +13,7 @@ const Settings = () => {
     city: '',
     state: '',
     zip: '',
-    country: 'USA'
+    country: ''
   });
   const [savedAddresses, setSavedAddresses] = useState([]);
 
@@ -27,7 +27,8 @@ const Settings = () => {
     'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
   ];
 
-  const countries = ['USA', 'Canada', 'Mexico'];
+  const countries = ['United States of America', 'Canada', 'Mexico'];
+
 
   return (
     <div className="p-6 min-h-screen">
