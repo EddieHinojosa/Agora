@@ -33,15 +33,15 @@ const ProductSchema = new mongoose.Schema({
     },
     productLength: {
         type: Number,
-        required: true,
+        required: false,
     },
     productWidth: {
         type: Number,
-        required: true,
+        required: false,
     },
     productHeight: {
         type: Number,
-        required: true,
+        required: false,
     },
     packedLength: {
         type: Number,
