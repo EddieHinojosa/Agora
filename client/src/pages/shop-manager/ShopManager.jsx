@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaLink } from "react-icons/fa";
 import UserData from '../../components/ShopManager/Main/UserData';
+import slug from 'slug'; // Importing the slug package
 
 // Dynamic Status Cards - will pull information from DB
 const StatusCard = ({ status, count }) => {
@@ -27,13 +28,14 @@ const ShopManager = () => {
       render={(userData) => {
         // For shop url link
         const baseUrl = window.location.origin;
-        const shopUrl = `${baseUrl}/shop/${userData.slug}`;
+        const shopNameSlug = slug(userData.shopName); // Generating the slug from shopName
+        const shopUrl = `${baseUrl}/shop/${shopNameSlug}`;
 
         return (
           <div>
             <div className='justify-center text-center'>
               <h2 className='text-4xl'>Hello {userData.shopName}!</h2>
-              <Link to={`/shop/${userData.slug}`} className='flex items-center justify-center space-x-2 hover:underline'>
+              <Link to={`/shop/${shopNameSlug}`} className='flex items-center justify-center space-x-2 hover:underline'>
                 <FaLink />
                 <span>{shopUrl}</span>
               </Link>
@@ -58,6 +60,7 @@ const ShopManager = () => {
 };
 
 export default ShopManager;
+
 
 // import React, { useContext } from 'react';
 // import { Link, useParams } from 'react-router-dom';
