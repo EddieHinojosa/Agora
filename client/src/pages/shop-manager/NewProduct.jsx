@@ -64,20 +64,6 @@ const [currentStep, setCurrentStep] = useState(0);
 
   const handleChange = (event) => {
 
-    
-    // console.log(user._id);
-    
-    const updatedUserRows = {...rows};
-
-    // console.log(updatedUserRows)
-
-    updatedUserRows.userId = user._id;
-
-    console.log(updatedUserRows.userId)
-    
-    setRows(updatedUserRows)
-    
-
     const { name, value } = event.target;
     const updatedRows = {...rows};
     console.log(updatedRows)
@@ -89,18 +75,30 @@ const [currentStep, setCurrentStep] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // console.log(user._id);
+    
+    const updatedUserRows = {...rows};
 
+    // console.log(updatedUserRows)
+
+    updatedUserRows.user = user._id;
+
+    console.log(updatedUserRows.user)
+    
+    setRows(updatedUserRows)
+    
 
     try {
       const response = await axios.post( 
         `${import.meta.env.MODE === 'production' 
           ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}products)`,
+          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/newproduct`,
         rows
       );
 
       console.log("Product submitted:", response);
-      navigate(`/shopmanager/user/${user._id}products`)
+      navigate(`/shopmanager/user/${user._id}/products`)
     } catch (error) {
       console.error("Error submitting Product:", error);
     }
