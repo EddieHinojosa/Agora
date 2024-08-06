@@ -31,7 +31,7 @@ router.get('/shop/:slug', async (req, res) => {
 });
 
 // Route for Shop Settings information
-router.post('/user/:id/shopsettings', async (req, res) => {
+router.post('/api/user/:id/settings', async (req, res) => {
   try {
     const userId = req.params.id;
     const { shopDescription, shopShippingAddress } = req.body;
