@@ -126,7 +126,7 @@ const [currentStep, setCurrentStep] = useState(0);
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <h2 className="text-2xl font-bold">New Product</h2>
       <div className="mt-4">{steps[currentStep]}</div>
       <div className="flex justify-start mt-4 space-x-4">

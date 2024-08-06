@@ -32,7 +32,7 @@ const ShopManager = () => {
         const shopUrl = `${baseUrl}/shop/${shopNameSlug}`;
 
         return (
-          <div>
+          <div className='min-h-screen'>
             <div className='justify-center text-center'>
               <h2 className='text-4xl'>Hello {userData.shopName}!</h2>
               <Link to={`/shop/${shopNameSlug}`} className='flex items-center justify-center space-x-2 hover:underline'>
@@ -44,13 +44,6 @@ const ShopManager = () => {
               <StatusCard status="Active" count={20} />
               <StatusCard status="Inactive" count={10} />
               <StatusCard status="Sold Out" count={5} />
-            </div>
-            <div>
-              <h2>TEST PULL USER INFO</h2>
-              <p>Name: {userData.firstName} {userData.lastName}</p>
-              <p>Email: {userData.email}</p>
-              <p>Username: {userData.username}</p>
-              <p>Shop Name: {userData.shopName}</p>
             </div>
           </div>
         );

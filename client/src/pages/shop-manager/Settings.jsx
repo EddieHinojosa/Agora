@@ -33,7 +33,7 @@ const Settings = () => {
   const countries = ['United States of America', 'Canada', 'Mexico'];
 
   if (!user) {
-    return <div>Plays jepordy theme</div>;
+    return <div>Plays jeopardy theme music</div>;
   }
 
   return (
