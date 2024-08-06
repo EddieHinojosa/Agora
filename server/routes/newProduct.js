@@ -1,26 +1,7 @@
 import express from 'express';
-// import admin from 'firebase-admin';
 import Product from '../models/Product.js';
 
 const router = express.Router()
-
-// Middleware to verify Firebase ID Token
-const authenticate = async (req, res, next) => {
-    const idToken = req.headers.authorization?.split('Bearer ')[1];
-
-    if (!idToken) {
-        return res.status(401).json({ message: 'Unauthorized: No token provided' });
-    }
-
-    try {
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
-        req.user = decodedToken;
-        next();
-    } catch (error) {
-        console.error('Error verifying token:', error);
-        res.status(401).json({ message: 'Unauthorized: Invalid token' });
-    }
-};
 
 // Create a new Product
 
@@ -79,5 +60,22 @@ router.delete('/shopmanager/user/:userId/products/:productId', async (req, res) 
         res.status(500).json({ message: "Error deleting product" });
     }
 });
+
+// Get Product by ID
+router.get('/api/products/:id', async (req, res) => {
+    const productId = req.params.id;
+
+    try {
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+        res.status(200).json(product);
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        res.status(500).json({ message: "Error fetching product" });
+    }
+});
+
 
 export default router;

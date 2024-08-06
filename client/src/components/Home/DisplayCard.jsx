@@ -2,13 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Card = ({ id, img, name, shop, price }) => {
-  const handleClick = (event) => {
-    event.preventDefault();
-    console.log('clicked');
-  }
 
   return (
-    <Link to={`/details/${id}`} onClick={handleClick} className="block pl-2 pb-2 bg-white">
+    <Link to={`/details/${id}`} className="block pl-2 pb-2 bg-white">
       <img
         src={img}
         alt={name}
