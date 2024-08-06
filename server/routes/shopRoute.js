@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../models/User.js';
 import authenticateToken from './auth.js';
+import Product from '../models/Product.js';
 
 const router = express.Router();
 
@@ -30,6 +31,26 @@ router.get('/shop/:slug', async (req, res) => {
   }
 });
 
+//Get products by Slug
+router.get('/shop/:slug/products', async (req,res) => {
+  let shopName = ""
+  
+  try{
+  const user = await User.findOne({slug: req.params.slug})
+  let shopName = user.shopName;
+  console.log(shopName)
+
+  const userProducts = await Product.find({ shopName: shopName});
+  console.log(userProducts);
+  res.status(200).json(userProducts)
+
+  } catch (error){ 
+    console.log("User's Shop Not found:", error);
+    res.status(500).json({message: "User's Shop not forund"});
+  };
+  
+})
+
 // Route for Shop Settings information
 router.post('/api/user/:id/settings', async (req, res) => {
   try {
@@ -54,6 +75,8 @@ router.post('/api/user/:id/settings', async (req, res) => {
     res.status(500).json({ error: 'No update for you' });
   }
 });
+
+
 
 
 export default router;

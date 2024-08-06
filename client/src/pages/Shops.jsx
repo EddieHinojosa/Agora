@@ -1,45 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UserData from '../components/ShopManager/Main/UserData';
 import DisplayGrid from '../components/Home/DisplayGrid';
+import axios from 'axios';
 
 
-const testProducts = [
-  {
-    id: '1',
-    name: 'bubblegum',
-    price: 1.99,
-    image_urls: [''],
-    shopName: 'Shop A',
-  },
-  {
-    id: '2',
-    name: 'baseball',
-    price: 20.99,
-    image_urls: [''],
-    shopName: 'Shop B',
-  },
-  {
-    id: '3',
-    name: 'shoes',
-    price: 30.99,
-    image_urls: [''],
-    shopName: 'Shop C',
-  },
-  {
-    id: '4',
-    name: 'hat',
-    price: 10.99,
-    image_urls: [''],
-    shopName: 'Shop D',
-  },
-  
-];
+const testProducts = []
+
 
 const Shop = () => {
   const { slug } = useParams();
   const [products, setProducts] = useState(testProducts)
 
+
+useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get(
+                    `${import.meta.env.MODE === 'production' 
+                      ? import.meta.env.VITE_PROD_API_URL 
+                      : import.meta.env.VITE_DEV_API_URL}/shop/${slug}/products
+                      `
+                );
+                setProducts(response.data);
+                console.log("Products fetched:", response.data);
+                console.log(`products poop`)
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+
+        fetchProducts();
+   //// deleting line 45 creates an endless loop that withh result in error code 429
+    }, [slug]);
   return (
     <UserData
       userId={slug}

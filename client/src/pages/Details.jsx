@@ -60,7 +60,7 @@ const ProductDetails = () => {
         <h2 className="text-2xl font-bold">{product.productName}</h2>
         <p className="text-xl text-gray-700 mt-2">${product.price}</p>
         <p className="text-lg text-gray-700 mt-2">{product.productDetails}</p>
-        <p className="text-md text-gray-500 mt-2">{product.user?.shopName || 'shop'}</p>
+        <p className="text-md text-gray-500 mt-2">{product.shopName || 'shop'}</p>
 
         {/* Size Dropdowns */}
         {product.sizeOptions && (
