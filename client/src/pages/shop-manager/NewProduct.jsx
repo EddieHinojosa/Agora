@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import ProductInfo from '../../components/newProductSteps/ProductInfo'
 import ProductType from '../../components/newProductSteps/ProductType'
 import ProductImages from '../../components/newProductSteps/ProductImages'
@@ -7,6 +7,8 @@ import ProductOptions from '../../components/newProductSteps/ProductOptions'
 import ProductDimensions from '../../components/newProductSteps/ProductDimensions'
 import ShippingSection from '../../components/newProductSteps/ShippingSection'
 import axios from 'axios'
+import { AuthContext } from '../../context/AuthContext'
+
 // import ProductTable from '../../components/newProductSteps/ProductTable'
 
 
@@ -48,13 +50,30 @@ const [rows, setRows] = useState(
     status: "",
     size: "",
     tags: [],
+    userId: "",
     quantity: "",
   },
 );
 
 const [currentStep, setCurrentStep] = useState(0);
+const { user } = useContext(AuthContext);
 
   const handleChange = (event) => {
+
+    
+    // console.log(user._id);
+    
+    const updatedUserRows = {...rows};
+
+    // console.log(updatedUserRows)
+
+    updatedUserRows.userId = user._id;
+
+    console.log(updatedUserRows.userId)
+    
+    setRows(updatedUserRows)
+    
+
     const { name, value } = event.target;
     const updatedRows = {...rows};
     console.log(updatedRows)
@@ -65,6 +84,8 @@ const [currentStep, setCurrentStep] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+
     try {
       const response = await axios.post( 
         `${import.meta.env.MODE === 'production' 
