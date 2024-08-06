@@ -3,23 +3,23 @@ import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 
 // needs to be updated to pull from the db schema
-const ProductCard = ({ id, image_urls, productName, quantity, price, onDelete }) => {
+const ProductCard = ({ _id, image_urls, productName, quantity, price, onDelete }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     
     // Delete function needs to be updated to delete from the db - deletes NOTHING right now
     const handleDelete = () => {
-        onDelete(id);
+        onDelete(_id);
         setIsModalOpen(false);
     };
 
     return (
         <div className="relative card border border-gray-300 overflow-hidden rounded-lg">
-            <Link to={`/product/${id}`} className="block">
-                <img src={image_urls[0]} alt={`No image available for ${productName}`} className="w-full h-48 object-cover" />
+            <Link to={`/product/${_id}`} className="block">
+                <img src={image_urls[0]} alt={`No image available for ${productName}`} className="w-full h-48 object-cover"/>
                 <div className="p-4">
-                    <h3 className="text-md font-semibold">{name}</h3>
+                    <h3 className="text-md font-semibold">{productName}</h3>
                     <p className="mt-1 text-sm text-gray-600">Stock: {quantity}</p>
-                    <p className="mt-1 text-gray-600 text-sm">${price}</p>
+                    <p className="mt-1 text-gray-600 text-sm">{"$" + `${price}`}</p>
                 </div>
             </Link>
             <div className="p-4 border-t border-gray-200 flex justify-end">

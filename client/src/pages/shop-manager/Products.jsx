@@ -10,7 +10,20 @@ import { AuthContext } from '../../context/AuthContext';
 const Products = () => {
     const { user } = useContext(AuthContext);
     const [products, setProducts] = useState([]);
-
+    
+    const onDelete = async (_id) => {
+        try { 
+            const response = await axios.delete(
+                `${import.meta.env.MODE === 'production' 
+                      ? import.meta.env.VITE_PROD_API_URL 
+                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/products/${_id}
+                      `
+            )
+            setProducts(products.filter(product => product._id !== _id)); 
+        } catch (error) {
+            console.log("Error Deleting Product:", error)
+        }
+    }
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -18,7 +31,8 @@ const Products = () => {
                 const response = await axios.get(
                     `${import.meta.env.MODE === 'production' 
                       ? import.meta.env.VITE_PROD_API_URL 
-                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/products`
+                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/products
+                      `
                 );
                 setProducts(response.data);
                 console.log("Products fetched:", response.data);
@@ -29,7 +43,7 @@ const Products = () => {
         };
 
         fetchProducts();
-
+   //// deleting line 45 creates an endless loop that withh result in error code 429
     }, [user._id]);
 
     return (
@@ -64,7 +78,7 @@ const Products = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
                 {products.map(product => (
-                    <ProductCard key={products.userId} {...product} />
+                    <ProductCard key={products.userId} {...product} onDelete={onDelete} />
                 ))}
             </div>
         </div>
