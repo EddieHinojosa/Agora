@@ -40,7 +40,19 @@ router.post('/shopmanager/user/:id/newproduct', async (req , res) => {
 
 })
 
+
 // Get all Products
+router.get('/', async (req,res) => {
+    try{
+        const allProducts = await Product.find({});
+        res.status(200).json(allProducts)
+    } catch (error) {
+        console.log("Unable to fetch:", error)
+        res.status(500).json({meesage: "Error finding all products"})
+    }
+})
+
+// Get all Products by single user
 router.get('/shopmanager/user/:id/products', async (req, res) => {
     const userId = req.params.id;
 
