@@ -15,9 +15,9 @@ const ProductCard = ({ id, image_urls, productName, quantity, price, onDelete })
     return (
         <div className="relative card border border-gray-300 overflow-hidden rounded-lg">
             <Link to={`/product/${id}`} className="block">
-                <img src={image_urls[0]} alt={`No image available for ${productName}`} className="w-full h-48 object-cover" />
+                <img src={image_urls[0]} alt={`No image available for ${productName}`} className="w-full h-48 object-cover" id={id} />
                 <div className="p-4">
-                    <h3 className="text-md font-semibold">{name}</h3>
+                    <h3 className="text-md font-semibold">{productName}</h3>
                     <p className="mt-1 text-sm text-gray-600">Stock: {quantity}</p>
                     <p className="mt-1 text-gray-600 text-sm">${price}</p>
                 </div>
