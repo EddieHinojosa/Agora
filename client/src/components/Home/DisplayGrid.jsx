@@ -27,7 +27,7 @@ const DisplayGrid = ({ products = [] }) => {
           <DisplayCard
             key={product._id}
             img={product.image_urls[0]}
-            name={product.name}
+            name={product.productName}
             shop={product.shopName}
             // shop={user.shopName}?
             // shop={product.user.shopName}?
@@ -50,5 +50,6 @@ const DisplayGrid = ({ products = [] }) => {
     </div>
   );
 };
+
 
 export default DisplayGrid;
