@@ -54,7 +54,7 @@ const [rows, setRows] = useState(
     status: "",
     size: "",
     tags: [],
-    userId: "",
+    user: "",
     quantity: "",
   },
 );
@@ -74,26 +74,22 @@ const [currentStep, setCurrentStep] = useState(0);
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-
+    e.preventDefault();    
+    
     try {
-      
     const updatedUserRows = {...rows};
+
+
     updatedUserRows.user = user._id;
     console.log(updatedUserRows.user)
     setRows(updatedUserRows)
 
-    } catch (error) {
-      console.log("Error updating state array")
-    };
-
-    try {
+    
       const response = await axios.post( 
         `${import.meta.env.MODE === 'production' 
           ? import.meta.env.VITE_PROD_API_URL 
           : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/newproduct`,
-        rows
+        updatedUserRows
       );
 
       console.log("Product submitted:", response);
