@@ -31,7 +31,7 @@ const DisplayGrid = ({ products = [] }) => {
             shop={product.shopName}
             // shop={user.shopName}?
             // shop={product.user.shopName}?
-            price={product.price}
+            price={`$` + `${product.price}`}
           />
         ))}
       </div>
