@@ -6,6 +6,9 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState(null);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedMaterial, setSelectedMaterial] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -55,6 +58,61 @@ const ProductDetails = () => {
         <p className="text-xl text-gray-700 mt-2">${product.price}</p>
         <p className="text-lg text-gray-700 mt-2">{product.productDetails}</p>
         <p className="text-md text-gray-500 mt-2">{product.user?.shopName || 'shop'}</p>
+
+        {/* Size Dropdowns */}
+        {product.sizeOptions && (
+            <div className="mt-4">
+              <label htmlFor="size" className="block text-sm font-medium text-gray-700">Size:</label>
+              <select
+                id="size"
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                value={selectedSize}
+                onChange={(e) => setSelectedSize(e.target.value)}
+              >
+                <option value="">Select a size</option>
+                {product.sizeOptions.map((size, index) => (
+                  <option key={index} value={size}>{size}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+        {/* Color Dropdowns */}
+        {product.colorOptions && (
+            <div className="mt-4">
+              <label htmlFor="color" className="block text-sm font-medium text-gray-700">Color:</label>
+              <select
+                id="color"
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+              >
+                <option value="">Select a color</option>
+                {product.colorOptions.map((color, index) => (
+                  <option key={index} value={color}>{color}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+        {/* Material Dropdowns */}
+        {product.materialOptions && (
+            <div className="mt-4">
+              <label htmlFor="material" className="block text-sm font-medium text-gray-700">Material:</label>
+              <select
+                id="material"
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                value={selectedMaterial}
+                onChange={(e) => setSelectedMaterial(e.target.value)}
+              >
+                <option value="">Select a material</option>
+                {product.materialOptions.map((material, index) => (
+                  <option key={index} value={material}>{material}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
         <button
           className="mt-4 px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-300 hover:text-black"
         >
