@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
 import ProductInfo from '../../components/newProductSteps/ProductInfo'
 import ProductType from '../../components/newProductSteps/ProductType'
 import ProductImages from '../../components/newProductSteps/ProductImages'
@@ -11,6 +13,8 @@ import axios from 'axios'
 
 
 const NewProduct = () => {
+const navigate = useNavigate();
+const { user } = useContext(AuthContext);
     
 const [rows, setRows] = useState(
   {
@@ -63,17 +67,19 @@ const [currentStep, setCurrentStep] = useState(0);
     setRows(updatedRows);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post( 
         `${import.meta.env.MODE === 'production' 
           ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/api/shopmanager/newproduct`,
+          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}products)`,
         rows
       );
 
       console.log("Product submitted:", response);
+      navigate(`/shopmanager/user/${user._id}products`)
     } catch (error) {
       console.error("Error submitting Product:", error);
     }
