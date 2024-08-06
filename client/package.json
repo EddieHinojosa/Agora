@@ -34,6 +34,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.25.1",
     "react-scripts": "^5.0.1",
+    "slug": "^9.1.0",
     "stream-browserify": "^3.0.0",
     "stripe": "^16.5.0",
     "yup": "^1.4.0"

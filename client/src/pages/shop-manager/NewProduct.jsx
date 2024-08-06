@@ -81,9 +81,7 @@ const [currentStep, setCurrentStep] = useState(0);
 
 
     updatedUserRows.user = user._id;
-
     console.log(updatedUserRows.user)
-    
     setRows(updatedUserRows)
 
     
