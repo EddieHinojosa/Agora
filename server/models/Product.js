@@ -62,7 +62,17 @@ const ProductSchema = new mongoose.Schema({
     status: {
         type: String,
         required: false,
-    }
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    shopName: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
 
 });
 

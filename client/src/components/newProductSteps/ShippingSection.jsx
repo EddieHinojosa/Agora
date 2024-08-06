@@ -23,7 +23,7 @@ const ShippingSection = ({ rows, handleChange, handleSubmit }) => {
   //     const response = await axios.post( 
   //       `${import.meta.env.MODE === 'production' 
   //         ? import.meta.env.VITE_PROD_API_URL 
-  //         : import.meta.env.VITE_DEV_API_URL}/api/shopmanager/newproduct`,
+  //         : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}products)`,
   //       rows
   //     );
 
@@ -233,7 +233,6 @@ const ShippingSection = ({ rows, handleChange, handleSubmit }) => {
         <button
           type="submit"
           onClick={handleSubmit}
-          to="/shopmanager/products"
           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
         >
           Publish

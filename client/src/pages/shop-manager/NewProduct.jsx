@@ -1,4 +1,6 @@
-import { useContext, useState } from 'react'
+import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
 import ProductInfo from '../../components/newProductSteps/ProductInfo'
 import ProductType from '../../components/newProductSteps/ProductType'
 import ProductImages from '../../components/newProductSteps/ProductImages'
@@ -7,12 +9,14 @@ import ProductOptions from '../../components/newProductSteps/ProductOptions'
 import ProductDimensions from '../../components/newProductSteps/ProductDimensions'
 import ShippingSection from '../../components/newProductSteps/ShippingSection'
 import axios from 'axios'
-import { AuthContext } from '../../context/AuthContext'
+
 
 // import ProductTable from '../../components/newProductSteps/ProductTable'
 
 
 const NewProduct = () => {
+const navigate = useNavigate();
+const { user } = useContext(AuthContext);
     
 const [rows, setRows] = useState(
   {
@@ -56,7 +60,7 @@ const [rows, setRows] = useState(
 );
 
 const [currentStep, setCurrentStep] = useState(0);
-const { user } = useContext(AuthContext);
+
 
   const handleChange = (event) => {
 
@@ -82,6 +86,7 @@ const { user } = useContext(AuthContext);
     setRows(updatedRows);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -90,11 +95,12 @@ const { user } = useContext(AuthContext);
       const response = await axios.post( 
         `${import.meta.env.MODE === 'production' 
           ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/api/shopmanager/newproduct`,
+          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}products)`,
         rows
       );
 
       console.log("Product submitted:", response);
+      navigate(`/shopmanager/user/${user._id}products`)
     } catch (error) {
       console.error("Error submitting Product:", error);
     }
