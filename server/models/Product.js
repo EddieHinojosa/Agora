@@ -71,9 +71,12 @@ const ProductSchema = new mongoose.Schema({
         // required: true,
     },
     shopName: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: false,
+        type: String,
+        required: true,
+        
+        // type: mongoose.Schema.Types.ObjectId,
+        // ref: "User",
+        // required: false,
     },
 
 });
