@@ -1,6 +1,6 @@
 import { updateUserShopSettings } from '../../../api/shopSettingsApi';
 
-const ShippingSettings = ({ address, setAddress, states, countries, userId, shopShippingAddress }) => {
+const ShippingSettings = ({ address, setAddress, states, countries, userId }) => {
   const handleSaveAddress = async () => {
     try {
       const response =

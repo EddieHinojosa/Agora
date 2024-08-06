@@ -36,7 +36,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  shopShippingAddress: AddressSchema,
+  shopShippingAddress: {
+    line1: String,
+    line2: String,
+    city: String,
+    state: String,
+    zip: String,
+    country: String,
+  },
   shopDescription: String,
   isGmail: {
     type: Boolean,
