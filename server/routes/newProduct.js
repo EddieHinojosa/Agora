@@ -44,7 +44,7 @@ router.post('/shopmanager/user/:id/newproduct', async (req , res) => {
 // Get all Products
 router.get('/', async (req,res) => {
     try{
-        const allProducts = await Product.find({});
+        const allProducts = await Product.find({"user": {"$exists": true}});
         res.status(200).json(allProducts)
     } catch (error) {
         console.log("Unable to fetch:", error)
