@@ -51,8 +51,10 @@ const [rows, setRows] = useState(
     processingTime: "",
   
     price: "",
-    status: "",
+    shopName: "",
     size: "",
+    status: "",
+    
     tags: [],
     user: "",
     quantity: "",
@@ -77,19 +79,20 @@ const [currentStep, setCurrentStep] = useState(0);
     e.preventDefault();    
     
     try {
-    const updatedUserRows = {...rows};
+    const updatedRows = {...rows};
 
 
-    updatedUserRows.user = user._id;
-    console.log(updatedUserRows.user)
-    setRows(updatedUserRows)
+    updatedRows.user = user._id;
+    updatedRows.shopName = user.shopName;
+    console.log(updatedRows.user)
+    setRows(updatedRows)
 
     
       const response = await axios.post( 
         `${import.meta.env.MODE === 'production' 
           ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/products)`,
-        rows
+          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/newproduct`,
+        updatedRows
       );
 
       console.log("Product submitted:", response);
