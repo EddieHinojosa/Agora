@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import DisplayCard from './DisplayCard';
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 
@@ -26,11 +26,10 @@ const DisplayGrid = ({ products = [] }) => {
         {currentProducts.map((product) => (
           <DisplayCard
             key={product._id}
+            id={product._id}
             img={product.image_urls[0]}
             name={product.productName}
-            shop={product.shopName}
-            // shop={user.shopName}?
-            // shop={product.user.shopName}?
+            shop={product.user?.shopName || 'Shop'}
             price={`$` + `${product.price}`}
           />
         ))}

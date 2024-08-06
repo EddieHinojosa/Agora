@@ -88,8 +88,8 @@ const [currentStep, setCurrentStep] = useState(0);
       const response = await axios.post( 
         `${import.meta.env.MODE === 'production' 
           ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/newproduct`,
-        updatedUserRows
+          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/products)`,
+        rows
       );
 
       console.log("Product submitted:", response);

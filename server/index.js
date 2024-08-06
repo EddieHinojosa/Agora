@@ -9,7 +9,6 @@ import admin from './firebaseAdmin.js';
 import authRoutes from './routes/auth.js';
 // import firebaseAuthRoutes from './routes/firebaseAuth.js';
 import userRoutes from './routes/user.js';
-
 // import routes from './routes/index.js';
 import shopRoutes from './routes/shopRoute.js';
 import productRoutes from './routes/newProduct.js';
