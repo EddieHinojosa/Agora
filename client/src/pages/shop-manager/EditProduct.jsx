@@ -45,11 +45,10 @@ const EditProduct = () => {
     <ProductOptions key="productOptions" rows={rows} handleChange={handleChange} setRows={setRows} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
     <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} />,
-    <ProductTable key="productTable" />, 
   ];
 
   return (
-    <div className="flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <h2 className="text-2xl font-bold">Edit Product</h2>
       <div className="mt-4">
         {steps.map((StepComponent, index) => (

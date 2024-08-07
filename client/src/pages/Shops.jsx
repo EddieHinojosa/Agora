@@ -38,7 +38,7 @@ useEffect(() => {
       userId={slug}
       isManager={false}
       render={(userData) => (
-          <div>
+          <div className='min-h-screen'>
           <h2 className='flex justify-center items-center bg-gray-100 p-4 text-4xl'>Welcome to {userData.shopName}'s Shop!</h2>
           <DisplayGrid products={products} />
         </div>

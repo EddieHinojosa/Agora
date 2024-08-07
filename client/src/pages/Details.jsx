@@ -6,6 +6,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState(null);
+  const [thumbnailImages, setThumbnailImages] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedMaterial, setSelectedMaterial] = useState('');
@@ -33,13 +34,14 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row items-start mt-6 pl-6 pr-6 md:pl-24 md:pr-20">
+    <div className="min-h-screen flex flex-col md:flex-row items-start mt-6 pl-6 pr-6 md:pl-24 md:pr-20">
     <div className="w-full md:w-1/2 flex flex-col items-center md:ml-6">
       <img
         src={mainImage}
         alt={product.productName}
         className="w-full h-auto mb-4"
       />
+      {product.image_urls.length > 1 && (
       <div className="flex space-x-2 md:space-x-2 md:flex-row flex-wrap justify-center">
         {product.image_urls.map((imageUrl, index) => (
           <img
@@ -51,6 +53,7 @@ const ProductDetails = () => {
           />
         ))}
       </div>
+      )}
     </div>
     <div className="w-full md:w-1/2 mt-4 md:mt-0 md:ml-6 flex flex-col justify-start">
       <div className="mb-4">
