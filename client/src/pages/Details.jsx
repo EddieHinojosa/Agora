@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { CartContext } from '../context/CartContext';
+import User from './User';
+import slug from 'slug';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -67,9 +69,13 @@ const ProductDetails = () => {
           <h2 className="text-2xl font-bold">{product.productName}</h2>
           <p className="text-xl text-gray-700 mt-2">${product.price}</p>
           <p className="text-lg text-gray-700 mt-2">{product.productDetails}</p>
-          <p className="text-md text-gray-500 mt-2">
-            {product.shopName || "shop"}
-          </p>
+          <div className='mt-4'>
+          <Link to={`/shop/${slug(product.shopName) || "shop"}`} className="text-md text-gray-500 hover:text-black">
+            {product.shopName || "shop"} 
+          </Link>
+          </div>
+
+
 
           {/* Size Dropdowns */}
           {product.size && product.size.length > 0 && (
