@@ -1,6 +1,4 @@
-import { updateUserShopSettings } from '../../../api/shopSettingsApi';
-
-const MainSettings = ({ shopPhoto, setShopPhoto, bannerPhoto, setBannerPhoto, vacationMode, setVacationMode, shopDescription, setShopDescription, userId }) => {
+const MainSettings = ({ shopPhoto, setShopPhoto, bannerPhoto, setBannerPhoto, vacationMode, setVacationMode, shopDescription, setShopDescription }) => {
   const getShopPhoto = (event) => {
     setShopPhoto(URL.createObjectURL(event.target.files[0]));
   };
@@ -11,15 +9,6 @@ const MainSettings = ({ shopPhoto, setShopPhoto, bannerPhoto, setBannerPhoto, va
 
   const handleVacationModeToggle = () => {
     setVacationMode(!vacationMode);
-  };
-
-  const handleSaveMainSettings = async () => {
-    try {
-      const response = await updateUserShopSettings(userId, shopDescription, null);
-      console.log('Shop settings updated:', response);
-    } catch (error) {
-      console.error('Error updating shop settings:', error);
-    }
   };
 
   return (
@@ -64,12 +53,6 @@ const MainSettings = ({ shopPhoto, setShopPhoto, bannerPhoto, setBannerPhoto, va
           onChange={handleVacationModeToggle}
           className="h-6 w-6 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
         />
-      </div>
-
-      <div className="mb-6">
-        <button onClick={handleSaveMainSettings} className="px-4 py-2 rounded-md bg-black text-white text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-          Save
-        </button>
       </div>
     </div>
   );
