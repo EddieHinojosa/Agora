@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { CartContext } from '../context/CartContext';
-import User from './User';
+import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from "react-icons/io";
 import slug from 'slug';
 
 const ProductDetails = () => {
@@ -13,6 +13,9 @@ const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedMaterial, setSelectedMaterial] = useState("");
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [showAbout, setShowAbout] = useState(false);
+  const [showSpec, setSpec] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -68,9 +71,9 @@ const ProductDetails = () => {
         <div className="mb-4">
           <h2 className="text-2xl font-bold">{product.productName}</h2>
           <p className="text-xl text-gray-700 mt-2">${product.price}</p>
-          <p className="text-lg text-gray-700 mt-2">{product.productDetails}</p>
+          <p className="text-lg text-gray-700 mt-2">{product.tags}</p>
           <div className='mt-4'>
-          <Link to={`/shop/${slug(product.shopName) || "shop"}`} className="text-md text-gray-500 hover:text-black">
+          <Link to={`/shop/${slug(product.shopName) || "shop"}`} className="text-sm rounded-md text-gray-700 hover:bg-gray-300 hover:text-black hover:p-2">
             {product.shopName || "shop"} 
           </Link>
           </div>
@@ -152,9 +155,94 @@ const ProductDetails = () => {
             </div>
           )}
 
-          <button onClick={handleAddToCart} className="mt-4 px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-300 hover:text-black">
+          {/* Item Quantity Dropdown */}
+            <div className="mt-4">
+              <label
+                htmlFor="quantity"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Item Quantity:
+              </label>
+              <select
+                id="quantity"
+                className="mt-1 block w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                value={selectedQuantity}
+                onChange={(e) => setSelectedQuantity(e.target.value)}
+              >
+                {[...Array(10).keys()].map((i) => (
+                  <option key={i + 1} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+          <button onClick={handleAddToCart} className="mt-4 px-4 py-2 w-1/2 bg-black text-white text-sm font-semibold rounded-md hover:bg-gray-300 hover:text-black">
             Add to Cart
           </button>
+
+
+           {/* About the Product Section */}
+          <div className="mt-6">
+            <button
+              onClick={() => setShowAbout(!showAbout)}
+              className="text-xl font-bold flex items-center justify-between w-1/2"
+            >
+              About the Product
+              <span>{showAbout ? <IoIosArrowDropupCircle /> : <IoIosArrowDropdownCircle />}</span>
+            </button>
+            {showAbout && (
+              <>
+                {product.aboutProduct && product.aboutProduct.length > 0 && (
+                  <ul className="list-disc list-inside mt-2 text-gray-700">
+                    {product.aboutProduct.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                )}
+                <ul className="list-disc list-inside mt-2 text-gray-700 text-md">
+                  <p className="w-1/2 text-lg text-gray-700 mt-2">{product.productDetails}</p>
+                  <li>Category: {product.category}</li>
+                  {product.tags && product.tags.length > 0 && <li>Tags: {product.tags.join(', ')}</li>}
+                  <li>Product Dimensions: {product.productLength} x {product.productWidth} x {product.productHeight}</li>
+                  <li>Packed Dimensions: {product.packedLength} x {product.packedWidth} x {product.packedHeight}</li>
+                  <li>Packed Weight: {product.packedWeight} lb</li>
+                  <li>Processing Time: {product.proscessingTime}</li>
+                </ul>
+              </>
+            )}
+          </div>
+
+          {/* Specifications Section */}
+          <div className="mt-2">
+            <button
+              onClick={() => setSpec(!showSpec)}
+              className="text-xl font-bold flex items-center justify-between w-1/2"
+            >
+              Specifications
+              <span>{showSpec ? <IoIosArrowDropupCircle /> : <IoIosArrowDropdownCircle />}</span>
+            </button>
+            {showSpec && (
+              <>
+                {product.aboutProduct && product.aboutProduct.length > 0 && (
+                  <ul className="list-disc list-inside mt-2 text-gray-700">
+                    {product.aboutProduct.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                )}
+                <ul className="list-disc list-inside mt-2 text-gray-700 text-md">
+                  <p className="w-1/2 text-lg text-gray-700 mt-2">{product.productDetails}</p>
+                  <li>Category: {product.category}</li>
+                  {product.tags && product.tags.length > 0 && <li>Tags: {product.tags.join(', ')}</li>}
+                  <li>Product Dimensions: {product.productLength} x {product.productWidth} x {product.productHeight}</li>
+                  <li>Packed Dimensions: {product.packedLength} x {product.packedWidth} x {product.packedHeight}</li>
+                  <li>Packed Weight: {product.packedWeight} lb</li>
+                  <li>Processing Time: {product.proscessingTime}</li>
+                </ul>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>
