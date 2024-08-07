@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UserData from '../components/ShopManager/Main/UserData';
 import DisplayGrid from '../components/Home/DisplayGrid';
+import { IoIosStar } from "react-icons/io";
 import axios from 'axios';
 
 
@@ -38,11 +39,17 @@ useEffect(() => {
       userId={slug}
       isManager={false}
       render={(userData) => (
-          <div className='min-h-screen'>
-          <h2 className='flex justify-center items-center bg-gray-100 p-4 text-4xl'>Welcome to {userData.shopName}'s Shop!</h2>
+        <div className='min-h-screen flex flex-col items-start justify-start bg-gray-50 px-4 md:px-10 pt-0'>
+          <h2 className='w-full flex justify-left mt-4 text-3xl'>{userData.shopName} Shop</h2>
+          <p className='w-full flex justify-left mt-6 text-sm'>
+            {[...Array(5)].map((_, index) => (
+              <IoIosStar key={index} />
+            ))}
+          </p>
+          <p className='w-full flex justify-left text-gray-700 text-sm'>{userData.shopShippingAddress.city}, {userData.shopShippingAddress.state}</p>
+          <p className='w-full flex justify-left mt-4 text-gray-700 text-sm'>{userData.shopDescription}</p>
           <DisplayGrid products={products} />
         </div>
-  
       )}
     />
   );
