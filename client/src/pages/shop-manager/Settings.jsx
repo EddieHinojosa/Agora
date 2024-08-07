@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import MainSettings from '../../components/ShopManager/Settings/MainSettings'; 
 import ShippingSettings from '../../components/ShopManager/Settings/ShippingSettings'; 
-import { updateUserShopSettings, fetchUserShopSettings } from '../../api/shopSettingsApi';
+import { updateUserShopSettings } from '../../api/shopSettingsApi';
 
 const Settings = () => {
   const { user } = useContext(AuthContext);
@@ -22,32 +22,22 @@ const Settings = () => {
   const [savedAddresses, setSavedAddresses] = useState([]);
 
   useEffect(() => {
-    const loadSettings = async () => {
-      try {
-        const settings = await fetchUserShopSettings(user._id);
-        setShopDescription(settings.shopDescription || '');
-        setAddress(settings.shopShippingAddress || {
-          line1: '',
-          line2: '',
-          city: '',
-          state: '',
-          zip: '',
-          country: ''
-        });
-      } catch (error) {
-        console.error('Failed to load settings:', error);
-      }
-    };
-
     if (user) {
-      loadSettings();
+      setShopDescription(user.shopDescription || '');
+      setAddress(user.shopShippingAddress || {
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        zip: '',
+        country: ''
+      });
     }
   }, [user]);
 
   const handleSaveSettings = async (userId) => {
     try {
-      const response =
-      await updateUserShopSettings(userId, shopDescription, address);
+      const response = await updateUserShopSettings(userId, shopDescription, address);
       console.log('Shop settings updated successfully!', response);
     } catch (error) {
       console.error('Failed to update shop settings.', error);
@@ -128,3 +118,4 @@ const Settings = () => {
 };
 
 export default Settings;
+
