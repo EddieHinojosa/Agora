@@ -41,7 +41,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-start mt-6 pl-6 pr-6 md:pl-24 md:pr-20">
+    <div className="min-h-screen flex flex-col md:flex-row items-start mt-6 pl-6 pr-6 md:pl-24 md:pr-20">
       <div className="w-full md:w-1/2 flex flex-col items-center md:ml-6">
         <img
           src={mainImage}

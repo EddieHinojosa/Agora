@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaLink } from "react-icons/fa";
 import UserData from '../../components/ShopManager/Main/UserData';
-import slug from 'slug'; // Importing the slug package
+import slug from 'slug';
 
 // Dynamic Status Cards - will pull information from DB
 const StatusCard = ({ status, count }) => {
