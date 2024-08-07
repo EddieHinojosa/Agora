@@ -47,7 +47,7 @@ const ProductImages = ({ rows, setRows  }) => {
             <li>Don't forget to click the SAVE IMAGES button below</li>
           </ol>
         </div>
-        <div className="md:w-3/4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 order-1 md:order-2">
+        <div className="md:w-3/4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6 order-1 md:order-2">
           <div className="border bg-gray-200 rounded-md flex h-32 w-full md:w-32">
             <CloudinaryUploadWidget setImages={setImages} />
           </div>
@@ -65,7 +65,7 @@ const ProductImages = ({ rows, setRows  }) => {
             pushImages(images, rows);
           }
         }}
-        className="mt-4 py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
+        className="mt-4 gap-2 py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
       >
         Save Images
       </button>
