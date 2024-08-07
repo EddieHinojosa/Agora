@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import {AuthContext} from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
+import { CartContext } from '../context/CartContext';
 
 const Cart = ({ isOpen, onRequestClose }) => {
     const { user } = useContext(AuthContext);
+    const { cartItems } = useContext(CartContext);
 
     const handleCheckout = async () => {
         try {
@@ -14,11 +16,11 @@ const Cart = ({ isOpen, onRequestClose }) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    items: [
-                        { name: "Clarissa's socks", amount: 1000, quantity: 1 },
-                        { name: "Devon's Hawaiian shirts", amount: 2000, quantity: 1 },
-                        { name: "Alex's pants", amount: 3000, quantity: 1 },
-                    ],
+                    items: cartItems.map(item => ({
+                        name: item.productName,
+                        amount: item.price, // add * 100 if pulling in cent, will review later
+                        quantity: 1, // set to 1 for now til i add ability to +/-
+                    })),
                 }),
             });
             if (!response.ok) {
@@ -64,18 +66,21 @@ const Cart = ({ isOpen, onRequestClose }) => {
                             <div className="px-4 py-5 sm:p-6">
                                 <h1 className="text-lg font-medium leading-6 text-gray-900">Items</h1>
                                 <div className="mt-4 space-y-4">
-                                    <div className="flex justify-between items-center p-4 border-b">
-                                        <div className="text-lg">Clarissa's socks</div>
-                                        <div className="text-lg">$10.00</div>
-                                    </div>
-                                    <div className="flex justify-between items-center p-4 border-b">
-                                        <div className="text-lg">Devon's Hawaiian shirts</div>
-                                        <div className="text-lg">$20.00</div>
-                                    </div>
-                                    <div className="flex justify-between items-center p-4 border-b">
-                                        <div className="text-lg">Alex's pants</div>
-                                        <div className="text-lg">$30.00</div>
-                                    </div>
+                                    {cartItems.length === 0 ? (
+                                        <p>Your cart is empty.</p>
+                                    ) : (
+                                        cartItems.map((item, index) => (
+                                            <div key={index} className="flex justify-between items-center p-4 border-b">
+                                                <div>
+                                                    <div className="text-lg">{item.productName}</div>
+                                                    <div className="text-sm text-gray-500">Size: {item.selectedSize}</div>
+                                                    <div className="text-sm text-gray-500">Color: {item.selectedColor}</div>
+                                                    <div className="text-sm text-gray-500">Material: {item.selectedMaterial}</div>
+                                                </div>
+                                                <div className="text-lg">${item.price}</div>
+                                            </div>
+                                        ))
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -87,35 +92,35 @@ const Cart = ({ isOpen, onRequestClose }) => {
                             <div className="mt-4 space-y-2">
                                 <div className="flex justify-between text-lg">
                                     <div>Subtotal</div>
-                                    <div>$60.00</div>
+                                    <div>${cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}</div>
                                 </div>
                                 <div className="flex justify-between text-lg">
                                     <div>Tax</div>
-                                    <div>$5.00</div>
+                                    <div>${(cartItems.reduce((total, item) => total + item.price, 0) * 0.1).toFixed(2)}</div>
                                 </div>
                                 <div className="flex justify-between text-lg font-bold">
                                     <div>Total</div>
-                                    <div>$65.00</div>
+                                    <div>${(cartItems.reduce((total, item) => total + item.price, 0) * 1.1).toFixed(2)}</div>
                                 </div>
                             </div>
                             <div className="mt-6 flex flex-col space-y-4">
                                 {/* Uncomment this block for live site */}
                                 {/* {user ? (
-                                    <button
-                                        onClick={handleCheckout}
-                                        className="inline-flex justify-center px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-500 focus:outline-none sm:w-auto sm:text-sm"
-                                    >
-                                        Checkout
-                                    </button>
-                                ) : (
-                                    <Link 
-                                        to="/login" 
-                                        className="text-red-500 hover:text-red-700 hover:underline"
-                                    >
-                                        Please log in to checkout
-                                    </Link>
+                                <button
+                                    onClick={handleCheckout}
+                                    className="inline-flex justify-center px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-500 focus:outline-none sm:w-auto sm:text-sm"
+                                >
+                                    Checkout
+                                </button>
+                                    ) : (
+                                <Link 
+                                    to="/login" 
+                                    className="text-red-500 hover:text-red-700 hover:underline"
+                                >
+                                    Please log in to checkout
+                                </Link>
                                 )} */}
-                                
+
                                 {/* Temporary block for testing */}
                                 <button
                                     onClick={handleCheckout}

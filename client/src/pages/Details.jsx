@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { CartContext } from '../context/CartContext';
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const { addToCart } = useContext(CartContext);
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
@@ -33,6 +35,10 @@ const ProductDetails = () => {
   if (!product) {
     return <div>The next available agent will be with you shortly.</div>;
   }
+
+  const handleAddToCart = () => {
+    addToCart(product, selectedSize, selectedColor, selectedMaterial);
+  };
 
   return (
     <div className="flex flex-col md:flex-row items-start mt-6 pl-6 pr-6 md:pl-24 md:pr-20">
@@ -140,7 +146,7 @@ const ProductDetails = () => {
             </div>
           )}
 
-          <button className="mt-4 px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-300 hover:text-black">
+          <button onClick={handleAddToCart} className="mt-4 px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-300 hover:text-black">
             Add to Cart
           </button>
         </div>
