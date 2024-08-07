@@ -71,7 +71,7 @@ const ProductDetails = () => {
         <div className="mb-4">
           <h2 className="text-2xl font-bold">{product.productName}</h2>
           <p className="text-xl text-gray-700 mt-2">${product.price}</p>
-          <p className="text-lg text-gray-700 mt-2">{product.tags}</p>
+          <p className="text-lg text-gray-700 mt-2">{product.tags && product.tags.length > 0 && <p>{product.tags.join(', ')}</p>}</p>
           <div className='mt-4'>
           <Link to={`/shop/${slug(product.shopName) || "shop"}`} className="text-sm rounded-md text-gray-700 hover:bg-gray-300 hover:text-black hover:p-2">
             {product.shopName || "shop"} 
@@ -193,28 +193,14 @@ const ProductDetails = () => {
             </button>
             {showAbout && (
               <>
-                {product.aboutProduct && product.aboutProduct.length > 0 && (
-                  <ul className="list-disc list-inside mt-2 text-gray-700">
-                    {product.aboutProduct.map((item, index) => (
-                      <li key={index}>{item}</li>
-                    ))}
-                  </ul>
-                )}
-                <ul className="list-disc list-inside mt-2 text-gray-700 text-md">
                   <p className="w-1/2 text-lg text-gray-700 mt-2">{product.productDetails}</p>
-                  <li>Category: {product.category}</li>
-                  {product.tags && product.tags.length > 0 && <li>Tags: {product.tags.join(', ')}</li>}
-                  <li>Product Dimensions: {product.productLength} x {product.productWidth} x {product.productHeight}</li>
-                  <li>Packed Dimensions: {product.packedLength} x {product.packedWidth} x {product.packedHeight}</li>
-                  <li>Packed Weight: {product.packedWeight} lb</li>
-                  <li>Processing Time: {product.proscessingTime}</li>
-                </ul>
+              
               </>
             )}
           </div>
 
           {/* Specifications Section */}
-          <div className="mt-2">
+          <div className="mt-3">
             <button
               onClick={() => setSpec(!showSpec)}
               className="text-xl font-bold flex items-center justify-between w-1/2"
@@ -232,7 +218,6 @@ const ProductDetails = () => {
                   </ul>
                 )}
                 <ul className="list-disc list-inside mt-2 text-gray-700 text-md">
-                  <p className="w-1/2 text-lg text-gray-700 mt-2">{product.productDetails}</p>
                   <li>Category: {product.category}</li>
                   {product.tags && product.tags.length > 0 && <li>Tags: {product.tags.join(', ')}</li>}
                   <li>Product Dimensions: {product.productLength} x {product.productWidth} x {product.productHeight}</li>
