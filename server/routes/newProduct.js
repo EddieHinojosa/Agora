@@ -64,9 +64,8 @@ router.delete('/shopmanager/user/:userId/products/:productId', async (req, res) 
 // Get Product by ID
 router.get('/api/products/:id', async (req, res) => {
     const productId = req.params.id;
-
     try {
-        const product = await Product.findById(productId);
+        const product = await Product.findById({_id : productId});
         if (!product) {
             return res.status(404).json({ message: "Product not found" });
         }
@@ -76,6 +75,19 @@ router.get('/api/products/:id', async (req, res) => {
         res.status(500).json({ message: "Error fetching product" });
     }
 });
+
+// Get Pruoduct  for editing
+// router.get('/shopmanager/user/:id/editproduct/:id', async (req, res) => {
+//     const { productId } = req.params;
+    
+//     try {
+//         const product = await Product.findOne({ productId });
+//         res.status(200).json(product); 
+//     } catch (error) {
+//         console.error("Error fetching product:", error);
+//         res.status(500).json({ message: "Error fetching product" });
+//     }
+// })
 
 
 export default router;

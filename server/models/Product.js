@@ -59,6 +59,10 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    proscessingTime:{
+        type: String,
+        required: false
+    },
     status: {
         type: String,
         required: false,

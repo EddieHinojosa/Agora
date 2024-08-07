@@ -13,7 +13,7 @@ const ProductCard = ({ _id, image_urls, productName, quantity, price, onDelete }
         onDelete(_id);
         setIsModalOpen(false);
     };
-
+ 
     return (
         <div className="relative card border border-gray-300 overflow-hidden rounded-lg">
             <Link to={`/shopmanager/user/${user._id}/editproduct/${_id}`} className="block">
