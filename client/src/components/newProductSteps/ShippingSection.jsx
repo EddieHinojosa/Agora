@@ -232,7 +232,7 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
       <div className="flex space-x-4 mt-6">
         <button
           type="submit"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit && handleEditSubmit}
           className="py-2 px-4 bg-black text-white rounded-md hover:bg-gray-300"
         >
           Publish
