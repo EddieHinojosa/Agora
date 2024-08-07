@@ -64,6 +64,7 @@ router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
 // Get Product by ID
 router.get('/api/products/:id', async (req, res) => {
     const productId = req.params.id;
+    
     try {
         const product = await Product.findById({_id : productId});
         if (!product) {
@@ -76,18 +77,43 @@ router.get('/api/products/:id', async (req, res) => {
     }
 });
 
-// Get Pruoduct  for editing
-// router.get('/shopmanager/:id/editproduct/:id', async (req, res) => {
-//     const { productId } = req.params;
-    
-//     try {
-//         const product = await Product.findOne({ productId });
-//         res.status(200).json(product); 
-//     } catch (error) {
-//         console.error("Error fetching product:", error);
-//         res.status(500).json({ message: "Error fetching product" });
-//     }
-// })
+// edit pruoduct by user id && product id
+router.put('/shopmanager/:id/editproduct/:productId', async (req, res) => {
+    const { productId } = req.params;
+    const userId = req.params.id;
+ 
 
+    try {
+        const targetProduct = await Product.findById({ _id: productId });
+        if (!targetProduct || targetProduct.user !== userId) {
+            return res.status(404).json({ message: "Product not found or you do not have permission to edit this product" });
+        }
+
+        const productUpdates = req.body;
+        const updatedFields = {};
+
+        // Iterate over the fields in the request body and add only the altered fields to updatedFields
+        for (const field in productUpdates) {
+            if (productUpdates[field] !== targetProduct[field]) {
+                updatedFields[field] = productUpdates[field];
+            }
+        }
+
+        if (Object.keys(updatedFields).length === 0) {
+            return res.status(400).json({ message: "No fields have been altered" });
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+            { _id: productId, user: userId },
+            { $set: updatedFields },
+            { new: true } // Return the updated document
+        );
+
+        res.json(updatedProduct);
+    } catch (error) {
+        console.error("Error updating product:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 export default router;
