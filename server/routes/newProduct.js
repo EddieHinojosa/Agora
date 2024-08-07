@@ -46,7 +46,7 @@ router.get('/shopmanager/:id/products', async (req, res) => {
     }
 });
 
-router.delete('/shopmanager/:userid/products/:productId', async (req, res) => {
+router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
     const { userId, productId } = req.params;
 
     try {
