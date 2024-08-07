@@ -28,8 +28,10 @@ const ShopManager = () => {
       render={(userData) => {
         // For shop url link
         const baseUrl = window.location.origin;
-        const shopNameSlug = slug(userData.shopName); // Generating the slug from shopName
+        const shopNameSlug = slug(userData.shopName);
         const shopUrl = `${baseUrl}/shop/${shopNameSlug}`;
+
+        const settingUpdate = !userData.shopShippingAddress || !userData.shopDescription;
 
         return (
           <div className='min-h-screen'>
@@ -40,10 +42,25 @@ const ShopManager = () => {
                 <span>{shopUrl}</span>
               </Link>
             </div>
-            <div className="flex justify-center mt-8">
+            <div className="flex justify-center items-center mt-8">
               <StatusCard status="Active" count={20} />
               <StatusCard status="Inactive" count={10} />
               <StatusCard status="Sold Out" count={5} />
+            </div>
+            <div className='flex justify-center mt-8'>
+            {(!userData.shopShippingAddress && !userData.shopDescription) && (
+                <h2>Please Enter Shop Shipping Address and Shop Description</h2>)}
+              {(!userData.shopShippingAddress && userData.shopDescription) && (
+                <h2>Please Enter Shop Shipping Address</h2>)}
+              {(userData.shopShippingAddress && !userData.shopDescription) && (
+                <h2>Please Enter Shop Description</h2>)}
+            </div>
+            <div className='flex justify-center'>
+                {settingUpdate && (
+                <Link to={`/shopmanager/user/${id}/settings`} className='mt-2 px-4 py-2 bg-black text-white text-sm rounded hover:bg-gray-300 hover:text-black'>
+                    Shop Settings
+                </Link>
+                )}
             </div>
           </div>
         );
