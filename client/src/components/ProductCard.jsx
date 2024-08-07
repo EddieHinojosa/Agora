@@ -14,7 +14,7 @@ const ProductCard = ({ _id, image_urls, productName, quantity, price, onDelete }
 
     return (
         <div className="relative card border border-gray-300 overflow-hidden rounded-lg">
-            <Link to={`/product/${_id}`} className="block">
+            <Link to={`/shopmanager/user/${_id}/editproduct/${_id}`} className="block">
                 <img src={image_urls[0]} alt={`No image available for ${productName}`} className="w-full h-48 object-cover"/>
                 <div className="p-4">
                     <h3 className="text-md font-semibold">{productName}</h3>
