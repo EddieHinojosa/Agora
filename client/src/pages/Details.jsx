@@ -122,7 +122,7 @@ const ProductDetails = () => {
                 onChange={(e) => setSelectedColor(e.target.value)}
               >
                 <option value="">Select a color</option>
-                {product.colorOptions.map((color, index) => (
+                {product.color.map((color, index) => (
                   <option key={index} value={color}>
                     {color}
                   </option>
