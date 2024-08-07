@@ -38,17 +38,17 @@ router.get('/shop/:slug/products', async (req,res) => {
   try{
   const user = await User.findOne({slug: req.params.slug})
   let shopName = user.shopName;
-  console.log(shopName)
+  // console.log(shopName)
 
   const userProducts = await Product.find({ shopName: shopName});
-  console.log(userProducts);
+  // console.log(userProducts);
   res.status(200).json(userProducts)
 
   } catch (error){ 
     console.log("User's Shop Not found:", error);
     res.status(500).json({message: "User's Shop not forund"});
   };
-  
+
 })
 
 // Route for Shop Settings information

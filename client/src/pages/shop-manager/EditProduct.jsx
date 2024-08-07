@@ -11,22 +11,44 @@ import ProductTable from '../../components/newProductSteps/ProductTable';
 const EditProduct = () => {
   const [rows, setRows] = useState([
     {
-      color: "",
-      cost: "",
-      height: "",
-      material: "",
-      packedLength: "",
-      packedWidth: "",
-      packedHeight: "",
-      productLength: "",
-      processingTime: "",
-      price: "",
-      status: "",
-      size: "",
-      photo: "",
-      quantity: "",
-      width: "",
-      weight: ""
+      // category: "",
+      // color: "",
+      // image_urls: [],
+      // material: "",
+      
+      // packedLength: "",
+      // packedLengthUnit: "",
+      
+      // packedWidth: "",
+      // packedWidthUnit: "",
+  
+      // packedHeight: "",
+      // packedHeightUnit: "",
+  
+      // productHeight: "",
+      // productHeightUnit: "",
+  
+      // productLength: "",
+      // productLengthUnit: "",
+  
+      // productWidth: "",
+      // productWidthUnit: "",
+  
+      // packedWeight: "",
+      // packedWeightUnit: "",
+      
+      // productName: "",
+  
+      // processingTime: "",
+    
+      // price: "",
+      // shopName: "",
+      // size: "",
+      // status: "",
+      
+      // tags: [],
+      // user: "",
+      // quantity: "",
     },
   ]);
 

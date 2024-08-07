@@ -24,14 +24,13 @@ useEffect(() => {
                 );
                 setProducts(response.data);
                 console.log("Products fetched:", response.data);
-                console.log(`products poop`)
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
         };
 
         fetchProducts();
-   //// deleting line 45 creates an endless loop that withh result in error code 429
+   //// deleting the following line creates an endless loop that withh result in error code 429
     }, [slug]);
   return (
     <UserData
