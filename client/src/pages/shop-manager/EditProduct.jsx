@@ -113,12 +113,12 @@ const EditProduct = () => {
       const response = await axios.post( 
         `${import.meta.env.MODE === 'production' 
           ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/newproduct`,
+          : import.meta.env.VITE_DEV_API_URL}/shopmanager/${user._id}/newproduct`,
         updatedRows
       );
 
       console.log("Product submitted:", response);
-      navigate(`/shopmanager/user/${user._id}/products`)
+      navigate(`/shopmanager/${user._id}/products`)
     } catch (error) {
       console.error("Error submitting Product:", error);
     }

@@ -57,7 +57,7 @@ const Navbar = ({ setModalIsOpen }) => {
                 <CiUser size={22} className="text-gray-500 hover:text-black" />
               </Link>
               {user.shopName && (
-                <Link to={`/shopmanager/user/${user._id}`}>
+                <Link to={`/shopmanager/${user._id}`}>
                   <CiShop
                     size={22}
                     className="text-gray-500 hover:text-black"

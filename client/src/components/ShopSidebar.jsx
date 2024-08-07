@@ -21,13 +21,13 @@ const ShopSidebar = () => {
             <div className={`flex-col md:flex md:h-full p-4 space-y-4 ${isOpen ? 'flex items-center justify-start w-full' : 'hidden md:flex md:items-start'}`}>
                 {user && user._id && user.shopName && (
                     <>
-                        <Link to={`/shopmanager/user/${user._id}`} className='mt-2 hover:underline text-sm text-center md:text-left'>Shop Home</Link>
-                        <Link to={`/shopmanager/user/${user._id}/orders`} className='hover:underline text-sm text-center md:text-left'>Orders</Link>
-                        <Link to={`/shopmanager/user/${user._id}/messages`} className='hover:underline text-sm text-center md:text-left'>Messages</Link>
-                        <Link to={`/shopmanager/user/${user._id}/products/`} className='hover:underline text-sm text-center md:text-left'>Products</Link>
-                        <Link to={`/shopmanager/user/${user._id}/finances/`} className='hover:underline text-sm text-center md:text-left'>Finances</Link>
-                        <Link to={`/shopmanager/user/${user._id}/calendar/`} className='hover:underline text-sm text-center md:text-left'>Calendar</Link>
-                        <Link to={`/shopmanager/user/${user._id}/settings/`} className='hover:underline text-sm text-center md:text-left'>Settings</Link>
+                        <Link to={`/shopmanager/${user._id}`} className='mt-2 hover:underline text-sm text-center md:text-left'>Shop Home</Link>
+                        <Link to={`/shopmanager/${user._id}/orders`} className='hover:underline text-sm text-center md:text-left'>Orders</Link>
+                        <Link to={`/shopmanager/${user._id}/messages`} className='hover:underline text-sm text-center md:text-left'>Messages</Link>
+                        <Link to={`/shopmanager/${user._id}/products/`} className='hover:underline text-sm text-center md:text-left'>Products</Link>
+                        <Link to={`/shopmanager/${user._id}/finances/`} className='hover:underline text-sm text-center md:text-left'>Finances</Link>
+                        <Link to={`/shopmanager/${user._id}/calendar/`} className='hover:underline text-sm text-center md:text-left'>Calendar</Link>
+                        <Link to={`/shopmanager/${user._id}/settings/`} className='hover:underline text-sm text-center md:text-left'>Settings</Link>
                     </>
                 )}
             </div>
