@@ -5,9 +5,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
 import helmet from 'helmet';
-import admin from './firebaseAdmin.js';
 import authRoutes from './routes/auth.js';
-// import firebaseAuthRoutes from './routes/firebaseAuth.js';
 import userRoutes from './routes/user.js';
 // import routes from './routes/index.js';
 import shopRoutes from './routes/shopRoute.js';
@@ -16,11 +14,6 @@ import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import MongoStore from 'connect-mongo';
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
-  });
-}
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -30,9 +23,9 @@ app.set('trust proxy', 1);
 
 const allowedOrigins = [
   process.env.VITE_DEV_API_URL,
-  process.env.VITE_DEV_URL,
+  process.env.VITE_DEV_APP_URL,
   process.env.VITE_PROD_API_URL,
-  process.env.VITE_PROD_URL,
+  process.env.VITE_PROD_APP_URL,
 ];
 
 const corsOptions = {
