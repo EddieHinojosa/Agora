@@ -1,8 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import MainSettings from '../../components/ShopManager/Settings/MainSettings'; 
 import ShippingSettings from '../../components/ShopManager/Settings/ShippingSettings'; 
-import { updateUserShopSettings } from '../../api/shopSettingsApi';
+import { updateUserShopSettings, fetchUserShopSettings } from '../../api/shopSettingsApi';
 
 const Settings = () => {
   const { user } = useContext(AuthContext);
@@ -20,6 +20,30 @@ const Settings = () => {
     country: ''
   });
   const [savedAddresses, setSavedAddresses] = useState([]);
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const settings = await fetchUserShopSettings(user._id);
+        setShopDescription(settings.shopDescription || '');
+        setAddress(settings.shopShippingAddress || {
+          line1: '',
+          line2: '',
+          city: '',
+          state: '',
+          zip: '',
+          country: ''
+        });
+        // Set other settings like shopPhoto, bannerPhoto, vacationMode if needed
+      } catch (error) {
+        console.error('Failed to load settings:', error);
+      }
+    };
+
+    if (user) {
+      loadSettings();
+    }
+  }, [user]);
 
   const handleSaveSettings = async (userId) => {
     try {
