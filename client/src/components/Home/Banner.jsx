@@ -7,7 +7,7 @@ const Banner = () => {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="w-full flex flex-col md:flex-row items-center justify-center bg-[#4a000a] rounded-lg shadow-lg p-4">
+    <div className="w-full flex flex-col md:flex-row items-center justify-center bg-[#4a000a] shadow-lg">
       <div className="flex-1 text-center md:flex md:flex-col md:justify-center">
         <h2 className="text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
           Find something
@@ -20,7 +20,7 @@ const Banner = () => {
         </h2>
         {!user && (
           <Link to="/login/usersignup">
-            <button className="mt-6 px-4 py-2 md:px-6 md:py-2 bg-white text-[#4a000a] font-bold rounded-lg shadow-lg hover:bg-gray-200">
+            <button className="mt-6 px-4 py-2 md:px-6 md:py-2 bg-white text-[#4a000a] font-bold rounded-lg shadow-lg hover:bg-[#4a000a] hover:text-white">
               Sign Up
             </button>
           </Link>
@@ -30,7 +30,7 @@ const Banner = () => {
         <img
           src={HeaderImg}
           alt="Banner"
-          className="w-full h-full object-cover rounded-lg"
+          className="w-full h-full object-cover"
         />
       </div>
     </div>

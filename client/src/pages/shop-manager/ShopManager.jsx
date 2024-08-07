@@ -57,7 +57,7 @@ const ShopManager = () => {
             </div>
             <div className='flex justify-center'>
                 {settingUpdate && (
-                <Link to={`/shopmanager/${id}/settings`} className='mt-2 px-4 py-2 bg-black text-white text-sm rounded hover:bg-gray-300 hover:text-black'>
+                <Link to={`/shopmanager/user/${id}/settings`} className='mt-2 px-4 py-2 bg-black text-white text-sm rounded hover:bg-gray-300 hover:text-black'>
                     Shop Settings
                 </Link>
                 )}
