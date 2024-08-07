@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
+import { AuthContext } from '../context/AuthContext';
 
 // needs to be updated to pull from the db schema
-const ProductCard = ({ _id, product, image_urls, productName, quantity, price, onDelete }) => {
+const ProductCard = ({ _id, image_urls, productName, quantity, price, onDelete }) => {
+    const { user } = useContext(AuthContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     
     // Delete function needs to be updated to delete from the db - deletes NOTHING right now
@@ -14,7 +16,7 @@ const ProductCard = ({ _id, product, image_urls, productName, quantity, price, o
  
     return (
         <div className="relative card border border-gray-300 overflow-hidden rounded-lg">
-            <Link to={`/shopmanager/user/${_id}/editproduct/${productName}`} className="block">
+            <Link to={`/shopmanager/user/${user._id}/editproduct/${_id}`} className="block">
                 <img src={image_urls[0]} alt={`No image available for ${productName}`} className="w-full h-48 object-cover"/>
                 <div className="p-4">
                     <h3 className="text-md font-semibold">{productName}</h3>
