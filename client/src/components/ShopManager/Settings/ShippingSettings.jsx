@@ -1,16 +1,4 @@
-import { updateUserShopSettings } from '../../../api/shopSettingsApi';
-
-const ShippingSettings = ({ address, setAddress, states, countries, userId }) => {
-  const handleSaveAddress = async () => {
-    try {
-      const response =
-      await updateUserShopSettings(userId, null, address);
-      setAddress({ line1: '', line2: '', city: '', state: '', zip: '', country: '' });
-      console.log('Shipping address saved', response);
-    } catch (error) {
-      console.error('Error updating shipping address:', error);
-    }
-  };
+const ShippingSettings = ({ address, setAddress, states, countries }) => {
 
   return (
     <div>
@@ -88,15 +76,6 @@ const ShippingSettings = ({ address, setAddress, states, countries, userId }) =>
             </option>
           ))}
         </select>
-      </div>
-
-      <div className="mb-4">
-        <button
-          onClick={handleSaveAddress}
-          className="px-4 py-2 rounded-md bg-black text-white text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          Save Address
-        </button>
       </div>
     </div>
   );
