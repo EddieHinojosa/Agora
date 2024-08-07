@@ -16,10 +16,11 @@ const Products = () => {
             const response = await axios.delete(
                 `${import.meta.env.MODE === 'production' 
                       ? import.meta.env.VITE_PROD_API_URL 
-                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/products/${_id}
+                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/${user._id}/products/${_id}
                       `
             )
-            setProducts(products.filter(product => product._id !== _id)); 
+            setProducts(products.filter(product => product._id !== _id));
+            console.log('Success!', response)
         } catch (error) {
             console.log("Error Deleting Product:", error)
         }
@@ -31,7 +32,7 @@ const Products = () => {
                 const response = await axios.get(
                     `${import.meta.env.MODE === 'production' 
                       ? import.meta.env.VITE_PROD_API_URL 
-                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/products
+                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/${user._id}/products
                       `
                 );
                 setProducts(response.data);
@@ -50,7 +51,7 @@ const Products = () => {
         <div className="min-h-screen container mx-auto p-4">
             <div className="flex items-center mb-4">
                 <h2 className="text-2xl">Products</h2>
-                <Link to={`/shopmanager/user/${user._id}/newproduct`} className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
+                <Link to={`/shopmanager/${user._id}/newproduct`} className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
                     <IoIosAddCircle className="mr-2 text-xl" /> Add A Product
                 </Link>
             </div>

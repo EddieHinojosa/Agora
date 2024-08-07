@@ -6,7 +6,7 @@ import Product from '../models/Product.js';
 const router = express.Router();
 
 // Route to get user data for shop manager
-router.get('/shopmanager/user/:id', authenticateToken, async (req, res) => {
+router.get('/shopmanager/:id', authenticateToken, async (req, res) => {
   try {
     const userId = req.params.id;
     const user = await User.findById(userId);

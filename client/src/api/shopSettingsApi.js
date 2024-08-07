@@ -14,3 +14,4 @@ export const updateUserShopSettings = async (userId, shopDescription, shopShippi
     throw error;
   }
 };
+
