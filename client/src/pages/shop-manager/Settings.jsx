@@ -34,7 +34,6 @@ const Settings = () => {
           zip: '',
           country: ''
         });
-        // Set other settings like shopPhoto, bannerPhoto, vacationMode if needed
       } catch (error) {
         console.error('Failed to load settings:', error);
       }

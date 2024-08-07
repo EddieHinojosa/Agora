@@ -1,3 +1,4 @@
+
 const MainSettings = ({ shopPhoto, setShopPhoto, bannerPhoto, setBannerPhoto, vacationMode, setVacationMode, shopDescription, setShopDescription }) => {
   const getShopPhoto = (event) => {
     setShopPhoto(URL.createObjectURL(event.target.files[0]));
