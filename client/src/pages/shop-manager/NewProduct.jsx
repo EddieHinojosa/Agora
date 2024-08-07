@@ -21,9 +21,9 @@ const { user } = useContext(AuthContext);
 const [rows, setRows] = useState(
   {
     category: "",
-    color: "",
+    color: [],
     image_urls: [],
-    material: "",
+    material: [],
     
     packedLength: "",
     packedLengthUnit: "",
@@ -51,9 +51,11 @@ const [rows, setRows] = useState(
     processingTime: "",
   
     price: "",
+    scent: [],
     shopName: "",
-    size: "",
+    size: [],
     status: "",
+    style: [],
     
     tags: [],
     user: "",

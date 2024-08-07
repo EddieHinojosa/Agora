@@ -31,35 +31,34 @@ import { MdDelete } from "react-icons/md";
         updatedOptionRows[index].values.push(updatedOptionRows[index].newValue);
         updatedOptionRows[index].newValue = "";
         setOptionRows(updatedOptionRows);
-
-          // State change logic below
-          // console.log(updatedOptionRows)
-          // console.log(updatedOptionRows[index].option)
-          // console.log(updatedOptionRows[index].values[index])
-        const stateRow = updatedOptionRows[index].option.toLowerCase()
-        const stateRowValue = updatedOptionRows[index].values[updatedOptionRows[index].values.length - 1]
-        const updatedRows = {...rows}
-        updatedRows[stateRow] = stateRowValue
-        setRows(updatedRows)
-        console.log(updatedRows)
+  
+        // State change logic below
+        const stateRow = updatedOptionRows[index].option.toLowerCase();
+        const stateRowValue = updatedOptionRows[index].values[updatedOptionRows[index].values.length - 1];
+        const updatedRows = { ...rows };
+        if (!updatedRows[stateRow]) {
+          updatedRows[stateRow] = [];
+        }
+        updatedRows[stateRow].push(stateRowValue);
+        setRows(updatedRows);
+        console.log(updatedRows);
       }
     };
 
     const deleteOptionValue = (optionIndex, valueIndex) => {
       const updatedOptionRows = [...optionRows];
+      const valueToDelete = updatedOptionRows[optionIndex].values[valueIndex];
       updatedOptionRows[optionIndex].values.splice(valueIndex, 1);
       setOptionRows(updatedOptionRows);
-
-
+  
       // State change logic below
-      const stateRow = updatedOptionRows[optionIndex].option.toLowerCase()
-      // console.log(updatedOptionRows[optionIndex].option.toLowerCase())
-      const stateRowValue = ""
-      const updatedRows = {...rows}
-      updatedRows[stateRow] = stateRowValue
-      setRows(updatedRows)
-      console.log(updatedRows)
- 
+      const stateRow = updatedOptionRows[optionIndex].option.toLowerCase();
+      const updatedRows = { ...rows };
+      if (updatedRows[stateRow]) {
+        updatedRows[stateRow] = updatedRows[stateRow].filter(value => value !== valueToDelete);
+      }
+      setRows(updatedRows);
+      console.log(updatedRows);
     };
 
     const addOptionRow = () => {
