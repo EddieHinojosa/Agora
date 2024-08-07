@@ -5,7 +5,7 @@ const router = express.Router()
 
 // Create a new Product
 
-router.post('/shopmanager/user/:id/newproduct', async (req , res) => {
+router.post('/shopmanager/:id/newproduct', async (req , res) => {
 
     const newProductData = {...req.body};
     console.log(newProductData);
@@ -34,7 +34,7 @@ router.get('/', async (req,res) => {
 })
 
 // Get all Products by single user
-router.get('/shopmanager/user/:id/products', async (req, res) => {
+router.get('/shopmanager/:id/products', async (req, res) => {
     const userId = req.params.id;
 
     try {
@@ -46,7 +46,7 @@ router.get('/shopmanager/user/:id/products', async (req, res) => {
     }
 });
 
-router.delete('/shopmanager/user/:userId/products/:productId', async (req, res) => {
+router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
     const { userId, productId } = req.params;
 
     try {
@@ -77,7 +77,7 @@ router.get('/api/products/:id', async (req, res) => {
 });
 
 // Get Pruoduct  for editing
-// router.get('/shopmanager/user/:id/editproduct/:id', async (req, res) => {
+// router.get('/shopmanager/:id/editproduct/:id', async (req, res) => {
 //     const { productId } = req.params;
     
 //     try {
