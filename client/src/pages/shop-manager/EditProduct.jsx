@@ -11,13 +11,12 @@ import axios from 'axios';
 
 
 
-
 const EditProduct = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [rows, setRows] = useState([]);
 
- 
+  
    
   useEffect(() => {
     const fetchProduct = async () => {
@@ -25,7 +24,7 @@ const EditProduct = () => {
             const response = await axios.get(
                 `${import.meta.env.MODE === 'production' 
                   ? import.meta.env.VITE_PROD_API_URL 
-                  : import.meta.env.VITE_DEV_API_URL}/products/${product._id}
+                  : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/editproduct/${productName}
                   `
             );
             setRows(...response.data);
@@ -39,28 +38,28 @@ const EditProduct = () => {
     //// deleting line 45 creates an endless loop that withh result in error code 429
      }, [user._id]);
   
-    const handleSubmit = async (e) => {
-      e.preventDefault();    
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();    
       
-      try {
-      const updatedRows = {...rows};
-      console.log(updatedRows.user)
-      setRows(updatedRows)
+    //   try {
+    //   const updatedRows = {...rows};
+    //   console.log(updatedRows.user)
+    //   setRows(updatedRows)
   
       
-        const response = await axios.post( 
-          `${import.meta.env.MODE === 'production' 
-            ? import.meta.env.VITE_PROD_API_URL 
-            : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/editproduct/${rows._id}`,
-          updatedRows
-        );
+    //     const response = await axios.post( 
+    //       `${import.meta.env.MODE === 'production' 
+    //         ? import.meta.env.VITE_PROD_API_URL 
+    //         : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}/editproduct/${rows._id}`,
+    //       updatedRows
+    //     );
   
-        console.log("Product submitted:", response);
-        navigate(`/shopmanager/user/${user._id}/products`)
-      } catch (error) {
-        console.error("Error submitting Product:", error);
-      }
-    };
+    //     console.log("Product submitted:", response);
+    //     navigate(`/shopmanager/user/${user._id}/products`)
+    //   } catch (error) {
+    //     console.error("Error submitting Product:", error);
+    //   }
+    // };
   
     const steps = [
       <ProductInfo key="productInfo" rows={rows}  />,
