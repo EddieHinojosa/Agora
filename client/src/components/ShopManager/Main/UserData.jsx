@@ -10,7 +10,7 @@ const UserData = ({ render, userId, isManager }) => {
     const fetchUserData = async () => {
       try {
         const endpoint = isManager 
-          ? `${import.meta.env.MODE === 'production' ? import.meta.env.VITE_PROD_API_URL : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${userId}`
+          ? `${import.meta.env.MODE === 'production' ? import.meta.env.VITE_PROD_API_URL : import.meta.env.VITE_DEV_API_URL}/shopmanager/${userId}`
           : `${import.meta.env.MODE === 'production' ? import.meta.env.VITE_PROD_API_URL : import.meta.env.VITE_DEV_API_URL}/shop/${userId}`;
 
         const response = await axios.get(endpoint);

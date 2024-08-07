@@ -59,7 +59,7 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    proscessingTime:{
+    processingTime:{
         type: String,
         required: false
     },
@@ -82,6 +82,28 @@ const ProductSchema = new mongoose.Schema({
         // ref: "User",
         // required: false,
     },
+    material: {
+        type: Array,
+        required: false
+    },
+    scent: {
+        type: Array,
+        required: false
+    },
+    style: {
+        type: Array,
+        required: false
+    },
+    size: {
+        type: Array,
+        required: false
+    },
+    color: {
+        type: Array,
+        required: false
+    },
+
+
 
 });
 

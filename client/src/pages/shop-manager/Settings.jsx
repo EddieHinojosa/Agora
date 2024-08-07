@@ -1,7 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import MainSettings from '../../components/ShopManager/Settings/MainSettings'; 
 import ShippingSettings from '../../components/ShopManager/Settings/ShippingSettings'; 
+import { updateUserShopSettings } from '../../api/shopSettingsApi';
 
 const Settings = () => {
   const { user } = useContext(AuthContext);
@@ -19,6 +20,29 @@ const Settings = () => {
     country: ''
   });
   const [savedAddresses, setSavedAddresses] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      setShopDescription(user.shopDescription || '');
+      setAddress(user.shopShippingAddress || {
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        zip: '',
+        country: ''
+      });
+    }
+  }, [user]);
+
+  const handleSaveSettings = async (userId) => {
+    try {
+      const response = await updateUserShopSettings(userId, shopDescription, address);
+      console.log('Shop settings updated successfully!', response);
+    } catch (error) {
+      console.error('Failed to update shop settings.', error);
+    }
+  };
 
   const states = [
     'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
@@ -80,8 +104,18 @@ const Settings = () => {
           shopShippingAddress={user.shopShippingAddress}
         />
       )}
+
+      <div className="mt-6">
+        <button
+          onClick={() => handleSaveSettings(user._id)}
+          className="px-4 py-2 rounded-md bg-black text-white text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Save Settings
+        </button>
+      </div>
     </div>
   );
 };
 
 export default Settings;
+

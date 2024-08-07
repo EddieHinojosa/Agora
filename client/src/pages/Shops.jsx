@@ -45,8 +45,11 @@ useEffect(() => {
               <IoIosStar key={index} />
             ))}
           </p>
-          <p className='w-full flex justify-left text-gray-700 text-sm'>{userData.shopShippingAddress.city}, {userData.shopShippingAddress.state}</p>
-          <p className='w-full flex justify-left mt-4 text-gray-700 text-sm'>{userData.shopDescription}</p>
+          {userData.shopShippingAddress ? (
+          <p className='w-full flex justify-left text-gray-700 text-sm'>
+            {userData.shopShippingAddress.city}, {userData.shopShippingAddress.state}</p> ) : null}
+            {userData.shopDescription ? (
+          <p className='w-1/2 flex justify-left mt-4 text-gray-700 text-sm'>{userData.shopDescription}</p> ) : null}
           <DisplayGrid products={products} />
         </div>
       )}
