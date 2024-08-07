@@ -3,10 +3,13 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Cart from './pages/Cart';
-import Modal from 'react-modal';
+import Modal from 'react-modal'; // upsed by the shopping cart
 import { CartProvider } from './context/CartContext';
 
+//this is added strictly for appReaders to know where the modal is being used
+//this is not necessary for the code to function, but creates a console warning if not set
 Modal.setAppElement('#root');
+
 
 function App() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
