@@ -59,7 +59,7 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    proscessingTime:{
+    processingTime:{
         type: String,
         required: false
     },
