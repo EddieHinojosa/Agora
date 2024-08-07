@@ -40,8 +40,7 @@ const testProducts = [
 const Home = () => {
 
   const [products, setProducts] = useState([]);
-  const [user, setUser] = useState(null) // May not be needed depending on db
-
+  
   const fetchProducts = async () => {
     try {
         const response = await axios.get(

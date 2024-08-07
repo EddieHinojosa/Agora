@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Orders = () => {
     return (
-        <div><div className="container mx-auto p-4">
+        <div><div className="min-h-screen container mx-auto p-4">
         <div className="flex items-center mb-4">
             <h2 className="text-2xl">Orders</h2>
         </div>

@@ -47,7 +47,7 @@ const Products = () => {
     }, [user._id]);
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="min-h-screen container mx-auto p-4">
             <div className="flex items-center mb-4">
                 <h2 className="text-2xl">Products</h2>
                 <Link to={`/shopmanager/user/${user._id}/newproduct`} className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
