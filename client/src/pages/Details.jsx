@@ -71,6 +71,7 @@ const ProductDetails = () => {
         <div className="mb-4">
           <h2 className="text-2xl font-bold">{product.productName}</h2>
           <p className="text-xl text-gray-700 mt-2">${product.price}</p>
+          <p className="text-md text-gray-700 mt-2">In Stock: {product.quantity}</p>
           <p className="text-lg text-gray-700 mt-2">{product.tags && product.tags.length > 0 && <p>{product.tags.join(', ')}</p>}</p>
           <div className='mt-4'>
           <Link to={`/shop/${slug(product.shopName) || "shop"}`} className="text-sm rounded-md text-gray-700 hover:bg-gray-300 hover:text-black hover:p-2">
