@@ -6,7 +6,7 @@ import LoginApp from './LoginApp.jsx';
 import ShopApp from './ShopApp.jsx';
 import './index.css';
 import { AuthProvider, AuthContext } from './context/AuthContext.jsx';
-// import { FirebaseAuthProvider, FirebaseAuthContext } from './context/FirebaseAuthContext.jsx';
+
 
 // Error page
 import Error from './pages/Error.jsx';

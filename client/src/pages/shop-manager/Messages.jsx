@@ -10,6 +10,8 @@ const MessagingApp = () => {
     const [activeTab, setActiveTab] = useState('inbox');
     const [selectedMessage, setSelectedMessage] = useState(null);
   
+    console.log("MessagingApp user:", user);
+    
     return (
       <div className="min-h-screen p-4">
         {user ? (
