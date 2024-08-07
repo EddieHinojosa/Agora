@@ -50,7 +50,7 @@
             type="number"
             id="width"
             name="productWidth"
-            value={rows.width}
+            value={rows.productWidth}
             onChange ={handleChange}
             onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -84,7 +84,7 @@
             type="number"
             id="height"
             name="productHeight"
-            value={rows.height}
+            value={rows.productHeight}
             onChange ={handleChange}
             onBlur={handleChange}
             className="p-2 block w-1/4 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"

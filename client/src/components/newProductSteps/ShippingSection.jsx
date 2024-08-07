@@ -4,7 +4,7 @@ import UserData from "../ShopManager/Main/UserData";
 import { AuthContext } from "../../context/AuthContext";
 
 // Shipping Section
-const ShippingSection = ({ rows, handleChange, handleSubmit }) => {
+const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit }) => {
   const [selectedAddress, setSelectedAddress] = useState("");
 
 
