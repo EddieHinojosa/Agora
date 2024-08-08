@@ -8,7 +8,7 @@ export const CartProvider = ({ children }) => {
     const addToCart = (product, selectedSize, selectedColor, selectedMaterial) => {
         setCartItems(prevItems => [
             ...prevItems,
-            { ...product, selectedSize, selectedColor, selectedMaterial }
+            { ...product, selectedSize, selectedColor, selectedMaterial, price_id: product.price }
         ]);
     };
 

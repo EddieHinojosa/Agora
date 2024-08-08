@@ -1,90 +1,100 @@
-// import { useEffect, useState } from 'react';
-// import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
-// import { auth, db } from '../../utils/firebaseConfig';
-// import { Link } from 'react-router-dom';
-// import { FaSearch } from 'react-icons/fa';
-// import { IoIosAddCircle } from "react-icons/io";
+import React, { useState, useContext } from 'react';
+import MessageList from '../../components/Messaging/MessageList';
+import MessageDetail from '../../components/Messaging/MessageDetails';
+import NewMessage from '../../components/Messaging/NewMessage';
+import { AuthContext } from '../../context/AuthContext';
+import Tabs from '../../components/Messaging/Tabs';
 
-// const Messages = () => {
-//   const [messages, setMessages] = useState([]);
-//   const [searchTerm, setSearchTerm] = useState('');
+const MessagingApp = () => {
+  const { user } = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState('inbox');
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [deletedMessages, setDeletedMessages] = useState([]);
+  const [composeData, setComposeData] = useState(null);
 
-//   // Currently connected to Firestore DB - needs to pull from whatever DB Users are
-//   // Fetch messages currently if user is auth
-//   useEffect(() => {
-//     const user = auth.currentUser;
-//     if (!user) return;
+  const handleSelectMessage = (message) => {
+    setSelectedMessage(message);
+  };
 
-//     // Query messages where recipient is the current user
-//     const q = query(
-//       collection(db, 'messages'),
-//       where('recipient', '==', user.uid),
-//       orderBy('timestamp', 'desc')
-//     );
+  const handleDeleteMessage = (message) => {
+    setDeletedMessages((prevDeletedMessages) => {
+      const updatedDeletedMessages = [message, ...prevDeletedMessages];
+      return updatedDeletedMessages.slice(0, 5);
+    });
+    setSelectedMessage(null); // Close the message detail view after deletion
+  };
 
-//     // Listen for changes to the query 
-//     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-//       const messages = querySnapshot.docs.map((doc) => doc.data());
-//       setMessages(messages);
-//     });
+  const handleReplyMessage = () => {
+    setComposeData({
+      recipient: selectedMessage.sender,
+      subject: `RE: ${selectedMessage.subject}`,
+      body: `\n\n---------- Original message ----------\nFrom: ${selectedMessage.sender}\nDate: ${new Date(selectedMessage.createdAt.toDate()).toLocaleString()}\nSubject: ${selectedMessage.subject}\nTo: ${selectedMessage.recipient}\n\n${selectedMessage.body}`,
+    });
+    setActiveTab('compose');
+  };
 
-//     return () => unsubscribe();
-//   }, []);
+  const handleForwardMessage = () => {
+    setComposeData({
+      recipient: '',
+      subject: `Fwd: ${selectedMessage.subject}`,
+      body: `\n\n---------- Forwarded message ----------\nFrom: ${selectedMessage.sender}\nDate: ${new Date(selectedMessage.createdAt.toDate()).toLocaleString()}\nSubject: ${selectedMessage.subject}\nTo: ${selectedMessage.recipient}\n\n${selectedMessage.body}`,
+    });
+    setActiveTab('compose');
+  };
 
-//   // Handle search input
-//   const handleSearch = (e) => {
-//     setSearchTerm(e.target.value);
-//   };
+  const handleMessageSent = () => {
+    setComposeData(null);
+  };
 
-//   // Filter messages based on search term
-//   const filteredMessages = messages.filter((message) =>
-//     message.text.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
+  return (
+    <div className="min-h-screen p-4">
+      {user ? (
+        <>
+          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          <div className="mt-4">
+            {activeTab === 'inbox' && (
+              <div className="flex">
+                <MessageList type="inbox" onSelectMessage={handleSelectMessage} onDeleteMessage={handleDeleteMessage} />
+                <MessageDetail message={selectedMessage} onClose={() => setSelectedMessage(null)} onReply={handleReplyMessage} />
+              </div>
+            )}
+            {activeTab === 'sent' && (
+              <div className="flex">
+                <MessageList type="sent" onSelectMessage={handleSelectMessage} onDeleteMessage={handleDeleteMessage} />
+                <MessageDetail message={selectedMessage} onClose={() => setSelectedMessage(null)} onForward={handleForwardMessage} />
+              </div>
+            )}
+            {activeTab === 'compose' && <NewMessage composeData={composeData} onMessageSent={handleMessageSent} />}
+            {activeTab === 'trash' && (
+              <div className="flex">
+                <div className="w-full">
+                  {deletedMessages.map((message) => (
+                    <div
+                      key={message.id}
+                      className="p-4 border-b border-gray-200 flex justify-between items-center hover:bg-gray-100"
+                    >
+                      <div onClick={() => handleSelectMessage(message)} className="cursor-pointer w-3/4">
+                        <h4 className="font-bold">{message.subject}</h4>
+                        <p>{message.body.slice(0, 20)}...</p>
+                        <p className="text-sm text-gray-500">
+                          {new Date(message.createdAt.toDate()).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <MessageDetail message={selectedMessage} onClose={() => setSelectedMessage(null)} />
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="min-h-screen flex items-center justify-center">
+          <p>Please log in to use the messaging system.</p>
+        </div>
+      )}
+    </div>
+  );
+};
 
-//   return (
-//     <div className='mt-4'>
-//       <h2 className="text-2xl">Messages</h2>
-
-//       {/* Search and new message button */}
-//       <div className="mt-4 flex space-x-2 mb-4 w-full">
-//         <div className="flex items-center w-3/4 md:w-3/4 p-2 border border-gray-300 rounded-md">
-//           <button className="text-gray-500 mr-2">
-//             <FaSearch />
-//           </button>
-//           <input
-//             type="text"
-//             placeholder="Search messages..."
-//             value={searchTerm}
-//             onChange={handleSearch}
-//             className="w-full border-none focus:ring-0"
-//           />
-//         </div>
-//         <Link to='/shopmanager/newmessage' className="ml-auto text-l flex items-center border border-gray-300 rounded-lg px-4 py-2 hover:bg-black hover:text-white">
-//                     <IoIosAddCircle className="mr-2 text-xl" /> New Message
-//                 </Link>
-//       </div>
-
-//       {/* Inbox and Sent Links --- currently no code inputed for links to make this happen */}
-//       <div className="flex space-x-4 mb-4 ml-2">
-//         <Link to="/shopmanager/inbox" className="text-black hover:underline">
-//           Inbox
-//         </Link>
-//         <Link to="/shopmanager/sent" className="text-black hover:underline">
-//           Sent
-//         </Link>
-//       </div>
-
-//       {/* Display messages */}
-//       <ul className="space-y-2">
-//         {filteredMessages.map((message, index) => (
-//           <li key={index} className="p-2 bg-gray-100 rounded">
-//             {message.text}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Messages;
-
+export default MessagingApp;

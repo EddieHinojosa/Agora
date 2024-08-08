@@ -13,7 +13,7 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
     
     
     const addresses = [
-     `${user.mailingAddress.street}, ${user.mailingAddress.city}, ${user.mailingAddress.state}`
+     `${user.shopShippingAddress.line1}, ${user.shopShippingAddress.city}, ${user.shopShippingAddress.state}, ${user.shopShippingAddress.zip}`
     ];
   
  
@@ -59,7 +59,7 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
             className="p-2 block w-2/6 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value = "" disabled >
-              Choose Mailing Address
+              Choose Shipping Address
               </option>
             {addresses.map((address, index) => (
               <option key={index} value={address}>

@@ -16,11 +16,18 @@ const schema = yup.object().shape({
   confirmPassword: yup.string()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
     .required('Confirm Password is required'),
-  billingStreetAddress: yup.string().required('Billing Street Address is required'),
+  billingStreetAddress1: yup.string().required('Billing Street Address is required'),
+  billingStreetAddress2: yup.string(),
   billingZipcode: yup.string().required('Billing Zipcode is required'),
   billingCity: yup.string().required('Billing City is required'),
   billingState: yup.string().required('Billing State is required'),
   billingCountry: yup.string().required('Billing Country is required'),
+  mailingStreetAddress1: yup.string().required('Mailing Street Address is required'),
+  mailingStreetAddress2: yup.string(),
+  mailingZipcode: yup.string().required('Mailing Zipcode is required'),
+  mailingCity: yup.string().required('Mailing City is required'),
+  mailingState: yup.string().required('Mailing State is required'),
+  mailingCountry: yup.string().required('Mailing Country is required'),
   username: yup.string().required('Username is required'),
   shopName: yup.string().required('Shop Name is required'),
 });
@@ -114,7 +121,8 @@ const UserSignup = () => {
   };
 
   const handleAddressCheck = () => {
-    setValue('mailingStreetAddress', watch('billingStreetAddress'));
+    setValue('mailingStreetAddress1', watch('billingStreetAddress1'));
+    setValue('mailingStreetAddress2', watch('billingStreetAddress2'));
     setValue('mailingZipcode', watch('billingZipcode'));
     setValue('mailingCity', watch('billingCity'));
     setValue('mailingState', watch('billingState'));
@@ -133,7 +141,8 @@ const UserSignup = () => {
         {emailError && <p className="text-red-600 text-sm">{emailError}</p>}
         <FormField label="Password" name="password" register={register} errors={errors} type="password" />
         <FormField label="Confirm Password" name="confirmPassword" register={register} errors={errors} type="password" />
-        <FormField label="Billing Street Address" name="billingStreetAddress" register={register} errors={errors} />
+        <FormField label="Billing Street Address 1" name="billingStreetAddress1" register={register} errors={errors} />
+        <FormField label="Billing Street Address 2" name="billingStreetAddress2" register={register} errors={errors} />
         <FormField label="Billing Zipcode" name="billingZipcode" register={register} errors={errors} />
         <FormField label="Billing City" name="billingCity" register={register} errors={errors} />
         <SelectField label="Billing State" name="billingState" register={register} errors={errors} options={states} />
@@ -144,7 +153,8 @@ const UserSignup = () => {
           <label className="ml-2 block text-sm text-gray-900">Mailing address same as billing</label>
         </div>
         
-        <FormField label="Mailing Street Address" name="mailingStreetAddress" register={register} errors={errors} />
+        <FormField label="Mailing Street Address 1" name="mailingStreetAddress1" register={register} errors={errors} />
+        <FormField label="Mailing Street Address 2" name="mailingStreetAddress2" register={register} errors={errors} />
         <FormField label="Mailing Zipcode" name="mailingZipcode" register={register} errors={errors} />
         <FormField label="Mailing City" name="mailingCity" register={register} errors={errors} />
         <SelectField label="Mailing State" name="mailingState" register={register} errors={errors} options={states} />
