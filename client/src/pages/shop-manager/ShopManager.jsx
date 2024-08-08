@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaLink } from "react-icons/fa";
 import UserData from '../../components/ShopManager/Main/UserData';
 import slug from 'slug';
+import axios from 'axios';
 
 // Dynamic Status Cards - will pull information from DB
 const StatusCard = ({ status, count }) => {
@@ -20,6 +21,30 @@ const StatusCard = ({ status, count }) => {
 
 const ShopManager = () => {
   const { id } = useParams(); 
+
+  // Status Card Code
+  const [productCounts, setProductCounts] = useState({
+    activeCount: 0,
+    totalCount: 0,
+    soldOutCount: 0,
+  })
+
+  useEffect(() => {
+    const fetchProductCounts = async () => {
+      try {
+        const apiUrl = import.meta.env.MODE === 'production' 
+          ? import.meta.env.VITE_PROD_API_URL 
+          : import.meta.env.VITE_DEV_API_URL;
+          
+        const response = await axios.get(`${apiUrl}/api/count/${id}`);
+        setProductCounts(response.data);
+        console.log('Product has been counted');
+      } catch (error) {
+        console.error('Error fetching product counts', error);
+      }
+    };
+    fetchProductCounts();
+  }, [id]);
 
   return (
     <UserData
@@ -43,9 +68,9 @@ const ShopManager = () => {
               </Link>
             </div>
             <div className="flex justify-center items-center mt-8">
-              <StatusCard status="Active" count={20} />
-              <StatusCard status="Inactive" count={10} />
-              <StatusCard status="Sold Out" count={5} />
+              <StatusCard status="Active Listings" count={productCounts.activeCount} />
+              <StatusCard status="Total Quantity" count={productCounts.totalCount} />
+              <StatusCard status="Sold Out" count={productCounts.soldOutCount} />
             </div>
             <div className='flex justify-center mt-8'>
             {(!userData.shopShippingAddress && !userData.shopDescription) && (
