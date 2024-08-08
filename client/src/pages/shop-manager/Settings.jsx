@@ -119,7 +119,7 @@ const Settings = () => {
         {saveMessage && <div className="text-green-800 mb-2 text-sm">{saveMessage}</div>} 
         <button
           onClick={() => handleSaveSettings(user._id)}
-          className="px-4 py-2 rounded-md bg-black text-white text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+          className="px-4 py-2 rounded-md bg-black text-white text-sm hover:bg-gray-300 hover:text-black focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
         >
           Save Settings
         </button>
