@@ -22,9 +22,9 @@ const EditProduct = () => {
   const [rows, setRows] = useState(
     {
     category: "",
-    // color: [],
-    // image_urls: [],
-    // material: [],
+    color: [],
+    image_urls: [],
+    material: [],
     
     packedLength: "",
     packedLengthUnit: "",
@@ -53,12 +53,12 @@ const EditProduct = () => {
   
     price: "",
     shopName: "",
-    // size: [],
-    // scent: [],
-    // style: [],
+    size: [],
+    scent: [],
+    style: [],
     status: "",
     
-    // tags: [],
+    tags: [],
 
 
     user: "",
