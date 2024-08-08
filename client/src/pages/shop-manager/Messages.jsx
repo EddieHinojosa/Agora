@@ -42,6 +42,10 @@ const MessagingApp = () => {
     setActiveTab('compose');
   };
 
+  const handleMessageSent = () => {
+    setComposeData(null);
+  };
+
   return (
     <div className="min-h-screen p-4">
       {user ? (
@@ -60,7 +64,7 @@ const MessagingApp = () => {
                 <MessageDetail message={selectedMessage} onClose={() => setSelectedMessage(null)} onForward={handleForwardMessage} />
               </div>
             )}
-            {activeTab === 'compose' && <NewMessage composeData={composeData} />}
+            {activeTab === 'compose' && <NewMessage composeData={composeData} onMessageSent={handleMessageSent} />}
             {activeTab === 'trash' && (
               <div className="flex">
                 <div className="w-full">

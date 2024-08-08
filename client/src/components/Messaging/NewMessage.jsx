@@ -3,7 +3,7 @@ import { db } from '../../utils/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { AuthContext } from '../../context/AuthContext';
 
-const NewMessage = ({ composeData }) => {
+const NewMessage = ({ composeData, onMessageSent }) => {
   const { user } = useContext(AuthContext);
   const [recipient, setRecipient] = useState('');
   const [subject, setSubject] = useState('');
@@ -36,6 +36,7 @@ const NewMessage = ({ composeData }) => {
         setSuccessMessage('Message sent successfully!');
         setErrorMessage('');
         setTimeout(() => setSuccessMessage(''), 3000); // Clear message after 3 seconds
+        if (onMessageSent) onMessageSent(); // Reset composeData in MessagingApp
       } catch (error) {
         console.error('Error sending message:', error);
         setErrorMessage('Failed to send message. Please try again.');
