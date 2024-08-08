@@ -22,9 +22,9 @@ const EditProduct = () => {
   const [rows, setRows] = useState(
     {
     category: "",
-    color: "",
-    image_urls: [],
-    material: "",
+    // color: [],
+    // image_urls: [],
+    // material: [],
     
     packedLength: "",
     packedLengthUnit: "",
@@ -53,10 +53,14 @@ const EditProduct = () => {
   
     price: "",
     shopName: "",
-    size: "",
+    // size: [],
+    // scent: [],
+    // style: [],
     status: "",
     
-    tags: [],
+    // tags: [],
+
+
     user: "",
     quantity: "",
     }
@@ -97,8 +101,8 @@ const EditProduct = () => {
 
   };
   
-  const handleEditSubmit = async (e) => {
-    e.preventDefault();    
+  const handleEditSubmit = async (e) => {  
+    console.log('inside handleEditSubmit')
     
     try {
     const updatedRows = {...rows};
@@ -110,10 +114,10 @@ const EditProduct = () => {
     setRows(updatedRows)
 
     
-      const response = await axios.post( 
+      const response = await axios.put( 
         `${import.meta.env.MODE === 'production' 
           ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/shopmanager/${user._id}/newproduct`,
+          : import.meta.env.VITE_DEV_API_URL}/shopmanager/${user._id}/editproduct/${id}`,
         updatedRows
       );
 
@@ -139,12 +143,13 @@ const EditProduct = () => {
     <div className="min-h-screen flex flex-col">
       <h2 className="text-2xl font-bold">Edit Product</h2>
       <div className="mt-4">
+        <form onSubmit={handleEditSubmit}>
         {steps.map((StepComponent, index) => (
           <div key={index} className="mb-6">
             {StepComponent}
           </div>
         ))}
-
+      </form>
       </div>
     </div>
   );

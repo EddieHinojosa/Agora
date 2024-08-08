@@ -72,7 +72,7 @@ const ProductDetails = () => {
           <h2 className="text-2xl font-bold">{product.productName}</h2>
           <p className="text-xl text-gray-700 mt-2">${product.price}</p>
           <p className="text-md text-gray-700 mt-2">In Stock: {product.quantity}</p>
-          <p className="text-lg text-gray-700 mt-2">{product.tags && product.tags.length > 0 && <p>{product.tags.join(', ')}</p>}</p>
+          <p className="text-lg w-1/2 text-gray-700 mt-2">{product.tags && product.tags.length > 0 && <p>{product.tags.join(', ')}</p>}</p>
           <div className='mt-4'>
           <Link to={`/shop/${slug(product.shopName) || "shop"}`} className="text-sm rounded-md text-gray-700 hover:bg-gray-300 hover:text-black hover:p-2">
             {product.shopName || "shop"} 
@@ -92,12 +92,12 @@ const ProductDetails = () => {
               </label>
               <select
                 id="size"
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                className="mt-1 block w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
                 value={selectedSize}
                 onChange={(e) => setSelectedSize(e.target.value)}
               >
                 <option value="">Select a size</option>
-                {product.sizeOptions.map((size, index) => (
+                {product.size.map((size, index) => (
                   <option key={index} value={size}>
                     {size}
                   </option>
@@ -117,12 +117,12 @@ const ProductDetails = () => {
               </label>
               <select
                 id="color"
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                className="mt-1 block w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
                 value={selectedColor}
                 onChange={(e) => setSelectedColor(e.target.value)}
               >
                 <option value="">Select a color</option>
-                {product.colorOptions.map((color, index) => (
+                {product.color.map((color, index) => (
                   <option key={index} value={color}>
                     {color}
                   </option>
@@ -142,12 +142,12 @@ const ProductDetails = () => {
               </label>
               <select
                 id="material"
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                className="mt-1 block w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
                 value={selectedMaterial}
                 onChange={(e) => setSelectedMaterial(e.target.value)}
               >
                 <option value="">Select a material</option>
-                {product.materialOptions.map((material, index) => (
+                {product.material.map((material, index) => (
                   <option key={index} value={material}>
                     {material}
                   </option>
@@ -224,7 +224,7 @@ const ProductDetails = () => {
                   <li>Product Dimensions: {product.productLength} x {product.productWidth} x {product.productHeight}</li>
                   <li>Packed Dimensions: {product.packedLength} x {product.packedWidth} x {product.packedHeight}</li>
                   <li>Packed Weight: {product.packedWeight} lb</li>
-                  <li>Processing Time: {product.proscessingTime}</li>
+                  <li>Processing Time: {product.processingTime}</li>
                 </ul>
               </>
             )}
