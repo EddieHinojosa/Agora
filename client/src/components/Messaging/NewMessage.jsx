@@ -1,15 +1,22 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { db } from '../../utils/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { AuthContext } from '../../context/AuthContext';
 
-const NewMessage = () => {
+const NewMessage = ({ replyData }) => {
   const { user } = useContext(AuthContext);
   const [recipient, setRecipient] = useState('');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (replyData) {
+      setRecipient(replyData.recipient);
+      setSubject(replyData.subject);
+    }
+  }, [replyData]);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -93,3 +100,4 @@ const NewMessage = () => {
 };
 
 export default NewMessage;
+  

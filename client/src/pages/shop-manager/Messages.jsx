@@ -9,6 +9,17 @@ const MessagingApp = () => {
   const { user } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState('inbox');
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const [replyData, setReplyData] = useState(null);  // State to hold reply data
+
+  const handleCloseModal = () => {
+    setSelectedMessage(null);
+  };
+
+  const handleReply = (message) => {
+    setReplyData({ recipient: message.sender, subject: `RE: ${message.subject}` });
+    setActiveTab('compose');
+    setSelectedMessage(null);
+  };
 
   return (
     <div className="min-h-screen p-4">
@@ -19,16 +30,28 @@ const MessagingApp = () => {
             {activeTab === 'inbox' && (
               <div className="flex">
                 <MessageList type="inbox" onSelectMessage={setSelectedMessage} />
-                <MessageDetail message={selectedMessage} />
+                {selectedMessage && (
+                  <MessageDetail
+                    message={selectedMessage}
+                    onClose={handleCloseModal}
+                    onReply={() => handleReply(selectedMessage)}
+                  />
+                )}
               </div>
             )}
             {activeTab === 'sent' && (
               <div className="flex">
                 <MessageList type="sent" onSelectMessage={setSelectedMessage} />
-                <MessageDetail message={selectedMessage} />
+                {selectedMessage && (
+                  <MessageDetail
+                    message={selectedMessage}
+                    onClose={handleCloseModal}
+                    onReply={() => handleReply(selectedMessage)}
+                  />
+                )}
               </div>
             )}
-            {activeTab === 'compose' && <NewMessage />}
+            {activeTab === 'compose' && <NewMessage replyData={replyData} />}
           </div>
         </>
       ) : (
