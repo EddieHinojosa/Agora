@@ -224,7 +224,7 @@ const ProductDetails = () => {
                   <li>Product Dimensions: {product.productLength} x {product.productWidth} x {product.productHeight}</li>
                   <li>Packed Dimensions: {product.packedLength} x {product.packedWidth} x {product.packedHeight}</li>
                   <li>Packed Weight: {product.packedWeight} lb</li>
-                  <li>Processing Time: {product.proscessingTime}</li>
+                  <li>Processing Time: {product.processingTime}</li>
                 </ul>
               </>
             )}

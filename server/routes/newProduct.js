@@ -116,4 +116,23 @@ router.put('/shopmanager/:id/editproduct/:productId', async (req, res) => {
     }
 });
 
+
+// Shop Manager Home Product route
+router.get('/api/count/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const activeCount = await Product.countDocuments({ user: userId });
+      const soldOutCount = await Product.countDocuments({ user: userId, status: 'Sold Out' });
+      const totalQuantity = await Product.aggregate([
+        { $match: { user: userId, status: { $ne: 'Inactive' } } },
+        { $group: { _id: null, totalQuantity: { $sum: "$quantity" } } }
+      ]);
+      const totalCount = totalQuantity.length > 0 ? totalQuantity[0].totalQuantity : 0;
+  
+      res.status(200).json({ activeCount, soldOutCount, totalCount });
+    } catch (error) {
+      res.status(500).json({ message: 'Server Error', error });
+    }
+  });
+
 export default router;

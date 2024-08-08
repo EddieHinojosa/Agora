@@ -2,40 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Banner from '../components/Home/Banner'
 import DisplayGrid from '../components/Home/DisplayGrid'
-// import DiscoverBanner from '../components/Home/DiscoverBanner'
-
-const testProducts = [
-  {
-    id: '1',
-    name: 'bubblegum',
-    price: 1.99,
-    image_urls: [''],
-    shopName: 'Shop A',
-  },
-  {
-    id: '2',
-    name: 'baseball',
-    price: 20.99,
-    image_urls: [''],
-    shopName: 'Shop B',
-  },
-  {
-    id: '3',
-    name: 'shoes',
-    price: 30.99,
-    image_urls: [''],
-    shopName: 'Shop C',
-  },
-  {
-    id: '4',
-    name: 'hat',
-    price: 10.99,
-    image_urls: [''],
-    shopName: 'Shop D',
-  },
-  
-];
-
 
 const Home = () => {
 
