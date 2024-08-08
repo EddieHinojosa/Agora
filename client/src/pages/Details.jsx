@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { CartContext } from '../context/CartContext';
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from "react-icons/io";
+import axios from "axios";
 import slug from 'slug';
+import BackButton from '../components/Home/Backbutton';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -13,6 +14,8 @@ const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedMaterial, setSelectedMaterial] = useState("");
+  const [selectedStyle, setSelectedStyle] = useState("");
+  const [selectedScent, setSelectedScent] = useState("");
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [showAbout, setShowAbout] = useState(false);
   const [showSpec, setSpec] = useState(false);
@@ -47,6 +50,7 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-start mt-6 pl-6 pr-6 md:pl-24 md:pr-20">
+      <div className='p-4'><BackButton /></div>
       <div className="w-full md:w-1/2 flex flex-col items-center md:ml-6">
         <img
           src={mainImage}
@@ -92,7 +96,7 @@ const ProductDetails = () => {
               </label>
               <select
                 id="size"
-                className="mt-1 block w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                className="mt-1 block w-full md:w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
                 value={selectedSize}
                 onChange={(e) => setSelectedSize(e.target.value)}
               >
@@ -117,7 +121,7 @@ const ProductDetails = () => {
               </label>
               <select
                 id="color"
-                className="mt-1 block w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                className="mt-1 block w-full md:w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
                 value={selectedColor}
                 onChange={(e) => setSelectedColor(e.target.value)}
               >
@@ -142,7 +146,7 @@ const ProductDetails = () => {
               </label>
               <select
                 id="material"
-                className="mt-1 block w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                className="mt-1 block w-full md:w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
                 value={selectedMaterial}
                 onChange={(e) => setSelectedMaterial(e.target.value)}
               >
@@ -156,6 +160,57 @@ const ProductDetails = () => {
             </div>
           )}
 
+          {/* Style Dropdown */}
+          {product.style && product.style.length > 0 && (
+            <div className="mt-4">
+              <label
+                htmlFor="style"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Style:
+              </label>
+              <select
+                id="style"
+                className="mt-1 block w-full md:w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                value={selectedStyle}
+                onChange={(e) => setSelectedStyle(e.target.value)}
+              >
+                <option value="">Select a style</option>
+                {product.style.map((style, index) => (
+                  <option key={index} value={style}>
+                    {style}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Scent Select */}
+          {product.scent && product.scent.length > 0 && (
+            <div className="mt-4">
+              <label
+                htmlFor="scent"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Scent:
+              </label>
+              <select
+                id="scent"
+                className="mt-1 block w-full md:w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                value={selectedScent}
+                onChange={(e) => setSelectedScent(e.target.value)}
+              >
+                <option value="">Select a scent</option>
+                {product.scent.map((scent, index) => (
+                  <option key={index} value={scent}>
+                    {scent}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          
+
           {/* Item Quantity Dropdown */}
             <div className="mt-4">
               <label
@@ -166,7 +221,7 @@ const ProductDetails = () => {
               </label>
               <select
                 id="quantity"
-                className="mt-1 block w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
+                className="mt-1 block w-full md:w-1/2 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-pink-border-pink-500 focus:border-pink-500 sm:text-sm"
                 value={selectedQuantity}
                 onChange={(e) => setSelectedQuantity(e.target.value)}
               >
@@ -178,7 +233,7 @@ const ProductDetails = () => {
               </select>
             </div>
 
-          <button onClick={handleAddToCart} className="mt-4 px-4 py-2 w-1/2 bg-black text-white text-sm font-semibold rounded-md hover:bg-gray-300 hover:text-black">
+          <button onClick={handleAddToCart} className="mt-4 px-4 py-2 w-full md:w-1/2  bg-black text-white text-sm font-semibold rounded-md hover:bg-gray-300 hover:text-black">
             Add to Cart
           </button>
 
@@ -187,7 +242,7 @@ const ProductDetails = () => {
           <div className="mt-6">
             <button
               onClick={() => setShowAbout(!showAbout)}
-              className="text-xl font-bold flex items-center justify-between w-1/2"
+              className="text-xl font-bold flex items-center justify-between w-full md:w-1/2 "
             >
               About the Product
               <span>{showAbout ? <IoIosArrowDropupCircle /> : <IoIosArrowDropdownCircle />}</span>
@@ -204,7 +259,7 @@ const ProductDetails = () => {
           <div className="mt-3">
             <button
               onClick={() => setSpec(!showSpec)}
-              className="text-xl font-bold flex items-center justify-between w-1/2"
+              className="text-xl font-bold flex items-center justify-between w-full md:w-1/2 "
             >
               Specifications
               <span>{showSpec ? <IoIosArrowDropupCircle /> : <IoIosArrowDropdownCircle />}</span>
