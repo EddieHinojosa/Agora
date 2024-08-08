@@ -14,8 +14,7 @@ const Categories = () => {
                       : import.meta.env.VITE_DEV_API_URL}`
                 );
                 setProducts(response.data);
-                console.log("Products fetched:", response.data);
-                console.log(`products poop`)
+                console.log("Products fetched:", response.data);         
             } catch (error) {
                 console.error("Error fetching products:", error);
             }

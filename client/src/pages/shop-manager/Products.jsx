@@ -5,6 +5,7 @@ import { IoMdSearch } from "react-icons/io";
 import axios from 'axios';
 import ProductCard from '../../components/ProductCard';
 import { AuthContext } from '../../context/AuthContext';
+import UserData from '../../components/ShopManager/Main/UserData';
 
 
 const Products = () => {

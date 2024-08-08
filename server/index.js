@@ -51,7 +51,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
 });
-app.use(limiter);
+// app.use(limiter);
 
 const mongoUri = process.env.VITE_MONGO_URI;
 if (!mongoUri) {
@@ -180,5 +180,5 @@ app.use('/api', stripeRoutes); //stripe stuff
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}...poop poop`);
+    console.log(`Server running on port ${PORT}`);
 });
