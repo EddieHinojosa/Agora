@@ -78,7 +78,7 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
           htmlFor="productWeight"
           className="mt-4 block text-sm font-medium text-gray-700"
         >
-          Item Weight
+          Item Weight *
         </label>
         <div className="flex items-center mt-1">
           <input
@@ -111,7 +111,7 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
           htmlFor="packedLength"
           className="mt-4 block text-sm font-medium text-gray-700"
         >
-          Packed Length
+          Packed Length *
         </label>
         <div className="flex items-center mt-1">
           <input
@@ -145,7 +145,7 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
           htmlFor="packedWidth"
           className="mt-4 block text-sm font-medium text-gray-700"
         >
-          Packed Width
+          Packed Width *
         </label>
         <div className="flex items-center mt-1">
           <input
@@ -178,7 +178,7 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
           htmlFor="packedHeight"
           className="mt-4 block text-sm font-medium text-gray-700"
         >
-          Packed Height
+          Packed Height *
         </label>
         <div className="flex items-center mt-1">
           <input

@@ -9,7 +9,7 @@
           htmlFor="productName"
           className="block text-sm font-medium text-gray-700"
         >
-          Product Name
+          Product Name *
         </label>
         <input
           type="text"
@@ -29,7 +29,7 @@
           htmlFor="productDetails"
           className="block text-sm font-medium text-gray-700"
         >
-          Product Details
+          Product Details *
         </label>
         <textarea
           id="productDetails"
