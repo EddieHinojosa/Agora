@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { IoIosAddCircle } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { IoMdSearch } from "react-icons/io";
 import axios from 'axios';
 import ProductCard from '../../components/ProductCard';
@@ -10,6 +10,7 @@ import UserData from '../../components/ShopManager/Main/UserData';
 
 const Products = () => {
     const { user } = useContext(AuthContext);
+    const { id } = useParams();
     const [products, setProducts] = useState([]);
     
     const onDelete = async (_id) => {
@@ -33,7 +34,7 @@ const Products = () => {
                 const response = await axios.get(
                     `${import.meta.env.MODE === 'production' 
                       ? import.meta.env.VITE_PROD_API_URL 
-                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/${user._id}/products
+                      : import.meta.env.VITE_DEV_API_URL}/shopmanager/${id}/products
                       `
                 );
                 setProducts(response.data);
@@ -43,10 +44,15 @@ const Products = () => {
                 console.error("Error fetching products:", error);
             }
         };
-
+        if (id) {
         fetchProducts();
+        }
    //// deleting line 45 creates an endless loop that withh result in error code 429
-    }, [user._id]);
+    }, [id]);
+
+    if (!user || !user._id) {
+        return <div>Plays Jeopardy Theme Song..</div>;
+    }
 
     return (
         <div className="min-h-screen container mx-auto p-4">
