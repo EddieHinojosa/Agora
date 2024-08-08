@@ -4,6 +4,7 @@ import { set } from "mongoose";
 
 const ProductImages = ({ rows, setRows  }) => {
   const [images, setImages] = useState([]);
+  const [saveMessage, setSaveMessage] = useState('');
 
   const pushImages = (images, rows) => {
     // State change logic for image urls
@@ -13,6 +14,11 @@ const ProductImages = ({ rows, setRows  }) => {
     setRows({ ...rows });
     console.log(rows)
     // console.log(imagesArray);
+
+    setSaveMessage('Images saved!');
+    setTimeout(() => {
+      setSaveMessage('');
+    }, 3000);
   }
 
   const pullImage = (e) => {
@@ -59,6 +65,7 @@ const ProductImages = ({ rows, setRows  }) => {
           ))}
         </div>
       </div>
+      <div className="mt-4 text-green-600">{saveMessage}</div>
       <button
         onClick={() => {
           if (images.length > 0) {

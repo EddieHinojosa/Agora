@@ -3,6 +3,7 @@ import { AuthContext } from '../../context/AuthContext';
 import MainSettings from '../../components/ShopManager/Settings/MainSettings'; 
 import ShippingSettings from '../../components/ShopManager/Settings/ShippingSettings'; 
 import { updateUserShopSettings } from '../../api/shopSettingsApi';
+import { set } from 'mongoose';
 
 const Settings = () => {
   const { user } = useContext(AuthContext);
@@ -20,6 +21,7 @@ const Settings = () => {
     country: ''
   });
   const [savedAddresses, setSavedAddresses] = useState([]);
+  const [saveMessage, setSaveMessage] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -39,8 +41,16 @@ const Settings = () => {
     try {
       const response = await updateUserShopSettings(userId, shopDescription, address);
       console.log('Shop settings updated successfully!', response);
+      setSaveMessage('Shop settings saved!')
+      setTimeout(() => {
+        setSaveMessage('');
+      }, 3000);
     } catch (error) {
       console.error('Failed to update shop settings.', error);
+      setSaveMessage('Failed to save settings..');
+      setTimeout(() => {
+        setSaveMessage('');
+      }, 3000);
     }
   };
 
@@ -106,9 +116,10 @@ const Settings = () => {
       )}
 
       <div className="mt-6">
+        {saveMessage && <div className="text-green-800 mb-2 text-sm">{saveMessage}</div>} 
         <button
           onClick={() => handleSaveSettings(user._id)}
-          className="px-4 py-2 rounded-md bg-black text-white text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="px-4 py-2 rounded-md bg-black text-white text-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
         >
           Save Settings
         </button>
