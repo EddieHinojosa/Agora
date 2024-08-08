@@ -9,7 +9,7 @@ const ProductPricing = ({ rows, handleChange }) => (
           htmlFor="price"
           className="mt-14 block text-sm font-medium text-gray-700"
         >
-          Price
+          Price *
         </label>
         <div className="relative mt-1">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
