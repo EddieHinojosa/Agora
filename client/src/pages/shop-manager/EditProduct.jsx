@@ -101,8 +101,7 @@ const EditProduct = () => {
 
   };
   
-  const handleEditSubmit = async (e) => {
-    e.preventDefault();    
+  const handleEditSubmit = async (e) => {  
     console.log('inside handleEditSubmit')
     
     try {
@@ -134,7 +133,7 @@ const EditProduct = () => {
       <ProductType key="productType" handleChange={handleChange} rows={rows}  setRows={setRows} />,
       // <ProductImages key="productImages" handleChange={handleChange} rows={rows} setRows={setRows} />,
       <ProductPricing key="productPricing" handleChange={handleChange} rows={rows} setRows={setRows} />,
-      // <ProductOptions key="productOptions"  handleChange={handleChange} rows={rows}  setRows={setRows} />,
+      <ProductOptions key="productOptions"  handleChange={handleChange} rows={rows}  setRows={setRows} />,
       <ProductDimensions key="productDimensions" handleChange={handleChange} rows={rows} setRows={setRows} />,
       <ShippingSection key="shippingSection" handleEditSubmit={handleEditSubmit} handleChange={handleChange} rows={rows} setRows={setRows} />,
       // <ProductTable key="productTable"  rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}  />,
