@@ -47,7 +47,6 @@ router.get('/shopmanager/:id/products', async (req, res) => {
 });
 
 
-
 // Get Product by ID
 router.get('/api/products/:id', async (req, res) => {
     const productId = req.params.id;
@@ -114,6 +113,26 @@ router.put('/shopmanager/:id/editproduct/:productId', async (req, res) => {
     }
 });
 
+
+// Shop Manager Home Product route
+router.get('/api/count/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const activeCount = await Product.countDocuments({ user: userId });
+      const soldOutCount = await Product.countDocuments({ user: userId, status: 'Sold Out' });
+      const totalQuantity = await Product.aggregate([
+        { $match: { user: userId, status: { $ne: 'Inactive' } } },
+        { $group: { _id: null, totalQuantity: { $sum: "$quantity" } } }
+      ]);
+      const totalCount = totalQuantity.length > 0 ? totalQuantity[0].totalQuantity : 0;
+  
+      res.status(200).json({ activeCount, soldOutCount, totalCount });
+    } catch (error) {
+      res.status(500).json({ message: 'Server Error', error });
+    }
+  });
+
+  
 router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
     const { userId, productId } = req.params;
 
@@ -128,4 +147,5 @@ router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
         res.status(500).json({ message: "Error deleting product" });
     }
 });
+
 export default router;
