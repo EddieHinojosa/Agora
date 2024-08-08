@@ -103,7 +103,10 @@ const Navbar = ({ setModalIsOpen }) => {
           Accessories
         </Link>
         <Link to="#" className="hover:underline text-sm">
-          Art & Collectibles
+          Art
+        </Link>
+        <Link to="#" className="hover:underline text-sm">
+          Collectibles
         </Link>
         <Link to="#" className="hover:underline text-sm">
           Clothing
@@ -118,7 +121,10 @@ const Navbar = ({ setModalIsOpen }) => {
           Jewelry
         </Link>
         <Link to="#" className="hover:underline text-sm">
-          Paper & Novelty
+          Paper
+        </Link>
+        <Link to="#" className="hover:underline text-sm">
+          Novelty
         </Link>
         <Link to="#" className="hover:underline text-sm">
           Pets

@@ -59,9 +59,9 @@ root.render(
               <Route path="cart" element={<Cart />} />
               <Route path="checkout" element={<Checkout />} />
               <Route path="update-profile" element={<UpdateProfile />} />
-              <Route path="shop/:slug" element={<Shops />} />
+              <Route path="/:slug" element={<Shops />} />
               <Route path="details/:id" element={<ProductDetails />} />
-              <Route path="/:category" element={<Categories />} />
+              <Route path=":category" element={<Categories />} />
             </Route>
 
             {/* Login-Signup Pages */}
