@@ -3,7 +3,7 @@ import { db } from '../../utils/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { AuthContext } from '../../context/AuthContext';
 
-const NewMessage = ({ replyData }) => {
+const NewMessage = ({ composeData }) => {
   const { user } = useContext(AuthContext);
   const [recipient, setRecipient] = useState('');
   const [subject, setSubject] = useState('');
@@ -12,11 +12,12 @@ const NewMessage = ({ replyData }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (replyData) {
-      setRecipient(replyData.recipient);
-      setSubject(replyData.subject);
+    if (composeData) {
+      setRecipient(composeData.recipient || '');
+      setSubject(composeData.subject || '');
+      setBody(composeData.body || '');
     }
-  }, [replyData]);
+  }, [composeData]);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();

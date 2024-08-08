@@ -9,16 +9,37 @@ const MessagingApp = () => {
   const { user } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState('inbox');
   const [selectedMessage, setSelectedMessage] = useState(null);
-  const [replyData, setReplyData] = useState(null);  // State to hold reply data
+  const [deletedMessages, setDeletedMessages] = useState([]);
+  const [composeData, setComposeData] = useState(null);
 
-  const handleCloseModal = () => {
-    setSelectedMessage(null);
+  const handleSelectMessage = (message) => {
+    setSelectedMessage(message);
   };
 
-  const handleReply = (message) => {
-    setReplyData({ recipient: message.sender, subject: `RE: ${message.subject}` });
+  const handleDeleteMessage = (message) => {
+    setDeletedMessages((prevDeletedMessages) => {
+      const updatedDeletedMessages = [message, ...prevDeletedMessages];
+      return updatedDeletedMessages.slice(0, 5);
+    });
+    setSelectedMessage(null); // Close the message detail view after deletion
+  };
+
+  const handleReplyMessage = () => {
+    setComposeData({
+      recipient: selectedMessage.sender,
+      subject: `RE: ${selectedMessage.subject}`,
+      body: `\n\n---------- Original message ----------\nFrom: ${selectedMessage.sender}\nDate: ${new Date(selectedMessage.createdAt.toDate()).toLocaleString()}\nSubject: ${selectedMessage.subject}\nTo: ${selectedMessage.recipient}\n\n${selectedMessage.body}`,
+    });
     setActiveTab('compose');
-    setSelectedMessage(null);
+  };
+
+  const handleForwardMessage = () => {
+    setComposeData({
+      recipient: '',
+      subject: `Fwd: ${selectedMessage.subject}`,
+      body: `\n\n---------- Forwarded message ----------\nFrom: ${selectedMessage.sender}\nDate: ${new Date(selectedMessage.createdAt.toDate()).toLocaleString()}\nSubject: ${selectedMessage.subject}\nTo: ${selectedMessage.recipient}\n\n${selectedMessage.body}`,
+    });
+    setActiveTab('compose');
   };
 
   return (
@@ -29,29 +50,38 @@ const MessagingApp = () => {
           <div className="mt-4">
             {activeTab === 'inbox' && (
               <div className="flex">
-                <MessageList type="inbox" onSelectMessage={setSelectedMessage} />
-                {selectedMessage && (
-                  <MessageDetail
-                    message={selectedMessage}
-                    onClose={handleCloseModal}
-                    onReply={() => handleReply(selectedMessage)}
-                  />
-                )}
+                <MessageList type="inbox" onSelectMessage={handleSelectMessage} onDeleteMessage={handleDeleteMessage} />
+                <MessageDetail message={selectedMessage} onClose={() => setSelectedMessage(null)} onReply={handleReplyMessage} />
               </div>
             )}
             {activeTab === 'sent' && (
               <div className="flex">
-                <MessageList type="sent" onSelectMessage={setSelectedMessage} />
-                {selectedMessage && (
-                  <MessageDetail
-                    message={selectedMessage}
-                    onClose={handleCloseModal}
-                    onReply={() => handleReply(selectedMessage)}
-                  />
-                )}
+                <MessageList type="sent" onSelectMessage={handleSelectMessage} onDeleteMessage={handleDeleteMessage} />
+                <MessageDetail message={selectedMessage} onClose={() => setSelectedMessage(null)} onForward={handleForwardMessage} />
               </div>
             )}
-            {activeTab === 'compose' && <NewMessage replyData={replyData} />}
+            {activeTab === 'compose' && <NewMessage composeData={composeData} />}
+            {activeTab === 'trash' && (
+              <div className="flex">
+                <div className="w-full">
+                  {deletedMessages.map((message) => (
+                    <div
+                      key={message.id}
+                      className="p-4 border-b border-gray-200 flex justify-between items-center hover:bg-gray-100"
+                    >
+                      <div onClick={() => handleSelectMessage(message)} className="cursor-pointer w-3/4">
+                        <h4 className="font-bold">{message.subject}</h4>
+                        <p>{message.body.slice(0, 20)}...</p>
+                        <p className="text-sm text-gray-500">
+                          {new Date(message.createdAt.toDate()).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <MessageDetail message={selectedMessage} onClose={() => setSelectedMessage(null)} />
+              </div>
+            )}
           </div>
         </>
       ) : (

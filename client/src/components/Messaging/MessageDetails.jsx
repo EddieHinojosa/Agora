@@ -2,7 +2,7 @@ import React from 'react';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../utils/firebase';
 
-const MessageDetail = ({ message, onClose, onReply }) => {
+const MessageDetail = ({ message, onClose, onReply, onForward }) => {
   if (!message) {
     return null;
   }
@@ -16,8 +16,14 @@ const MessageDetail = ({ message, onClose, onReply }) => {
     }
   };
 
+  const handleOutsideClick = (e) => {
+    if (e.target.classList.contains('modal-background')) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 modal-background" onClick={handleOutsideClick}>
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative">
         <button onClick={onClose} className="absolute top-2 right-2 text-gray-600 hover:text-gray-800">&times;</button>
         <h2 className="text-2xl font-bold mb-4">{message.subject}</h2>
@@ -26,7 +32,8 @@ const MessageDetail = ({ message, onClose, onReply }) => {
         <p className="text-sm text-gray-500 mb-4">{new Date(message.createdAt.toDate()).toLocaleString()}</p>
         <div className="whitespace-pre-wrap mb-4">{message.body}</div>
         <div className="flex justify-end space-x-4">
-          <button onClick={() => onReply(message)} className="bg-blue-500 text-white p-2 rounded">Reply</button>
+          {onReply && <button onClick={onReply} className="bg-blue-500 text-white p-2 rounded">Reply</button>}
+          {onForward && <button onClick={onForward} className="bg-blue-500 text-white p-2 rounded">Forward</button>}
           <button onClick={handleDelete} className="bg-red-500 text-white p-2 rounded">Delete</button>
           <button onClick={onClose} className="bg-gray-300 text-black p-2 rounded">Close</button>
         </div>

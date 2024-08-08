@@ -21,6 +21,12 @@ const Tabs = ({ activeTab, setActiveTab }) => {
       >
         New Message
       </button>
+      <button
+        className={`p-4 ${activeTab === 'trash' ? 'border-b-2 border-blue-500' : ''}`}
+        onClick={() => setActiveTab('trash')}
+      >
+        Trash
+      </button>
     </div>
   );
 };
