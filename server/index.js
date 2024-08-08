@@ -14,6 +14,8 @@ import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import MongoStore from 'connect-mongo';
 import path from 'path';
+import { fileURLToPath } from 'url'; // Import these
+import { dirname } from 'path';
 
 
 const app = express();
@@ -147,7 +149,12 @@ app.use('/' , productRoutes);
 // });
 
 // // --------------------need to fix the routing (Eddie)-----------------------
-const __dirname = path.resolve();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Serve static files from the React app
+
 app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
 // Catch-all route to serve `index.html` for any route not handled by other routes
