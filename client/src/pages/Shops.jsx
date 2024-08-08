@@ -6,12 +6,9 @@ import { IoIosStar } from "react-icons/io";
 import axios from 'axios';
 
 
-const testProducts = []
-
-
 const Shop = () => {
   const { slug } = useParams();
-  const [products, setProducts] = useState(testProducts)
+  const [products, setProducts] = useState([])
 
 
 useEffect(() => {
