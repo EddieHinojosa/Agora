@@ -46,20 +46,6 @@ router.get('/shopmanager/:id/products', async (req, res) => {
     }
 });
 
-router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
-    const { userId, productId } = req.params;
-
-    try {
-        const deletedProduct = await Product.findOneAndDelete({ _id: productId, user: userId });
-        if (!deletedProduct) {
-            return res.status(404).json({ message: "Product not found or you do not have permission to delete this product" });
-        }
-        res.status(200).json({ message: "Product deleted successfully" });
-    } catch (error) {
-        console.error("Error deleting product:", error);
-        res.status(500).json({ message: "Error deleting product" });
-    }
-});
 
 // Get Product by ID
 router.get('/api/products/:id', async (req, res) => {
@@ -93,8 +79,19 @@ router.put('/shopmanager/:id/editproduct/:productId', async (req, res) => {
         const updatedFields = {};
 
         // Iterate over the fields in the request body and add only the altered fields to updatedFields
+        // If the field is an array, push the new value to the existing array
         for (const field in productUpdates) {
-            if (productUpdates[field] !== targetProduct[field]) {
+            if (
+                field === "image_urls"
+                || field === "tags" 
+                || field === "color" 
+                || field === "size"
+                || field === "material"
+                || field === "scent"
+            )  {
+                updatedFields[field] = Array.from(new Set(targetProduct[field].concat(productUpdates[field])));
+            }
+            else if (productUpdates[field] !== targetProduct[field]) {
                 updatedFields[field] = productUpdates[field];
             }
         }
@@ -134,5 +131,21 @@ router.get('/api/count/:userId', async (req, res) => {
       res.status(500).json({ message: 'Server Error', error });
     }
   });
+
+  
+router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
+    const { userId, productId } = req.params;
+
+    try {
+        const deletedProduct = await Product.findOneAndDelete({ _id: productId, user: userId });
+        if (!deletedProduct) {
+            return res.status(404).json({ message: "Product not found or you do not have permission to delete this product" });
+        }
+        res.status(200).json({ message: "Product deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting product:", error);
+        res.status(500).json({ message: "Error deleting product" });
+    }
+});
 
 export default router;
