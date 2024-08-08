@@ -131,7 +131,7 @@ const EditProduct = () => {
     const steps = [
       <ProductInfo key="productInfo" handleChange={handleChange} rows={rows} setRows={setRows} />,
       <ProductType key="productType" handleChange={handleChange} rows={rows}  setRows={setRows} />,
-      // <ProductImages key="productImages" handleChange={handleChange} rows={rows} setRows={setRows} />,
+      <ProductImages key="productImages" handleChange={handleChange} rows={rows} setRows={setRows} />,
       <ProductPricing key="productPricing" handleChange={handleChange} rows={rows} setRows={setRows} />,
       <ProductOptions key="productOptions"  handleChange={handleChange} rows={rows}  setRows={setRows} />,
       <ProductDimensions key="productDimensions" handleChange={handleChange} rows={rows} setRows={setRows} />,

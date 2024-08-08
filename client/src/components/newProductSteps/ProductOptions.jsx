@@ -1,10 +1,12 @@
 import { set } from "mongoose";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import { AuthContext } from "../../context/AuthContext";
 
 // Product Options Section
   const ProductOptions = ({ rows, onChange, setRows }) => {
+    const { user } = useContext(AuthContext)
     const [optionRows, setOptionRows] = useState([
       { 
         option: "", 
@@ -25,7 +27,7 @@ import { MdDelete } from "react-icons/md";
       setOptionRows(updatedOptionRows);
     };
 
-    const addOptionValue = (index) => {
+    const addOptionValue = (index, event) => {
       const updatedOptionRows = [...optionRows];
       if (updatedOptionRows[index].newValue.trim() !== "") {
         updatedOptionRows[index].values.push(updatedOptionRows[index].newValue);
@@ -45,7 +47,7 @@ import { MdDelete } from "react-icons/md";
       }
     };
 
-    const deleteOptionValue = (optionIndex, valueIndex) => {
+    const deleteOptionValue = (optionIndex, valueIndex, event) => {
       const updatedOptionRows = [...optionRows];
       const valueToDelete = updatedOptionRows[optionIndex].values[valueIndex];
       updatedOptionRows[optionIndex].values.splice(valueIndex, 1);
