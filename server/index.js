@@ -13,6 +13,7 @@ import productRoutes from './routes/newProduct.js';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
 import MongoStore from 'connect-mongo';
+import path from 'path';
 
 
 const app = express();
@@ -146,6 +147,15 @@ app.use('/' , productRoutes);
 // });
 
 // // --------------------need to fix the routing (Eddie)-----------------------
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
+
+// Catch-all route to serve `index.html` for any route not handled by other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
+
+
 
 // Stripe Checkout Session route
 app.post('/api/create-checkout-session', async (req, res) => {
