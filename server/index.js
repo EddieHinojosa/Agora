@@ -145,36 +145,36 @@ app.use('/' , productRoutes);
 
 // // // --------------------need to fix the routing (Eddie)-----------------------
 
-// // Stripe Checkout Session route
-// app.post('/api/create-checkout-session', async (req, res) => {
-//   try {
-//       // Create a Stripe Checkout session
-//       const session = await stripe.checkout.sessions.create({
-//           payment_method_types: ['card'],
-//           line_items: req.body.items.map(item => ({
-//               price_data: {
-//                   currency: 'usd',
-//                   product_data: {
-//                       name: item.name,
-//                   },
-//                   unit_amount: item.amount,
-//               },
-//               quantity: item.quantity,
-//           })),
-//           mode: 'payment',
-//           // Update these URLs to match your deployment
-//           success_url: `${process.env.VITE_PROD_API_URL}/checkout-success`,
-//           cancel_url: `${process.env.CLIENT_URL}/`,
-//       });
+// Stripe Checkout Session route
+app.post('/api/create-checkout-session', async (req, res) => {
+  try {
+      // Create a Stripe Checkout session
+      const session = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items: req.body.items.map(item => ({
+              price_data: {
+                  currency: 'usd',
+                  product_data: {
+                      name: item.name,
+                  },
+                  unit_amount: item.amount,
+              },
+              quantity: item.quantity,
+          })),
+          mode: 'payment',
+          // Update these URLs to match your deployment
+          success_url: `${process.env.VITE_PROD_API_URL}/checkout-success`,
+          cancel_url: `${process.env.CLIENT_URL}/`,
+      });
 
-//       // Send the session URL to the client
-//       res.json({ url: session.url });
-//   } catch (e) {
-//       res.status(500).json({ error: e.message });
-//   }
-// });
+      // Send the session URL to the client
+      res.json({ url: session.url });
+  } catch (e) {
+      res.status(500).json({ error: e.message });
+  }
+});
 // =======
-// app.use('/api', stripeRoutes); //stripe stuff
+app.use('/api', stripeRoutes); //stripe stuff
 // >>>>>>> main
 
 
