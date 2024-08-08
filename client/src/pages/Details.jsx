@@ -209,7 +209,6 @@ const ProductDetails = () => {
               </select>
             </div>
           )}
-          
 
           {/* Item Quantity Dropdown */}
             <div className="mt-4">
