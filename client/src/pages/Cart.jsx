@@ -10,25 +10,28 @@ const Cart = ({ isOpen, onRequestClose }) => {
 
     const handleCheckout = async () => {
         try {
-            const response = await fetch('/api/create-checkout-session', {
+            const response = await fetch(`${import.meta.env.MODE === 'production' 
+                        ? import.meta.env.VITE_PROD_API_URL 
+                        : import.meta.env.VITE_DEV_API_URL}/api/create-checkout-session`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     items: cartItems.map(item => ({
+                        price: item.price_id,
+                        quantity: 1, //hardcoded quantity, import from cart later wchi comes from details.jsx
                         name: item.productName,
-                        amount: item.price, // add * 100 if pulling in cent, will review later
-                        quantity: 1, // set to 1 for now til i add ability to +/-
+                        // description: `${item.selectedSize}, ${item.selectedColor}, ${item.selectedMaterial}`,
                     })),
                 }),
             });
             if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
+                const errorDetails = await response.json();
+                throw new Error(`Error: ${response.statusText} - ${errorDetails.error}`);
             }
             const { url } = await response.json();
-            console.log('Stripe Checkout URL:', url);
-            window.location = url; // Redirect to Stripe Checkout
+            window.location.href = url; // Redirect to Stripe Checkout
         } catch (error) {
             console.error('Checkout Error:', error);
         }
@@ -94,34 +97,12 @@ const Cart = ({ isOpen, onRequestClose }) => {
                                     <div>Subtotal</div>
                                     <div>${cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}</div>
                                 </div>
-                                <div className="flex justify-between text-lg">
-                                    <div>Tax</div>
-                                    <div>${(cartItems.reduce((total, item) => total + item.price, 0) * 0.1).toFixed(2)}</div>
-                                </div>
                                 <div className="flex justify-between text-lg font-bold">
                                     <div>Total</div>
-                                    <div>${(cartItems.reduce((total, item) => total + item.price, 0) * 1.1).toFixed(2)}</div>
+                                    <div>${cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}</div>
                                 </div>
                             </div>
                             <div className="mt-6 flex flex-col space-y-4">
-                                {/* Uncomment this block for live site */}
-                                {/* {user ? (
-                                <button
-                                    onClick={handleCheckout}
-                                    className="inline-flex justify-center px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-500 focus:outline-none sm:w-auto sm:text-sm"
-                                >
-                                    Checkout
-                                </button>
-                                    ) : (
-                                <Link 
-                                    to="/login" 
-                                    className="text-red-500 hover:text-red-700 hover:underline"
-                                >
-                                    Please log in to checkout
-                                </Link>
-                                )} */}
-
-                                {/* Temporary block for testing */}
                                 <button
                                     onClick={handleCheckout}
                                     className="inline-flex justify-center px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-500 focus:outline-none sm:w-auto sm:text-sm"
