@@ -39,7 +39,6 @@ const Products = () => {
                 );
                 setProducts(response.data);
                 console.log("Products fetched:", response.data);
-                console.log(`products poop`)
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
