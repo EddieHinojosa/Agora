@@ -2,19 +2,19 @@ import { useState } from "react";
 import CloudinaryUploadWidget from "../cloudinaryUploadWidget";
 import { set } from "mongoose";
 
-const ProductImages = ({ rows, setRows  }) => {
-  const [images, setImages] = useState([]);
+const ProductImages = ({ rows, setRows, images, setImages  }) => {
+  
   const [saveMessage, setSaveMessage] = useState('');
 
   const pushImages = (images, rows) => {
-    // State change logic for image urls
+
+// State change logic for image urls
     const imagesArray = images.map((images) => images.url);
     const uniqueImages = [...new Set([...rows.image_urls, ...imagesArray])];
     rows.image_urls = uniqueImages;
     setRows({ ...rows });
     console.log(rows)
-    // console.log(imagesArray);
-
+  
     setSaveMessage('Images saved!');
     setTimeout(() => {
       setSaveMessage('');

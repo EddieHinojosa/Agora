@@ -73,13 +73,14 @@ const ShopManager = () => {
               <StatusCard status="Sold Out" count={productCounts.soldOutCount} />
             </div>
             <div className='flex justify-center mt-8'>
-            {(!userData.shopShippingAddress && !userData.shopDescription) && (
-                <h2>Please Enter Shop Shipping Address and Shop Description</h2>)}
-              {(!userData.shopShippingAddress && userData.shopDescription) && (
-                <h2>Please Enter Shop Shipping Address</h2>)}
-              {(userData.shopShippingAddress && !userData.shopDescription) && (
-                <h2>Please Enter Shop Description</h2>)}
-            </div>
+    {(!userData.shopShippingAddress && !userData.shopDescription) && (
+        <h2>Please Enter Shop Shipping Address and Shop Description</h2>
+    )}
+    {(!userData.shopShippingAddress && userData.shopDescription) && (
+        <h2>Please Enter Shop Shipping Address</h2>
+    )}
+
+</div>
             <div className='flex justify-center'>
                 {settingUpdate && (
                 <Link to={`/shopmanager/${id}/settings`} className='mt-2 px-4 py-2 bg-black text-white text-sm rounded hover:bg-gray-300 hover:text-black'>
