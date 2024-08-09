@@ -5,11 +5,32 @@ import { MdOutlineShoppingBag } from "react-icons/md";
 import { CiUser, CiShop } from "react-icons/ci";
 import { AuthContext } from "../context/AuthContext";
 import { IoMenu, IoClose } from "react-icons/io5";
+import { searchProducts } from '../api/searchApi'
 
 const Navbar = ({ setModalIsOpen }) => {
   const { user, logout } = useContext(AuthContext);
+  const [searchQuery, setSearchQuery] = useState('')
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
+
+  // Search Bar
+  const handleSearch = async () => {
+    try {
+      const products = await searchProducts(searchQuery);
+      navigate('/results', { state: { products }})
+      setSearchQuery('');
+    } catch (error) {
+      console.error('Error searching for products:', error)
+    }
+  }
+
+  // Press enter to search
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  }
 
   const handleLogout = () => {
     if (user) {
@@ -43,9 +64,12 @@ const Navbar = ({ setModalIsOpen }) => {
             <input
               type="text"
               placeholder=""
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-full p-1 pr-12 border border-gray-300 rounded-lg"
             />
-            <button className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+            <button onClick={handleSearch} className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
               <FaSearch />
             </button>
           </div>

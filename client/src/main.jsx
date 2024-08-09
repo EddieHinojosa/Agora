@@ -20,6 +20,7 @@ import UpdateProfile from './pages/UpdateProfile.jsx';
 import Shops from './pages/Shops.jsx';
 import ProductDetails from './pages/Details.jsx'
 import Categories from './pages/Categories.jsx';
+import Results from './pages/Results.jsx'
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';

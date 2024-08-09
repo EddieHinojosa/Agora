@@ -3,7 +3,6 @@ import { AuthContext } from '../../context/AuthContext';
 import MainSettings from '../../components/ShopManager/Settings/MainSettings'; 
 import ShippingSettings from '../../components/ShopManager/Settings/ShippingSettings'; 
 import { updateUserShopSettings } from '../../api/shopSettingsApi';
-import { set } from 'mongoose';
 
 const Settings = () => {
   const { user } = useContext(AuthContext);
