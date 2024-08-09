@@ -62,8 +62,7 @@ root.render(
               <Route path="update-profile" element={<UpdateProfile />} />
               <Route path="/:slug" element={<Shops />} />
               <Route path="details/:id" element={<ProductDetails />} />
-              <Route path=":category" element={<Categories />} />
-              <Route path="/results" element={<Results />} />
+              <Route path="/categories/:category" element={<Categories />} />
             </Route>
 
             {/* Login-Signup Pages */}

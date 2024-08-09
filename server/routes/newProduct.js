@@ -46,6 +46,33 @@ router.get('/shopmanager/:id/products', async (req, res) => {
     }
 });
 
+// Get all Products by Category
+router.get('/categories/:category', async (req, res) => {
+    const category = req.params.category;
+    if (category === "food&drink") {
+        try {
+            const products = await Product.find({ 
+                category: { 
+                    $in: ["tableware", "drinkware"] 
+                 }  
+            });
+            res.status(200).json(products);
+        }
+        catch (error) {
+            console.error("Error fetching products:", error);
+            res.status(500).json({ message: "Error fetching products", error });
+        }
+    } else {    
+        try {
+        const products = await Product.find({ category: category });
+        res.status(200).json(products);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).json({ message: "Error fetching products", error });
+    }
+}
+});
+
 
 // Get Product by ID
 router.get('/api/products/:id', async (req, res) => {

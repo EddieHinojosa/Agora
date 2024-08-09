@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import DisplayGrid from '../components/Home/DisplayGrid'
 import axios from 'axios'
+import { useParams } from 'react-router-dom';
 
 const Categories = () => {
     const [products, setProducts] = useState([]);
+    const { category } = useParams();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -11,8 +13,10 @@ const Categories = () => {
                 const response = await axios.get(
                     `${import.meta.env.MODE === 'production' 
                       ? import.meta.env.VITE_PROD_API_URL 
-                      : import.meta.env.VITE_DEV_API_URL}`
+                      : import.meta.env.VITE_DEV_API_URL}/categories/${category}`
                 );
+
+
                 setProducts(response.data);
                 console.log("Products fetched:", response.data);         
             } catch (error) {
@@ -21,7 +25,7 @@ const Categories = () => {
         };
 
         fetchProducts();
-    }   , [])
+    }   , [category]);
 
     return (
         <div>
