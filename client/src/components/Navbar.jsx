@@ -16,7 +16,7 @@ const Navbar = ({ setModalIsOpen }) => {
   const handleSearch = async () => {
     try {
       const products = await searchProducts(searchQuery);
-      navigate('/search-results', { state: { products }})
+      navigate('/results', { state: { products }})
     } catch (error) {
       console.error('Error searching for products:', error)
     }
@@ -58,7 +58,7 @@ const Navbar = ({ setModalIsOpen }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full p-1 pr-12 border border-gray-300 rounded-lg"
             />
-            <button className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+            <button onClick={handleSearch} className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
               <FaSearch />
             </button>
           </div>

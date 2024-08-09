@@ -149,7 +149,7 @@ router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
 });
 
 // Search Route
-router.get('/search', async (req, res) => {
+router.get('/results', async (req, res) => {
     try {
         const { query } = req.query;
         const products = await Product.find({

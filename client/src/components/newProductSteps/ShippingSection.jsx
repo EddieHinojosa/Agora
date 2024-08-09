@@ -12,9 +12,9 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
 
     
     
-    const addresses = [
-     `${user.shopShippingAddress.line1}, ${user.shopShippingAddress.city}, ${user.shopShippingAddress.state}, ${user.shopShippingAddress.zip}`
-    ];
+  const addresses = user && user.shopShippingAddress ? [
+    `${user.shopShippingAddress.line1}, ${user.shopShippingAddress.city}, ${user.shopShippingAddress.state}, ${user.shopShippingAddress.zip}`
+  ] : [];
   
  
   // const handleSubmit = async (e) => {
