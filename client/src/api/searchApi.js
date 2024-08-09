@@ -2,7 +2,9 @@ import axios from "axios";
  
 export const searchProducts = async (searchQuery) => {
     try {
-        const response = await axios.get('/search', {
+        const response = await axios.get(`${import.meta.env.MODE === 'production' 
+        ? import.meta.env.VITE_PROD_API_URL 
+        : import.meta.env.VITE_DEV_API_URL}/search`, {
             params: { query: searchQuery },
         })
         console.log('Search Success!');
