@@ -2,12 +2,14 @@ import express from 'express';
 import Stripe from 'stripe';
 
 const router = express.Router();
-const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
+// const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
 
 router.post('/create-checkout-session', async (req, res) => {
     console.log('Request received to create checkout session');
     const { items } = req.body;
     console.log('Items:', items);
+
+    let stripeApiKey = process.env.VITE_STRIPE_SECRET_KEY; 
 
     const line_items = items.map(item => ({
         price_data: {
@@ -21,16 +23,19 @@ router.post('/create-checkout-session', async (req, res) => {
     }));
 
     try {
+
+        const stripe = new Stripe(stripeApiKey);
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items,
             mode: 'payment',
             success_url: `${process.env.MODE === 'production'
-                ? process.env.VITE_PROD_URL
-                : process.env.VITE_DEV_URL}?success=true`,
+                ? process.env.VITE_PROD_APP_URL
+                : process.env.VITE_DEV_APP_URL}?success=true`,
             cancel_url: `${process.env.MODE === 'production'
-                ? process.env.VITE_PROD_URL
-                : process.env.VITE_DEV_URL}?canceled=true`,
+                ? process.env.VITE_PROD_APP_URL
+                : process.env.VITE_DEV_APP_URL}?canceled=true`,
         });
 
         console.log('Checkout session created:', session.url);
