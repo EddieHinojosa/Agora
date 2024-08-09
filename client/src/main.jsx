@@ -20,6 +20,7 @@ import UpdateProfile from './pages/UpdateProfile.jsx';
 import Shops from './pages/Shops.jsx';
 import ProductDetails from './pages/Details.jsx'
 import Categories from './pages/Categories.jsx';
+import Results from './pages/Results.jsx'
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
@@ -62,6 +63,7 @@ root.render(
               <Route path="/:slug" element={<Shops />} />
               <Route path="details/:id" element={<ProductDetails />} />
               <Route path=":category" element={<Categories />} />
+              <Route path="/results" element={<Results />} />
             </Route>
 
             {/* Login-Signup Pages */}
