@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
 
 const Cart = ({ isOpen, onRequestClose }) => {
-    const { user } = useContext(AuthContext);
+    // const { user } = useContext(AuthContext);
     const { cartItems } = useContext(CartContext);
 
     const handleCheckout = async () => {
@@ -15,7 +15,7 @@ const Cart = ({ isOpen, onRequestClose }) => {
                         : import.meta.env.VITE_DEV_API_URL}/api/create-checkout-session`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     items: cartItems.map(item => ({
