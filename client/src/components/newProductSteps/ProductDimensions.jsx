@@ -29,7 +29,7 @@
           value={rows.productLengthUnit} 
           onChange={handleChange} 
          >
-            <option value = "" disabled >
+            <option value = "undefined" disabled >
               --
             </option>
             <option value="cm">cm</option>
@@ -66,7 +66,7 @@
           value={rows.productWidthUnit} 
           onChange={handleChange} 
          >  
-            <option value = "" disabled >
+            <option value = "undefined" disabled >
               --
             </option>
             <option value="cm">cm</option>
@@ -88,7 +88,7 @@
         <div className="flex items-center mt-1">
           <input
             type="number"
-            id="height"
+            id="productHeight"
             name="productHeight"
             value={rows.productHeight}
             onChange ={handleChange}
@@ -103,7 +103,7 @@
           value={rows.productHeightUnit} 
           onChange={handleChange} 
          >
-            <option value = "" disabled >
+            <option value = "undefined" disabled >
               --
             </option>
             <option value="cm">cm</option>

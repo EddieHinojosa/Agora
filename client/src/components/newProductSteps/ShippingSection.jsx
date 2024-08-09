@@ -6,27 +6,20 @@ import { AuthContext } from "../../context/AuthContext";
 
 // Shipping Section
 const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit }) => {
+  
   const [selectedAddress, setSelectedAddress] = useState("");
-
-
-
   const { user } = useContext(AuthContext);
- 
 
-    
-   
     const addresses = user && user.shopShippingAddress ?  [
     `${user.shopShippingAddress.line1}, `
     + `${user.shopShippingAddress.city}, ` 
     + `${user.shopShippingAddress.state}, ` 
     + `${user.shopShippingAddress.zip}, `
-    ] : [];
+    ] : [rows.shippingAddress];
  
 
   return (
-    // <UserData 
-    // userId={id}
-    // render ={(userData) => (
+   
     <div>
       {/* Shipping Address */}
       <div>

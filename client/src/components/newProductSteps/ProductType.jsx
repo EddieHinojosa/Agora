@@ -8,8 +8,9 @@ const ProductType = ({ rows, setRows, handleChange, tags, setTags }) => {
   const [itemType, setItemType] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  // Add tag and limit
+// Add tag and limit
   const addTag = () => {
+    event.preventDefault();
     if (tags.length < 10 && newTag.trim() !== "") {
       setTags([...tags, newTag.trim()]);
       setNewTag("");
@@ -18,20 +19,14 @@ const ProductType = ({ rows, setRows, handleChange, tags, setTags }) => {
       setTagLimitReached(true);
     }
     
-      // State change logic below
+// State change logic below
 
       let newTagRowArray = [...new Set([...tags, newTag.trim()])]
       rows.tags = newTagRowArray
       let updatedRows = {...rows}
       setRows(updatedRows)
       console.log(updatedRows)
-      // console.log(tags)
-      // console.log(newTag)
-      // console.log(addTag[index].option)
-      // console.log(addTag[index].values[index])
-      // console.log(updatedRows)
-      // console.log(rows)
-      // console.log(newTagRowArray)
+
   };
 
   // Delete Tag

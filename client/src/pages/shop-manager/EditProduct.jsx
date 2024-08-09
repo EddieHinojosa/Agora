@@ -141,10 +141,10 @@ const EditProduct = () => {
   
     const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} />,
-    <ProductType key="productType" rows={rows} setRows={setRows} tags={tags} setTags={setTags} handleChange={handleChange}  />,
-    <ProductImages key="productImages" rows={rows} setRows={setRows} images={images} setImages={setImages} handleChange={handleChange} />,
+    // <ProductType key="productType" rows={rows} setRows={setRows} tags={tags} setTags={setTags} handleChange={handleChange}  />,
+    // <ProductImages key="productImages" rows={rows} setRows={setRows} images={images} setImages={setImages} handleChange={handleChange} />,
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} />,
-    <ProductOptions key="productOptions" rows={rows} setRows={setRows} handleChange={handleChange} optionRows={optionRows} setOptionRows={setOptionRows} />,
+    // <ProductOptions key="productOptions" rows={rows} setRows={setRows} handleChange={handleChange} optionRows={optionRows} setOptionRows={setOptionRows} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
     <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} handleEditSubmit={handleEditSubmit} />,
     // <ProductTable key="productTable"  rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}  />,
