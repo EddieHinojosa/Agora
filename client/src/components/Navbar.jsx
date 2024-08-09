@@ -13,12 +13,22 @@ const Navbar = ({ setModalIsOpen }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
+
+  // Search Bar
   const handleSearch = async () => {
     try {
       const products = await searchProducts(searchQuery);
       navigate('/results', { state: { products }})
+      setSearchQuery('');
     } catch (error) {
       console.error('Error searching for products:', error)
+    }
+  }
+
+  // Press enter to search
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
     }
   }
 
@@ -56,6 +66,7 @@ const Navbar = ({ setModalIsOpen }) => {
               placeholder=""
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="w-full p-1 pr-12 border border-gray-300 rounded-lg"
             />
             <button onClick={handleSearch} className="absolute top-1/2 right-4 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
