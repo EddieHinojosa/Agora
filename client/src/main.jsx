@@ -63,6 +63,7 @@ root.render(
               <Route path="shop/:slug" element={<Shops />} />
               <Route path="details/:id" element={<ProductDetails />} />
               <Route path="/categories/:category" element={<Categories />} />
+              <Route path="/results" element={<Results />} />
             </Route>
 
             {/* Login-Signup Pages */}
