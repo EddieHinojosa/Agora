@@ -99,28 +99,28 @@ const Navbar = ({ setModalIsOpen }) => {
           isOpen ? "flex" : "hidden md:flex"
         }`}
       >
-        <Link to="#" className="hover:underline text-sm">
+        <Link to="categories/accessories" className="hover:underline text-sm">
           Accessories
         </Link>
-        <Link to="#" className="hover:underline text-sm">
+        <Link to="categories/art" className="hover:underline text-sm">
           Art & Collectibles
         </Link>
-        <Link to="#" className="hover:underline text-sm">
+        <Link to="categories/clothing" className="hover:underline text-sm">
           Clothing
         </Link>
-        <Link to="#" className="hover:underline text-sm">
+        <Link to="categories/homedecor" className="hover:underline text-sm">
           Home Decor
         </Link>
-        <Link to="#" className="hover:underline text-sm">
+        <Link to="categories/food&drink" className="hover:underline text-sm">
           Food & Drink
         </Link>
-        <Link to="#" className="hover:underline text-sm">
+        <Link to="categories/jewelry" className="hover:underline text-sm">
           Jewelry
         </Link>
-        <Link to="#" className="hover:underline text-sm">
+        <Link to="categories/novelty" className="hover:underline text-sm">
           Paper & Novelty
         </Link>
-        <Link to="#" className="hover:underline text-sm">
+        <Link to="categories/pets" className="hover:underline text-sm">
           Pets
         </Link>
       </div>
