@@ -11,7 +11,6 @@ import userRoutes from './routes/user.js';
 import shopRoutes from './routes/shopRoute.js';
 import productRoutes from './routes/newProduct.js';
 import rateLimit from 'express-rate-limit';
-import Stripe from 'stripe';
 import MongoStore from 'connect-mongo';
 import stripeRoutes from './routes/stripe.js';
 
@@ -19,7 +18,7 @@ import stripeRoutes from './routes/stripe.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
+
 
 app.set('trust proxy', 1);
 
@@ -51,7 +50,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
 });
-// app.use(limiter);
+app.use(limiter);
 
 const mongoUri = process.env.VITE_MONGO_URI;
 if (!mongoUri) {
@@ -80,7 +79,7 @@ app.use('/api/auth', authRoutes); // Regular auth routes
 app.use('/', shopRoutes);
 app.use('/api', userRoutes);
 app.use('/' , productRoutes);
-app.use('/stripe', stripeRoutes);
+app.use('/api', stripeRoutes);
 
 
 // Start server
