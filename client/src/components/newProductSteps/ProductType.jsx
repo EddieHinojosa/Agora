@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 // Product Type Section
-const ProductType = ({ rows, handleChange, setRows }) => {
-  const [tags, setTags] = useState([]);
+const ProductType = ({ rows, setRows, handleChange, tags, setTags }) => {
+  
   const [newTag, setNewTag] = useState("");
   const [tagLimitReached, setTagLimitReached] = useState(false);
   const [itemType, setItemType] = useState("");

@@ -18,6 +18,7 @@ const NewProduct = () => {
 const navigate = useNavigate();
 const { user } = useContext(AuthContext);
     
+/// Product State, this is what will be sent to the server
 const [rows, setRows] = useState(
   {
     category: "",
@@ -53,6 +54,7 @@ const [rows, setRows] = useState(
     price: "",
     scent: [],
     shopName: "",
+    shippingAddress: "",
     size: [],
     status: "",
     style: [],
@@ -62,6 +64,19 @@ const [rows, setRows] = useState(
     quantity: "",
   },
 );
+/// Product Options State
+const [optionRows, setOptionRows] = useState([
+  { 
+    option: "", 
+    values: [], 
+    newValue: "" 
+  },
+]);
+/// Tags State
+const [tags, setTags] = useState([]);
+
+/// Images State
+const [images, setImages] = useState([]);
 
 const [currentStep, setCurrentStep] = useState(0);
 
@@ -106,10 +121,10 @@ const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} />,
-    <ProductType key="productType" rows={rows} handleChange={handleChange} setRows={setRows} />,
-    <ProductImages key="productImages" rows={rows} setRows={setRows} handleChange={handleChange} />,
+    <ProductType key="productType" rows={rows} setRows={setRows} tags={tags} setTags={setTags} handleChange={handleChange}  />,
+    <ProductImages key="productImages" rows={rows} setRows={setRows} images={images} setImages={setImages} handleChange={handleChange} />,
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} />,
-    <ProductOptions key="productOptions" rows={rows} handleChange={handleChange} setRows={setRows} />,
+    <ProductOptions key="productOptions" rows={rows} setRows={setRows} handleChange={handleChange} optionRows={optionRows} setOptionRows={setOptionRows} />,
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
     <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} handleSubmit={handleSubmit} />,
     // <ProductTable key="productTable"  rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}  />,

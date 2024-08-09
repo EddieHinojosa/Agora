@@ -3,35 +3,25 @@ import axios from "axios";
 import UserData from "../ShopManager/Main/UserData";
 import { AuthContext } from "../../context/AuthContext";
 
+
 // Shipping Section
 const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit }) => {
   const [selectedAddress, setSelectedAddress] = useState("");
 
 
+
   const { user } = useContext(AuthContext);
-
-    
-    
-    const addresses = [
-     `${user.shopShippingAddress.line1}, ${user.shopShippingAddress.city}, ${user.shopShippingAddress.state}, ${user.shopShippingAddress.zip}`
-    ];
-  
  
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post( 
-  //       `${import.meta.env.MODE === 'production' 
-  //         ? import.meta.env.VITE_PROD_API_URL 
-  //         : import.meta.env.VITE_DEV_API_URL}/shopmanager/user/${user._id}products)`,
-  //       rows
-  //     );
 
-  //     console.log("Product submitted:", response);
-  //   } catch (error) {
-  //     console.error("Error submitting Product:", error);
-  //   }
-  // };
+    
+   
+    const addresses = [
+    `${user.shopShippingAddress.line1}, `
+    + `${user.shopShippingAddress.city}, ` 
+    + `${user.shopShippingAddress.state}, ` 
+    + `${user.shopShippingAddress.zip}, `
+    ];
+ 
 
   return (
     // <UserData 
@@ -97,6 +87,9 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
             value={rows.packedWeightUnit}
             onChange={handleChange}
           >
+            <option value = "" disabled >
+              --
+            </option>
             <option value="kg">kg</option>
             <option value="lb">lb</option>
             <option value="g">g</option>
@@ -132,6 +125,9 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
             value={rows.packedLengthUnit}
             onChange={handleChange}
           >
+            <option value = "" disabled >
+              --
+            </option>
             <option value="cm">cm</option>
             <option value="in">in</option>
             <option value="mm">mm</option>
@@ -166,6 +162,9 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
             value={rows.packedWidthUnit}
             onChange={handleChange}
           >
+            <option value = "" disabled >
+              --
+            </option>
             <option value="in">in</option>
             <option value="mm">mm</option>
             <option value="ft">ft</option>
@@ -199,6 +198,9 @@ const ShippingSection = ({ rows, handleChange, handleSubmit, handleEditSubmit })
             value={rows.packedHeightUnit}
             onChange={handleChange}
           >
+            <option value = "" disabled >
+              --
+            </option>
             <option value="cm">cm</option>
             <option value="in">in</option>
             <option value="mm">mm</option>

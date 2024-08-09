@@ -17,57 +17,67 @@ const EditProduct = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { id } = useParams();
-  console.log(id)
+  // console.log(id)
 
   const [rows, setRows] = useState(
     {
-    category: "",
-    color: [],
-    image_urls: [],
-    material: [],
-    
-    packedLength: "",
-    packedLengthUnit: "",
-    
-    packedWidth: "",
-    packedWidthUnit: "",
-
-    packedHeight: "",
-    packedHeightUnit: "",
-
-    productHeight: "",
-    productHeightUnit: "",
-
-    productLength: "",
-    productLengthUnit: "",
-
-    productWidth: "",
-    productWidthUnit: "",
-
-    packedWeight: "",
-    packedWeightUnit: "",
-    
-    productName: "",
-
-    processingTime: "",
+      category: "",
+      color: [],
+      image_urls: [],
+      material: [],
+      
+      packedLength: "",
+      packedLengthUnit: "",
+      
+      packedWidth: "",
+      packedWidthUnit: "",
   
-    price: "",
-    shopName: "",
-    size: [],
-    scent: [],
-    style: [],
-    status: "",
+      packedHeight: "",
+      packedHeightUnit: "",
+  
+      productHeight: "",
+      productHeightUnit: "",
+  
+      productLength: "",
+      productLengthUnit: "",
+  
+      productWidth: "",
+      productWidthUnit: "",
+  
+      packedWeight: "",
+      packedWeightUnit: "",
+      
+      productName: "",
+  
+      processingTime: "",
     
-    tags: [],
-
-
-    user: "",
-    quantity: "",
-    }
+      price: "",
+      scent: [],
+      shopName: "",
+      shippingAddress: "",
+      size: [],
+      status: "",
+      style: [],
+      
+      tags: [],
+      user: "",
+      quantity: "",
+    },
   );
-
-
+  /// Product Options State
+  const [optionRows, setOptionRows] = useState([
+    { 
+      option: "", 
+      values: [], 
+      newValue: "" 
+    },
+  ]);
+  /// Tags State
+  const [tags, setTags] = useState([]);
   
+  /// Images State
+  const [images, setImages] = useState([]);
+
    
   useEffect(() => {
     const fetchProduct = async () => {
@@ -85,8 +95,9 @@ const EditProduct = () => {
         console.error("Error fetching product:", error);
       }
     };
-
+    if (id) {
     fetchProduct();
+    }
   }, [id]);
 
   const handleChange = (event) => {
@@ -129,14 +140,14 @@ const EditProduct = () => {
   };
   
     const steps = [
-      <ProductInfo key="productInfo" handleChange={handleChange} rows={rows} setRows={setRows} />,
-      <ProductType key="productType" handleChange={handleChange} rows={rows}  setRows={setRows} />,
-      <ProductImages key="productImages" handleChange={handleChange} rows={rows} setRows={setRows} />,
-      <ProductPricing key="productPricing" handleChange={handleChange} rows={rows} setRows={setRows} />,
-      <ProductOptions key="productOptions"  handleChange={handleChange} rows={rows}  setRows={setRows} />,
-      <ProductDimensions key="productDimensions" handleChange={handleChange} rows={rows} setRows={setRows} />,
-      <ShippingSection key="shippingSection" handleEditSubmit={handleEditSubmit} handleChange={handleChange} rows={rows} setRows={setRows} />,
-      // <ProductTable key="productTable"  rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}  />,
+    <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} />,
+    <ProductType key="productType" rows={rows} setRows={setRows} tags={tags} setTags={setTags} handleChange={handleChange}  />,
+    <ProductImages key="productImages" rows={rows} setRows={setRows} images={images} setImages={setImages} handleChange={handleChange} />,
+    <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} />,
+    <ProductOptions key="productOptions" rows={rows} setRows={setRows} handleChange={handleChange} optionRows={optionRows} setOptionRows={setOptionRows} />,
+    <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
+    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} handleEditSubmit={handleEditSubmit} />,
+    // <ProductTable key="productTable"  rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}  />,
     ];
 
   return (

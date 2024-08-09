@@ -2,8 +2,8 @@ import { useState } from "react";
 import CloudinaryUploadWidget from "../cloudinaryUploadWidget";
 import { set } from "mongoose";
 
-const ProductImages = ({ rows, setRows  }) => {
-  const [images, setImages] = useState([]);
+const ProductImages = ({ rows, setRows, images, setImages  }) => {
+  
   const [saveMessage, setSaveMessage] = useState('');
 
   const pushImages = (images, rows) => {

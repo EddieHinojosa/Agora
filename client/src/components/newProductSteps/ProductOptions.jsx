@@ -5,15 +5,15 @@ import { MdDelete } from "react-icons/md";
 import { AuthContext } from "../../context/AuthContext";
 
 // Product Options Section
-  const ProductOptions = ({ rows, onChange, setRows }) => {
+  const ProductOptions = ({ rows, setRows, onChange, optionRows, setOptionRows }) => {
     const { user } = useContext(AuthContext)
-    const [optionRows, setOptionRows] = useState([
-      { 
-        option: "", 
-        values: [], 
-        newValue: "" 
-      },
-    ]);
+    // const [optionRows, setOptionRows] = useState([
+    //   { 
+    //     option: "", 
+    //     values: [], 
+    //     newValue: "" 
+    //   },
+    // ]);
 
     const handleOptionChange = (index, event) => {
       const updatedOptionRows = [...optionRows];

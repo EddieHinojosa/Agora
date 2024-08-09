@@ -9,7 +9,6 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-        //instead of "productType" we can use "category"
     category: {
         type: String,
         required: true,
@@ -22,7 +21,6 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: false,
     }, 
-    //instaed of "Images" we can use "image_urls"
     image_urls: {
         type: [String],
         required: false,
@@ -81,6 +79,10 @@ const ProductSchema = new mongoose.Schema({
         // type: mongoose.Schema.Types.ObjectId,
         // ref: "User",
         // required: false,
+    },
+    shippingAddress: {
+        type: String,
+        required: true
     },
     material: {
         type: Array,
