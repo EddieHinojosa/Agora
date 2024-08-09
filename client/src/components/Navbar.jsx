@@ -8,8 +8,10 @@ import { IoMenu, IoClose } from "react-icons/io5";
 
 const Navbar = ({ setModalIsOpen }) => {
   const { user, logout } = useContext(AuthContext);
+  const [searchQuery, setSearchQuery] = useState('')
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
 
   const handleLogout = () => {
     if (user) {
