@@ -54,7 +54,7 @@ const ShopManager = () => {
         // For shop url link
         const baseUrl = window.location.origin;
         const shopNameSlug = slug(userData.shopName);
-        const shopUrl = `${baseUrl}/${shopNameSlug}`;
+        const shopUrl = `${baseUrl}/shop/${shopNameSlug}`;
 
         const settingUpdate = !userData.shopShippingAddress || !userData.shopDescription;
 
@@ -62,7 +62,7 @@ const ShopManager = () => {
           <div className='min-h-screen'>
             <div className='justify-center text-center'>
               <h2 className='text-4xl'>Hello {userData.shopName}!</h2>
-              <Link to={`/${shopNameSlug}`} className='flex items-center justify-center space-x-2 hover:underline'>
+              <Link to={`/shop/${shopNameSlug}`} className='flex items-center justify-center space-x-2 hover:underline'>
                 <FaLink />
                 <span>{shopUrl}</span>
               </Link>
