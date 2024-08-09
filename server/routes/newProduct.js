@@ -114,7 +114,7 @@ router.put('/shopmanager/:id/editproduct/:productId', async (req, res) => {
 });
 
 
-// Shop Manager Home Product route
+// Shop Manager Status Card Route
 router.get('/api/count/:userId', async (req, res) => {
     const { userId } = req.params;
     try {
@@ -132,7 +132,7 @@ router.get('/api/count/:userId', async (req, res) => {
     }
   });
 
-  
+// Product Delete Route
 router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
     const { userId, productId } = req.params;
 
@@ -147,5 +147,20 @@ router.delete('/shopmanager/:userId/products/:productId', async (req, res) => {
         res.status(500).json({ message: "Error deleting product" });
     }
 });
+
+// Search Route
+router.get('/search', async (req, res) => {
+    try {
+        const { query } = req.query;
+        const products = await Product.find({
+            $text: { $search: query }
+        })
+        res.json(products)
+        console.log(products)
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to search for products' })
+        console.log("Danger Will Robinson:", error)
+    }
+})
 
 export default router;
