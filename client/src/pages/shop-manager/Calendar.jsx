@@ -1,7 +1,9 @@
 const Calendar = () => {
     return (
-        <div></div>
-
+        <div>
+            <h2 className="text-3xl">Calendar coming soon...</h2>
+        </div>
+    
         //-----------------eddie calendar stuff in process-----------------
 // // Import the googleapis library
 // import { google } from 'googleapis';

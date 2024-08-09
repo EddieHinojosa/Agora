@@ -55,7 +55,7 @@ const ShippingSettings = ({ address, setAddress, states, countries }) => {
     
     
       <button onClick={() => setIsEditing(!isEditing)} className="mb-4 px-4 py-2 rounded-md bg-black text-white text-sm hover:bg-gray-300 hover:text-black focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
-        {isEditing ? 'Cancel' : 'Edit Shipping Address'}
+        {isEditing ? 'Save' : 'Edit Shipping Address'}
       </button>
 
       {isEditing && (
