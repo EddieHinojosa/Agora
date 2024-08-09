@@ -9,14 +9,18 @@ const UserData = ({ render, userId, isManager }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        const baseUrl = import.meta.env.MODE === 'production' 
+          ? import.meta.env.VITE_PROD_API_URL 
+          : import.meta.env.VITE_DEV_API_URL;
+
         const endpoint = isManager 
-          ? `${import.meta.env.MODE === 'production' ? import.meta.env.VITE_PROD_API_URL : import.meta.env.VITE_DEV_API_URL}/shopmanager/${userId}`
-          : `${import.meta.env.MODE === 'production' ? import.meta.env.VITE_PROD_API_URL : import.meta.env.VITE_DEV_API_URL}/shop/${userId}`;
+          ? `${baseUrl}/shopmanager/${userId}`
+          : `${baseUrl}/shop/${userId}`;
 
         const response = await axios.get(endpoint);
         setUserData(response.data);
       } catch (error) {
-        console.error('Error fetching user data', error);
+        console.error('Error fetching user data:', error);
         setError('Failed to load user data. Please try again later.');
       }
     };
