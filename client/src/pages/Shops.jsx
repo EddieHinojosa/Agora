@@ -30,10 +30,14 @@ useEffect(() => {
         };
 
         fetchProducts();
-   //// deleting the following line creates an endless loop that withh result in error code 429
     }, [slug]);
-  return (
-    <UserData
+
+    const toggleMessageInput = (userData) => {
+      setComposeData(composeData ? null : { recipient: userData.shopName });
+    };
+    
+    return (
+      <UserData
       userId={slug}
       isManager={false}
       render={(userData) => (
@@ -50,7 +54,7 @@ useEffect(() => {
             {userData.shopDescription ? (
           <p className='w-full md:w-1/2 flex justify-left mt-4 text-gray-700 text-sm'>{userData.shopDescription}</p> ) : null}
           <button 
-          onClick={() => setComposeData ({ recipient: userData.shopName })}
+          onClick={() => toggleMessageInput(userData)} 
           className='w-full md:w-auto mt-2 bg-black text-white text-sm hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md'>
           Message
           </button>
