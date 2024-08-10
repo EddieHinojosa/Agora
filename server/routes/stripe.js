@@ -2,7 +2,6 @@ import express from 'express';
 import Stripe from 'stripe';
 
 const router = express.Router();
-// const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
 
 router.post('/create-checkout-session', async (req, res) => {
     console.log('Request received to create checkout session');
@@ -12,7 +11,7 @@ router.post('/create-checkout-session', async (req, res) => {
     let stripeApiKey = process.env.VITE_STRIPE_SECRET_KEY;
 
     const line_items = items.map(item => {
-        // Create a description string with only the attributes that have values
+        // Creates only if the attribute is selected
         let descriptionParts = [];
         if (item.selectedSize) {
             descriptionParts.push(`Size: ${item.selectedSize}`);
@@ -29,7 +28,6 @@ router.post('/create-checkout-session', async (req, res) => {
 
         const description = descriptionParts.join(', ');
 
-        // Construct the line item
         const lineItem = {
             price_data: {
                 currency: 'usd',
@@ -42,7 +40,7 @@ router.post('/create-checkout-session', async (req, res) => {
             quantity: item.quantity,
         };
 
-        // Add the description only if it is not empty
+        // Adds the description only if it is not empty
         if (description) {
             lineItem.price_data.product_data.description = description;
         }
@@ -76,19 +74,3 @@ router.post('/create-checkout-session', async (req, res) => {
 
 export default router;
 
-
-
-
-
-// ${
-//     import.meta.env.MODE === 'production'
-//     ? import.meta.env.VITE_PROD_API_URL
-//     : import.meta.env.VITE_DEV_API_URL
-// }
-
-
-
-
-// ${process.env.MODE === 'production'
-//     ? process.env.VITE_PROD_API_URL
-//     : process.env.VITE_DEV_API_URL}

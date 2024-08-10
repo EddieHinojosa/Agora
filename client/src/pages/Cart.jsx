@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
 
 const Cart = ({ isOpen, onRequestClose }) => {
-    // const { user } = useContext(AuthContext);
     const { cartItems } = useContext(CartContext);
 
     const handleCheckout = async () => {
@@ -41,7 +39,7 @@ const Cart = ({ isOpen, onRequestClose }) => {
                             price: item.price_id,
                             quantity: item.selectedQuantity,
                             name: item.productName,
-                            description: description.trim(), // Add description with selected attributes
+                            description: description.trim(), // Add description with selected attributes from lines 21-33
                         };
                     }),
                 }),
