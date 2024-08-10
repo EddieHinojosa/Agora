@@ -4,11 +4,13 @@ import UserData from '../components/ShopManager/Main/UserData';
 import DisplayGrid from '../components/Home/DisplayGrid';
 import { IoIosStar } from "react-icons/io";
 import axios from 'axios';
+import NewMessage from '../components/Messaging/NewMessage';
 
 
 const Shop = () => {
   const { slug } = useParams();
   const [products, setProducts] = useState([])
+  const [composeData, setComposeData] = useState(null)
 
 
 useEffect(() => {
@@ -47,9 +49,14 @@ useEffect(() => {
             {userData.shopShippingAddress.city}, {userData.shopShippingAddress.state}</p> ) : null}
             {userData.shopDescription ? (
           <p className='w-full md:w-1/2 flex justify-left mt-4 text-gray-700 text-sm'>{userData.shopDescription}</p> ) : null}
-          <button className='w-full md:w-auto mt-2 bg-black text-white text-sm hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md'>
+          <button 
+          onClick={() => setComposeData ({ recipient: userData.shopName })}
+          className='w-full md:w-auto mt-2 bg-black text-white text-sm hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md'>
           Message
           </button>
+          {composeData && (
+            <NewMessage composeData={composeData} onMessageSent={() => setComposeData(null)} />
+          )}
           <DisplayGrid products={products} />
         </div>
       )}
