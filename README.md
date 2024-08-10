@@ -35,7 +35,7 @@
   <h3 align="center">Agora</h3>
 
   <p align="center">
-    Your One-stop shop for your online goods
+    Agora is an e-commerce site, it's a dynamic marketplace where you can set up shop, sell your own products, and connect directly with customers. It's your space to showcase your brand, manage your store, and grow your business in a supportive online community.
     <br />
     <a href="https://github.com/EddieHinojosa/Agora"><strong>Explore the docs »</strong></a>
     <br />
