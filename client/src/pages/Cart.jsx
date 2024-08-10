@@ -18,12 +18,32 @@ const Cart = ({ isOpen, onRequestClose }) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    items: cartItems.map(item => ({
-                        price: item.price_id,
-                        quantity: item.selectedQuantity,
-                        name: item.productName,
-                        // description: `${item.selectedSize}, ${item.selectedColor}, ${item.selectedMaterial}`,
-                    })),
+                    items: cartItems.map(item => {
+                        // Construct the description with available attributes
+                        let descriptionParts = [];
+                        if (item.selectedSize) {
+                            descriptionParts.push(`Size: ${item.selectedSize}`);
+                        }
+                        if (item.selectedColor) {
+                            descriptionParts.push(`Color: ${item.selectedColor}`);
+                        }
+                        if (item.selectedMaterial) {
+                            descriptionParts.push(`Material: ${item.selectedMaterial}`);
+                        }
+                        if (item.selectedScent) {
+                            descriptionParts.push(`Scent: ${item.selectedScent}`);
+                        }
+                        
+                        const description = descriptionParts.join(', ');
+    
+                        return {
+                            image: item.mainImage,
+                            price: item.price_id,
+                            quantity: item.selectedQuantity,
+                            name: item.productName,
+                            description: description.trim(), // Add description with selected attributes
+                        };
+                    }),
                 }),
             });
             if (!response.ok) {
@@ -105,12 +125,11 @@ const Cart = ({ isOpen, onRequestClose }) => {
                             <h2 className="text-lg font-medium leading-6 text-gray-900">Summary</h2>
                             <div className="mt-4 space-y-2">
                                 <div className="flex justify-between text-lg">
-                                    <div>Subtotal</div>
-                                    <div>${cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}</div>
-                                </div>
-                                <div className="flex justify-between text-lg font-bold">
-                                    <div>Total</div>
-                                    <div>${cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}</div>
+                                <div>Subtotal</div>
+                                    <div>
+                                        ${cartItems.reduce((total, item) => 
+                                            total + item.price * item.selectedQuantity, 0
+                                        ).toFixed(2)} </div>
                                 </div>
                             </div>
                             <div className="mt-6 flex flex-col space-y-4">

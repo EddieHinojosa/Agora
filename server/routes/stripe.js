@@ -35,6 +35,7 @@ router.post('/create-checkout-session', async (req, res) => {
                 currency: 'usd',
                 product_data: {
                     name: item.name,
+                    images: item.image ? [item.image] : [0]
                 },
                 unit_amount: item.price * 100, // Stripe expects the amount in cents
             },
