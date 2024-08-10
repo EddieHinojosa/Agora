@@ -5,10 +5,10 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
 
-    const addToCart = (product, selectedSize, selectedColor, selectedMaterial) => {
+    const addToCart = (product, selectedSize, selectedColor, selectedMaterial, selectedScent, selectedQuantity) => {
         setCartItems(prevItems => [
             ...prevItems,
-            { ...product, selectedSize, selectedColor, selectedMaterial, price_id: product.price }
+            { ...product, selectedSize, selectedColor, selectedMaterial, selectedQuantity, selectedScent ,price_id: product.price }
         ]);
     };
 

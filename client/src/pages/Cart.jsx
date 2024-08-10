@@ -10,9 +10,9 @@ const Cart = ({ isOpen, onRequestClose }) => {
 
     const handleCheckout = async () => {
         try {
-            const response = await fetch(`${import.meta.env.MODE === 'production' 
-                        ? import.meta.env.VITE_PROD_API_URL 
-                        : import.meta.env.VITE_DEV_API_URL}/api/create-checkout-session`, {
+            const response = await fetch(`${import.meta.env.MODE === 'production'
+                ? import.meta.env.VITE_PROD_API_URL
+                : import.meta.env.VITE_DEV_API_URL}/api/create-checkout-session`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ const Cart = ({ isOpen, onRequestClose }) => {
                 body: JSON.stringify({
                     items: cartItems.map(item => ({
                         price: item.price_id,
-                        quantity: 1, //hardcoded quantity, import from cart later wchi comes from details.jsx
+                        quantity: item.selectedQuantity,
                         name: item.productName,
                         // description: `${item.selectedSize}, ${item.selectedColor}, ${item.selectedMaterial}`,
                     })),
@@ -76,11 +76,22 @@ const Cart = ({ isOpen, onRequestClose }) => {
                                             <div key={index} className="flex justify-between items-center p-4 border-b">
                                                 <div>
                                                     <div className="text-lg">{item.productName}</div>
-                                                    <div className="text-sm text-gray-500">Size: {item.selectedSize}</div>
-                                                    <div className="text-sm text-gray-500">Color: {item.selectedColor}</div>
-                                                    <div className="text-sm text-gray-500">Material: {item.selectedMaterial}</div>
+                                                    {item.selectedSize && (
+                                                        <div className="text-sm text-gray-500">Size: {item.selectedSize}</div>
+                                                    )}
+                                                    {item.selectedColor && (
+                                                        <div className="text-sm text-gray-500">Color: {item.selectedColor}</div>
+                                                    )}
+                                                    {item.selectedMaterial && (
+                                                        <div className="text-sm text-gray-500">Material: {item.selectedMaterial}</div>
+                                                    )}
+                                                    {item.selectedScent && (
+                                                        <div className="text-sm text-gray-500">Scent: {item.selectedScent}</div>
+                                                    )}
+                                                    <div className="text-sm text-gray-500">Quantity: {item.selectedQuantity}</div>
                                                 </div>
-                                                <div className="text-lg">${item.price}</div>
+                                                <div className="text-lg">${(item.price * item.selectedQuantity).toFixed(2)}</div>
+
                                             </div>
                                         ))
                                     )}

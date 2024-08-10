@@ -9,21 +9,47 @@ router.post('/create-checkout-session', async (req, res) => {
     const { items } = req.body;
     console.log('Items:', items);
 
-    let stripeApiKey = process.env.VITE_STRIPE_SECRET_KEY; 
+    let stripeApiKey = process.env.VITE_STRIPE_SECRET_KEY;
 
-    const line_items = items.map(item => ({
-        price_data: {
-            currency: 'usd',
-            product_data: {
-                name: item.name,
+    const line_items = items.map(item => {
+        // Create a description string with only the attributes that have values
+        let descriptionParts = [];
+        if (item.selectedSize) {
+            descriptionParts.push(`Size: ${item.selectedSize}`);
+        }
+        if (item.selectedColor) {
+            descriptionParts.push(`Color: ${item.selectedColor}`);
+        }
+        if (item.selectedMaterial) {
+            descriptionParts.push(`Material: ${item.selectedMaterial}`);
+        }
+        if (item.selectedScent) {
+            descriptionParts.push(`Scent: ${item.selectedScent}`);
+        }
+
+        const description = descriptionParts.join(', ');
+
+        // Construct the line item
+        const lineItem = {
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: item.name,
+                },
+                unit_amount: item.price * 100, // Stripe expects the amount in cents
             },
-            unit_amount: item.price * 100, // Stripe expects the amount in cents, thi'll convert it
-        },
-        quantity: item.quantity,
-    }));
+            quantity: item.quantity,
+        };
+
+        // Add the description only if it is not empty
+        if (description) {
+            lineItem.price_data.product_data.description = description;
+        }
+
+        return lineItem;
+    });
 
     try {
-
         const stripe = new Stripe(stripeApiKey);
 
         const session = await stripe.checkout.sessions.create({
@@ -45,6 +71,7 @@ router.post('/create-checkout-session', async (req, res) => {
         res.status(500).send({ error: error.message });
     }
 });
+
 
 export default router;
 
