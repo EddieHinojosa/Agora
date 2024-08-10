@@ -2,28 +2,53 @@ import express from 'express';
 import Stripe from 'stripe';
 
 const router = express.Router();
-// const stripe = new Stripe(process.env.VITE_STRIPE_SECRET_KEY);
 
 router.post('/create-checkout-session', async (req, res) => {
     console.log('Request received to create checkout session');
     const { items } = req.body;
     console.log('Items:', items);
 
-    let stripeApiKey = process.env.VITE_STRIPE_SECRET_KEY; 
+    let stripeApiKey = process.env.VITE_STRIPE_SECRET_KEY;
 
-    const line_items = items.map(item => ({
-        price_data: {
-            currency: 'usd',
-            product_data: {
-                name: item.name,
+    const line_items = items.map(item => {
+        // Creates only if the attribute is selected
+        let descriptionParts = [];
+        if (item.selectedSize) {
+            descriptionParts.push(`Size: ${item.selectedSize}`);
+        }
+        if (item.selectedColor) {
+            descriptionParts.push(`Color: ${item.selectedColor}`);
+        }
+        if (item.selectedMaterial) {
+            descriptionParts.push(`Material: ${item.selectedMaterial}`);
+        }
+        if (item.selectedScent) {
+            descriptionParts.push(`Scent: ${item.selectedScent}`);
+        }
+
+        const description = descriptionParts.join(', ');
+
+        const lineItem = {
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: item.name,
+                    images: item.image ? [item.image] : [0]
+                },
+                unit_amount: item.price * 100, // Stripe expects the amount in cents
             },
-            unit_amount: item.price * 100, // Stripe expects the amount in cents, thi'll convert it
-        },
-        quantity: item.quantity,
-    }));
+            quantity: item.quantity,
+        };
+
+        // Adds the description only if it is not empty
+        if (description) {
+            lineItem.price_data.product_data.description = description;
+        }
+
+        return lineItem;
+    });
 
     try {
-
         const stripe = new Stripe(stripeApiKey);
 
         const session = await stripe.checkout.sessions.create({
@@ -32,10 +57,10 @@ router.post('/create-checkout-session', async (req, res) => {
             mode: 'payment',
             success_url: `${process.env.MODE === 'production'
                 ? process.env.VITE_PROD_APP_URL
-                : process.env.VITE_DEV_APP_URL}?success=true`,
+                : process.env.VITE_DEV_APP_URL}`,
             cancel_url: `${process.env.MODE === 'production'
                 ? process.env.VITE_PROD_APP_URL
-                : process.env.VITE_DEV_APP_URL}?canceled=true`,
+                : process.env.VITE_DEV_APP_URL}`,
         });
 
         console.log('Checkout session created:', session.url);
@@ -46,21 +71,6 @@ router.post('/create-checkout-session', async (req, res) => {
     }
 });
 
+
 export default router;
 
-
-
-
-
-// ${
-//     import.meta.env.MODE === 'production'
-//     ? import.meta.env.VITE_PROD_API_URL
-//     : import.meta.env.VITE_DEV_API_URL
-// }
-
-
-
-
-// ${process.env.MODE === 'production'
-//     ? process.env.VITE_PROD_API_URL
-//     : process.env.VITE_DEV_API_URL}

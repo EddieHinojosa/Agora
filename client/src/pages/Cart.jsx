@@ -1,29 +1,47 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
-import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
 
 const Cart = ({ isOpen, onRequestClose }) => {
-    // const { user } = useContext(AuthContext);
     const { cartItems } = useContext(CartContext);
 
     const handleCheckout = async () => {
         try {
-            const response = await fetch(`${import.meta.env.MODE === 'production' 
-                        ? import.meta.env.VITE_PROD_API_URL 
-                        : import.meta.env.VITE_DEV_API_URL}/api/create-checkout-session`, {
+            const response = await fetch(`${import.meta.env.MODE === 'production'
+                ? import.meta.env.VITE_PROD_API_URL
+                : import.meta.env.VITE_DEV_API_URL}/api/create-checkout-session`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    items: cartItems.map(item => ({
-                        price: item.price_id,
-                        quantity: 1, //hardcoded quantity, import from cart later wchi comes from details.jsx
-                        name: item.productName,
-                        // description: `${item.selectedSize}, ${item.selectedColor}, ${item.selectedMaterial}`,
-                    })),
+                    items: cartItems.map(item => {
+                        // Construct the description with available attributes
+                        let descriptionParts = [];
+                        if (item.selectedSize) {
+                            descriptionParts.push(`Size: ${item.selectedSize}`);
+                        }
+                        if (item.selectedColor) {
+                            descriptionParts.push(`Color: ${item.selectedColor}`);
+                        }
+                        if (item.selectedMaterial) {
+                            descriptionParts.push(`Material: ${item.selectedMaterial}`);
+                        }
+                        if (item.selectedScent) {
+                            descriptionParts.push(`Scent: ${item.selectedScent}`);
+                        }
+                        
+                        const description = descriptionParts.join(', ');
+    
+                        return {
+                            image: item.mainImage,
+                            price: item.price_id,
+                            quantity: item.selectedQuantity,
+                            name: item.productName,
+                            description: description.trim(), // Add description with selected attributes from lines 21-33
+                        };
+                    }),
                 }),
             });
             if (!response.ok) {
@@ -76,11 +94,22 @@ const Cart = ({ isOpen, onRequestClose }) => {
                                             <div key={index} className="flex justify-between items-center p-4 border-b">
                                                 <div>
                                                     <div className="text-lg">{item.productName}</div>
-                                                    <div className="text-sm text-gray-500">Size: {item.selectedSize}</div>
-                                                    <div className="text-sm text-gray-500">Color: {item.selectedColor}</div>
-                                                    <div className="text-sm text-gray-500">Material: {item.selectedMaterial}</div>
+                                                    {item.selectedSize && (
+                                                        <div className="text-sm text-gray-500">Size: {item.selectedSize}</div>
+                                                    )}
+                                                    {item.selectedColor && (
+                                                        <div className="text-sm text-gray-500">Color: {item.selectedColor}</div>
+                                                    )}
+                                                    {item.selectedMaterial && (
+                                                        <div className="text-sm text-gray-500">Material: {item.selectedMaterial}</div>
+                                                    )}
+                                                    {item.selectedScent && (
+                                                        <div className="text-sm text-gray-500">Scent: {item.selectedScent}</div>
+                                                    )}
+                                                    <div className="text-sm text-gray-500">Quantity: {item.selectedQuantity}</div>
                                                 </div>
-                                                <div className="text-lg">${item.price}</div>
+                                                <div className="text-lg">${(item.price * item.selectedQuantity).toFixed(2)}</div>
+
                                             </div>
                                         ))
                                     )}
@@ -94,12 +123,11 @@ const Cart = ({ isOpen, onRequestClose }) => {
                             <h2 className="text-lg font-medium leading-6 text-gray-900">Summary</h2>
                             <div className="mt-4 space-y-2">
                                 <div className="flex justify-between text-lg">
-                                    <div>Subtotal</div>
-                                    <div>${cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}</div>
-                                </div>
-                                <div className="flex justify-between text-lg font-bold">
-                                    <div>Total</div>
-                                    <div>${cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}</div>
+                                <div>Subtotal</div>
+                                    <div>
+                                        ${cartItems.reduce((total, item) => 
+                                            total + item.price * item.selectedQuantity, 0
+                                        ).toFixed(2)} </div>
                                 </div>
                             </div>
                             <div className="mt-6 flex flex-col space-y-4">
