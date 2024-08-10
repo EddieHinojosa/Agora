@@ -13,8 +13,7 @@
   &nbsp;&nbsp;
   <a href="https://github.com/EddieHinojosa/Agora/issues/new?labels=bug&template=bug-report---.md">![Static Badge](https://img.shields.io/badge/Report_Bug-red)
   </a>
-  &nbsp;&nbsp;
-  <a>[![Netlify Status](https://api.netlify.com/api/v1/badges/65e9486a-2d24-4361-86d6-17565afe97e2/deploy-status)](https://app.netlify.com/sites/agoracrafts/deploys) </a>
+  
 </div>
 
 <br>
@@ -27,15 +26,14 @@
     <div align="center">
 
 <!--  logo image -->
-<img width="922" alt="insert log image" src=" insert log image please " style="width:600px; height:auto;">
 
 </div>
   </a>
 
-  <h3 align="center">Agora</h3>
+  <h1 align="center">Agora</h1>
 
   <p align="center">
-    Agora is an e-commerce site, it's a dynamic marketplace where you can set up shop, sell your own products, and connect directly with customers. It's your space to showcase your brand, manage your store, and grow your business in a supportive online community.
+    Agora is a premier e-commerce platform, designed for creative entrepreneurs and independent sellers to establish their own unique storefronts. Whether you're offering handcrafted accessories, collectibles, or original artwork, Agora provides a sophisticated and user-friendly environment to showcase your products, connect with a global audience, and drive business growth. Join a thriving community of creators and take advantage of powerful tools to manage your shop, engage customers, and build your brand in an online marketplace that champions creativity and quality.
     <br />
     <a href="https://github.com/EddieHinojosa/Agora"><strong>Explore the docs »</strong></a>
     <br />
@@ -70,59 +68,67 @@
   </ol>
 </details>
 
+<br>
+<br>
+<br>
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
-
-<div align="center">
-
-<!-- add project logo -->
-<img width="922" alt="Agora Logo goes here..." src=" insert logo source... " style="width:300px; height:auto;">
-</div>
+# About The Project
 
 
 
-
-<p>Welcome to Agora, <br>
-
-howdy...insert cool summary here.... </p>
 
 
 ## How It Works:
 
-<p>1. Login or Register </p>
-<p>2. select stuff<br> 
-<p>3. buy stuff. </p>
-<p>4. Enjoy! </p>
+<h3 style="font-size: 1.5em;">1. Login or Register </h3>
+  <p style="text-indent: 2em; white-space: pre-wrap;">
+    Create an account or log in to access personalized features and manage your shop or purchases efficiently.
+  </p>
+<h3 style="font-size: 1.5em;">2. Browse our wide selection of unique products</h3> 
+  <p style="text-indent: 2em; white-space: pre-wrap;">
+    Explore a diverse range of handcrafted accessories, collectibles, 
+    and original artwork from talented creators. Discover items that 
+    are as unique as you are.
+  </p>
+<h3 style="font-size: 1.5em;">3. Add desired prodicts to cart</h3>
+  <p style="text-indent: 2em; white-space: pre-wrap;">
+    Select your favorite items and add them to your cart for a seamless shopping experience. 
+    Easily review your selections before proceeding to checkout.
+  </p>
+<h3 style="font-size: 1.5em;">4. Buy!</h3>
+  <p style="text-indent: 2em; white-space: pre-wrap;">
+    Complete your purchase with our secure and straightforward checkout process via Stripe. 
+    Your products will be on their way to you in no time!
+  </p>
+
+
+
 
 ## Features:
-<h4><strong>Login/feature 1:</strong><br></h4>
-<p>With the ability to Register and log in, this feature personalized and give you the ability to add your selected items to your cart, purchase, and even add items to a see later/fav list .</p>
-
-<h4><strong>feature 2:</strong><br></h4>
-<p>feature 2 stuff<br>
-list a thing or 2 thing in relation to feature 2<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- one fish<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- two fish <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- red fish<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- blue fish
-
-</p>
 
 
-<h4><strong>Favorite's List:</strong><br></h4>
-<p>because this HAS to go in it
-</p>
+
 
 
 
 
 ## Video Tour:
 
-<!-- include a site desmonstration  -->
+<h3 style="font-size: 1.5em;">Sign-Up and Login </h3>
 
 
+
+<h3 style="font-size: 1.5em;">Browse products and payment path </h3>
+
+
+
+<h3 style="font-size: 1.5em;">Shop Owners: Adding products to your shop </h3>
+
+
+
+<h3 style="font-size: 1.5em;">Shop Owners: Messaging system </h3>
 
 
 
@@ -145,17 +151,22 @@ npm install
 ```
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To run on localhost:
 ```bash
-npm server.js
+npm run develop
 ```
 
 
 
 
-<!-- ## Built With
+## Built With
+- ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+- ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+- ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+- ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+- ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+- ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+- ![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white)
+- ![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
 
-* HTML
-* CSS
-* JavaScript -->
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -205,7 +216,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 * Repo Link: [https://github.com/EddieHinojosa/Agora](https://github.com/EddieHinojosa/Agora)
 
-* Live link via Render.com: [---render link---](---render link---)
+* Live link via Render.com: [https://agora-crafts.onrender.com/](https://agora-crafts.onrender.com/)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
