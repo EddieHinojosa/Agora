@@ -119,32 +119,33 @@
 <h3 style="font-size: 1.5em;">Sign-Up and Login </h3>
 
 
+https://github.com/user-attachments/assets/839c44df-b542-48ec-9879-8240a9ba83c0
 
-https://github.com/user-attachments/assets/f5d275c3-e976-40bc-a686-1cfdfac0c380
 
 
 
 <h3 style="font-size: 1.5em;">Browse products and payment path </h3>
 
 
+https://github.com/user-attachments/assets/d6243618-dd1c-4969-a12f-c5cc92d23752
 
-https://github.com/user-attachments/assets/8ffc63ad-a847-4d77-94ab-bc276e52af93
 
 
 
 <h3 style="font-size: 1.5em;">Shop Owners: Adding products to your shop </h3>
 
 
+https://github.com/user-attachments/assets/ca7baad8-72b3-4b10-bd28-620c9117f8c2
 
-https://github.com/user-attachments/assets/94890463-cf22-4da5-804b-1ff964b1de4d
+
 
 
 
 <h3 style="font-size: 1.5em;">Shop Owners: Messaging system </h3>
 
 
+https://github.com/user-attachments/assets/5063c827-33fe-40d8-a1e8-3809a95d3344
 
-https://github.com/user-attachments/assets/20f78ed2-9dcf-4183-8a79-508b6f27cc38
 
 
 
