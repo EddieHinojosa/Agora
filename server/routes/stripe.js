@@ -59,10 +59,10 @@ router.post('/create-checkout-session', async (req, res) => {
             mode: 'payment',
             success_url: `${process.env.MODE === 'production'
                 ? process.env.VITE_PROD_APP_URL
-                : process.env.VITE_DEV_APP_URL}?success=true`,
+                : process.env.VITE_DEV_APP_URL}`,
             cancel_url: `${process.env.MODE === 'production'
                 ? process.env.VITE_PROD_APP_URL
-                : process.env.VITE_DEV_APP_URL}?canceled=true`,
+                : process.env.VITE_DEV_APP_URL}`,
         });
 
         console.log('Checkout session created:', session.url);
