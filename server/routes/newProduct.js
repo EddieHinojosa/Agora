@@ -4,7 +4,6 @@ import Product from '../models/Product.js';
 const router = express.Router()
 
 // Create a new Product
-
 router.post('/shopmanager/:id/newproduct', async (req , res) => {
 
     const newProductData = {...req.body};
