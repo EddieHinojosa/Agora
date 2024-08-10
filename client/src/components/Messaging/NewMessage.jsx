@@ -23,11 +23,12 @@ const NewMessage = ({ composeData, onMessageSent }) => {
     e.preventDefault();
     if (subject.trim() !== '' && body.trim() !== '' && recipient.trim() !== '') {
       try {
+        const sender = user?.username || user?.shopName || 'Unknown Sender';
         await addDoc(collection(db, 'messages'), {
           recipient,
           subject,
           body,
-          sender: user.username || user.shopName,
+          sender,
           createdAt: new Date(),
         });
         setRecipient('');
