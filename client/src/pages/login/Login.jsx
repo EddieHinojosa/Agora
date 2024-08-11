@@ -35,7 +35,7 @@ const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <FormField label="Email" name="email" register={register} errors={errors} />
         <FormField label="Password" name="password" register={register} errors={errors} type="password" />
-        <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">
+        <button type="submit" className='w-full mt-2 bg-black text-white text-sm hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md'>
           Login
         </button>
       </form>

@@ -132,7 +132,7 @@ const Cart = ({ isOpen, onRequestClose }) => {
                             <div className="mt-6 flex flex-col space-y-4">
                                 <button
                                     onClick={handleCheckout}
-                                    className="inline-flex justify-center px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-500 focus:outline-none sm:w-auto sm:text-sm"
+                                    className="inline-flex justify-center px-4 py-2 text-base font-medium text-white bg-red-900 hover:bg-red-700 border border-transparent rounded-md shadow-sm focus:outline-none sm:w-auto sm:text-sm"
                                 >
                                     Checkout
                                 </button>

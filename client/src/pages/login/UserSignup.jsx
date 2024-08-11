@@ -167,7 +167,7 @@ const UserSignup = () => {
 
         {signupMessage && <p className="text-red-600 text-sm">{signupMessage}</p>}
         
-        <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700" disabled={!isValid || emailError || usernameError || shopNameError}>
+        <button type="submit" className='w-full mt-2 bg-black text-white text-sm hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md' disabled={!isValid || emailError || usernameError || shopNameError}>
           Register
         </button>
         {(!isValid || emailError || usernameError || shopNameError) && <p className="text-red-600 text-sm text-center mt-4">Please fill out all fields correctly before continuing.</p>}

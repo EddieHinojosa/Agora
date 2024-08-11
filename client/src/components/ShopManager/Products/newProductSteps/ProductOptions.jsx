@@ -64,7 +64,7 @@ import { AuthContext } from "../../../../context/AuthContext";
       const updatedOptionRows = optionRows.filter((_, i) => i !== index);
       setOptionRows(updatedOptionRows);
     };
-    
+
     return (
       // Option Table
       <div className="mt-6">

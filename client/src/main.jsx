@@ -13,7 +13,7 @@ import Error from './pages/Error.jsx';
 
 // Home-Main Pages
 import Home from './pages/main/Home.jsx';
-import User from './pages/main/User.jsx';
+import User from './pages/login/User.jsx';
 import Cart from './pages/main/Cart.jsx';
 import Checkout from './pages/main/Checkout.jsx';
 import UpdateProfile from './pages/main/UpdateProfile.jsx';
