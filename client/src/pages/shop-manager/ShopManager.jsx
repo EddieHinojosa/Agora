@@ -74,10 +74,13 @@ const ShopManager = () => {
             </div>
             <div className='flex justify-center mt-8'>
     {(!userData.shopShippingAddress && !userData.shopDescription) && (
-        <h2>Please Enter Shop Shipping Address and Shop Description</h2>
+        <h2>Please Enter Shop Shipping Address and Shop Description.</h2>
     )}
     {(!userData.shopShippingAddress && userData.shopDescription) && (
-        <h2>Please Enter Shop Shipping Address</h2>
+        <h2>Please Enter Shop Shipping Address.</h2>
+    )}
+    {(userData.shopShippingAddress && !userData.shopDescription) && (
+        <h2>Please Enter Shop Description.</h2>
     )}
 
 </div>
