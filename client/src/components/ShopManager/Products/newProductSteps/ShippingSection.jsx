@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import UserData from "../ShopManager/Main/UserData";
-import { AuthContext } from "../../context/AuthContext";
+import UserData from "../../Main/UserData";
+import { AuthContext } from "../../../../context/AuthContext";
 
 
 // Shipping Section

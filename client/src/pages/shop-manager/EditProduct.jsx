@@ -1,14 +1,14 @@
 import { useState, useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
-import ProductInfo from '../../components/newProductSteps/ProductInfo';
-import ProductType from '../../components/newProductSteps/ProductType';
-import ProductImages from '../../components/newProductSteps/ProductImages';
-import ProductPricing from '../../components/newProductSteps/ProductPricing';
-import ProductOptions from '../../components/newProductSteps/ProductOptions';
-import ProductDimensions from '../../components/newProductSteps/ProductDimensions';
+import ProductInfo from '../../components/ShopManager/Products/newProductSteps/ProductInfo';
+import ProductType from '../../components/ShopManager/Products/newProductSteps/ProductType';
+import ProductImages from '../../components/ShopManager/Products/newProductSteps/ProductImages';
+import ProductPricing from '../../components/ShopManager/Products/newProductSteps/ProductPricing';
+import ProductOptions from '../../components/ShopManager/Products/newProductSteps/ProductOptions';
+import ProductDimensions from '../../components/ShopManager/Products/newProductSteps/ProductDimensions';
 import axios from 'axios';
-import ShippingSection from '../../components/newProductSteps/ShippingSection';
+import ShippingSection from '../../components/ShopManager/Products/newProductSteps/ShippingSection';
 
 
 

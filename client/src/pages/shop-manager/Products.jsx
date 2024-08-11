@@ -3,7 +3,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import { Link, useParams } from 'react-router-dom';
 import { IoMdSearch } from "react-icons/io";
 import axios from 'axios';
-import ProductCard from '../../components/ProductCard';
+import ProductCard from '../../components/ShopManager/Products/ProductCard';
 import { AuthContext } from '../../context/AuthContext';
 import UserData from '../../components/ShopManager/Main/UserData';
 
