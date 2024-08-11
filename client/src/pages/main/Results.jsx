@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import DisplayGrid from '../components/Home/DisplayGrid';
+import DisplayGrid from '../../components/Home/DisplayGrid';
 
 const SearchResults = () => {
   const location = useLocation();

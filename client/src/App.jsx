@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Cart from './pages/Cart';
+import Cart from './pages/main/Cart.jsx';
 import Modal from 'react-modal'; // upsed by the shopping cart
 import { CartProvider } from './context/CartContext';
 

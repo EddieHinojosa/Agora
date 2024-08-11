@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import DisplayGrid from '../components/Home/DisplayGrid'
+import DisplayGrid from '../../components/Home/DisplayGrid'
 import axios from 'axios'
 import { useParams } from 'react-router-dom';
 

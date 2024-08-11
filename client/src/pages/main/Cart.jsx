@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Modal from 'react-modal';
-import { CartContext } from '../context/CartContext';
+import { CartContext } from '../../context/CartContext';
 
 const Cart = ({ isOpen, onRequestClose }) => {
     const { cartItems } = useContext(CartContext);

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from "react-router-dom";
-import { CartContext } from '../context/CartContext';
+import { CartContext } from '../../context/CartContext';
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from "react-icons/io";
 import axios from "axios";
 import slug from 'slug';
-import BackButton from '../components/Home/Backbutton';
+import BackButton from '../../components/Home/Backbutton';
 
 const ProductDetails = () => {
   const { id } = useParams();

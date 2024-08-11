@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Banner from '../components/Home/Banner'
-import DisplayGrid from '../components/Home/DisplayGrid'
+import Banner from '../../components/Home/Banner'
+import DisplayGrid from '../../components/Home/DisplayGrid'
 
 const Home = () => {
 
@@ -21,17 +21,8 @@ const Home = () => {
     }
 };
 
-  // const getUser = async () => {
-  //   try {
-  //     const response = await axios.get('http://localhost:5000/api/user')
-  //     setUser(response.data)
-  //   } catch (error) {
-  //     console.error('Error getting user:', error)
-  //   }
-  // }
   useEffect(() => {
     fetchProducts();
-    // getUser();
   }, [])
   
 

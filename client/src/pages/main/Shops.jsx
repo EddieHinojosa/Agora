@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import UserData from '../components/ShopManager/Main/UserData';
-import DisplayGrid from '../components/Home/DisplayGrid';
+import UserData from '../../components/ShopManager/Main/UserData';
+import DisplayGrid from '../../components/Home/DisplayGrid';
 import { IoIosStar } from "react-icons/io";
 import axios from 'axios';
-import NewMessage from '../components/Messaging/NewMessage';
+import NewMessage from '../../components/Messaging/NewMessage';
 
 
 const Shop = () => {

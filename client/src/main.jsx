@@ -12,15 +12,15 @@ import { AuthProvider } from './context/AuthContext.jsx';
 import Error from './pages/Error.jsx';
 
 // Home-Main Pages
-import Home from './pages/Home.jsx';
-import User from './pages/User.jsx';
-import Cart from './pages/Cart.jsx';
-import Checkout from './pages/Checkout.jsx';
-import UpdateProfile from './pages/UpdateProfile.jsx';
-import Shops from './pages/Shops.jsx';
-import ProductDetails from './pages/Details.jsx'
-import Categories from './pages/Categories.jsx';
-import Results from './pages/Results.jsx'
+import Home from './pages/main/Home.jsx';
+import User from './pages/main/User.jsx';
+import Cart from './pages/main/Cart.jsx';
+import Checkout from './pages/main/Checkout.jsx';
+import UpdateProfile from './pages/main/UpdateProfile.jsx';
+import Shops from './pages/main/Shops.jsx';
+import ProductDetails from './pages/main/Details.jsx'
+import Categories from './pages/main/Categories.jsx';
+import Results from './pages/main/Results.jsx'
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
