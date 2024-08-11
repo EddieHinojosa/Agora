@@ -34,7 +34,8 @@ useEffect(() => {
     }, [slug]);
 
     const toggleMessageInput = (userData) => {
-      setComposeData(composeData ? null : { recipient: userData.shopName });
+      const formatShopName = userData.shopName.split(' ')[0].toLowerCase();
+      setComposeData(composeData ? null : { recipient: formatShopName });
     };
     
     return (
