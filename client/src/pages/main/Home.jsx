@@ -6,6 +6,7 @@ import DisplayGrid from '../../components/Home/DisplayGrid'
 const Home = () => {
 
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   
   const fetchProducts = async () => {
     try {
@@ -28,8 +29,8 @@ const Home = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-start justify-start bg-gray-50 px-4 md:px-10 pt-0">
-      <Banner />
-      <DisplayGrid products={products} />
+      {currentPage === 1 && <Banner />}
+      <DisplayGrid products={products} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
     </div>
   );
 

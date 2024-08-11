@@ -41,6 +41,10 @@ const Settings = () => {
       const response = await updateUserShopSettings(userId, shopDescription, address);
       console.log('Shop settings updated successfully!', response);
       setSaveMessage('Shop settings saved!')
+
+      setShopDescription(shopDescription)
+      setAddress(address)
+
       setTimeout(() => {
         setSaveMessage('');
       }, 3000);
