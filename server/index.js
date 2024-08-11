@@ -5,14 +5,9 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
 import helmet from 'helmet';
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/user.js';
-// import routes from './routes/index.js';
-import shopRoutes from './routes/shopRoute.js';
-import productRoutes from './routes/newProduct.js';
+import routes from './routes/index.js';
 import rateLimit from 'express-rate-limit';
 import MongoStore from 'connect-mongo';
-import stripeRoutes from './routes/stripe.js';
 
 
 
@@ -74,13 +69,7 @@ app.use(session({
   }
 }));
 
-app.use('/api/auth', authRoutes); // Regular auth routes
-// // app.use('/api/firebase-auth', firebaseAuthRoutes); // Firebase auth routes
-app.use('/', shopRoutes);
-app.use('/api', userRoutes);
-app.use('/' , productRoutes);
-app.use('/api', stripeRoutes);
-
+app.use(routes);
 
 // Start server
 app.listen(PORT, () => {
