@@ -45,7 +45,7 @@ const ProductDetails = () => {
   }
 
   const handleAddToCart = () => {
-    addToCart(product, selectedSize, selectedColor, selectedMaterial);
+    addToCart(product, selectedSize, selectedColor, selectedMaterial, selectedScent,selectedQuantity, mainImage);
   };
 
   return (
