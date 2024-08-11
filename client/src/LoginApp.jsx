@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import ShopNavbar from "./components/ShopManager/Main/ShopNavbar";
-import Footer from "./components/Footer";
+import Footer from "./components/Home/Footer";
 
 function LoginApp() {
   return (
