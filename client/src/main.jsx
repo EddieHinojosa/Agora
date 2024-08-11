@@ -15,7 +15,6 @@ import Error from './pages/Error.jsx';
 import Home from './pages/main/Home.jsx';
 import User from './pages/login/User.jsx';
 import Cart from './pages/main/Cart.jsx';
-import Checkout from './pages/main/Checkout.jsx';
 import UpdateProfile from './pages/main/UpdateProfile.jsx';
 import Shops from './pages/main/Shops.jsx';
 import ProductDetails from './pages/main/Details.jsx'
@@ -52,7 +51,6 @@ root.render(
               <Route path="home" element={<Home />} />
               <Route path="user" element={<User />} />
               <Route path="cart" element={<Cart />} />
-              <Route path="checkout" element={<Checkout />} />
               <Route path="update-profile" element={<UpdateProfile />} />
               <Route path="shop/:slug" element={<Shops />} />
               <Route path="details/:id" element={<ProductDetails />} />
