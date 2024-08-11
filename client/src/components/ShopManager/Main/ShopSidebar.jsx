@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { IoMenu, IoClose } from 'react-icons/io5';
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 const ShopSidebar = () => {
     const [isOpen, setIsOpen] = useState(false);

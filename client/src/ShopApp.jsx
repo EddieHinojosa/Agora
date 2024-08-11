@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import ShopNavbar from './components/ShopNavbar';
-import ShopSidebar from './components/ShopSidebar';
+import ShopNavbar from './components/ShopManager/Main/ShopNavbar';
+import ShopSidebar from './components/ShopManager/Main/ShopSidebar';
 import Footer from './components/Footer';
 
 const ShopApp = () => {
