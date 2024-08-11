@@ -1,19 +1,17 @@
-// import express from 'express';
-// import authRoutes from './auth.js';
-// import userRoutes from './user.js';
-// import newProduct from './newProduct.js';
-// import getProduct from './products.js';
-// import unifiedAuth from './unifiedAuth.js';
-// import shopRoutes from './shopRoute.js';
+import express from 'express';
+import authRoutes from './auth.js';
+import userRoutes from './user.js';
+import productRoutes from './productRoutes.js';
+import shopRoutes from './shopRoute.js';
+import stripeRoutes from './stripe.js'
 
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.use('/auth', authRoutes);
-// router.use('/', shopRoutes);
-// router.use('/user', userRoutes);
-// router.use('/newproduct', newProduct);
-// router.use('/products', getProduct);
-// router.use('/unifiedauth', unifiedAuth);
+router.use('/api/auth', authRoutes); // Regular auth routes
+router.use('/', shopRoutes);
+router.use('/api', userRoutes);
+router.use('/' , productRoutes);
+router.use('/api', stripeRoutes);
 
-// export default router;
+export default router;

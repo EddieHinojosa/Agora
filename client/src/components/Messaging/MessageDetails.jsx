@@ -32,10 +32,10 @@ const MessageDetail = ({ message, onClose, onReply, onForward }) => {
         <p className="text-sm text-gray-500 mb-4">{new Date(message.createdAt.toDate()).toLocaleString()}</p>
         <div className="whitespace-pre-wrap mb-4">{message.body}</div>
         <div className="flex justify-end space-x-4">
-          {onReply && <button onClick={onReply} className="bg-blue-500 text-white p-2 rounded">Reply</button>}
-          {onForward && <button onClick={onForward} className="bg-blue-500 text-white p-2 rounded">Forward</button>}
-          <button onClick={handleDelete} className="bg-red-500 text-white p-2 rounded">Delete</button>
-          <button onClick={onClose} className="bg-gray-300 text-black p-2 rounded">Close</button>
+          {onReply && <button onClick={onReply} className='w-full md:w-auto p-2 bg-black text-white hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md text-sm'>Reply</button>}
+          {onForward && <button onClick={onForward} className='w-full md:w-auto p-2 bg-black text-white hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md text-sm'>Forward</button>}
+          <button onClick={handleDelete} className="bg-red-900 hover:bg-red-700 text-white p-2 rounded-md text-sm">Delete</button>
+          <button onClick={onClose} className="bg-gray-300 text-black p-2 rounded-md text-sm">Close</button>
         </div>
       </div>
     </div>

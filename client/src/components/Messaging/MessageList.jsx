@@ -69,7 +69,7 @@ const MessageList = ({ type, onSelectMessage, onDeleteMessage }) => {
             </p>
           </div>
           <div className="flex space-x-2">
-            <button onClick={() => handleDelete(message)} className="bg-red-500 text-white p-2 rounded">Delete</button>
+            <button onClick={() => handleDelete(message)} className="bg-red-900 hover:bg-red-700 text-white p-2 rounded-md text-sm">Delete</button>
           </div>
         </div>
       ))}

@@ -1,26 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.jsx';
 import LoginApp from './LoginApp.jsx';
 import ShopApp from './ShopApp.jsx';
 import './index.css';
-import { AuthProvider, AuthContext } from './context/AuthContext.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
 
 
 // Error page
 import Error from './pages/Error.jsx';
 
 // Home-Main Pages
-import Home from './pages/Home.jsx';
-import User from './pages/User.jsx';
-import Cart from './pages/Cart.jsx';
-import Checkout from './pages/Checkout.jsx';
-import UpdateProfile from './pages/UpdateProfile.jsx';
-import Shops from './pages/Shops.jsx';
-import ProductDetails from './pages/Details.jsx'
-import Categories from './pages/Categories.jsx';
-import Results from './pages/Results.jsx'
+import Home from './pages/main/Home.jsx';
+import User from './pages/login/User.jsx';
+import Cart from './pages/main/Cart.jsx';
+import Checkout from './pages/main/Checkout.jsx';
+import UpdateProfile from './pages/main/UpdateProfile.jsx';
+import Shops from './pages/main/Shops.jsx';
+import ProductDetails from './pages/main/Details.jsx'
+import Categories from './pages/main/Categories.jsx';
+import Results from './pages/main/Results.jsx'
 
 // Login-Signup Pages
 import Login from './pages/login/Login.jsx';
