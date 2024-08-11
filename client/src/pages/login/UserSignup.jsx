@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useLocation } from 'react-router-dom';
-import FormField from '../../components/FormField';
-import SelectField from '../../components/SelectField';
+import FormField from '../../components/Login/FormField';
+import SelectField from '../../components/Login/SelectField';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 
