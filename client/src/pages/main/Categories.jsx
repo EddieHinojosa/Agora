@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 const Categories = () => {
     const [products, setProducts] = useState([]);
     const { category } = useParams();
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -29,7 +30,7 @@ const Categories = () => {
 
     return (
         <div>
-           <DisplayGrid products={products}/>
+           <DisplayGrid products={products} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
         </div>
     )
 }
