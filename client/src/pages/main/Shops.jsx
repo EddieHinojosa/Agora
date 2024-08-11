@@ -11,6 +11,7 @@ const Shop = () => {
   const { slug } = useParams();
   const [products, setProducts] = useState([])
   const [composeData, setComposeData] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1);
 
 
 useEffect(() => {
@@ -61,7 +62,7 @@ useEffect(() => {
           {composeData && (
             <NewMessage composeData={composeData} onMessageSent={() => setComposeData(null)} />
           )}
-          <DisplayGrid products={products} />
+          <DisplayGrid products={products} currentPage={currentPage} setCurrentPage={setCurrentPage}  />
         </div>
       )}
     />
