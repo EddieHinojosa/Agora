@@ -2,7 +2,7 @@ import { set } from "mongoose";
 import React, { useContext, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../../../context/AuthContext";
 
 // Product Options Section
   const ProductOptions = ({ rows, setRows, onChange, optionRows, setOptionRows }) => {
@@ -64,7 +64,7 @@ import { AuthContext } from "../../context/AuthContext";
       const updatedOptionRows = optionRows.filter((_, i) => i !== index);
       setOptionRows(updatedOptionRows);
     };
-    
+
     return (
       // Option Table
       <div className="mt-6">

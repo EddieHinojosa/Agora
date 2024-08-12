@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import UserData from '../components/ShopManager/Main/UserData';
-import DisplayGrid from '../components/Home/DisplayGrid';
+import UserData from '../../components/ShopManager/Main/UserData';
+import DisplayGrid from '../../components/Home/DisplayGrid';
 import { IoIosStar } from "react-icons/io";
 import axios from 'axios';
-import NewMessage from '../components/Messaging/NewMessage';
+import NewMessage from '../../components/Messaging/NewMessage';
 
 
 const Shop = () => {
   const { slug } = useParams();
   const [products, setProducts] = useState([])
   const [composeData, setComposeData] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1);
 
 
 useEffect(() => {
@@ -33,7 +34,8 @@ useEffect(() => {
     }, [slug]);
 
     const toggleMessageInput = (userData) => {
-      setComposeData(composeData ? null : { recipient: userData.shopName });
+      const formatShopName = userData.shopName.split(' ')[0].toLowerCase();
+      setComposeData(composeData ? null : { recipient: formatShopName });
     };
     
     return (
@@ -61,7 +63,7 @@ useEffect(() => {
           {composeData && (
             <NewMessage composeData={composeData} onMessageSent={() => setComposeData(null)} />
           )}
-          <DisplayGrid products={products} />
+          <DisplayGrid products={products} currentPage={currentPage} setCurrentPage={setCurrentPage}  />
         </div>
       )}
     />

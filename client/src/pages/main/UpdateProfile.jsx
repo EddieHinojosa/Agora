@@ -4,9 +4,9 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {AuthContext} from '../context/AuthContext';
-import FormField from '../components/FormField';
-import SelectField from '../components/SelectField';
+import {AuthContext} from '../../context/AuthContext';
+import FormField from '../../components/Login/FormField';
+import SelectField from '../../components/Login/SelectField';
 
 const schema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),

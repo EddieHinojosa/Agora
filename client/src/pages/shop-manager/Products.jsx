@@ -3,9 +3,8 @@ import { IoIosAddCircle } from "react-icons/io";
 import { Link, useParams } from 'react-router-dom';
 import { IoMdSearch } from "react-icons/io";
 import axios from 'axios';
-import ProductCard from '../../components/ProductCard';
+import ProductCard from '../../components/ShopManager/Products/ProductCard';
 import { AuthContext } from '../../context/AuthContext';
-import UserData from '../../components/ShopManager/Main/UserData';
 
 
 const Products = () => {
@@ -46,7 +45,6 @@ const Products = () => {
         if (id) {
         fetchProducts();
         }
-   //// deleting line 45 creates an endless loop that withh result in error code 429
     }, [id]);
 
     if (!user || !user._id) {

@@ -1,11 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import DisplayCard from './DisplayCard';
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 
-const DisplayGrid = ({ products = [] }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const DisplayGrid = ({ products = [], currentPage, setCurrentPage }) => {
   const productsPerPage = 20;
   const totalPages = Math.ceil(products.length / productsPerPage);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -50,5 +53,5 @@ const DisplayGrid = ({ products = [] }) => {
   );
 };
 
-
 export default DisplayGrid;
+

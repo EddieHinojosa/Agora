@@ -92,7 +92,7 @@
     and original artwork from talented creators. Discover items that 
     are as unique as you are.
   </p>
-<h3 style="font-size: 1.5em;">3. Add desired prodicts to cart</h3>
+<h3 style="font-size: 1.5em;">3. Add desired products to cart</h3>
   <p style="text-indent: 2em; white-space: pre-wrap;">
     Select your favorite items and add them to your cart for a seamless shopping experience. 
     Easily review your selections before proceeding to checkout.

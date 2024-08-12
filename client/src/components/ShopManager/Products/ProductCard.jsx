@@ -1,14 +1,12 @@
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 
-// needs to be updated to pull from the db schema
 const ProductCard = ({ _id, image_urls, productName, quantity, price, onDelete }) => {
     const { user } = useContext(AuthContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     
-    // Delete function needs to be updated to delete from the db - deletes NOTHING right now
     const handleDelete = () => {
         onDelete(_id);
         setIsModalOpen(false);

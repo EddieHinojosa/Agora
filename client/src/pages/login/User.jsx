@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {AuthContext} from '../context/AuthContext';
+import {AuthContext} from '../../context/AuthContext';
 
 const schema = yup.object().shape({
     newPassword: yup.string().required('New Password is required').min(6, 'Password must be at least 6 characters long'),
@@ -38,7 +38,7 @@ const User = () => {
                     <input type="password" {...register('confirmNewPassword')} className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                     <p className="text-red-600 text-sm">{errors.confirmNewPassword?.message}</p>
                 </div>
-                <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">Change Password</button>
+                <button type="submit" className='w-full mt-2 bg-black text-white text-sm hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md'>Change Password</button>
             </form>
         </div>
     );

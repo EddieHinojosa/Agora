@@ -54,7 +54,7 @@ const ProductImages = ({ rows, setRows, images, setImages  }) => {
           </ol>
         </div>
         <div className="md:w-3/4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6 order-1 md:order-2">
-          <div className="border bg-gray-200 rounded-md flex h-32 w-full md:w-32">
+          <div className="rounded-md flex h-32 w-full md:w-32">
             <CloudinaryUploadWidget setImages={setImages} />
           </div>
           {images.map((image, index) => (
