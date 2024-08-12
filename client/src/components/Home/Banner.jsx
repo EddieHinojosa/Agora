@@ -20,7 +20,7 @@ const Banner = () => {
         </h2>
         {!user && (
           <Link to="/login/usersignup">
-            <button className="mt-6 px-4 py-2 md:px-6 md:py-2 bg-white text-[#4a000a] font-bold rounded-lg shadow-lg hover:bg-[#4a000a] hover:text-white">
+            <button className="mt-6 px-4 py-2 md:px-4 md:py-2 lg:px-6 lg:py-2 xl:px-10 xl:py-2 bg-white text-[#4a000a] text-sm xl:text-xl font-bold rounded-lg shadow-lg hover:bg-[#4a000a] hover:text-white">
               Sign Up
             </button>
           </Link>
