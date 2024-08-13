@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const NavLinks = ({ isOpen }) => {
   return (
     <div
       className={`flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-4 ${
-        isOpen ? 'flex' : 'hidden md:flex'
+        isOpen ? "flex" : "hidden md:flex"
       }`}
     >
       <Link to="categories/accessories" className="hover:underline text-sm">

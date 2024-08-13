@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { CiUser, CiShop } from 'react-icons/ci';
-import { MdOutlineShoppingBag } from 'react-icons/md';
-import { AuthContext } from '../../../context/AuthContext';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { CiUser, CiShop } from "react-icons/ci";
+import { MdOutlineShoppingBag } from "react-icons/md";
+import { AuthContext } from "../../../context/AuthContext";
 
 const UserMenu = ({ setModalIsOpen }) => {
   const { user, logout } = useContext(AuthContext);
