@@ -8,19 +8,19 @@ const Banner = () => {
 
   return (
     <div className="w-full flex flex-col md:flex-row items-center justify-center bg-[#4a000a] shadow-lg">
-      <div className="flex-1 text-center md:flex md:flex-col md:justify-center">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
+      <div className="flex-1 p-4 text-center md:flex md:flex-col md:justify-center">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white leading-tight">
           Find something
         </h2>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl xxl:text-7xl text-white leading-tight">
           just as unique
         </h2>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white leading-tight">
           as you
         </h2>
         {!user && (
           <Link to="/login/usersignup">
-            <button className="mt-6 px-4 py-2 md:px-6 md:py-2 bg-white text-[#4a000a] font-bold rounded-lg shadow-lg hover:bg-[#4a000a] hover:text-white">
+            <button className="mt-6 px-4 py-2 md:px-4 md:py-2 lg:px-6 lg:py-2 xl:px-10 xl:py-2 bg-white text-[#4a000a] text-sm xl:text-xl font-bold rounded-lg shadow-lg hover:bg-[#4a000a] hover:text-white">
               Sign Up
             </button>
           </Link>
