@@ -1,41 +1,61 @@
-import React, { useState, useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Link } from 'react-router-dom';
-import FormField from '../../components/Login/FormField';
-import { AuthContext } from '../../context/AuthContext';
+import React, { useState, useContext } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Link } from "react-router-dom";
+import FormField from "../../components/Login/FormField";
+import { AuthContext } from "../../context/AuthContext";
 
 const schema = yup.object().shape({
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().required('Password is required'),
+  email: yup.string().email("Invalid email").required("Email is required"),
+  password: yup.string().required("Password is required"),
 });
 
 const Login = () => {
   const { regularLogin } = useContext(AuthContext);
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
   });
-  const [loginError, setLoginError] = useState('');
+  const [loginError, setLoginError] = useState("");
 
   const onSubmit = async (data) => {
     try {
       await regularLogin(data.email, data.password);
-      console.log('User logged in');  // Debugging
+      console.log("User logged in"); // Debugging
     } catch (error) {
-      console.log('Login error:', error);  // Debugging
-      setLoginError('Login failed: ' + error.message);
+      console.log("Login error:", error); // Debugging
+      setLoginError("Login failed: " + error.message);
     }
   };
 
   return (
     <div className="max-w-md mx-auto bg-white p-8 mt-10 shadow-md rounded">
       <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-      {loginError && <p className="text-red-600 text-sm text-center">{loginError}</p>}
+      {loginError && (
+        <p className="text-red-600 text-sm text-center">{loginError}</p>
+      )}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <FormField label="Email" name="email" register={register} errors={errors} />
-        <FormField label="Password" name="password" register={register} errors={errors} type="password" />
-        <button type="submit" className='w-full mt-2 bg-black text-white text-sm hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md'>
+        <FormField
+          label="Email"
+          name="email"
+          register={register}
+          errors={errors}
+        />
+        <FormField
+          label="Password"
+          name="password"
+          register={register}
+          errors={errors}
+          type="password"
+        />
+        <button
+          type="submit"
+          className="w-full mt-2 bg-black text-white text-sm hover:bg-gray-300 hover:text-black px-4 py-2 rounded-md"
+        >
           Login
         </button>
       </form>
@@ -45,19 +65,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

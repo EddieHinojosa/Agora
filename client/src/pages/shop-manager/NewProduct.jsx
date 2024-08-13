@@ -1,34 +1,31 @@
-import { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../context/AuthContext'
-import ProductInfo from '../../components/ShopManager/Products/newProductSteps/ProductInfo'
-import ProductType from '../../components/ShopManager/Products/newProductSteps/ProductType'
-import ProductImages from '../../components/ShopManager/Products/newProductSteps/ProductImages'
-import ProductPricing from '../../components/ShopManager/Products/newProductSteps/ProductPricing'
-import ProductOptions from '../../components/ShopManager/Products/newProductSteps/ProductOptions'
-import ProductDimensions from '../../components/ShopManager/Products/newProductSteps/ProductDimensions'
-import ShippingSection from '../../components/ShopManager/Products/newProductSteps/ShippingSection'
-import axios from 'axios'
-
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import ProductInfo from "../../components/ShopManager/Products/newProductSteps/ProductInfo";
+import ProductType from "../../components/ShopManager/Products/newProductSteps/ProductType";
+import ProductImages from "../../components/ShopManager/Products/newProductSteps/ProductImages";
+import ProductPricing from "../../components/ShopManager/Products/newProductSteps/ProductPricing";
+import ProductOptions from "../../components/ShopManager/Products/newProductSteps/ProductOptions";
+import ProductDimensions from "../../components/ShopManager/Products/newProductSteps/ProductDimensions";
+import ShippingSection from "../../components/ShopManager/Products/newProductSteps/ShippingSection";
+import axios from "axios";
 
 // import ProductTable from '../../components/newProductSteps/ProductTable'
 
-
 const NewProduct = () => {
-const navigate = useNavigate();
-const { user } = useContext(AuthContext);
-    
-/// Product State, this is what will be sent to the server
-const [rows, setRows] = useState(
-  {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+
+  /// Product State, this is what will be sent to the server
+  const [rows, setRows] = useState({
     category: "",
     color: [],
     image_urls: [],
     material: [],
-    
+
     packedLength: "",
     packedLengthUnit: "",
-    
+
     packedWidth: "",
     packedWidthUnit: "",
 
@@ -46,11 +43,11 @@ const [rows, setRows] = useState(
 
     packedWeight: "",
     packedWeightUnit: "",
-    
+
     productName: "",
 
     processingTime: "",
-  
+
     price: "",
     scent: [],
     shopName: "",
@@ -58,62 +55,56 @@ const [rows, setRows] = useState(
     size: [],
     status: "",
     style: [],
-    
+
     tags: [],
     user: "",
     quantity: "",
-  },
-);
-/// Product Options State
-const [optionRows, setOptionRows] = useState([
-  { 
-    option: "", 
-    values: [], 
-    newValue: "" 
-  },
-]);
-/// Tags State
-const [tags, setTags] = useState([]);
+  });
+  /// Product Options State
+  const [optionRows, setOptionRows] = useState([
+    {
+      option: "",
+      values: [],
+      newValue: "",
+    },
+  ]);
+  /// Tags State
+  const [tags, setTags] = useState([]);
 
-/// Images State
-const [images, setImages] = useState([]);
+  /// Images State
+  const [images, setImages] = useState([]);
 
-const [currentStep, setCurrentStep] = useState(0);
-
+  const [currentStep, setCurrentStep] = useState(0);
 
   const handleChange = (event) => {
-
     const { name, value } = event.target;
-    const updatedRows = {...rows};
-    console.log(updatedRows)
-    console.log(name)
+    const updatedRows = { ...rows };
+    console.log(updatedRows);
+    console.log(name);
     updatedRows[name] = value;
     setRows(updatedRows);
   };
 
-
   const handleSubmit = async (e) => {
-  
-    
     try {
-    const updatedRows = {...rows};
+      const updatedRows = { ...rows };
 
+      updatedRows.user = user._id;
+      updatedRows.shopName = user.shopName;
+      console.log(updatedRows.user);
+      setRows(updatedRows);
 
-    updatedRows.user = user._id;
-    updatedRows.shopName = user.shopName;
-    console.log(updatedRows.user)
-    setRows(updatedRows)
-
-    
-      const response = await axios.post( 
-        `${import.meta.env.MODE === 'production' 
-          ? import.meta.env.VITE_PROD_API_URL 
-          : import.meta.env.VITE_DEV_API_URL}/shopmanager/${user._id}/newproduct`,
+      const response = await axios.post(
+        `${
+          import.meta.env.MODE === "production"
+            ? import.meta.env.VITE_PROD_API_URL
+            : import.meta.env.VITE_DEV_API_URL
+        }/shopmanager/${user._id}/newproduct`,
         updatedRows
       );
 
       console.log("Product submitted:", response);
-      navigate(`/shopmanager/${user._id}/products`)
+      navigate(`/shopmanager/${user._id}/products`);
     } catch (error) {
       console.error("Error submitting Product:", error);
     }
@@ -121,12 +112,46 @@ const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} />,
-    <ProductType key="productType" rows={rows} setRows={setRows} tags={tags} setTags={setTags} handleChange={handleChange}  />,
-    <ProductImages key="productImages" rows={rows} setRows={setRows} images={images} setImages={setImages} handleChange={handleChange} />,
-    <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} />,
-    <ProductOptions key="productOptions" rows={rows} setRows={setRows} handleChange={handleChange} optionRows={optionRows} setOptionRows={setOptionRows} />,
-    <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
-    <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} handleSubmit={handleSubmit} />,
+    <ProductType
+      key="productType"
+      rows={rows}
+      setRows={setRows}
+      tags={tags}
+      setTags={setTags}
+      handleChange={handleChange}
+    />,
+    <ProductImages
+      key="productImages"
+      rows={rows}
+      setRows={setRows}
+      images={images}
+      setImages={setImages}
+      handleChange={handleChange}
+    />,
+    <ProductPricing
+      key="productPricing"
+      rows={rows}
+      handleChange={handleChange}
+    />,
+    <ProductOptions
+      key="productOptions"
+      rows={rows}
+      setRows={setRows}
+      handleChange={handleChange}
+      optionRows={optionRows}
+      setOptionRows={setOptionRows}
+    />,
+    <ProductDimensions
+      key="productDimensions"
+      rows={rows}
+      handleChange={handleChange}
+    />,
+    <ShippingSection
+      key="shippingSection"
+      rows={rows}
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+    />,
   ];
 
   const handleNext = () => {
@@ -164,7 +189,7 @@ const [currentStep, setCurrentStep] = useState(0);
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewProduct
+export default NewProduct;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const MainSettings = ({ shopPhoto, setShopPhoto, bannerPhoto, setBannerPhoto, vacationMode, setVacationMode, shopDescription, setShopDescription }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [photosDisabled, setPhotosDisabled] = useState(true);
   
   const getShopPhoto = (event) => {
     setShopPhoto(URL.createObjectURL(event.target.files[0]));
@@ -25,6 +26,7 @@ const MainSettings = ({ shopPhoto, setShopPhoto, bannerPhoto, setBannerPhoto, va
           accept="image/*"
           onChange={getShopPhoto}
           className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-gray-300 file:text-black hover:file:bg-gray-300"
+          disabled={photosDisabled}
         />
         {shopPhoto && <img src={shopPhoto} alt="Shop" className="mt-4 w-32 h-32 object-cover rounded-md" />}
       </div>
@@ -36,6 +38,7 @@ const MainSettings = ({ shopPhoto, setShopPhoto, bannerPhoto, setBannerPhoto, va
           accept="image/*"
           onChange={getBannerPhoto}
           className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-gray-300 file:text-black hover:file:bg-gray-300"
+          disabled={photosDisabled}
         />
         {bannerPhoto && <img src={bannerPhoto} alt="Banner" className="mt-4 w-full h-32 object-cover rounded" />}
       </div>

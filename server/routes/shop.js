@@ -1,13 +1,13 @@
-import express from 'express';
-import User from '../models/User.js';
-import authenticateToken from './unifiedAuth.js';
+import express from "express";
+import User from "../models/User.js";
+import authenticateToken from "./unifiedAuth.js";
 
 const router = express.Router();
 
-router.post('/signup', authenticateToken, async (req, res) => {
+router.post("/signup", authenticateToken, async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.user.userId || req.user.uid });
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     user.billingAddress = {
       streetAddress: req.body.billingStreetAddress,
@@ -26,16 +26,10 @@ router.post('/signup', authenticateToken, async (req, res) => {
     };
 
     await user.save();
-    res.json({ message: 'Shop signup successful' });
+    res.json({ message: "Shop signup successful" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
 export default router;
-
-
-
-
-
-
