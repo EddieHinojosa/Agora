@@ -1,57 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import Banner from '../../components/Home/Banner'
-import DisplayGrid from '../../components/Home/DisplayGrid'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Banner from "../../components/Home/Banner";
+import DisplayGrid from "../../components/Home/DisplayGrid";
 
 const Home = () => {
-
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  
+
   const fetchProducts = async () => {
     try {
-        const response = await axios.get(
-            `${import.meta.env.MODE === 'production' 
-              ? import.meta.env.VITE_PROD_API_URL 
-              : import.meta.env.VITE_DEV_API_URL}`
-        );
-        setProducts(response.data);
-        console.log("Products fetched:", response.data);
+      const response = await axios.get(
+        `${
+          import.meta.env.MODE === "production"
+            ? import.meta.env.VITE_PROD_API_URL
+            : import.meta.env.VITE_DEV_API_URL
+        }`
+      );
+      setProducts(response.data);
+      console.log("Products fetched:", response.data);
     } catch (error) {
-        console.error("Error fetching products:", error);
+      console.error("Error fetching products:", error);
     }
-};
+  };
 
   useEffect(() => {
     fetchProducts();
-  }, [])
-  
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-start justify-start bg-gray-50 px-4 md:px-10 pt-0">
       {currentPage === 1 && <Banner />}
-      <DisplayGrid products={products} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+      <DisplayGrid
+        products={products}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
+};
 
-}
-
-export default Home
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default Home;
 
 // OLD CODE
 
@@ -87,7 +75,3 @@ export default Home
 // };
 
 // export default Home;
-
-
-
-

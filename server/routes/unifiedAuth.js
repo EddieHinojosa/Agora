@@ -1,12 +1,12 @@
-import jwt from 'jsonwebtoken';
-import admin from 'firebase-admin';
-import User from '../models/User.js';
+import jwt from "jsonwebtoken";
+import admin from "firebase-admin";
+import User from "../models/User.js";
 
 // Middleware to verify both JWT and Firebase tokens
 const authenticateToken = async (req, res, next) => {
-  const token = req.headers.authorization?.split('Bearer ')[1];
+  const token = req.headers.authorization?.split("Bearer ")[1];
   if (!token) {
-    return res.status(401).json({ message: 'Unauthorized: No token provided' });
+    return res.status(401).json({ message: "Unauthorized: No token provided" });
   }
 
   try {
@@ -21,8 +21,8 @@ const authenticateToken = async (req, res, next) => {
       req.user = decodedFirebaseToken;
       return next();
     } catch (firebaseError) {
-      console.error('Error verifying token:', firebaseError);
-      return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+      console.error("Error verifying token:", firebaseError);
+      return res.status(401).json({ message: "Unauthorized: Invalid token" });
     }
   }
 };

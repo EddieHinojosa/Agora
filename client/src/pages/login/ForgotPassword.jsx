@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useSearchParams } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
-  const [newPassword, setNewPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const token = searchParams.get('token');
+  const [newPassword, setNewPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const token = searchParams.get("token");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/auth/reset-password', { token, newPassword });
-      setMessage('Password reset successful');
+      await axios.post("/api/auth/reset-password", { token, newPassword });
+      setMessage("Password reset successful");
     } catch (error) {
-      setMessage('Error resetting password');
+      setMessage("Error resetting password");
     }
   };
 
