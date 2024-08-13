@@ -68,17 +68,12 @@ const ProductSchema = new mongoose.Schema({
     user: {
         type: String,
         required: true
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: "User",
-        // required: true,
+
     },
     shopName: {
         type: String,
         required: true,
-        
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: "User",
-        // required: false,
+
     },
     shippingAddress: {
         type: String,

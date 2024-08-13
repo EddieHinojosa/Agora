@@ -2,22 +2,25 @@ import { useState, useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import ProductInfo from '../../components/ShopManager/Products/newProductSteps/ProductInfo';
-import ProductType from '../../components/ShopManager/Products/newProductSteps/ProductType';
-import ProductImages from '../../components/ShopManager/Products/newProductSteps/ProductImages';
+
 import ProductPricing from '../../components/ShopManager/Products/newProductSteps/ProductPricing';
-import ProductOptions from '../../components/ShopManager/Products/newProductSteps/ProductOptions';
+
 import ProductDimensions from '../../components/ShopManager/Products/newProductSteps/ProductDimensions';
 import axios from 'axios';
 import ShippingSection from '../../components/ShopManager/Products/newProductSteps/ShippingSection';
 
+// Imports for future development
 
+// import ProductType from '../../components/ShopManager/Products/newProductSteps/ProductType';
+// import ProductImages from '../../components/ShopManager/Products/newProductSteps/ProductImages';
+// import ProductOptions from '../../components/ShopManager/Products/newProductSteps/ProductOptions';
 
 
 const EditProduct = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { id } = useParams();
-  // console.log(id)
+
 
   const [rows, setRows] = useState(
     {
@@ -64,19 +67,7 @@ const EditProduct = () => {
       quantity: "",
     },
   );
-  /// Product Options State
-  const [optionRows, setOptionRows] = useState([
-    { 
-      option: "", 
-      values: [], 
-      newValue: "" 
-    },
-  ]);
-  /// Tags State
-  const [tags, setTags] = useState([]);
-  
-  /// Images State
-  const [images, setImages] = useState([]);
+
 
    
   useEffect(() => {
@@ -141,14 +132,20 @@ const EditProduct = () => {
   
     const steps = [
     <ProductInfo key="productInfo" rows={rows} handleChange={handleChange} />,
-    // <ProductType key="productType" rows={rows} setRows={setRows} tags={tags} setTags={setTags} handleChange={handleChange}  />,
-    // <ProductImages key="productImages" rows={rows} setRows={setRows} images={images} setImages={setImages} handleChange={handleChange} />,
+   
     <ProductPricing key="productPricing" rows={rows} handleChange={handleChange} />,
-    // <ProductOptions key="productOptions" rows={rows} setRows={setRows} handleChange={handleChange} optionRows={optionRows} setOptionRows={setOptionRows} />,
+    
     <ProductDimensions key="productDimensions" rows={rows} handleChange={handleChange} />,
     <ShippingSection key="shippingSection" rows={rows} handleChange={handleChange} handleEditSubmit={handleEditSubmit} />,
-    // <ProductTable key="productTable"  rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}  />,
-    ];
+
+ // components for future development
+
+  // <ProductType key="productType" rows={rows} setRows={setRows} tags={tags} setTags={setTags} handleChange={handleChange}  />,
+  // <ProductOptions key="productOptions" rows={rows} setRows={setRows} handleChange={handleChange} optionRows={optionRows} setOptionRows={setOptionRows} />,  
+  // <ProductImages key="productImages" rows={rows} setRows={setRows} images={images} setImages={setImages} handleChange={handleChange} />,
+  // <ProductTable key="productTable"  rows={rows} handleChange={handleChange} handleSubmit={handleSubmit}  />,
+  ];
+
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -167,3 +164,19 @@ const EditProduct = () => {
 };
 
 export default EditProduct;
+
+//State change functions for future development
+
+  // /// Product Options State
+  // const [optionRows, setOptionRows] = useState([
+  //   { 
+  //     option: "", 
+  //     values: [], 
+  //     newValue: "" 
+  //   },
+  // ]);
+  // /// Tags State
+  // const [tags, setTags] = useState([]);
+  
+  // /// Images State
+  // const [images, setImages] = useState([]);
