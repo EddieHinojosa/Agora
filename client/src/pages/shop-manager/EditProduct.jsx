@@ -103,7 +103,8 @@ const EditProduct = () => {
 
   };
   
-  const handleEditSubmit = async (e) => {  
+  const handleEditSubmit = async (e) => { 
+    e.preventDefault(); 
     console.log('inside handleEditSubmit')
     
     try {
