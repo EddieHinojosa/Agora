@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { IoMenu, IoClose } from 'react-icons/io5';
-import SearchBar from './SearchBar';
-import UserMenu from './UserMenu';
-import NavLinks from './NavLinks';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { IoMenu, IoClose } from "react-icons/io5";
+import SearchBar from "./SearchBar";
+import UserMenu from "./UserMenu";
+import NavLinks from "./NavLinks";
 
 const Navbar = ({ setModalIsOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,11 @@ const Navbar = ({ setModalIsOpen }) => {
         <div className="flex-grow mx-4">
           <SearchBar />
         </div>
-        <div className={`flex items-center space-x-4 md:flex-row md:space-y-0 ${isOpen ? 'flex' : 'hidden md:flex'}`}>
+        <div
+          className={`flex items-center space-x-4 md:flex-row md:space-y-0 ${
+            isOpen ? "flex" : "hidden md:flex"
+          }`}
+        >
           <UserMenu setModalIsOpen={setModalIsOpen} />
         </div>
       </div>
